@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:smithing_transform",
+  "addition": {
+    "item": "minecraft:quartz"
+  },
+  "base": {
+    "item": "minecraft:netherite_chestplate"
+  },
+  "result": {
+    "item": "chineseweapons:netherite_fine_scale_armor_chestplate"
+  },
+  "template": {
+    "item": "chineseweapons:fine_scale_armor_forging_stone"
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "parent": "chineseweapons:custom/diamond_dagger_axe",
+  "textures": {
+    "0": "chineseweapons:block/diamond_dagger_axe",
+    "particle": "chineseweapons:block/diamond_dagger_axe"
+  }
+}

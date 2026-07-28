@@ -1,0 +1,9 @@
+{
+  "parent": "chineseweapons:custom/armor_casting_table",
+  "textures": {
+    "all": "chineseweapons:block/armor_casting_table",
+    "particle": "minecraft:block/dark_oak_planks",
+    "1": "chineseweapons:block/smithing_table"
+  },
+  "render_type": "solid"
+}

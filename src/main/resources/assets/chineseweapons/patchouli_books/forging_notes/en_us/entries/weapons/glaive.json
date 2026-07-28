@@ -1,0 +1,25 @@
+{
+  "sortnum": 0,
+  "name": "patchouli.chineseweapons.book.entries.weapons.glaive.name",
+  "icon": "chineseweapons:iron_glaive",
+  "category": "chineseweapons:weapons",
+  "pages": [
+    {
+      "type": "spotlight",
+      "item": "chineseweapons:iron_glaive",
+      "text": "patchouli.chineseweapons.book.entries.weapons.glaive.pages.0.text"
+    },
+    {
+      "type": "spotlight",
+      "item": "chineseweapons:green_loong_glaive",
+      "text": "patchouli.chineseweapons.book.entries.weapons.glaive.pages.1.text"
+    },
+    {
+      "type": "image",
+      "images": [
+        "chineseweapons:textures/book/weapons_0.png"
+      ],
+      "text": "patchouli.chineseweapons.book.entries.weapons.text"
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "parent": "chineseweapons:custom/netherite_dagger_axe",
+  "textures": {
+    "0": "chineseweapons:block/netherite_dagger_axe",
+    "1": "chineseweapons:block/netherite_dagger_axe_2",
+    "2": "chineseweapons:block/netherite_dagger_axe_1",
+    "3": "chineseweapons:block/netherite_dagger_axe_3",
+    "particle": "chineseweapons:item/netherite_dagger_axe"
+  }
+}

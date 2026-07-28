@@ -1,0 +1,25 @@
+{
+  "sortnum": 0,
+  "name":"patchouli.chineseweapons.book.entries.weapons.sky_piercing_halberd.name",
+  "icon": "chineseweapons:iron_sky_piercing_halberd",
+  "category": "chineseweapons:weapons",
+  "pages": [
+    {
+      "type": "spotlight",
+      "item": "chineseweapons:iron_sky_piercing_halberd",
+      "text": "patchouli.chineseweapons.book.entries.weapons.sky_piercing_halberd.pages.0.text"
+    },
+    {
+      "type": "spotlight",
+      "item": "chineseweapons:diamond_sky_piercing_halberd",
+      "text": "patchouli.chineseweapons.book.entries.weapons.sky_piercing_halberd.pages.1.text"
+    },
+    {
+      "type": "image",
+      "images": [
+        "chineseweapons:textures/book/weapons_2.png"
+      ],
+      "text": "patchouli.chineseweapons.book.entries.weapons.text"
+    }
+  ]
+}

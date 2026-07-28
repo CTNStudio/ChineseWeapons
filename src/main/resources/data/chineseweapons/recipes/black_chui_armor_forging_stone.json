@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    " b ",
+    "bab",
+    " b "
+  ],
+  "key": {
+    "a": {
+      "item": "minecraft:quartz"
+    },
+    "b": {
+      "item": "minecraft:basalt"
+    }
+  },
+  "result": {
+    "item": "chineseweapons:black_chui_armor_forging_stone",
+    "count": 4
+  }
+}

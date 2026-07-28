@@ -1,0 +1,35 @@
+{
+  "sortnum": 5,
+  "name": "patchouli.chineseweapons.book.entries.armor.fine_scale_armor.name",
+  "icon": "chineseweapons:iron_fine_scale_armor_chestplate",
+  "category": "chineseweapons:armor",
+  "pages": [
+    {
+      "type": "spotlight",
+      "item": "chineseweapons:iron_fine_scale_armor_helmet",
+      "text": "patchouli.chineseweapons.book.entries.armor.fine_scale_armor.pages.0.text"
+    },
+    {
+      "type": "spotlight",
+      "item": "chineseweapons:iron_fine_scale_armor_chestplate",
+      "text": "patchouli.chineseweapons.book.entries.armor.fine_scale_armor.pages.1.text"
+    },
+    {
+      "type": "spotlight",
+      "item": "chineseweapons:iron_fine_scale_armor_leggings",
+      "text": "patchouli.chineseweapons.book.entries.armor.fine_scale_armor.pages.2.text"
+    },
+    {
+      "type": "spotlight",
+      "item": "chineseweapons:iron_fine_scale_armor_boots",
+      "text": "patchouli.chineseweapons.book.entries.armor.fine_scale_armor.pages.3.text"
+    },
+    {
+      "type": "image",
+      "images": [
+        "chineseweapons:textures/book/armor_5.png"
+      ],
+      "text": "patchouli.chineseweapons.book.entries.armor.text"
+    }
+  ]
+}

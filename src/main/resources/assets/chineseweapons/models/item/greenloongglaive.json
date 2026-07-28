@@ -1,0 +1,12 @@
+{
+  "parent": "chineseweapons:custom/green_loong_glaive",
+  "textures": {
+    "0": "chineseweapons:block/green_loong_glaive",
+    "1": "chineseweapons:block/green_loong_glaive_head_1",
+    "2": "chineseweapons:block/green_loong_glaive_head_2",
+    "3": "chineseweapons:block/green_loong_glaive_head_3",
+    "4": "chineseweapons:block/green_loong_glaive_head_4",
+    "5": "chineseweapons:block/green_loong_glaive_head",
+    "particle": "chineseweapons:item/green_loong_glaive"
+  }
+}

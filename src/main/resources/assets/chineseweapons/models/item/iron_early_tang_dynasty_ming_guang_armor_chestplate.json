@@ -1,0 +1,6 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "chineseweapons:item/iron_early_tang_dynasty_ming_guang_chestplate"
+  }
+}

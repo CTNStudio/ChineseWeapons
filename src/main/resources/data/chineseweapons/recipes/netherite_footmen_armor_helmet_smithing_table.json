@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:smithing_transform",
+  "addition": {
+    "item": "minecraft:quartz"
+  },
+  "base": {
+    "item": "minecraft:netherite_helmet"
+  },
+  "result": {
+    "item": "chineseweapons:netherite_footmen_armor_helmet"
+  },
+  "template": {
+    "item": "chineseweapons:footmen_armor_forging_stone"
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "name": "patchouli.chineseweapons.book.name",
+  "landing_text": "patchouli.chineseweapons.book.landing_text",
+  "i18n": true,
+  "version": 1,
+  "book_texture": "chineseweapons:textures/gui/forging_notes.png",
+  "model": "chineseweapons:forging_notes",
+  "use_resource_pack": true,
+  "text_color":"000000",
+  "header_color":"333333",
+  "nameplate_color":"FFDD00",
+  "link_color":"0000EE",
+  "link_hover_color":"8800EE",
+  "progress_bar_color":"FFFF55",
+  "progress_bar_background":"DDDDDD",
+  "pause_game":true,
+  "show_toasts":true,
+  "use_blocky_font":false,
+  "creative_tab":"chineseweapons:chinese_weapons"
+}

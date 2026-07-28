@@ -1,0 +1,18 @@
+{
+  "gui_light": "front",
+  "loader": "forge:separate_transforms",
+  "textures": {
+    "particle": "chineseweapons:item/mini_golden_dagger_axe"
+  },
+  "base": {
+    "parent": "chineseweapons:item/goldendaggeraxe"
+  },
+  "perspectives": {
+    "gui": {
+      "parent": "minecraft:item/generated",
+      "textures": {
+        "layer0": "chineseweapons:item/mini_golden_dagger_axe"
+      }
+    }
+  }
+}

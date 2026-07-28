@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:smithing_transform",
+  "addition": {
+    "item": "minecraft:quartz"
+  },
+  "base": {
+    "item": "minecraft:diamond_chestplate"
+  },
+  "result": {
+    "item": "chineseweapons:diamond_black_chui_armor_chestplate"
+  },
+  "template": {
+    "item": "chineseweapons:black_chui_armor_forging_stone"
+  }
+}

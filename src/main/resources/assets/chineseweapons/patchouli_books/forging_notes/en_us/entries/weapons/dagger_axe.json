@@ -1,0 +1,25 @@
+{
+  "sortnum": 0,
+  "name":"patchouli.chineseweapons.book.entries.weapons.dagger_axe.name",
+  "icon": "chineseweapons:iron_dagger_axe",
+  "category": "chineseweapons:weapons",
+  "pages": [
+    {
+      "type": "spotlight",
+      "item": "chineseweapons:iron_dagger_axe",
+      "text": "patchouli.chineseweapons.book.entries.weapons.dagger_axe.pages.0.text"
+    },
+    {
+      "type": "spotlight",
+      "item": "chineseweapons:diamond_dagger_axe",
+      "text": "patchouli.chineseweapons.book.entries.weapons.dagger_axe.pages.1.text"
+    },
+    {
+      "type": "image",
+      "images": [
+        "chineseweapons:textures/book/weapons_1.png"
+      ],
+      "text": "patchouli.chineseweapons.book.entries.weapons.text"
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:smithing_transform",
+  "addition": {
+    "item": "minecraft:quartz"
+  },
+  "base": {
+    "item": "minecraft:iron_helmet"
+  },
+  "result": {
+    "item": "chineseweapons:tang_dynasty_infantry_armor_helmet"
+  },
+  "template": {
+    "item": "chineseweapons:tang_dynasty_infantry_armor_forging_stone"
+  }
+}

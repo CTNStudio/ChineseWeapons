@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    " b ",
+    "bab",
+    " b "
+  ],
+  "key": {
+    "a": {
+      "item": "minecraft:quartz"
+    },
+    "b": {
+      "item": "minecraft:diorite"
+    }
+  },
+  "result": {
+    "item": "chineseweapons:middle_tang_dynasty_ming_guang_armor_forging_stone",
+    "count": 4
+  }
+}

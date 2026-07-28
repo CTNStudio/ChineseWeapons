@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Specification-Title: chineseweapons
+Specification-Vendor: CTN-STUDIO,Xiris177,Prizmarin,EndYigjie,sf.,BaiGave,spake404,MCcaptain5412,Slime_Dragon
+Specification-Version: 1
+Implementation-Title: ChineseWeapons
+Implementation-Version: 1.0.0
+Implementation-Vendor: CTN-STUDIO,Xiris177,Prizmarin,EndYigjie,sf.,BaiGave,spake404,MCcaptain5412,Slime_Dragon
+Implementation-Timestamp: 2026-01-07T15:07:29+0800
+MixinConfigs: mixins.endyingjie_i_s.json
+

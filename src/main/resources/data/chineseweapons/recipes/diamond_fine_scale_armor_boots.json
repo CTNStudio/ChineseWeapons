@@ -1,0 +1,20 @@
+{
+    "type": "chineseweapons:weapon_casting_shaped",
+    "pattern": [
+      "   ",
+      "A A",
+      "A A"
+    ],
+    "main_material": {
+      "item": "minecraft:diamond"
+    },
+    "key": {
+      "A": {
+        "item": "chineseweapons:diamond_armor_pieces"
+      }
+  },
+  "result": {
+    "count": 1,
+    "item": "chineseweapons:diamond_fine_scale_armor_boots"
+  }
+}

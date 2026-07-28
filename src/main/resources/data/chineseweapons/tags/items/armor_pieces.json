@@ -1,0 +1,12 @@
+{
+  "replace": false,
+  "values": [
+    "chineseweapons:iron_armor_pieces",
+    "chineseweapons:diamond_armor_pieces",
+    "chineseweapons:golden_armor_pieces",
+    "chineseweapons:stone_armor_pieces",
+    "chineseweapons:iron_mountain_character_armor_pieces",
+    "chineseweapons:diamond_mountain_character_armor_pieces",
+    "chineseweapons:golden_mountain_character_armor_pieces"
+  ]
+}

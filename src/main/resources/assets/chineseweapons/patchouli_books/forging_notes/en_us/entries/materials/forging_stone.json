@@ -1,0 +1,13 @@
+{
+  "sortnum": 0,
+  "name":"patchouli.chineseweapons.book.entries.materials.forging_stone.name",
+  "icon": "chineseweapons:black_chui_armor_forging_stone",
+  "category": "chineseweapons:materials",
+  "pages": [
+    {
+      "type": "spotlight",
+      "item": "chineseweapons:black_chui_armor_forging_stone",
+      "text": "patchouli.chineseweapons.book.entries.materials.forging_stone.pages.0.text"
+    }
+  ]
+}

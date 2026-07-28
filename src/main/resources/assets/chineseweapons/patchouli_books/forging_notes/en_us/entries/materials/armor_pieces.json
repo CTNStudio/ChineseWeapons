@@ -1,0 +1,18 @@
+{
+  "sortnum": 0,
+  "name":"patchouli.chineseweapons.book.entries.materials.armor_pieces.name",
+  "icon": "chineseweapons:iron_armor_pieces",
+  "category": "chineseweapons:materials",
+  "pages": [
+    {
+      "type": "spotlight",
+      "item": "chineseweapons:iron_armor_pieces",
+      "text": "patchouli.chineseweapons.book.entries.materials.armor_pieces.pages.0.text"
+    },
+      {
+        "type": "spotlight",
+        "item": "chineseweapons:iron_mountain_character_armor_pieces",
+        "text": "patchouli.chineseweapons.book.entries.materials.armor_pieces.pages.1.text"
+      }
+  ]
+}

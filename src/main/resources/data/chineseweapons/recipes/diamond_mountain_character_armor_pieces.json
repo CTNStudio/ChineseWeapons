@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "aaa",
+    " a "
+  ],
+  "key": {
+    "a": {
+      "item": "minecraft:diamond"
+    }
+  },
+  "result": {
+    "item": "chineseweapons:diamond_mountain_character_armor_pieces",
+    "count": 12
+  }
+}

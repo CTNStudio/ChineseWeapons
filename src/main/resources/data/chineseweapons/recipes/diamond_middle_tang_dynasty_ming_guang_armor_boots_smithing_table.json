@@ -1,0 +1,15 @@
+  {
+  "type": "minecraft:smithing_transform",
+  "addition": {
+    "item": "minecraft:quartz"
+  },
+  "base": {
+    "item": "minecraft:diamond_boots"
+  },
+  "result": {
+    "item": "chineseweapons:diamond_middle_tang_dynasty_ming_guang_armor_boots"
+  },
+  "template": {
+    "item": "chineseweapons:middle_tang_dynasty_ming_guang_armor_forging_stone"
+  }
+}

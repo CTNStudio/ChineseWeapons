@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    " b ",
+    "bab",
+    " b "
+  ],
+  "key": {
+    "a": {
+      "item": "minecraft:quartz"
+    },
+    "b": {
+      "item": "minecraft:sandstone"
+    }
+  },
+  "result": {
+    "item": "chineseweapons:tang_dynasty_infantry_armor_forging_stone",
+    "count": 4
+  }
+}

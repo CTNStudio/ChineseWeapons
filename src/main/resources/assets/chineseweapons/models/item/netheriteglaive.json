@@ -1,0 +1,12 @@
+{
+  "parent": "chineseweapons:custom/netherite_glaive",
+  "textures": {
+    "0": "chineseweapons:block/netherite_glaive",
+    "1": "chineseweapons:block/netherite_glaive_head_1",
+    "2": "chineseweapons:block/netherite_glaive_head_2",
+    "3": "chineseweapons:block/netherite_glaive_head_3",
+    "4": "chineseweapons:block/netherite_glaive_head_4",
+    "5": "chineseweapons:block/standard_glaive_head",
+    "particle": "chineseweapons:item/netherite_glaive"
+  }
+}

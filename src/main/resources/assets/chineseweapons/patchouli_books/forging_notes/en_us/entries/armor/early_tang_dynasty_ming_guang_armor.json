@@ -1,0 +1,35 @@
+{
+  "sortnum": 0,
+  "name": "patchouli.chineseweapons.book.entries.armor.early_tang_dynasty_ming_guang_armor.name",
+  "icon": "chineseweapons:iron_early_tang_dynasty_ming_guang_armor_chestplate",
+  "category": "chineseweapons:armor",
+  "pages": [
+    {
+      "type": "spotlight",
+      "item": "chineseweapons:iron_early_tang_dynasty_ming_guang_armor_helmet",
+      "text": "patchouli.chineseweapons.book.entries.armor.early_tang_dynasty_ming_guang_armor.pages.0.text"
+    },
+    {
+      "type": "spotlight",
+      "item": "chineseweapons:iron_early_tang_dynasty_ming_guang_armor_chestplate",
+      "text": "patchouli.chineseweapons.book.entries.armor.early_tang_dynasty_ming_guang_armor.pages.1.text"
+    },
+    {
+      "type": "spotlight",
+      "item": "chineseweapons:iron_early_tang_dynasty_ming_guang_armor_leggings",
+      "text": "patchouli.chineseweapons.book.entries.armor.early_tang_dynasty_ming_guang_armor.pages.2.text"
+    },
+    {
+      "type": "spotlight",
+      "item": "chineseweapons:iron_early_tang_dynasty_ming_guang_armor_boots",
+      "text": "patchouli.chineseweapons.book.entries.armor.early_tang_dynasty_ming_guang_armor.pages.3.text"
+    },
+    {
+      "type": "image",
+      "images": [
+        "chineseweapons:textures/book/armor_0.png"
+      ],
+      "text": "patchouli.chineseweapons.book.entries.armor.text"
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "parent": "block/cube",
+  "textures": {
+    "down": "chineseweapons:block/ancient_gem_ore",
+    "up": "chineseweapons:block/ancient_gem_ore",
+    "north": "chineseweapons:block/ancient_gem_ore",
+    "east": "chineseweapons:block/ancient_gem_ore",
+    "south": "chineseweapons:block/ancient_gem_ore",
+    "west": "chineseweapons:block/ancient_gem_ore",
+    "particle": "chineseweapons:block/ancient_gem_ore"
+  },
+  "render_type": "solid"
+}

@@ -1,0 +1,6 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "chineseweapons:item/tang_dynasty_infantry_armor_helmet"
+  }
+}

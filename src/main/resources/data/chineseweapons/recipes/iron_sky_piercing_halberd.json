@@ -1,0 +1,23 @@
+{
+  "type": "chineseweapons:weapon_casting_shaped",
+  "pattern": [
+    " AA",
+    "ABA",
+    "BA "
+  ],
+  "main_material": {
+    "item": "minecraft:gold_ingot"
+  },
+  "key": {
+    "A": {
+      "item": "minecraft:iron_ingot"
+    },
+    "B": {
+      "item": "minecraft:stick"
+    }
+  },
+  "result": {
+    "count": 1,
+    "item": "chineseweapons:iron_sky_piercing_halberd"
+  }
+}

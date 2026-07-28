@@ -1,0 +1,22 @@
+{
+  "gui_light": "front",
+  "loader": "forge:separate_transforms",
+  "textures": {
+    "particle": "chineseweapons:item/golden_sky_piercing_halberd"
+  },
+  "base": {
+    "parent": "chineseweapons:custom/sky_piercing_halberd",
+    "textures": {
+      "0": "chineseweapons:item/golden_sky_piercing_halberd",
+      "particle": "chineseweapons:item/golden_sky_piercing_halberd"
+    }
+  },
+  "perspectives": {
+    "gui": {
+      "parent": "minecraft:item/generated",
+      "textures": {
+        "layer0": "chineseweapons:item/mini_golden_sky_piercing_halberd"
+      }
+    }
+  }
+}

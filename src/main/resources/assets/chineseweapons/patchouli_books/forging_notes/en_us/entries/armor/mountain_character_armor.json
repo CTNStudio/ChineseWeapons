@@ -1,0 +1,35 @@
+{
+  "sortnum": 3,
+  "name": "patchouli.chineseweapons.book.entries.armor.mountain_character_armor.name",
+  "icon": "chineseweapons:iron_mountain_character_armor_chestplate",
+  "category": "chineseweapons:armor",
+  "pages": [
+    {
+      "type": "spotlight",
+      "item": "chineseweapons:iron_mountain_character_armor_helmet",
+      "text": "patchouli.chineseweapons.book.entries.armor.mountain_character_armor.pages.0.text"
+    },
+    {
+      "type": "spotlight",
+      "item": "chineseweapons:iron_mountain_character_armor_chestplate",
+      "text": "patchouli.chineseweapons.book.entries.armor.mountain_character_armor.pages.1.text"
+    },
+    {
+      "type": "spotlight",
+      "item": "chineseweapons:iron_mountain_character_armor_leggings",
+      "text": "patchouli.chineseweapons.book.entries.armor.mountain_character_armor.pages.2.text"
+    },
+    {
+      "type": "spotlight",
+      "item": "chineseweapons:iron_mountain_character_armor_boots",
+      "text": "patchouli.chineseweapons.book.entries.armor.mountain_character_armor.pages.3.text"
+    },
+    {
+      "type": "image",
+      "images": [
+        "chineseweapons:textures/book/armor_3.png"
+      ],
+      "text": "patchouli.chineseweapons.book.entries.armor.text"
+    }
+  ]
+}

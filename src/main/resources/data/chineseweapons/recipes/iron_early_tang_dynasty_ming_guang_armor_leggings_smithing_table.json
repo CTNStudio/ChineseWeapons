@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:smithing_transform",
+  "addition": {
+    "item": "minecraft:quartz"
+  },
+  "base": {
+    "item": "minecraft:iron_leggings"
+  },
+  "result": {
+    "item": "chineseweapons:iron_early_tang_dynasty_ming_guang_armor_leggings"
+  },
+  "template": {
+    "item": "chineseweapons:early_tang_dynasty_ming_guang_armor_forging_stone"
+  }
+}

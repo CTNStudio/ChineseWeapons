@@ -1,0 +1,35 @@
+{
+  "sortnum": 4,
+  "name": "patchouli.chineseweapons.book.entries.armor.tang_dynasty_infantry_armor.name",
+  "icon": "chineseweapons:tang_dynasty_infantry_armor_chestplate",
+  "category": "chineseweapons:armor",
+  "pages": [
+    {
+      "type": "spotlight",
+      "item": "chineseweapons:tang_dynasty_infantry_armor_helmet",
+      "text": "patchouli.chineseweapons.book.entries.armor.tang_dynasty_infantry_armor.pages.0.text"
+    },
+    {
+      "type": "spotlight",
+      "item": "chineseweapons:tang_dynasty_infantry_armor_chestplate",
+      "text": "patchouli.chineseweapons.book.entries.armor.tang_dynasty_infantry_armor.pages.1.text"
+    },
+    {
+      "type": "spotlight",
+      "item": "chineseweapons:tang_dynasty_infantry_armor_leggings",
+      "text": "patchouli.chineseweapons.book.entries.armor.tang_dynasty_infantry_armor.pages.2.text"
+    },
+    {
+      "type": "spotlight",
+      "item": "chineseweapons:tang_dynasty_infantry_armor_boots",
+      "text": "patchouli.chineseweapons.book.entries.armor.tang_dynasty_infantry_armor.pages.3.text"
+    },
+    {
+      "type": "image",
+      "images": [
+        "chineseweapons:textures/book/armor_4.png"
+      ],
+      "text": "patchouli.chineseweapons.book.entries.armor.text"
+    }
+  ]
+}

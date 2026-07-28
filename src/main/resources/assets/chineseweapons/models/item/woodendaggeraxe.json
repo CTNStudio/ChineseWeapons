@@ -1,0 +1,10 @@
+{
+  "parent": "chineseweapons:custom/wooden_dagger_axe",
+  "textures": {
+    "0": "chineseweapons:block/wooden_dagger_axe",
+    "1": "chineseweapons:block/wooden_dagger_axe_2",
+    "2": "chineseweapons:block/wooden_dagger_axe_1",
+    "3": "chineseweapons:block/wooden_dagger_axe_3",
+    "particle": "chineseweapons:item/wooden_dagger_axe"
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:smithing_transform",
+  "addition": {
+    "item": "minecraft:quartz"
+  },
+  "base": {
+    "item": "minecraft:golden_helmet"
+  },
+  "result": {
+    "item": "chineseweapons:golden_footmen_armor_helmet"
+  },
+  "template": {
+    "item": "chineseweapons:footmen_armor_forging_stone"
+  }
+}

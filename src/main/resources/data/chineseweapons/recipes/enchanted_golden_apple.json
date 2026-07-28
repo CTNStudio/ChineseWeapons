@@ -1,0 +1,23 @@
+{
+  "type": "chineseweapons:weapon_casting_shaped",
+  "pattern": [
+    "HHH",
+    "HBH",
+    "HHH"
+  ],
+  "main_material": {
+    "item": "minecraft:diamond_block"
+  },
+  "key": {
+    "H": {
+      "item": "minecraft:golden_block"
+    },
+    "B": {
+      "item": "minecraft:apple"
+    }
+  },
+  "result": {
+    "item": "minecraft:enchanted_golden_apple",
+    "count": 1
+  }
+}

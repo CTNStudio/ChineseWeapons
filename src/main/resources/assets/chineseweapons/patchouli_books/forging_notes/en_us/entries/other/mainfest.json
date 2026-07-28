@@ -1,0 +1,21 @@
+{
+  "sortnum": 0,
+  "name": "patchouli.chineseweapons.book.entries.other.mainfest.name",
+  "icon": "minecraft:feather",
+  "category": "chineseweapons:other",
+  "pages": [
+    {
+    "type": "image",
+    "images": [
+      "chineseweapons:textures/book/logo.png"
+    ],
+    "text": "patchouli.chineseweapons.book.entries.other.mainfest.pages.0.text"
+    },
+    {
+      "type": "link",
+      "text": "patchouli.chineseweapons.book.entries.other.mainfest.pages.1.text",
+      "url": "https://www.ctnstudios.top",
+      "link_text": "patchouli.chineseweapons.book.entries.other.mainfest.pages.2.text"
+    }
+  ]
+}
