@@ -51,9 +51,10 @@ public class Modelfootmen_armor<T extends Entity> extends EntityModel<T> {
         PartDefinition bone2_r1 = bipedHead.addOrReplaceChild("bone2_r1", CubeListBuilder.create().texOffs(56, 0).addBox(-1.0F, -2.0F, -3.0F, 0.0F, 5.0F, 9.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.9F, -11.9F, 1.5F, -0.2618F, 0.0F, 0.0F));
         PartDefinition bone2_r2 = bipedHead.addOrReplaceChild("bone2_r2", CubeListBuilder.create().texOffs(56, 0).addBox(0.0F, -2.5F, -4.5F, 0.0F, 5.0F, 9.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-0.1F, -11.0288F, 2.8195F, 0.0F, 0.2618F, 1.5708F));
         PartDefinition armorHead_r1 = bipedHead.addOrReplaceChild("armorHead_r1", CubeListBuilder.create().texOffs(0, 33).mirror().addBox(-4.0F, -1.5F, -6.0F, 10.0F, 5.0F, 10.0F, new CubeDeformation(0.3F)).mirror(false), PartPose.offsetAndRotation(-1.0F, -0.3F, 1.0F, 0.0175F, 0.0F, 0.0F));
-        PartDefinition bipedBody = partdefinition.addOrReplaceChild("bipedBody", CubeListBuilder.create().texOffs(32, 16).addBox(-4.0F, -0.5F, -2.8F, 8.0F, 7.0F, 6.0F, new CubeDeformation(1.0F))
-                .texOffs(32, 0).addBox(-4.0F, -0.5F, -2.0F, 8.0F, 12.0F, 4.0F, new CubeDeformation(1.0F))
-                .texOffs(26, 63).addBox(-2.0F, 6.0F, -4.0F, 4.0F, 4.0F, 1.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 0.0F, 0.0F));
+        PartDefinition bipedBody = partdefinition.addOrReplaceChild("bipedBody", CubeListBuilder.create()
+                .texOffs(32, 16).addBox(-4.0F, 1.0F, -2.8F, 8.0F, 7.0F, 6.0F, new CubeDeformation(1.0F))
+                .texOffs(32, 0).addBox(-4.0F, 1.0F, -2.0F, 8.0F, 12.0F, 4.0F, new CubeDeformation(1.0F))
+                .texOffs(26, 63).addBox(-2.0F, 7.5F, -4.0F, 4.0F, 4.0F, 1.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 0.0F, 0.0F));
         PartDefinition bipedRightArm = partdefinition.addOrReplaceChild("bipedRightArm", CubeListBuilder.create().texOffs(64, 47).mirror().addBox(-3.3F, -2.5F, -2.0F, 4.0F, 12.0F, 4.0F, new CubeDeformation(0.4F)).mirror(false), PartPose.offset(-5.0F, 2.0F, 0.0F));
         PartDefinition dontTouch_r1 = bipedRightArm.addOrReplaceChild("dontTouch_r1", CubeListBuilder.create().texOffs(48, 47).addBox(-2.0F, -6.0F, -2.0F, 4.0F, 12.0F, 4.0F, new CubeDeformation(0.5F)), PartPose.offsetAndRotation(-2.9926F, 3.4363F, 0.0F, 0.0F, 0.0F, 0.3054F));
         PartDefinition dontTouch_r2 = bipedRightArm.addOrReplaceChild("dontTouch_r2", CubeListBuilder.create().texOffs(60, 14).addBox(-2.0F, -3.5F, -2.0F, 4.0F, 5.0F, 4.0F, new CubeDeformation(0.52F)), PartPose.offsetAndRotation(-2.7679F, 0.7541F, 0.0F, 0.0F, 0.0F, 0.6981F));

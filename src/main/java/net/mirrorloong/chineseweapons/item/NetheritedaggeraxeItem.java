@@ -29,7 +29,7 @@ public class NetheritedaggeraxeItem extends FiveBlockReachSwordItem {
 			}
 
 			public float getAttackDamageBonus() {
-				return 10f;
+				return 5f;
 			}
 
 			public int getLevel() {

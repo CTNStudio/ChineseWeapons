@@ -1,0 +1,18 @@
+{
+  "sortnum": 1,
+  "name": "patchouli.chineseweapons.book.entries.other.banquan.artwork.name",
+  "icon": "minecraft:book",
+  "category": "chineseweapons:other",
+  "read_by_default": "true",
+  "pages": [
+    {
+      "type": "text",
+      "title": "patchouli.chineseweapons.book.entries.other.banquan.artwork.pages.0.title",
+      "text": "patchouli.chineseweapons.book.entries.other.banquan.artwork.pages.1.text"
+    },
+    {
+      "type": "text",
+      "text": "patchouli.chineseweapons.book.entries.other.banquan.artwork.pages.2.text"
+    }
+  ]
+}

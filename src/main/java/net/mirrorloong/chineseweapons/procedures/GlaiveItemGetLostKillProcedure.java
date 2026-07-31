@@ -1,5 +1,7 @@
 package net.mirrorloong.chineseweapons.procedures;
 
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -35,6 +37,9 @@ public final class GlaiveItemGetLostKillProcedure {
     private static final double ATTACK_HALF_WIDTH = 1.5D;
     private static final double ATTACK_HALF_HEIGHT = 1.5D;
     private static final Map<UUID, ActiveSpin> ACTIVE_SPINS = new HashMap<>();
+    private static final Map<UUID, Long> SKILL_COOLDOWN_END = new HashMap<>();
+    private static final Map<UUID, Integer> LAST_TIP_TICK = new HashMap<>();
+    private static final int TIP_THROTTLE_TICKS = 10;
 
     private GlaiveItemGetLostKillProcedure() {
     }
@@ -43,11 +48,31 @@ public final class GlaiveItemGetLostKillProcedure {
         if (hand != InteractionHand.MAIN_HAND || !player.isShiftKeyDown() || itemStack.isEmpty()) {
             return false;
         }
-        if (player.getCooldowns().isOnCooldown(itemStack.getItem())) {
-            return false;
+
+        UUID playerId = player.getUUID();
+        long currentGameTick = world.getGameTime();
+        if (SKILL_COOLDOWN_END.containsKey(playerId)) {
+            long endTick = SKILL_COOLDOWN_END.get(playerId);
+            if (currentGameTick < endTick) {
+                long remainTicks = endTick - currentGameTick;
+                double remainSec = remainTicks / 20.0D;
+                if (!LAST_TIP_TICK.containsKey(playerId) || currentGameTick - LAST_TIP_TICK.get(playerId) > TIP_THROTTLE_TICKS) {
+                    LAST_TIP_TICK.put(playerId, (int) currentGameTick);
+                    String timeStr = String.format("%.2f", remainSec);
+                    Component message = Component.translatable("item.chineseweapons.GlaiveItemGetLostKill", timeStr)
+                            .withStyle(ChatFormatting.GOLD);
+                    player.displayClientMessage(message, true);
+                }
+                return false;
+            } else {
+                SKILL_COOLDOWN_END.remove(playerId);
+            }
         }
 
-        player.getCooldowns().addCooldown(itemStack.getItem(), COOLDOWN_TICKS);
+        Item skillItem = itemStack.getItem();
+        player.getCooldowns().addCooldown(skillItem, COOLDOWN_TICKS);
+        SKILL_COOLDOWN_END.put(playerId, currentGameTick + COOLDOWN_TICKS);
+
         if (world.isClientSide()) {
             DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> GlaiveSpinAnimationHandler.start(player, itemStack));
             return true;
@@ -60,7 +85,7 @@ public final class GlaiveItemGetLostKillProcedure {
                 totalDamage,
                 totalDamage / DAMAGE_PULSE_COUNT
         );
-        ACTIVE_SPINS.put(player.getUUID(), activeSpin);
+        ACTIVE_SPINS.put(playerId, activeSpin);
         damageTargetsInFront(world, player, activeSpin.damageForCurrentPulse());
         activeSpin.markPulseApplied();
         player.causeFoodExhaustion(EXHAUSTION_COST);
@@ -75,12 +100,13 @@ public final class GlaiveItemGetLostKillProcedure {
         }
 
         Player player = event.player;
-        ActiveSpin activeSpin = ACTIVE_SPINS.get(player.getUUID());
+        UUID uuid = player.getUUID();
+        ActiveSpin activeSpin = ACTIVE_SPINS.get(uuid);
         if (activeSpin == null) {
             return;
         }
         if (!activeSpin.isStillUsingStartingGlaive(player)) {
-            ACTIVE_SPINS.remove(player.getUUID());
+            ACTIVE_SPINS.remove(uuid);
             return;
         }
 
@@ -90,13 +116,16 @@ public final class GlaiveItemGetLostKillProcedure {
             activeSpin.markPulseApplied();
         }
         if (activeSpin.isFinished()) {
-            ACTIVE_SPINS.remove(player.getUUID());
+            ACTIVE_SPINS.remove(uuid);
         }
     }
 
     @SubscribeEvent
     public static void onPlayerLogout(PlayerEvent.PlayerLoggedOutEvent event) {
-        ACTIVE_SPINS.remove(event.getEntity().getUUID());
+        UUID uuid = event.getEntity().getUUID();
+        ACTIVE_SPINS.remove(uuid);
+        SKILL_COOLDOWN_END.remove(uuid);
+        LAST_TIP_TICK.remove(uuid);
     }
 
     private static void damageTargetsInFront(Level world, Player player, float damage) {

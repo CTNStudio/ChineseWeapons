@@ -25,7 +25,7 @@ public class DiamonddaggeraxeItem extends FiveBlockReachSwordItem {
 			}
 
 			public float getAttackDamageBonus() {
-				return 9f;
+				return 4f;
 			}
 
 			public int getLevel() {

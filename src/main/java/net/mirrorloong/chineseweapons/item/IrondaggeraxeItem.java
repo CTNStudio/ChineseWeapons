@@ -29,7 +29,7 @@ public class IrondaggeraxeItem extends FiveBlockReachSwordItem {
 			}
 
 			public float getAttackDamageBonus() {
-				return 8f;
+				return 3f;
 			}
 
 			public int getLevel() {

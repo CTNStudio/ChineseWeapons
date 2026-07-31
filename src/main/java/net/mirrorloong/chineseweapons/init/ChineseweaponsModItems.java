@@ -115,12 +115,14 @@ public class ChineseweaponsModItems {
 	public static final RegistryObject<Item> NETHERITEFINE_SCALE_ARMOR_CHESTPLATE = REGISTRY.register("netherite_fine_scale_armor_chestplate", () -> new FinescalearmorItem(FinescalearmorItem.MaterialVariant.NETHERITE, ArmorItem.Type.CHESTPLATE));
 	public static final RegistryObject<Item> NETHERITEFINE_SCALE_ARMOR_LEGGINGS = REGISTRY.register("netherite_fine_scale_armor_leggings", () -> new FinescalearmorItem(FinescalearmorItem.MaterialVariant.NETHERITE, ArmorItem.Type.LEGGINGS));
 	public static final RegistryObject<Item> NETHERITEFINE_SCALE_ARMOR_BOOTS = REGISTRY.register("netherite_fine_scale_armor_boots", () -> new FinescalearmorItem(FinescalearmorItem.MaterialVariant.NETHERITE, ArmorItem.Type.BOOTS));
+    //铁=a，石=a-1，木=a-2，金伤害=a-2，钻石=a+1
 	public static final RegistryObject<Item> GOLDEN_DAGGER_AXE = REGISTRY.register("golden_dagger_axe", GoldendaggeraxeItem::new);
 	public static final RegistryObject<Item> DIAMOND_DAGGER_AXE = REGISTRY.register("diamond_dagger_axe", DiamonddaggeraxeItem::new);
 	public static final RegistryObject<Item> IRON_DAGGER_AXE = REGISTRY.register("iron_dagger_axe", IrondaggeraxeItem::new);
 	public static final RegistryObject<Item> WOODEN_DAGGER_AXE = REGISTRY.register("wooden_dagger_axe", WoodendaggeraxeItem::new);
 	public static final RegistryObject<Item> NETHERITE_DAGGER_AXE = REGISTRY.register("netherite_dagger_axe", NetheritedaggeraxeItem::new);
 	public static final RegistryObject<Item> STONE_DAGGER_AXE = REGISTRY.register("stone_dagger_axe", StonedaggeraxeItem::new);
+
 	public static final RegistryObject<Item> DIAMOND_GLAIVE = REGISTRY.register("diamond_glaive", DiamondglaiveItem::new);
 	public static final RegistryObject<Item> GOLDEN_GLAIVE = REGISTRY.register("golden_glaive", GoldenglaiveItem::new);
 	public static final RegistryObject<Item> NETHERITE_GLAIVE = REGISTRY.register("netherite_glaive", NetheriteglaiveItem::new);
@@ -128,6 +130,7 @@ public class ChineseweaponsModItems {
 	public static final RegistryObject<Item> STONE_GLAIVE = REGISTRY.register("stone_glaive", StoneglaiveItem::new);
 	public static final RegistryObject<Item> WOODEN_GLAIVE = REGISTRY.register("wooden_glaive", WoodenglaiveItem::new);
 	public static final RegistryObject<Item> GREENLOONG_GLAIVE = REGISTRY.register("green_loong_glaive", GreenloongglaiveItem::new);
+
 	public static final RegistryObject<Item> WOODEN_SKY_PIERCING_HALBERD = REGISTRY.register("wooden_sky_piercing_halberd", () -> new SkyPiercingHalberdItem(Tiers.WOOD, 4, false));
 	public static final RegistryObject<Item> STONE_SKY_PIERCING_HALBERD = REGISTRY.register("stone_sky_piercing_halberd", () -> new SkyPiercingHalberdItem(Tiers.STONE, 5, false));
 	public static final RegistryObject<Item> GOLDEN_SKY_PIERCING_HALBERD = REGISTRY.register("golden_sky_piercing_halberd", () -> new SkyPiercingHalberdItem(Tiers.GOLD, 6, false));

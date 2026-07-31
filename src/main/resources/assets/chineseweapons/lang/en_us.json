@@ -239,8 +239,8 @@
   "patchouli.chineseweapons.book.categories.weapons.name": "Weapons",
   "patchouli.chineseweapons.book.categories.weapons.description": "Usage and attributes of all weapons",
   "patchouli.chineseweapons.book.entries.weapons.glaive.name": "Glaive",
-  "patchouli.chineseweapons.book.entries.weapons.glaive.pages.0.text": "The glaive is a long bladed polearm. Attacks have an 80%% chance to inflict 5 seconds of Bleeding on targets. Left-click while sneaking to trigger a spinning attack which deals normal glaive damage plus an extra 2 damage, though each spin attack consumes 1 saturation point.",
-  "patchouli.chineseweapons.book.entries.weapons.glaive.pages.1.text": "Glaives can be crafted from wood, stone, gold, iron, diamond and netherite. An Iron Glaive combined with an Ancient Gem can be crafted into the Green Dragon Glaive.",
+  "patchouli.chineseweapons.book.entries.weapons.glaive.pages.0.text": "The glaive is a long bladed polearm. Attacks have an 80%% chance to inflict 5 seconds of Bleeding on targets. Right-click while sneaking to trigger a spinning attack which deals normal glaive damage plus an extra 2 damage, though each spin attack consumes 1 saturation point.",
+  "patchouli.chineseweapons.book.entries.weapons.glaive.pages.1.text": "Glaives can be crafted from wood, stone, gold, iron, diamond and netherite. An Iron Glaive combined with an Ancient Gem can be crafted into the Green Loong Glaive.",
   "patchouli.chineseweapons.book.entries.weapons.dagger_axe.name": "Dagger-Axe",
   "patchouli.chineseweapons.book.entries.weapons.dagger_axe.pages.0.text": "The Dagger-Axe is a classic polearm for hooking and pecking originating in the Pre-Qin period. Right-click to execute Hook Pull: drag targets that are not riding entities toward you and deal 2 damage.",
   "patchouli.chineseweapons.book.entries.weapons.dagger_axe.pages.1.text": "If the target is mounted on a mob, there is a 30%% chance to pull the target off its mount; this attack consumes 1 durability point of the Dagger-Axe. Standard thrust attacks have an 80%% chance to apply 5 seconds of Cuts to the target.",
@@ -256,8 +256,11 @@
   "patchouli.chineseweapons.book.entries.materials.armor_pieces.pages.1.text": "Mountain Character Armor Pieces can be crafted into Armor Piece Plates for crafting Mountain Character Armor.",
   "patchouli.chineseweapons.book.categories.other.name": "Miscellaneous",
   "patchouli.chineseweapons.book.categories.other.description": "Development & credit information",
-  "patchouli.chineseweapons.book.entries.other.mainfest.pages.1.text": "§lChinese Armaments Credits:§rCTN STUDIO-Owner,sf.-Programming,End_Ying_Jie-Programming,Xiris-Models&Textures,MCcaptain5412:Textures,Slime_Dragon-Textures,Призмарин-Russian Translator,Fanglimao:Bedrock Porter.//n§lSpecial Thanks:§rspake404-Code Support,BaiGave-Code Support,Yangyan-Suggestions,Tower of Sighs-Mascot.",
+  "patchouli.chineseweapons.book.entries.other.mainfest.pages.1.text": "§lChinese Armaments Credits:$(br)§rCTN STUDIO-Owner,sf.-Programming,End_Ying_Jie-Programming,Xiris-Models&Textures,MCcaptain5412:Textures,Slime_Dragon-Textures,Призмарин-Russian Translator,Fanglimao:Bedrock Porter.$(br)§lSpecial Thanks:$(br)§rspake404-Code Support,BaiGave-Code Support,Yangyan-Suggestions,Tower of Sighs-Mascot.",
   "patchouli.chineseweapons.book.entries.other.mainfest.pages.0.text": "This mod project is developed and hosted by CTN STUDIO.",
-  "patchouli.chineseweapons.book.entries.other.mainfest.pages.2.text": "CTN STUDIO Official Website"
-
+  "patchouli.chineseweapons.book.entries.other.mainfest.pages.2.text": "CTN STUDIO Official Website",
+  "item.chineseweapons.GlaiveItemGetLostKill": "You can use Rolling Slash after %s seconds",
+  "patchouli.chineseweapons.book.entries.materials.forging_stone.pages.1.text":"It can be made like this",
+  "patchouli.chineseweapons.book.entries.materials.armor_pieces.pages.3.text":"It can be made like this",
+  "patchouli.chineseweapons.book.entries.materials.armor_pieces.pages.4.text": "It can be made like this"
 }

@@ -63,7 +63,7 @@ public class ArmorcastingtableBlock extends Block {
 			NetworkHooks.openScreen(player, new MenuProvider() {
 				@Override
 				public Component getDisplayName() {
-					return Component.literal("Armor Casting Table");
+					return Component.translatable("block.chineseweapons.armor_casting_table");
 				}
 
 				@Override

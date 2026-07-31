@@ -1,0 +1,26 @@
+{
+  "sortnum": 2,
+  "name": "patchouli.chineseweapons.book.entries.other.banquan.codes.name",
+  "icon": "minecraft:book",
+  "category": "chineseweapons:other",
+  "read_by_default": "true",
+  "pages": [
+    {
+      "type": "text",
+      "title": "patchouli.chineseweapons.book.entries.other.banquan.codes.pages.0.title",
+      "text": "patchouli.chineseweapons.book.entries.other.banquan.codes.pages.1.text"
+    },
+    {
+      "type": "text",
+      "text": "patchouli.chineseweapons.book.entries.other.banquan.codes.pages.2.text"
+    },
+    {
+      "type": "text",
+      "text": "patchouli.chineseweapons.book.entries.other.banquan.codes.pages.3.text"
+    },
+    {
+      "type": "text",
+      "text": "patchouli.chineseweapons.book.entries.other.banquan.codes.pages.4.text"
+    }
+  ]
+}

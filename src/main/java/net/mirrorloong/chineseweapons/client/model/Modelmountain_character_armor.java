@@ -67,10 +67,11 @@ public class Modelmountain_character_armor<T extends Entity> extends EntityModel
 
         PartDefinition cube_r2 = bipedHead.addOrReplaceChild("cube_r2", CubeListBuilder.create().texOffs(56, 34).mirror().addBox(0.0F, -3.5F, 0.0F, 4.0F, 7.0F, 0.0F, new CubeDeformation(0.0F)).mirror(false), PartPose.offsetAndRotation(4.5F, -6.0F, -3.0F, 0.0F, -1.1345F, 0.0F));
 
-        PartDefinition bipedBody = partdefinition.addOrReplaceChild("bipedBody", CubeListBuilder.create().texOffs(56, 41).addBox(-1.5F, 4.7F, -4.2F, 3.0F, 3.0F, 2.0F, new CubeDeformation(0.01F))
-                .texOffs(24, 16).addBox(-2.5F, 7.5F, -3.0F, 5.0F, 6.0F, 7.0F, new CubeDeformation(0.8F))
-                .texOffs(32, 51).addBox(-3.5F, -1.0F, -3.0F, 7.0F, 7.0F, 1.0F, new CubeDeformation(0.8F))
-                .texOffs(0, 16).addBox(-4.0F, -0.5F, -2.0F, 8.0F, 12.0F, 4.0F, new CubeDeformation(1.0F)), PartPose.offset(0.0F, 0.0F, 0.0F));
+        PartDefinition bipedBody = partdefinition.addOrReplaceChild("bipedBody", CubeListBuilder.create()
+                .texOffs(56, 41).addBox(-1.5F, 6.2F, -4.2F, 3.0F, 3.0F, 2.0F, new CubeDeformation(0.01F))
+                .texOffs(24, 16).addBox(-2.5F, 9.0F, -3.0F, 5.0F, 6.0F, 7.0F, new CubeDeformation(0.8F))
+                .texOffs(32, 51).addBox(-3.5F, 0.5F, -3.0F, 7.0F, 7.0F, 1.0F, new CubeDeformation(0.8F))
+                .texOffs(0, 16).addBox(-4.0F, 1.0F, -2.0F, 8.0F, 12.0F, 4.0F, new CubeDeformation(1.0F)), PartPose.offset(0.0F, 0.0F, 0.0F));
 
         PartDefinition armo_r1 = bipedBody.addOrReplaceChild("armo_r1", CubeListBuilder.create().texOffs(56, 46).addBox(-1.5F, -1.5F, -1.0F, 2.0F, 3.0F, 1.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(2.5F, 5.8F, -3.2F, 0.0F, 0.0F, -0.3054F));
 

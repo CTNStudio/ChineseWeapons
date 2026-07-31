@@ -55,7 +55,9 @@ public class Modelfine_scale_armor<T extends Entity> extends EntityModel<T> {
 		PartDefinition bipedLeftLeg = partdefinition.addOrReplaceChild("bipedLeftLeg", CubeListBuilder.create().texOffs(48, 43).addBox(-1.9F, -0.5F, -2.0F, 4.0F, 12.0F, 4.0F, new CubeDeformation(0.86F)), PartPose.offset(1.9F, 12.0F, 0.0F));
 		bipedLeftLeg.addOrReplaceChild("LeftLegArmor_r1", CubeListBuilder.create().texOffs(0, 33).mirror().addBox(-2.5F, -4.0F, -2.0F, 5.0F, 8.0F, 4.0F, new CubeDeformation(0.91F)).mirror(false), PartPose.offsetAndRotation(0.6F, 3.5F, 0.0F, 0.0F, 0.0F, -0.1745F));
 
-		PartDefinition bipedBody = partdefinition.addOrReplaceChild("bipedBody", CubeListBuilder.create().texOffs(0, 17).addBox(-4.0F, -0.5F, -2.0F, 8.0F, 12.0F, 4.0F, new CubeDeformation(1.0F)).texOffs(32, 0).addBox(-4.5F, -0.5F, -2.0F, 9.0F, 7.0F, 4.0F, new CubeDeformation(1.1F)), PartPose.offset(0.0F, 0.0F, 0.0F));
+        PartDefinition bipedBody = partdefinition.addOrReplaceChild("bipedBody", CubeListBuilder.create()
+                .texOffs(0, 17).addBox(-4.0F, 1.0F, -2.0F, 8.0F, 12.0F, 4.0F, new CubeDeformation(1.0F))
+                .texOffs(32, 0).addBox(-4.5F, 1.0F, -2.0F, 9.0F, 7.0F, 4.0F, new CubeDeformation(1.1F)), PartPose.offset(0.0F, 0.0F, 0.0F));
 		bipedBody.addOrReplaceChild("RightLegArmor_r1", CubeListBuilder.create().texOffs(0, 52).addBox(1.5F, 1.0F, -2.0F, 1.0F, 8.0F, 4.0F, new CubeDeformation(0.91F)), PartPose.offsetAndRotation(-5.573F, 9.7776F, 0.0F, 0.0F, 0.0F, 0.384F));
 		bipedBody.addOrReplaceChild("LeftLegArmor_r2", CubeListBuilder.create().texOffs(0, 52).mirror().addBox(-2.5F, 1.0F, -2.0F, 1.0F, 8.0F, 4.0F, new CubeDeformation(0.91F)).mirror(false), PartPose.offsetAndRotation(5.573F, 9.7776F, 0.0F, 0.0F, 0.0F, -0.384F));
 

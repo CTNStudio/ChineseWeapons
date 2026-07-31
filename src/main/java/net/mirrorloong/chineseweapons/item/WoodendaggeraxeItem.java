@@ -20,6 +20,8 @@ import net.minecraft.resources.ResourceLocation;
 import net.mirrorloong.chineseweapons.procedures.DaggerAxeItemFierceHookProcedure;
 import net.mirrorloong.chineseweapons.procedures.DaggerAxeAndGlaiveItemjizhongProcedure;
 
+
+//铁=a，石=a-1，木=a-2，金伤害=a-2，钻石=a+1 铁8f
 public class WoodendaggeraxeItem extends FiveBlockReachSwordItem {
 	public WoodendaggeraxeItem() {
 		super(new Tier() {
@@ -32,7 +34,7 @@ public class WoodendaggeraxeItem extends FiveBlockReachSwordItem {
 			}
 
 			public float getAttackDamageBonus() {
-				return 6f;
+				return 1f;
 			}
 
 			public int getLevel() {

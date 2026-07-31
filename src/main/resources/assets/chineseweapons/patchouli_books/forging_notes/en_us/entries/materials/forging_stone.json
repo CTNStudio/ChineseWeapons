@@ -8,6 +8,11 @@
       "type": "spotlight",
       "item": "chineseweapons:black_chui_armor_forging_stone",
       "text": "patchouli.chineseweapons.book.entries.materials.forging_stone.pages.0.text"
+    },
+    {
+      "type": "crafting",
+      "recipe": "chineseweapons:black_chui_armor_forging_stone",
+      "text": "patchouli.chineseweapons.book.entries.materials.forging_stone.pages.1.text"
     }
   ]
 }

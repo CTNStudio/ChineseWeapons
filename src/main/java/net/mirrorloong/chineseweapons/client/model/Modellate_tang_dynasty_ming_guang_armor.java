@@ -52,8 +52,9 @@ public class Modellate_tang_dynasty_ming_guang_armor<T extends Entity> extends E
 
         PartDefinition cube_r3 = bipedHead.addOrReplaceChild("cube_r3", CubeListBuilder.create().texOffs(0, 48).addBox(-1.5F, -0.9825F, -1.4322F, 3.0F, 4.0F, 3.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, -14.0305F, 0.239F, 1.2479F, 0.0F, 0.0F));
 
-        PartDefinition bipedBody = partdefinition.addOrReplaceChild("bipedBody", CubeListBuilder.create().texOffs(0, 16).addBox(-4.0F, -0.5F, -2.0F, 8.0F, 12.0F, 4.0F, new CubeDeformation(1.01F))
-                .texOffs(40, 33).addBox(-4.0F, -0.1F, -2.0F, 8.0F, 7.0F, 4.0F, new CubeDeformation(1.5F)), PartPose.offset(0.0F, 0.0F, 0.0F));
+        PartDefinition bipedBody = partdefinition.addOrReplaceChild("bipedBody", CubeListBuilder.create()
+                .texOffs(0, 16).addBox(-4.0F, 1.0F, -2.0F, 8.0F, 12.0F, 4.0F, new CubeDeformation(1.01F))
+                .texOffs(40, 33).addBox(-4.0F, 1.4F, -2.0F, 8.0F, 7.0F, 4.0F, new CubeDeformation(1.5F)), PartPose.offset(0.0F, 0.0F, 0.0F));
 
         PartDefinition bipedRightArm = partdefinition.addOrReplaceChild("bipedRightArm", CubeListBuilder.create().texOffs(32, 0).addBox(-3.9F, -2.5F, -2.0F, 4.0F, 12.0F, 4.0F, new CubeDeformation(0.5F)), PartPose.offset(-5.0F, 2.0F, 0.0F));
 

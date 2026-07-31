@@ -25,7 +25,7 @@ public class GoldenglaiveItem extends GlaiveItemBase {
 			}
 
 			public float getAttackDamageBonus() {
-				return 3f;
+				return 1f;
 			}
 
 			public int getLevel() {
