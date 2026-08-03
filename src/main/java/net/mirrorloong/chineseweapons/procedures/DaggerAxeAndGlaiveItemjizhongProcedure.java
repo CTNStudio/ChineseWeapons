@@ -8,12 +8,27 @@ import net.minecraft.world.entity.LivingEntity;
 import net.mirrorloong.chineseweapons.init.ChineseWeaponsModEffects;
 
 public class DaggerAxeAndGlaiveItemjizhongProcedure {
+    private static final RandomSource RANDOM = RandomSource.create();
+
     public static void execute(Entity entity) {
-        if (entity == null)
+        if (entity == null) {
             return;
-        if (Mth.nextDouble(RandomSource.create(), 1, 100) <= 80) {
-            if (entity instanceof LivingEntity _entity && !_entity.level().isClientSide())
-                _entity.addEffect(new MobEffectInstance(ChineseWeaponsModEffects.CusEffectSupplier.get(), 120, 0, false, true));
+        }
+
+        if (entity.level().isClientSide()) {
+            return;
+        }
+
+        if (Mth.nextDouble(RANDOM, 1, 100) <= 80) {
+            if (entity instanceof LivingEntity livingEntity) {
+                livingEntity.addEffect(new MobEffectInstance(
+                        ChineseWeaponsModEffects.CusEffectSupplier.get(),
+                        120,
+                        0,
+                        true,
+                        true
+                ));
+            }
         }
     }
 }

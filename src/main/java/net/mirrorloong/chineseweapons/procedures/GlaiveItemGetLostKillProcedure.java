@@ -37,7 +37,6 @@ public final class GlaiveItemGetLostKillProcedure {
     private static final double ATTACK_HALF_WIDTH = 1.5D;
     private static final double ATTACK_HALF_HEIGHT = 1.5D;
     private static final Map<UUID, ActiveSpin> ACTIVE_SPINS = new HashMap<>();
-    private static final Map<UUID, Long> SKILL_COOLDOWN_END = new HashMap<>();
     private static final Map<UUID, Integer> LAST_TIP_TICK = new HashMap<>();
     private static final int TIP_THROTTLE_TICKS = 10;
 
@@ -49,30 +48,25 @@ public final class GlaiveItemGetLostKillProcedure {
             return false;
         }
 
-        UUID playerId = player.getUUID();
-        long currentGameTick = world.getGameTime();
-        if (SKILL_COOLDOWN_END.containsKey(playerId)) {
-            long endTick = SKILL_COOLDOWN_END.get(playerId);
-            if (currentGameTick < endTick) {
-                long remainTicks = endTick - currentGameTick;
+        if (player.getCooldowns().isOnCooldown(itemStack.getItem())) {
+            if (world.isClientSide()) {
+                float remainTicks = player.getCooldowns().getCooldownPercent(itemStack.getItem(), 1.0F) * COOLDOWN_TICKS;
                 double remainSec = remainTicks / 20.0D;
-                if (!LAST_TIP_TICK.containsKey(playerId) || currentGameTick - LAST_TIP_TICK.get(playerId) > TIP_THROTTLE_TICKS) {
-                    LAST_TIP_TICK.put(playerId, (int) currentGameTick);
+                int currentTick = player.tickCount;
+
+                if (!LAST_TIP_TICK.containsKey(player.getUUID()) ||
+                        currentTick - LAST_TIP_TICK.get(player.getUUID()) > TIP_THROTTLE_TICKS) {
+                    LAST_TIP_TICK.put(player.getUUID(), currentTick);
                     String timeStr = String.format("%.2f", remainSec);
                     Component message = Component.translatable("item.chineseweapons.GlaiveItemGetLostKill", timeStr)
                             .withStyle(ChatFormatting.GOLD);
                     player.displayClientMessage(message, true);
                 }
-                return false;
-            } else {
-                SKILL_COOLDOWN_END.remove(playerId);
             }
+            return false;
         }
 
-        Item skillItem = itemStack.getItem();
-        player.getCooldowns().addCooldown(skillItem, COOLDOWN_TICKS);
-        SKILL_COOLDOWN_END.put(playerId, currentGameTick + COOLDOWN_TICKS);
-
+        player.getCooldowns().addCooldown(itemStack.getItem(), COOLDOWN_TICKS);
         if (world.isClientSide()) {
             DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> GlaiveSpinAnimationHandler.start(player, itemStack));
             return true;
@@ -85,7 +79,7 @@ public final class GlaiveItemGetLostKillProcedure {
                 totalDamage,
                 totalDamage / DAMAGE_PULSE_COUNT
         );
-        ACTIVE_SPINS.put(playerId, activeSpin);
+        ACTIVE_SPINS.put(player.getUUID(), activeSpin);
         damageTargetsInFront(world, player, activeSpin.damageForCurrentPulse());
         activeSpin.markPulseApplied();
         player.causeFoodExhaustion(EXHAUSTION_COST);
@@ -100,13 +94,12 @@ public final class GlaiveItemGetLostKillProcedure {
         }
 
         Player player = event.player;
-        UUID uuid = player.getUUID();
-        ActiveSpin activeSpin = ACTIVE_SPINS.get(uuid);
+        ActiveSpin activeSpin = ACTIVE_SPINS.get(player.getUUID());
         if (activeSpin == null) {
             return;
         }
         if (!activeSpin.isStillUsingStartingGlaive(player)) {
-            ACTIVE_SPINS.remove(uuid);
+            ACTIVE_SPINS.remove(player.getUUID());
             return;
         }
 
@@ -116,7 +109,7 @@ public final class GlaiveItemGetLostKillProcedure {
             activeSpin.markPulseApplied();
         }
         if (activeSpin.isFinished()) {
-            ACTIVE_SPINS.remove(uuid);
+            ACTIVE_SPINS.remove(player.getUUID());
         }
     }
 
@@ -124,7 +117,6 @@ public final class GlaiveItemGetLostKillProcedure {
     public static void onPlayerLogout(PlayerEvent.PlayerLoggedOutEvent event) {
         UUID uuid = event.getEntity().getUUID();
         ACTIVE_SPINS.remove(uuid);
-        SKILL_COOLDOWN_END.remove(uuid);
         LAST_TIP_TICK.remove(uuid);
     }
 
