@@ -20,5 +20,7 @@ public class ChineseweaponsModModels {
 		event.registerLayerDefinition(Modelblack_chui_armor.LAYER_LOCATION, Modelblack_chui_armor::createBodyLayer);
 		event.registerLayerDefinition(Modeltang_dynasty_infantry_armor.LAYER_LOCATION, Modeltang_dynasty_infantry_armor::createBodyLayer);
 		event.registerLayerDefinition(Modelfine_scale_armor.LAYER_LOCATION, Modelfine_scale_armor::createBodyLayer);
+        event.registerLayerDefinition(Modelsuanni_helmet.LAYER_LOCATION, Modelsuanni_helmet::createBodyLayer);
+        event.registerLayerDefinition(Modelbohai_helmet.LAYER_LOCATION, Modelbohai_helmet::createBodyLayer);
 	}
 }

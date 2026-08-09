@@ -23,7 +23,7 @@ public class GreenloongglaiveItem extends GlaiveItemBase {
 			}
 
 			public float getAttackDamageBonus() {
-				return 10f;
+				return 6f;
 			}
 
 			public int getLevel() {
@@ -37,8 +37,9 @@ public class GreenloongglaiveItem extends GlaiveItemBase {
 			public Ingredient getRepairIngredient() {
 				return Ingredient.of(new ItemStack(ChineseweaponsModItems.GREENLOONG_GLAIVE.get()));
 			}
-		}, 3, -2.3f, new Item.Properties().fireResistant());
+		}, 3, -3f, new Item.Properties().fireResistant());
 	}
+
 
     @Override
     public boolean hurtEnemy(ItemStack itemstack, LivingEntity entity, LivingEntity sourceentity) {

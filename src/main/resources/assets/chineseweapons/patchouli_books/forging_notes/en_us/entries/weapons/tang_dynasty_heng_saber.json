@@ -1,0 +1,18 @@
+{
+  "sortnum": 0,
+  "name": "patchouli.chineseweapons.book.entries.weapons.tang_dynasty_heng_saber.name",
+  "icon": "chineseweapons:iron_tang_dynasty_heng_saber",
+  "category": "chineseweapons:weapons",
+  "pages": [
+    {
+      "type": "spotlight",
+      "item": "chineseweapons:iron_tang_dynasty_heng_saber",
+      "text": "patchouli.chineseweapons.book.entries.weapons.tang_dynasty_heng_saber.pages.0.text"
+    },
+    {
+      "type": "spotlight",
+      "item": "chineseweapons:iron_tang_dynasty_heng_saber",
+      "text": "patchouli.chineseweapons.book.entries.weapons.tang_dynasty_heng_saber.pages.1.text"
+    }
+  ]
+}

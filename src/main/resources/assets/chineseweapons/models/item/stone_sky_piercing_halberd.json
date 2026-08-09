@@ -7,8 +7,8 @@
   "base": {
     "parent": "chineseweapons:custom/sky_piercing_halberd",
     "textures": {
-      "0": "chineseweapons:item/stone_sky_piercing_halberd",
-      "particle": "chineseweapons:item/stone_sky_piercing_halberd"
+      "1": "chineseweapons:block/stone_sky_piercing_halberd",
+      "particle": "chineseweapons:block/stone_sky_piercing_halberd"
     }
   },
   "perspectives": {

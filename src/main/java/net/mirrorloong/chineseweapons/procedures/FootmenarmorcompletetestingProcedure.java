@@ -12,6 +12,7 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.core.registries.Registries;
 
+import net.minecraft.world.level.block.Blocks;
 import net.mirrorloong.chineseweapons.init.ChineseweaponsModItems;
 
 public class FootmenarmorcompletetestingProcedure {
@@ -21,7 +22,17 @@ public class FootmenarmorcompletetestingProcedure {
         if ((entity instanceof LivingEntity _entGetArmor ? _entGetArmor.getItemBySlot(EquipmentSlot.HEAD) : ItemStack.EMPTY).getItem() == ChineseweaponsModItems.DIAMONDFOOTMENARMOR_HELMET.get()
                 || (entity instanceof LivingEntity _entGetArmor ? _entGetArmor.getItemBySlot(EquipmentSlot.HEAD) : ItemStack.EMPTY).getItem() == ChineseweaponsModItems.IRONFOOTMENARMOR_HELMET.get()
                 || (entity instanceof LivingEntity _entGetArmor ? _entGetArmor.getItemBySlot(EquipmentSlot.HEAD) : ItemStack.EMPTY).getItem() == ChineseweaponsModItems.GOLDENFOOTMENARMOR_HELMET.get()
-                || (entity instanceof LivingEntity _entGetArmor ? _entGetArmor.getItemBySlot(EquipmentSlot.HEAD) : ItemStack.EMPTY).getItem() == ChineseweaponsModItems.NETHERITEFOOTMENARMOR_HELMET.get()) {
+                || (entity instanceof LivingEntity _entGetArmor ? _entGetArmor.getItemBySlot(EquipmentSlot.HEAD) : ItemStack.EMPTY).getItem() == ChineseweaponsModItems.NETHERITEFOOTMENARMOR_HELMET.get()
+
+                || (entity instanceof LivingEntity _entGetArmor ? _entGetArmor.getItemBySlot(EquipmentSlot.HEAD) : ItemStack.EMPTY).getItem() == ChineseweaponsModItems.DIAMOND_SUANNI_HELMET.get()
+                || (entity instanceof LivingEntity _entGetArmor ? _entGetArmor.getItemBySlot(EquipmentSlot.HEAD) : ItemStack.EMPTY).getItem() == ChineseweaponsModItems.IRON_SUANNI_HELMET.get()
+                || (entity instanceof LivingEntity _entGetArmor ? _entGetArmor.getItemBySlot(EquipmentSlot.HEAD) : ItemStack.EMPTY).getItem() == ChineseweaponsModItems.NETHERITE_SUANNI_HELMET.get()
+                || (entity instanceof LivingEntity _entGetArmor ? _entGetArmor.getItemBySlot(EquipmentSlot.HEAD) : ItemStack.EMPTY).getItem() == ChineseweaponsModItems.GOLDEN_SUANNI_HELMET.get()
+
+                || (entity instanceof LivingEntity _entGetArmor ? _entGetArmor.getItemBySlot(EquipmentSlot.HEAD) : ItemStack.EMPTY).getItem() == ChineseweaponsModItems.GOLDEN_BOHAI_HELMET.get()
+                || (entity instanceof LivingEntity _entGetArmor ? _entGetArmor.getItemBySlot(EquipmentSlot.HEAD) : ItemStack.EMPTY).getItem() == ChineseweaponsModItems.NETHERITE_BOHAI_HELMET.get()
+                || (entity instanceof LivingEntity _entGetArmor ? _entGetArmor.getItemBySlot(EquipmentSlot.HEAD) : ItemStack.EMPTY).getItem() == ChineseweaponsModItems.IRON_BOHAI_HELMET.get()
+                || (entity instanceof LivingEntity _entGetArmor ? _entGetArmor.getItemBySlot(EquipmentSlot.HEAD) : ItemStack.EMPTY).getItem() == ChineseweaponsModItems.GOLDEN_SUANNI_HELMET.get()) {
 
             if ((entity instanceof LivingEntity _entGetArmor ? _entGetArmor.getItemBySlot(EquipmentSlot.CHEST) : ItemStack.EMPTY).getItem() == ChineseweaponsModItems.DIAMONDFOOTMENARMOR_CHESTPLATE.get()
                     || (entity instanceof LivingEntity _entGetArmor ? _entGetArmor.getItemBySlot(EquipmentSlot.CHEST) : ItemStack.EMPTY).getItem() == ChineseweaponsModItems.IRONFOOTMENARMOR_CHESTPLATE.get()
@@ -38,8 +49,17 @@ public class FootmenarmorcompletetestingProcedure {
                             || (entity instanceof LivingEntity _entGetArmor ? _entGetArmor.getItemBySlot(EquipmentSlot.FEET) : ItemStack.EMPTY).getItem() == ChineseweaponsModItems.GOLDENFOOTMENARMOR_BOOTS.get()
                             || (entity instanceof LivingEntity _entGetArmor ? _entGetArmor.getItemBySlot(EquipmentSlot.FEET) : ItemStack.EMPTY).getItem() == ChineseweaponsModItems.NETHERITEFOOTMENARMOR_BOOTS.get()) {
 
-                        if (entity instanceof LivingEntity _entity && !_entity.level().isClientSide())
-                            _entity.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 1, 1, false, false));
+                        if (!((entity instanceof LivingEntity _entGetArmor ? _entGetArmor.getMainHandItem() : ItemStack.EMPTY).getItem() == ChineseweaponsModItems.DIAMOND_GLAIVE.get() ||
+                                (entity instanceof LivingEntity _entGetArmor ? _entGetArmor.getMainHandItem() : ItemStack.EMPTY).getItem() == ChineseweaponsModItems.GOLDEN_GLAIVE.get() ||
+                                (entity instanceof LivingEntity _entGetArmor ? _entGetArmor.getMainHandItem() : ItemStack.EMPTY).getItem() == ChineseweaponsModItems.GREENLOONG_GLAIVE.get() ||
+                                (entity instanceof LivingEntity _entGetArmor ? _entGetArmor.getMainHandItem() : ItemStack.EMPTY).getItem() == ChineseweaponsModItems.IRON_GLAIVE.get() ||
+                                (entity instanceof LivingEntity _entGetArmor ? _entGetArmor.getMainHandItem() : ItemStack.EMPTY).getItem() == ChineseweaponsModItems.WOODEN_GLAIVE.get() ||
+                                (entity instanceof LivingEntity _entGetArmor ? _entGetArmor.getMainHandItem() : ItemStack.EMPTY).getItem() == ChineseweaponsModItems.NETHERITE_GLAIVE.get() ||
+                                (entity instanceof LivingEntity _entGetArmor ? _entGetArmor.getMainHandItem() : ItemStack.EMPTY).getItem() == ChineseweaponsModItems.STONE_GLAIVE.get())) {
+                            if (entity instanceof LivingEntity _entity && !_entity.level().isClientSide())
+                                _entity.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 1, 1, false, false));
+                        }
+
                         if ((entity instanceof LivingEntity _livEnt ? _livEnt.getHealth() : -1) <= (entity instanceof LivingEntity _livEnt ? _livEnt.getMaxHealth() : -1) / 4) {
                             if (entity instanceof LivingEntity _entity && !_entity.level().isClientSide())
                                 _entity.addEffect(new MobEffectInstance(MobEffects.DAMAGE_BOOST, 100, 1, false, true));

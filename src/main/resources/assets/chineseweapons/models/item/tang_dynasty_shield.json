@@ -1,0 +1,7 @@
+{
+  "parent": "chineseweapons:custom/tang_dynasty_shield",
+  "textures": {
+    "1": "chineseweapons:block/tang_dynasty_shield",
+    "particle": "chineseweapons:block/tang_dynasty_shield"
+  }
+}

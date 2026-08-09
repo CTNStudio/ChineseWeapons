@@ -1,0 +1,6 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "chineseweapons:item/golden_bohai_helmet"
+  }
+}

@@ -46,7 +46,7 @@ public class Modelfootmen_armor<T extends Entity> extends EntityModel<T> {
         PartDefinition partdefinition = meshdefinition.getRoot();
         PartDefinition bipedHead = partdefinition.addOrReplaceChild("bipedHead", CubeListBuilder.create().texOffs(48, 63).addBox(-4.0F, -1.8F, -4.0F, 8.0F, 3.0F, 8.0F, new CubeDeformation(0.7F))
                 .texOffs(0, 16).addBox(-4.0F, -7.0F, -4.0F, 8.0F, 8.0F, 8.0F, new CubeDeformation(0.62F))
-                .texOffs(0, 0).addBox(-4.1F, -9.8F, -4.1F, 8.0F, 2.0F, 8.0F, new CubeDeformation(0.2F))
+                .texOffs(0, 0).addBox(-4.1F, -9.8F, -4.1F, 8.0F, 2.0F, 8.0F, new CubeDeformation(0.25F))
                 .texOffs(60, 34).addBox(-1.1F, -12.3564F, -1.3549F, 2.0F, 2.0F, 2.0F, new CubeDeformation(0.5F)), PartPose.offset(0.0F, 0.0F, 0.0F));
         PartDefinition bone2_r1 = bipedHead.addOrReplaceChild("bone2_r1", CubeListBuilder.create().texOffs(56, 0).addBox(-1.0F, -2.0F, -3.0F, 0.0F, 5.0F, 9.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.9F, -11.9F, 1.5F, -0.2618F, 0.0F, 0.0F));
         PartDefinition bone2_r2 = bipedHead.addOrReplaceChild("bone2_r2", CubeListBuilder.create().texOffs(56, 0).addBox(0.0F, -2.5F, -4.5F, 0.0F, 5.0F, 9.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-0.1F, -11.0288F, 2.8195F, 0.0F, 0.2618F, 1.5708F));

@@ -42,7 +42,7 @@ public class WoodenglaiveItem extends GlaiveItemBase {
 			public Ingredient getRepairIngredient() {
 				return CompoundIngredient.of(Ingredient.of(ItemTags.create(new ResourceLocation("minecraft:planks"))), Ingredient.of(new ItemStack(ChineseweaponsModItems.WOODEN_GLAIVE.get())));
 			}
-		}, 3, -2.4f, new Item.Properties());
+		}, 3, -2.2f, new Item.Properties());
 	}
 
     @Override

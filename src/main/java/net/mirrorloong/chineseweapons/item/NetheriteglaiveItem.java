@@ -39,7 +39,7 @@ public class NetheriteglaiveItem extends GlaiveItemBase {
 			public Ingredient getRepairIngredient() {
 				return Ingredient.of(new ItemStack(Items.NETHERITE_INGOT), new ItemStack(ChineseweaponsModItems.NETHERITE_GLAIVE.get()));
 			}
-		}, 3, -2.4f, new Item.Properties().fireResistant());
+		}, 3, -3f, new Item.Properties().fireResistant());
 	}
 
     @Override

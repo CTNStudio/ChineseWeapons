@@ -3,27 +3,28 @@ package net.mirrorloong.chineseweapons.item;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.geom.ModelPart;
+import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.item.ArmorItem;
-import net.minecraft.world.item.ArmorMaterial;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
+import net.minecraft.world.item.*;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.level.Level;
 import net.mirrorloong.chineseweapons.client.model.Modeltang_dynasty_infantry_armor;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.extensions.common.IClientItemExtensions;
+import net.mirrorloong.chineseweapons.procedures.DyeableItem;
 
+import javax.annotation.Nullable;
 import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
 
-public abstract class TangdynastyinfantryarmorItem extends ArmorItem {
+public abstract class TangdynastyinfantryarmorItem extends ArmorItem implements DyeableItem {
 	public TangdynastyinfantryarmorItem(ArmorItem.Type type, Item.Properties properties) {
 		super(new ArmorMaterial() {
 			@Override
@@ -68,7 +69,10 @@ public abstract class TangdynastyinfantryarmorItem extends ArmorItem {
 		}, type, properties);
 	}
 
-	private static ModelPart emptyPart() {
+    public static final String TEXTURE_BASE = "chineseweapons:textures/entities/tang_dynasty_infantry_armor.png";
+    public static final String TEXTURE_OVERLAY = "chineseweapons:textures/entities/tang_dynasty_infantry_armor_color.png";
+
+    private static ModelPart emptyPart() {
 		return new ModelPart(Collections.emptyList(), Collections.emptyMap());
 	}
 
@@ -97,12 +101,19 @@ public abstract class TangdynastyinfantryarmorItem extends ArmorItem {
 		});
 	}
 
-	@Override
-	public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlot slot, String type) {
-		return "chineseweapons:textures/entities/tang_dynasty_infantry_armor.png";
-	}
+    @Override
+    public void appendHoverText(ItemStack stack, @Nullable Level level,
+                                List<Component> tooltip, TooltipFlag flag) {
+        super.appendHoverText(stack, level, tooltip, flag);
+        DyeableItem.addDyeTooltip(stack, tooltip);
+    }
 
-	public static class Helmet extends TangdynastyinfantryarmorItem {
+    @Override
+    public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlot slot, String type) {
+        return DyeableItem.getArmorTexture(stack, type, TEXTURE_BASE, TEXTURE_OVERLAY);
+    }
+
+    public static class Helmet extends TangdynastyinfantryarmorItem {
 		public Helmet() {
 			super(ArmorItem.Type.HELMET, new Item.Properties());
 		}

@@ -44,7 +44,7 @@ public class DiamondglaiveItem extends GlaiveItemBase {
 			public Ingredient getRepairIngredient() {
 				return Ingredient.of(new ItemStack(Items.DIAMOND), new ItemStack(ChineseweaponsModItems.DIAMOND_GLAIVE.get()));
 			}
-		}, 3, -2.4f, new Item.Properties());
+		}, 3, -2.8f, new Item.Properties());
 	}
 
     @Override

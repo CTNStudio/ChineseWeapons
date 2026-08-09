@@ -11,13 +11,12 @@ import net.mirrorloong.chineseweapons.event.ChineseWeaponsCombatEvents;
 import net.mirrorloong.chineseweapons.init.ChineseWeaponsModEffects;
 
 public class SkyPiercingHalberdItem extends FourBlockReachSwordItem {
-    private static final float ATTACK_SPEED_MODIFIER = -2.2F;
 
-    public SkyPiercingHalberdItem(Tier tier, int displayedAttackDamage, boolean fireResistant) {
+    public SkyPiercingHalberdItem(Tier tier, int displayedAttackDamage, float speed, boolean fireResistant) {
         super(
                 tier,
                 Math.round(displayedAttackDamage - 1.0F - tier.getAttackDamageBonus()),
-                ATTACK_SPEED_MODIFIER,
+                speed - 4.0F,
                 properties(tier, fireResistant)
         );
     }

@@ -1,6 +1,11 @@
 
 package net.mirrorloong.chineseweapons.item;
 
+import com.mojang.blaze3d.platform.NativeImage;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.*;
+import net.minecraft.world.level.Level;
 import net.mirrorloong.chineseweapons.client.model.Modelblack_chui_armor;
 
 import net.minecraftforge.client.extensions.common.IClientItemExtensions;
@@ -8,11 +13,6 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.api.distmarker.Dist;
 
 import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.world.item.Items;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ArmorMaterial;
-import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.Entity;
@@ -21,12 +21,21 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.Minecraft;
+import net.mirrorloong.chineseweapons.procedures.DyeableItem;
+import org.apache.commons.compress.utils.IOUtils;
+import org.stringtemplate.v4.ST;
 
+import javax.annotation.Nullable;
+import java.io.ByteArrayOutputStream;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
+import java.util.*;
 import java.util.function.Consumer;
-import java.util.Map;
-import java.util.Collections;
 
-public abstract class DiamondblackchuiarmorItem extends ArmorItem {
+
+public abstract class DiamondblackchuiarmorItem extends ArmorItem implements DyeableItem {
 	public DiamondblackchuiarmorItem(ArmorItem.Type type, Item.Properties properties) {
 		super(new ArmorMaterial() {
 			@Override
@@ -70,6 +79,21 @@ public abstract class DiamondblackchuiarmorItem extends ArmorItem {
 		}, type, properties);
 	}
 
+    public static final String TEXTURE_BASE = "chineseweapons:textures/entities/diamond_black_chui_armor.png";
+    public static final String TEXTURE_OVERLAY = "chineseweapons:textures/entities/black_chui_armor_color.png";
+
+    @Override
+    public void appendHoverText(ItemStack stack, @Nullable Level level,
+                                List<Component> tooltip, TooltipFlag flag) {
+        super.appendHoverText(stack, level, tooltip, flag);
+        DyeableItem.addDyeTooltip(stack, tooltip);
+    }
+
+    @Override
+    public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlot slot, String type) {
+        return DyeableItem.getArmorTexture(stack, type, TEXTURE_BASE, TEXTURE_OVERLAY);
+    }
+
 	public static class Helmet extends DiamondblackchuiarmorItem {
 		public Helmet() {
 			super(ArmorItem.Type.HELMET, new Item.Properties());
@@ -92,12 +116,8 @@ public abstract class DiamondblackchuiarmorItem extends ArmorItem {
 				}
 			});
 		}
+    }
 
-		@Override
-		public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlot slot, String type) {
-			return "chineseweapons:textures/entities/diamond_black_chui_armor.png";
-		}
-	}
 
 	public static class Chestplate extends DiamondblackchuiarmorItem {
 		public Chestplate() {
@@ -122,10 +142,6 @@ public abstract class DiamondblackchuiarmorItem extends ArmorItem {
 			});
 		}
 
-		@Override
-		public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlot slot, String type) {
-			return "chineseweapons:textures/entities/diamond_black_chui_armor.png";
-		}
 	}
 
 	public static class Leggings extends DiamondblackchuiarmorItem {
@@ -152,10 +168,6 @@ public abstract class DiamondblackchuiarmorItem extends ArmorItem {
 			});
 		}
 
-		@Override
-		public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlot slot, String type) {
-			return "chineseweapons:textures/entities/diamond_black_chui_armor.png";
-		}
 	}
 
 	public static class Boots extends DiamondblackchuiarmorItem {
@@ -180,11 +192,6 @@ public abstract class DiamondblackchuiarmorItem extends ArmorItem {
 					return armorModel;
 				}
 			});
-		}
-
-		@Override
-		public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlot slot, String type) {
-			return "chineseweapons:textures/entities/diamond_black_chui_armor.png";
 		}
 	}
 }

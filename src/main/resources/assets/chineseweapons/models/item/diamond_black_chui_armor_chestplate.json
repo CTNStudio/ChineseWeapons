@@ -1,6 +1,7 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "chineseweapons:item/diamond_black_chui_chestplate"
+    "layer0": "chineseweapons:item/diamond_black_chui_chestplate",
+    "layer1": "chineseweapons:item/diamond_black_chui_chestplate_color"
   }
 }

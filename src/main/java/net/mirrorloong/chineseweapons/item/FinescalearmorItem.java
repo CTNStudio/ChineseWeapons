@@ -3,31 +3,35 @@ package net.mirrorloong.chineseweapons.item;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.geom.ModelPart;
+import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.item.ArmorItem;
-import net.minecraft.world.item.ArmorMaterial;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
+import net.minecraft.world.item.*;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.level.Level;
 import net.mirrorloong.chineseweapons.client.model.Modelfine_scale_armor;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.extensions.common.IClientItemExtensions;
+import net.mirrorloong.chineseweapons.procedures.DyeableItem;
 
+import javax.annotation.Nullable;
 import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
 
-public class FinescalearmorItem extends ArmorItem {
+public class FinescalearmorItem extends ArmorItem implements DyeableItem {
 	private final MaterialVariant materialVariant;
+    private final String TEXTURE_BASE;
+    public static final String TEXTURE_OVERLAY = "chineseweapons:textures/entities/fine_scale_armor_color.png";
 
-	public FinescalearmorItem(MaterialVariant materialVariant, ArmorItem.Type type) {
+    public FinescalearmorItem(MaterialVariant materialVariant, ArmorItem.Type type) {
 		super(materialVariant, type, materialVariant == MaterialVariant.NETHERITE ? new Item.Properties().fireResistant() : new Item.Properties());
+        this.TEXTURE_BASE = "chineseweapons:textures/entities/" + materialVariant.textureName;
 		this.materialVariant = materialVariant;
 	}
 
@@ -65,12 +69,18 @@ public class FinescalearmorItem extends ArmorItem {
 		});
 	}
 
-	@Override
-	public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlot slot, String type) {
-		return "chineseweapons:textures/entities/" + materialVariant.textureName;
-	}
+    @Override
+    public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlot slot, String type) {
+        return DyeableItem.getArmorTexture(stack, type, TEXTURE_BASE, TEXTURE_OVERLAY);
+    }
 
-	@Override
+    @Override
+    public void appendHoverText(ItemStack stack, @Nullable Level level,
+                                List<Component> tooltip, TooltipFlag flag) {
+        super.appendHoverText(stack, level, tooltip, flag);
+        DyeableItem.addDyeTooltip(stack, tooltip);
+    }
+    @Override
 	public boolean makesPiglinsNeutral(ItemStack stack, LivingEntity wearer) {
 		return materialVariant == MaterialVariant.GOLDEN;
 	}

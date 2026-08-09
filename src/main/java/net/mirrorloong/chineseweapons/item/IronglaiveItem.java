@@ -39,7 +39,7 @@ public class IronglaiveItem extends GlaiveItemBase {
 			public Ingredient getRepairIngredient() {
 				return Ingredient.of(new ItemStack(Items.IRON_INGOT), new ItemStack(ChineseweaponsModItems.IRON_GLAIVE.get()));
 			}
-		}, 3, -2.4f, new Item.Properties());
+		}, 3, -2.6f, new Item.Properties());
 	}
 
     @Override

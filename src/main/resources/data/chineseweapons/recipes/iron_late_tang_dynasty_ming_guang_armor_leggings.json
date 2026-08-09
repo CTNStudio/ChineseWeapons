@@ -3,7 +3,7 @@
     "pattern": [
       "ABA",
       "A A",
-      "D D"
+      "C C"
     ],
     "main_material": {
       "item": "minecraft:iron_nugget"
@@ -16,7 +16,7 @@
         "item": "chineseweapons:iron_armor_pieces_plate"
       },
       "C":{
-        "item": "minecraft:wool"
+        "item": "minecraft:white_wool"
       }
     },
     "result": {

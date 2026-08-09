@@ -2,7 +2,9 @@
 package net.mirrorloong.chineseweapons.item;
 
 import com.google.common.collect.Iterables;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.*;
 import net.minecraft.world.level.Level;
 import net.mirrorloong.chineseweapons.client.model.Modelfootmen_armor;
 
@@ -11,11 +13,6 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.api.distmarker.Dist;
 
 import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.world.item.Items;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ArmorMaterial;
-import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.Entity;
@@ -24,13 +21,16 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.Minecraft;
+import net.mirrorloong.chineseweapons.procedures.DyeableItem;
 import net.mirrorloong.chineseweapons.procedures.FootmenarmorcompletetestingProcedure;
 
+import javax.annotation.Nullable;
+import java.util.List;
 import java.util.function.Consumer;
 import java.util.Map;
 import java.util.Collections;
 
-public abstract class DiamondfootmenarmorItem extends ArmorItem {
+public abstract class DiamondfootmenarmorItem extends ArmorItem implements DyeableItem {
 	public DiamondfootmenarmorItem(ArmorItem.Type type, Item.Properties properties) {
 		super(new ArmorMaterial() {
 			@Override
@@ -75,6 +75,21 @@ public abstract class DiamondfootmenarmorItem extends ArmorItem {
 		}, type, properties);
 	}
 
+    public static final String TEXTURE_BASE = "chineseweapons:textures/entities/diamond_footmen_armor.png";
+    public static final String TEXTURE_OVERLAY = "chineseweapons:textures/entities/footmen_armor_color.png";
+
+    @Override
+    public void appendHoverText(ItemStack stack, @Nullable Level level,
+                                List<Component> tooltip, TooltipFlag flag) {
+        super.appendHoverText(stack, level, tooltip, flag);
+        DyeableItem.addDyeTooltip(stack, tooltip);
+    }
+
+    @Override
+    public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlot slot, String type) {
+        return DyeableItem.getArmorTexture(stack, type, TEXTURE_BASE, TEXTURE_OVERLAY);
+    }
+
 	public static class Helmet extends DiamondfootmenarmorItem {
 		public Helmet() {
 			super(ArmorItem.Type.HELMET, new Item.Properties());
@@ -96,11 +111,6 @@ public abstract class DiamondfootmenarmorItem extends ArmorItem {
 					return armorModel;
 				}
 			});
-		}
-
-		@Override
-		public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlot slot, String type) {
-			return "chineseweapons:textures/entities/diamond_footmen_armor.png";
 		}
 
         @Override
@@ -134,11 +144,6 @@ public abstract class DiamondfootmenarmorItem extends ArmorItem {
 				}
 			});
 		}
-
-		@Override
-		public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlot slot, String type) {
-			return "chineseweapons:textures/entities/diamond_footmen_armor.png";
-		}
 	}
 
 	public static class Leggings extends DiamondfootmenarmorItem {
@@ -164,11 +169,6 @@ public abstract class DiamondfootmenarmorItem extends ArmorItem {
 				}
 			});
 		}
-
-		@Override
-		public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlot slot, String type) {
-			return "chineseweapons:textures/entities/diamond_footmen_armor.png";
-		}
 	}
 
 	public static class Boots extends DiamondfootmenarmorItem {
@@ -193,11 +193,6 @@ public abstract class DiamondfootmenarmorItem extends ArmorItem {
 					return armorModel;
 				}
 			});
-		}
-
-		@Override
-		public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlot slot, String type) {
-			return "chineseweapons:textures/entities/diamond_footmen_armor.png";
 		}
 	}
 }

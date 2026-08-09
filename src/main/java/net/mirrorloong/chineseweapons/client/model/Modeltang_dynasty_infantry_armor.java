@@ -39,8 +39,8 @@ public class Modeltang_dynasty_infantry_armor<T extends Entity> extends EntityMo
 	public static LayerDefinition createBodyLayer() {
 		MeshDefinition meshdefinition = new MeshDefinition();
 		PartDefinition partdefinition = meshdefinition.getRoot();
-		PartDefinition bipedHead = partdefinition.addOrReplaceChild("bipedHead", CubeListBuilder.create().texOffs(0, 0).addBox(-4.0F, -9.0F, -4.0F, 8.0F, 8.0F, 8.0F, new CubeDeformation(0.6F))
-				.texOffs(49, 14).addBox(-1.5F, -11.6F, -2.5F, 3.0F, 2.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 0.0F, 0.0F));
+		PartDefinition bipedHead = partdefinition.addOrReplaceChild("bipedHead", CubeListBuilder.create().texOffs(0, 0).addBox(-4.0F, -8.0F, -4.0F, 8.0F, 8.0F, 8.0F, new CubeDeformation(0.6F))
+				.texOffs(49, 14).addBox(-1.5F, -10.6F, -2.5F, 3.0F, 2.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 0.0F, 0.0F));
 		bipedHead.addOrReplaceChild("cube_r1", CubeListBuilder.create().texOffs(39, 10).addBox(-3.5F, -1.5F, 0.0F, 7.0F, 3.0F, 0.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, -11.1F, -2.1F, 0.4538F, 0.0F, 0.0F));
 		bipedHead.addOrReplaceChild("armorHead_r1", CubeListBuilder.create().texOffs(39, 31).mirror().addBox(-3.8F, -2.3F, -2.2F, 8.0F, 4.0F, 4.0F, new CubeDeformation(0.7F)).mirror(false)
 				.texOffs(39, 31).addBox(-4.2F, -2.3F, -2.2F, 8.0F, 4.0F, 4.0F, new CubeDeformation(0.7F)), PartPose.offsetAndRotation(0.0F, -13.0F, 1.6F, 0.1745F, 0.0F, 0.0F));

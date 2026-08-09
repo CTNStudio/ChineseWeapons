@@ -1,0 +1,22 @@
+{
+  "gui_light": "front",
+  "loader": "forge:separate_transforms",
+  "textures": {
+    "particle": "chineseweapons:item/stone_tang_dynasty_heng_saber"
+  },
+  "base": {
+    "parent": "chineseweapons:custom/tang_dynasty_heng_saber",
+    "textures": {
+      "8": "chineseweapons:block/stone_tang_dynasty_heng_saber",
+      "particle": "chineseweapons:block/stone_tang_dynasty_heng_saber"
+    }
+  },
+  "perspectives": {
+    "gui": {
+      "parent": "minecraft:item/generated",
+      "textures": {
+        "layer0": "chineseweapons:item/stone_tang_dynasty_heng_saber"
+      }
+    }
+  }
+}

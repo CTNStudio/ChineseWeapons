@@ -1,15 +1,23 @@
 package net.mirrorloong.chineseweapons;
+import net.minecraft.client.color.item.ItemColor;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.RecipesUpdatedEvent;
+import net.minecraftforge.client.event.RegisterColorHandlersEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
+import net.minecraftforge.registries.DeferredRegister;
+import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.RegistryObject;
 import net.mirrorloong.chineseweapons.gui.recipe.DeferredGui;
 import net.mirrorloong.chineseweapons.gui.recipe.WeaponsCastingTableTypeGuiMenu;
 import net.mirrorloong.chineseweapons.init.*;
 import net.mirrorloong.chineseweapons.item.*;
+import net.mirrorloong.chineseweapons.procedures.DyeableItem;
 import net.mirrorloong.chineseweapons.recipes.DeferredRecipe;
+import net.mirrorloong.chineseweapons.recipes.DyeableArmorRecipe;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
 import net.minecraftforge.network.simple.SimpleChannel;
@@ -43,6 +51,14 @@ public class ChineseweaponsMod {
 		WeaponsCastingTableTypeGuiMenu.recipeManager=event.getRecipeManager();
 	}
 
+    public static final DeferredRegister<RecipeSerializer<?>> RECIPE_SERIALIZERS =
+            DeferredRegister.create(ForgeRegistries.RECIPE_SERIALIZERS, "chineseweapons");
+
+    public static final RegistryObject<RecipeSerializer<DyeableArmorRecipe>> DYEABLE_ARMOR_RECIPE =
+            RECIPE_SERIALIZERS.register("crafting_special_dyeablearmor",
+                    () -> DyeableArmorRecipe.SERIALIZER);
+
+
 	public ChineseweaponsMod() {
 		MinecraftForge.EVENT_BUS.register(this);
 		IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
@@ -54,8 +70,8 @@ public class ChineseweaponsMod {
 		ChineseweaponsModTabs.REGISTRY.register(bus);
 		ChineseWeaponsModEffects.REGISTER.register(bus);
         ChineseWeaponsModEnchantments.REGISTRY.register(bus);
+        RECIPE_SERIALIZERS.register(bus);
 	}
-
 
 	private static final Random random = new Random();
 	@Mod.EventBusSubscriber(modid = ChineseweaponsMod.MODID,bus= Mod.EventBusSubscriber.Bus.FORGE)

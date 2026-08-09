@@ -17,6 +17,7 @@ import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.common.Mod;
+import net.mirrorloong.chineseweapons.ChineseweaponsMod;
 import net.mirrorloong.chineseweapons.client.GlaiveSpinAnimationHandler;
 
 import java.util.HashMap;
@@ -24,12 +25,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
-@Mod.EventBusSubscriber(modid = "chineseweapons", bus = Mod.EventBusSubscriber.Bus.FORGE)
+@Mod.EventBusSubscriber(modid = ChineseweaponsMod.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public final class GlaiveItemGetLostKillProcedure {
     private static final int SKILL_DURATION_TICKS = 30;
     private static final int DAMAGE_PULSE_INTERVAL_TICKS = 11;
     private static final int DAMAGE_PULSE_COUNT = 3;
-    private static final int COOLDOWN_TICKS = 200;
+    private static final int COOLDOWN_TICKS = 20;
     private static final int DURABILITY_COST = 3;
     private static final float EXHAUSTION_COST = 5.0F;
     private static final float DAMAGE_BONUS = 2.0F;
@@ -72,7 +73,7 @@ public final class GlaiveItemGetLostKillProcedure {
             return true;
         }
 
-        float totalDamage = (float) player.getAttributeValue(Attributes.ATTACK_DAMAGE) + DAMAGE_BONUS;
+        float totalDamage = (float) player.getAttributeValue(Attributes.ATTACK_DAMAGE) - DAMAGE_BONUS;
         ActiveSpin activeSpin = new ActiveSpin(
                 player.getInventory().selected,
                 itemStack.getItem(),

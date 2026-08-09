@@ -1,6 +1,9 @@
 
 package net.mirrorloong.chineseweapons.item;
 
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.item.*;
+import net.minecraft.world.level.Level;
 import net.mirrorloong.chineseweapons.client.model.Modelearly_tang_dynasty_ming_guang_armor;
 
 import net.minecraftforge.client.extensions.common.IClientItemExtensions;
@@ -8,11 +11,6 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.api.distmarker.Dist;
 
 import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.world.item.Items;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ArmorMaterial;
-import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.Entity;
@@ -21,12 +19,15 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.Minecraft;
+import net.mirrorloong.chineseweapons.procedures.DyeableItem;
 
+import javax.annotation.Nullable;
+import java.util.List;
 import java.util.function.Consumer;
 import java.util.Map;
 import java.util.Collections;
 
-public abstract class DiamondearlytangdynastymingguangarmorItem extends ArmorItem {
+public abstract class DiamondearlytangdynastymingguangarmorItem extends ArmorItem implements DyeableItem {
 	public DiamondearlytangdynastymingguangarmorItem(ArmorItem.Type type, Item.Properties properties) {
 		super(new ArmorMaterial() {
 			@Override
@@ -71,12 +72,27 @@ public abstract class DiamondearlytangdynastymingguangarmorItem extends ArmorIte
 		}, type, properties);
 	}
 
+    public static final String TEXTURE_BASE = "chineseweapons:textures/entities/diamond_early_tang_dynasty_ming_guang_armor.png";
+    public static final String TEXTURE_OVERLAY = "chineseweapons:textures/entities/early_tang_dynasty_ming_guang_armor_color.png";
+
+    @Override
+    public void appendHoverText(ItemStack stack, @Nullable Level level,
+                                List<Component> tooltip, TooltipFlag flag) {
+        super.appendHoverText(stack, level, tooltip, flag);
+        DyeableItem.addDyeTooltip(stack, tooltip);
+    }
+
+    @Override
+    public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlot slot, String type) {
+        return DyeableItem.getArmorTexture(stack, type, TEXTURE_BASE, TEXTURE_OVERLAY);
+    }
+
 	public static class Helmet extends DiamondearlytangdynastymingguangarmorItem {
 		public Helmet() {
 			super(ArmorItem.Type.HELMET, new Item.Properties());
 		}
 
-		@Override
+        @Override
 		public void initializeClient(Consumer<IClientItemExtensions> consumer) {
 			consumer.accept(new IClientItemExtensions() {
 				@Override
@@ -92,11 +108,6 @@ public abstract class DiamondearlytangdynastymingguangarmorItem extends ArmorIte
 					return armorModel;
 				}
 			});
-		}
-
-		@Override
-		public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlot slot, String type) {
-			return "chineseweapons:textures/entities/diamond_early_tang_dynasty_ming_guang_armor.png";
 		}
 	}
 
@@ -124,11 +135,6 @@ public abstract class DiamondearlytangdynastymingguangarmorItem extends ArmorIte
 				}
 			});
 		}
-
-		@Override
-		public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlot slot, String type) {
-			return "chineseweapons:textures/entities/diamond_early_tang_dynasty_ming_guang_armor.png";
-		}
 	}
 
 	public static class Leggings extends DiamondearlytangdynastymingguangarmorItem {
@@ -155,10 +161,6 @@ public abstract class DiamondearlytangdynastymingguangarmorItem extends ArmorIte
 			});
 		}
 
-		@Override
-		public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlot slot, String type) {
-			return "chineseweapons:textures/entities/diamond_early_tang_dynasty_ming_guang_armor.png";
-		}
 	}
 
 	public static class Boots extends DiamondearlytangdynastymingguangarmorItem {
@@ -183,11 +185,6 @@ public abstract class DiamondearlytangdynastymingguangarmorItem extends ArmorIte
 					return armorModel;
 				}
 			});
-		}
-
-		@Override
-		public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlot slot, String type) {
-			return "chineseweapons:textures/entities/diamond_early_tang_dynasty_ming_guang_armor.png";
 		}
 	}
 }
