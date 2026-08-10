@@ -3,13 +3,11 @@ package net.mirrorloong.chineseweapons.client;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.texture.OverlayTexture;
+import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -22,16 +20,29 @@ import java.util.UUID;
 
 @OnlyIn(Dist.CLIENT)
 public final class GlaiveSpinAnimationHandler {
-    private static final int ROTATION_DURATION_TICKS = 30;
+    private static final int ANIMATION_DURATION_TICKS = 30;
+
+    // The action is intentionally split into readable phases so the first-person
+    // pose can be tuned without changing the server-side skill timing.
+    private static final float ADVANCE_END = 0.18F;
+    private static final float DOWNWARD_END = 0.30F;
+    private static final float SPIN_END = 0.86F;
+    private static final float FORWARD_OFFSET = -0.28F;
+    private static final float DOWNWARD_OFFSET = -0.12F;
+    private static final float DOWNWARD_ROTATION = -45.0F;
+    private static final float FULL_SPIN = -360.0F;
+    private static final float SPIN_SCALE = 1.25F;
+    private static final float HAND_PIVOT_X = 0.0F;
+    private static final float HAND_PIVOT_Y = -0.24F;
+    private static final float HAND_PIVOT_Z = 0.10F;
     private static final GlaiveSpinAnimationHandler INSTANCE = new GlaiveSpinAnimationHandler();
 
     private static boolean registered;
     private static boolean rotating;
-    private static int rotationTimer;
+    private static int elapsedTicks;
     private static UUID rotatingPlayerId;
     private static int startingSlot = -1;
     private static Item startingItem;
-    private static ItemStack renderedGlaive = ItemStack.EMPTY;
 
     private GlaiveSpinAnimationHandler() {
     }
@@ -43,11 +54,10 @@ public final class GlaiveSpinAnimationHandler {
         }
 
         rotating = true;
-        rotationTimer = ROTATION_DURATION_TICKS;
+        elapsedTicks = 0;
         rotatingPlayerId = player.getUUID();
         startingSlot = player.getInventory().selected;
         startingItem = itemStack.getItem();
-        renderedGlaive = itemStack.copy();
     }
 
     @SubscribeEvent
@@ -62,8 +72,8 @@ public final class GlaiveSpinAnimationHandler {
             return;
         }
 
-        rotationTimer--;
-        if (rotationTimer <= 0) {
+        elapsedTicks++;
+        if (elapsedTicks >= ANIMATION_DURATION_TICKS) {
             stop();
         }
     }
@@ -80,12 +90,10 @@ public final class GlaiveSpinAnimationHandler {
             return;
         }
 
-        event.setCanceled(true);
-        PoseStack poseStack = event.getPoseStack();
-        poseStack.pushPose();
-        poseStack.mulPose(Axis.ZP.rotationDegrees((ROTATION_DURATION_TICKS - rotationTimer) * 36.0F));
-        renderGlaive(player, poseStack, event.getMultiBufferSource(), event.getPackedLight());
-        poseStack.popPose();
+        // Keep vanilla hand and item rendering. The event's pose stack is used by
+        // the vanilla renderer immediately after this callback.
+        applyAnimation(event.getPoseStack(), player,
+                Mth.clamp((elapsedTicks + event.getPartialTick()) / ANIMATION_DURATION_TICKS, 0.0F, 1.0F));
     }
 
     private static boolean isStillHoldingStartingGlaive(Player player) {
@@ -97,30 +105,40 @@ public final class GlaiveSpinAnimationHandler {
                 && player.getMainHandItem().getItem() == startingItem;
     }
 
-    private static void renderGlaive(Player player, PoseStack poseStack, MultiBufferSource buffer, int packedLight) {
-        ItemDisplayContext displayContext = player.getMainArm() == HumanoidArm.RIGHT
-                ? ItemDisplayContext.FIRST_PERSON_RIGHT_HAND
-                : ItemDisplayContext.FIRST_PERSON_LEFT_HAND;
-        Minecraft.getInstance().getItemRenderer().renderStatic(
-                player,
-                renderedGlaive,
-                displayContext,
-                false,
-                poseStack,
-                buffer,
-                player.level(),
-                packedLight,
-                OverlayTexture.NO_OVERLAY,
-                player.getId()
-        );
+    private static void applyAnimation(PoseStack poseStack, Player player, float progress) {
+        float advance = smoothStep(progress / ADVANCE_END);
+        float downward = smoothStep((progress - ADVANCE_END) / (DOWNWARD_END - ADVANCE_END));
+        float spin = smoothStep((progress - DOWNWARD_END) / (SPIN_END - DOWNWARD_END));
+        float recover = smoothStep((progress - SPIN_END) / (1.0F - SPIN_END));
+        float handSign = player.getMainArm() == HumanoidArm.RIGHT ? 1.0F : -1.0F;
+
+        float moveProgress = advance - recover;
+        float downwardRotation = DOWNWARD_ROTATION * downward * (1.0F - recover);
+        float spinRotation = FULL_SPIN * spin * handSign;
+        float scaleProgress = spin * (1.0F - recover);
+        float scale = Mth.lerp(scaleProgress, 1.0F, SPIN_SCALE);
+
+        poseStack.translate(0.0D, DOWNWARD_OFFSET * moveProgress, FORWARD_OFFSET * moveProgress);
+
+        // Rotate around the hand instead of the camera origin. This keeps the
+        // glaive attached to the grip while the blade sweeps through the view.
+        poseStack.translate(HAND_PIVOT_X * handSign, HAND_PIVOT_Y, HAND_PIVOT_Z);
+        poseStack.scale(scale, scale, scale);
+        poseStack.mulPose(Axis.XP.rotationDegrees(downwardRotation));
+        poseStack.mulPose(Axis.YP.rotationDegrees(spinRotation));
+        poseStack.translate(-HAND_PIVOT_X * handSign, -HAND_PIVOT_Y, -HAND_PIVOT_Z);
+    }
+
+    private static float smoothStep(float value) {
+        float clamped = Mth.clamp(value, 0.0F, 1.0F);
+        return clamped * clamped * (3.0F - 2.0F * clamped);
     }
 
     private static void stop() {
         rotating = false;
-        rotationTimer = 0;
+        elapsedTicks = 0;
         rotatingPlayerId = null;
         startingSlot = -1;
         startingItem = null;
-        renderedGlaive = ItemStack.EMPTY;
     }
 }

@@ -14,10 +14,11 @@ import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
+import net.mirrorloong.chineseweapons.ChineseweaponsMod;
 
 public class Modellate_tang_dynasty_ming_guang_armor<T extends Entity> extends EntityModel<T> {
 	// This layer location should be baked with EntityRendererProvider.Context in the entity renderer and passed into this model's constructor
-	public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(new ResourceLocation("chineseweapons", "late_tang_dynasty_ming_guang_armor"), "main");
+	public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(ChineseweaponsMod.MODID, "late_tang_dynasty_ming_guang_armor"), "main");
     public final ModelPart bipedHead;
     public final ModelPart bipedBody;
     public final ModelPart bipedRightArm;

@@ -1,7 +1,14 @@
 {
   "parent": "chineseweapons:custom/tang_dynasty_shield",
   "textures": {
-    "1": "chineseweapons:block/tang_dynasty_shield",
     "particle": "chineseweapons:block/tang_dynasty_shield"
-  }
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "chineseweapons:blocking": 1.0
+      },
+      "model": "chineseweapons:custom/tang_dynasty_shield_on"
+    }
+  ]
 }

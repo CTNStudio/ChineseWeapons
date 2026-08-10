@@ -9,6 +9,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.SwordItem;
 import net.minecraft.world.item.Tier;
 import net.minecraftforge.common.ForgeMod;
+import net.mirrorloong.chineseweapons.compat.WeaponScriptSettings;
 
 import java.util.UUID;
 
@@ -30,7 +31,7 @@ public abstract class ReachSwordItem extends SwordItem {
 
         return ImmutableMultimap.<Attribute, AttributeModifier>builder()
                 .putAll(super.getDefaultAttributeModifiers(equipmentSlot))
-                .put(ForgeMod.ENTITY_REACH.get(), new AttributeModifier(ENTITY_REACH_MODIFIER_ID, "Weapon entity reach", this.entityReachBonus, AttributeModifier.Operation.ADDITION))
+                .put(ForgeMod.ENTITY_REACH.get(), new AttributeModifier(ENTITY_REACH_MODIFIER_ID, "Weapon entity reach", WeaponScriptSettings.getReachBonus(this, this.entityReachBonus), AttributeModifier.Operation.ADDITION))
                 .build();
     }
 }

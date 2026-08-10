@@ -11,14 +11,13 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.common.MinecraftForge;
 import net.mirrorloong.chineseweapons.ChineseweaponsMod;
-import net.mirrorloong.chineseweapons.client.GlaiveSpinAnimationHandler;
+import net.mirrorloong.chineseweapons.event.GlaiveSpinStartedEvent;
 
 import java.util.HashMap;
 import java.util.List;
@@ -69,7 +68,7 @@ public final class GlaiveItemGetLostKillProcedure {
 
         player.getCooldowns().addCooldown(itemStack.getItem(), COOLDOWN_TICKS);
         if (world.isClientSide()) {
-            DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> GlaiveSpinAnimationHandler.start(player, itemStack));
+            MinecraftForge.EVENT_BUS.post(new GlaiveSpinStartedEvent(player, itemStack.copy()));
             return true;
         }
 

@@ -2,17 +2,12 @@ package net.mirrorloong.chineseweapons.recipes;
 
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
-import net.minecraftforge.client.event.RecipesUpdatedEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import net.mirrorloong.chineseweapons.ChineseweaponsMod;
-import net.mirrorloong.chineseweapons.gui.recipe.WeaponsCastingTableTypeGuiMenu;
 
 import java.util.function.Supplier;
-@Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.FORGE, modid = ChineseweaponsMod.MODID)
 public class DeferredRecipe {
     public static final DeferredRegister<RecipeType<?>> DeferredRecipe = DeferredRegister.create(ForgeRegistries.RECIPE_TYPES, ChineseweaponsMod.MODID);
 
@@ -28,9 +23,4 @@ public class DeferredRecipe {
             return new WCTRecipeSer();
         }
     });
-    @SubscribeEvent
-    public static void onRecipesUpdated(RecipesUpdatedEvent event){
-        WeaponsCastingTableTypeGuiMenu.recipeManager=event.getRecipeManager();
-    }
-
 }

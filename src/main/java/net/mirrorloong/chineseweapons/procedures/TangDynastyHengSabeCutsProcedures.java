@@ -1,7 +1,5 @@
 package net.mirrorloong.chineseweapons.procedures;
 
-import com.mojang.math.Axis;
-import net.minecraft.client.Minecraft;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -14,7 +12,6 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.client.event.RenderHandEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -148,33 +145,20 @@ public class TangDynastyHengSabeCutsProcedures {
         itemAnimData.put(uid, new StabAnimData(anim.bindItem(), tickLeft, true));
     }
 
-    @SubscribeEvent
-    public static void modifyItemRender(RenderHandEvent event) {
-        Player player = Minecraft.getInstance().player;
-        if (player == null) return;
-        UUID uid = player.getUUID();
-        if (!itemAnimData.containsKey(uid)) return;
+    public static float getAnimationProgress(UUID uid) {
         StabAnimData anim = itemAnimData.get(uid);
+        if (anim == null) return 0.0F;
 
         int tickLeft = anim.tickLeft();
         int passed = DH_TICK - tickLeft;
-        float progress;
-
         if (passed <= 8) {
-            progress = (float) passed / 8;
+            return (float) passed / 8;
         }
-        else if (passed <= 38) {
-            progress = 1F;
-        }
-        else {
-            int retractPass = passed - 38;
-            progress = 1F - ((float) retractPass / 8);
+        if (passed <= 38) {
+            return 1.0F;
         }
 
-        float pitchRotate = XUANZHUAN * progress;
-        float forwardMove = QianYi_Item * progress;
-
-        event.getPoseStack().mulPose(Axis.XP.rotationDegrees(pitchRotate));
-        event.getPoseStack().translate(0, 0, forwardMove);
+        int retractPass = passed - 38;
+        return 1.0F - ((float) retractPass / 8);
     }
 }

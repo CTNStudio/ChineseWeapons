@@ -8,7 +8,7 @@ import net.minecraft.world.entity.player.Inventory;
 import net.mirrorloong.chineseweapons.ChineseweaponsMod;
 public class WeaponsCastingTableScreen extends AbstractContainerScreen<WeaponsCastingTableTypeGuiMenu> {
 
-    private final ResourceLocation TextureBackGround = new ResourceLocation(ChineseweaponsMod.MODID,"textures/gui/weapons_casting_table.png");
+    private final ResourceLocation TextureBackGround = ResourceLocation.fromNamespaceAndPath(ChineseweaponsMod.MODID,"textures/gui/weapons_casting_table.png");
     public WeaponsCastingTableScreen(WeaponsCastingTableTypeGuiMenu pMenu, Inventory pInventory, Component pComponent){
         super(pMenu,pInventory,pComponent);
         this.inventoryLabelX=-19;

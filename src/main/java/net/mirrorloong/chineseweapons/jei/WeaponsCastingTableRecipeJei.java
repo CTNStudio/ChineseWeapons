@@ -19,7 +19,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public class WeaponsCastingTableRecipeJei implements IRecipeCategory<WCTRecipe> {
-    public static final ResourceLocation BACKGROUND_TEXTURE = new ResourceLocation(ChineseweaponsMod.MODID, "textures/gui/jei/weapons_casting_table.png");
+    public static final ResourceLocation BACKGROUND_TEXTURE = ResourceLocation.fromNamespaceAndPath(ChineseweaponsMod.MODID, "textures/gui/jei/weapons_casting_table.png");
     public static final int WIDTH = 157;
     public static final int HEIGHT = 62;
 

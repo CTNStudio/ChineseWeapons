@@ -53,7 +53,9 @@ public class WCTRecipeSer implements RecipeSerializer<WCTRecipe> {
     public @Nullable WCTRecipe fromNetwork(ResourceLocation id, FriendlyByteBuf buf) {
         int IngredientSize =buf.readVarInt();
         NonNullList<Ingredient> ingredients = NonNullList.withSize(IngredientSize,Ingredient.EMPTY);
-        for (int i=0;i<IngredientSize;++i) Ingredient.fromNetwork(buf);
+        for (int i = 0; i < IngredientSize; ++i) {
+            ingredients.set(i, Ingredient.fromNetwork(buf));
+        }
         ItemStack result = buf.readItem();
         return new WCTRecipe(id, ingredients, result);
     }

@@ -13,10 +13,11 @@ import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
+import net.mirrorloong.chineseweapons.ChineseweaponsMod;
 
 public class Modelsuanni_helmet<T extends Entity> extends EntityModel<T> {
 	// This layer location should be baked with EntityRendererProvider.Context in the entity renderer and passed into this model's constructor
-    public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(new ResourceLocation("chineseweapons", "suanni_helmet"), "main");
+    public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(ChineseweaponsMod.MODID, "suanni_helmet"), "main");
     public final ModelPart bipedHead;
 
     public Modelsuanni_helmet(ModelPart root) {

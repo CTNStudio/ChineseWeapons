@@ -40,7 +40,7 @@ public class WoodenglaiveItem extends GlaiveItemBase {
 			}
 
 			public Ingredient getRepairIngredient() {
-				return CompoundIngredient.of(Ingredient.of(ItemTags.create(new ResourceLocation("minecraft:planks"))), Ingredient.of(new ItemStack(ChineseweaponsModItems.WOODEN_GLAIVE.get())));
+				return CompoundIngredient.of(Ingredient.of(ItemTags.create(ResourceLocation.fromNamespaceAndPath("minecraft","planks"))), Ingredient.of(new ItemStack(ChineseweaponsModItems.WOODEN_GLAIVE.get())));
 			}
 		}, 3, -2.2f, new Item.Properties());
 	}
@@ -48,7 +48,7 @@ public class WoodenglaiveItem extends GlaiveItemBase {
     @Override
     public boolean hurtEnemy(ItemStack itemstack, LivingEntity entity, LivingEntity sourceentity) {
         boolean retval = super.hurtEnemy(itemstack, entity, sourceentity);
-        DaggerAxeAndGlaiveItemjizhongProcedure.execute(entity);
+        DaggerAxeAndGlaiveItemjizhongProcedure.execute(entity, itemstack);
         return retval;
     }
 

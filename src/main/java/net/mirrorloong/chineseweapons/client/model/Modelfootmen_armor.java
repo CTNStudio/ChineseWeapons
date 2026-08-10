@@ -14,6 +14,7 @@ import net.minecraft.client.model.EntityModel;
 
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.blaze3d.vertex.PoseStack;
+import net.mirrorloong.chineseweapons.ChineseweaponsMod;
 
 // Made with Blockbench 5.0.4
 // Exported for Minecraft version 1.17 or later with Mojang mappings
@@ -21,7 +22,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 
 public class Modelfootmen_armor<T extends Entity> extends EntityModel<T> {
     // This layer location should be baked with EntityRendererProvider.Context in the entity renderer and passed into this model's constructor
-    public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(new ResourceLocation("chineseweapons", "modelfootmen_armor"), "main");
+    public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(ChineseweaponsMod.MODID, "modelfootmen_armor"), "main");
     public final ModelPart bipedHead;
     public final ModelPart bipedBody;
     public final ModelPart bipedLeftArm;

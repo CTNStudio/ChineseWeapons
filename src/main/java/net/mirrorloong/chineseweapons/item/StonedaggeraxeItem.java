@@ -44,7 +44,7 @@ public class StonedaggeraxeItem extends FiveBlockReachSwordItem {
 			}
 
 			public Ingredient getRepairIngredient() {
-				return CompoundIngredient.of(Ingredient.of(ItemTags.create(new ResourceLocation("forge:stone"))), Ingredient.of(new ItemStack(ChineseweaponsModItems.STONE_DAGGER_AXE.get())));
+				return CompoundIngredient.of(Ingredient.of(ItemTags.create(ResourceLocation.fromNamespaceAndPath("forge", "stone"))), Ingredient.of(new ItemStack(ChineseweaponsModItems.STONE_DAGGER_AXE.get())));
 			}
 		}, 3, -2.5f, new Item.Properties());
 	}
@@ -59,7 +59,7 @@ public class StonedaggeraxeItem extends FiveBlockReachSwordItem {
     @Override
     public boolean hurtEnemy(ItemStack itemstack, LivingEntity entity, LivingEntity sourceentity) {
         boolean retval = super.hurtEnemy(itemstack, entity, sourceentity);
-        DaggerAxeAndGlaiveItemjizhongProcedure.execute(entity);
+        DaggerAxeAndGlaiveItemjizhongProcedure.execute(entity, itemstack);
         return retval;
     }
 }

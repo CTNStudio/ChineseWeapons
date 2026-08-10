@@ -44,7 +44,7 @@ public class GreenloongglaiveItem extends GlaiveItemBase {
     @Override
     public boolean hurtEnemy(ItemStack itemstack, LivingEntity entity, LivingEntity sourceentity) {
         boolean retval = super.hurtEnemy(itemstack, entity, sourceentity);
-        DaggerAxeAndGlaiveItemjizhongProcedure.execute(entity);
+        DaggerAxeAndGlaiveItemjizhongProcedure.execute(entity, itemstack);
         return retval;
     }
 }

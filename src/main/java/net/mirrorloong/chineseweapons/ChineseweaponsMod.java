@@ -1,23 +1,19 @@
 package net.mirrorloong.chineseweapons;
-import net.minecraft.client.color.item.ItemColor;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.crafting.RecipeSerializer;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.event.RecipesUpdatedEvent;
-import net.minecraftforge.client.event.RegisterColorHandlersEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import net.mirrorloong.chineseweapons.gui.recipe.DeferredGui;
-import net.mirrorloong.chineseweapons.gui.recipe.WeaponsCastingTableTypeGuiMenu;
 import net.mirrorloong.chineseweapons.init.*;
 import net.mirrorloong.chineseweapons.item.*;
 import net.mirrorloong.chineseweapons.procedures.DyeableItem;
 import net.mirrorloong.chineseweapons.recipes.DeferredRecipe;
 import net.mirrorloong.chineseweapons.recipes.DyeableArmorRecipe;
+import net.mirrorloong.chineseweapons.compat.WeaponScriptSettings;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
 import net.minecraftforge.network.simple.SimpleChannel;
@@ -41,37 +37,32 @@ import java.util.function.BiConsumer;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 @Mod(ChineseweaponsMod.MODID)
-@Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.FORGE,modid = ChineseweaponsMod.MODID,value = Dist.DEDICATED_SERVER)
 public class ChineseweaponsMod {
 	public static final Logger LOGGER = LogManager.getLogger(ChineseweaponsMod.class);
 	public static final String MODID = "chineseweapons";
 
-	@SubscribeEvent
-	public static void onRecipesUpdated(RecipesUpdatedEvent event){
-		WeaponsCastingTableTypeGuiMenu.recipeManager=event.getRecipeManager();
-	}
-
     public static final DeferredRegister<RecipeSerializer<?>> RECIPE_SERIALIZERS =
-            DeferredRegister.create(ForgeRegistries.RECIPE_SERIALIZERS, "chineseweapons");
+            DeferredRegister.create(ForgeRegistries.RECIPE_SERIALIZERS, ChineseweaponsMod.MODID);
 
     public static final RegistryObject<RecipeSerializer<DyeableArmorRecipe>> DYEABLE_ARMOR_RECIPE =
             RECIPE_SERIALIZERS.register("crafting_special_dyeablearmor",
                     () -> DyeableArmorRecipe.SERIALIZER);
 
 
-	public ChineseweaponsMod() {
-		MinecraftForge.EVENT_BUS.register(this);
-		IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
-		DeferredRecipe.DeferredRecipeSer.register(bus);
-		DeferredRecipe.DeferredRecipe.register(bus);
-		DeferredGui.Deferred.register(bus);
-		ChineseweaponsModBlocks.REGISTRY.register(bus);
-		ChineseweaponsModItems.REGISTRY.register(bus);
-		ChineseweaponsModTabs.REGISTRY.register(bus);
-		ChineseWeaponsModEffects.REGISTER.register(bus);
+    public ChineseweaponsMod(FMLJavaModLoadingContext context) {
+        IEventBus bus = context.getModEventBus();
+
+        MinecraftForge.EVENT_BUS.register(this);
+        DeferredRecipe.DeferredRecipeSer.register(bus);
+        DeferredRecipe.DeferredRecipe.register(bus);
+        DeferredGui.Deferred.register(bus);
+        ChineseweaponsModBlocks.REGISTRY.register(bus);
+        ChineseweaponsModItems.REGISTRY.register(bus);
+        ChineseweaponsModTabs.REGISTRY.register(bus);
+        ChineseWeaponsModEffects.REGISTER.register(bus);
         ChineseWeaponsModEnchantments.REGISTRY.register(bus);
         RECIPE_SERIALIZERS.register(bus);
-	}
+    }
 
 	private static final Random random = new Random();
 	@Mod.EventBusSubscriber(modid = ChineseweaponsMod.MODID,bus= Mod.EventBusSubscriber.Bus.FORGE)
@@ -86,8 +77,8 @@ public class ChineseweaponsMod {
 					|| item instanceof IronglaiveItem || item instanceof NetheriteglaiveItem
 					|| item instanceof GreenloongglaiveItem
 					|| item instanceof WoodenglaiveItem ||item instanceof StoneglaiveItem ){
-						int gai_lv = random.nextInt(99)+1;
-						if(gai_lv<=60){
+						float chance = WeaponScriptSettings.getChance(item, WeaponScriptSettings.Skill.GLAIVE_DISMOUNT, 0.60F);
+						if (random.nextFloat() < chance) {
 							event.getEntity().stopRiding();
 						}
 					}
@@ -96,7 +87,7 @@ public class ChineseweaponsMod {
 		}
 	}
 	private static final String PROTOCOL_VERSION = "1";
-	public static final SimpleChannel PACKET_HANDLER = NetworkRegistry.newSimpleChannel(new ResourceLocation(MODID, MODID), () -> PROTOCOL_VERSION, PROTOCOL_VERSION::equals, PROTOCOL_VERSION::equals);
+	public static final SimpleChannel PACKET_HANDLER = NetworkRegistry.newSimpleChannel(ResourceLocation.fromNamespaceAndPath(MODID, MODID), () -> PROTOCOL_VERSION, PROTOCOL_VERSION::equals, PROTOCOL_VERSION::equals);
 	private static int messageID = 0;
 
 	public static <T> void addNetworkMessage(Class<T> messageType, BiConsumer<T, FriendlyByteBuf> encoder, Function<FriendlyByteBuf, T> decoder, BiConsumer<T, Supplier<NetworkEvent.Context>> messageConsumer) {

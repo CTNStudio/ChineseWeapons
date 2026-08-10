@@ -1,6 +1,5 @@
 package net.mirrorloong.chineseweapons.event;
 
-import net.minecraft.client.color.item.ItemColor;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
@@ -25,7 +24,6 @@ import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.client.event.RegisterColorHandlersEvent;
 import net.mirrorloong.chineseweapons.ChineseweaponsMod;
 import net.mirrorloong.chineseweapons.init.ChineseWeaponsModEffects;
 import net.minecraftforge.event.TickEvent;
@@ -36,8 +34,6 @@ import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.ForgeRegistries;
-import net.mirrorloong.chineseweapons.init.ChineseweaponsModItems;
-import net.mirrorloong.chineseweapons.procedures.DyeableItem;
 
 import java.util.UUID;
 
@@ -106,6 +102,7 @@ public final class ChineseWeaponsCombatEvents {
         }
     }
 
+    /*
     @SubscribeEvent
     public static void registerItemColors(RegisterColorHandlersEvent.Item event) {
         ItemColor dyeableColor = (stack, tintIndex) -> {
@@ -242,6 +239,7 @@ public final class ChineseWeaponsCombatEvents {
                 ChineseweaponsModItems.IRONMOUNTAINCHARACTERARMOR_BOOTS.get()
         );
     }
+    */
 
     @SubscribeEvent(priority = EventPriority.HIGH)
     public static void applyArmorCombatRules(LivingHurtEvent event) {
