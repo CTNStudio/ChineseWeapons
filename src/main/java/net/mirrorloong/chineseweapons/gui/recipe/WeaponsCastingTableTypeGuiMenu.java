@@ -67,8 +67,7 @@ public class WeaponsCastingTableTypeGuiMenu extends AbstractContainerMenu {
     public WeaponsCastingTableTypeGuiMenu(int id, Inventory inventoryPlayer) {
         super(DeferredGui.RegMenu.get(), id);
         this.player = inventoryPlayer.player;
-
-        // 初始化 recipeManager
+        //初始化 hyw
         if (inventoryPlayer.player.level().isClientSide()) {
             this.recipeManager = Minecraft.getInstance().level.getRecipeManager();
         } else {
