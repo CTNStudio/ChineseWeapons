@@ -1,5 +1,6 @@
 package net.mirrorloong.chineseweapons.gui.recipe;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.network.protocol.game.ClientboundContainerSetSlotPacket;
 import net.minecraft.server.level.ServerPlayer;
@@ -63,40 +64,59 @@ public class WeaponsCastingTableTypeGuiMenu extends AbstractContainerMenu {
         }
     };
 
-    public WeaponsCastingTableTypeGuiMenu(int id, Inventory inventoryPlayer){
-        super(DeferredGui.RegMenu.get(),id);
-        this.player=inventoryPlayer.player;
+    public WeaponsCastingTableTypeGuiMenu(int id, Inventory inventoryPlayer) {
+        super(DeferredGui.RegMenu.get(), id);
+        this.player = inventoryPlayer.player;
+
+        // 初始化 recipeManager
+        if (inventoryPlayer.player.level().isClientSide()) {
+            this.recipeManager = Minecraft.getInstance().level.getRecipeManager();
+        } else {
+            this.recipeManager = inventoryPlayer.player.level().getServer().getRecipeManager();
+        }
+
         container2.addListener(container -> {
-            try{
-            List<WCTRecipe> AllWCTRecipe = recipeManager.getAllRecipesFor(DeferredRecipe.WeaponCastingShapedType.get());
+            try {
+                if (recipeManager == null) {
+                    if (player.level().isClientSide()) {
+                        recipeManager = Minecraft.getInstance().level.getRecipeManager();
+                    } else {
+                        recipeManager = player.level().getServer().getRecipeManager();
+                    }
+                }
+
+                if (recipeManager != null) {
+                    List<WCTRecipe> AllWCTRecipe = recipeManager.getAllRecipesFor(DeferredRecipe.WeaponCastingShapedType.get());
                     for (WCTRecipe wctRecipe : AllWCTRecipe) {
                         if (wctRecipe.matches(container2, null)) {
                             outputContainer.setItem(0, wctRecipe.getResultItem2());
                             break;
-                        } else if (!outputContainer.getItem(0).is(Items.AIR))
+                        } else if (!outputContainer.getItem(0).is(Items.AIR)) {
                             outputContainer.setItem(0, new ItemStack(Items.AIR));
+                        }
                     }
-                } catch (Exception e) {
-                    e.printStackTrace();
                 }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         });
-        int i=0;
+
+        int i = 0;
         for (int row = 0; row < 3; ++row) {
             for (int col = 0; col < 9; ++col) {
-                this.addSlot(new Slot(inventoryPlayer, col + row * 9 + 9,  col * 18-19, 84 + row * 18));
+                this.addSlot(new Slot(inventoryPlayer, col + row * 9 + 9, col * 18 - 19, 84 + row * 18));
             }
         }
         for (int col = 0; col < 9; ++col) {
-            this.addSlot(new Slot(inventoryPlayer, col,
-                     col * 18-19, 142));
+            this.addSlot(new Slot(inventoryPlayer, col, col * 18 - 19, 142));
         }
-        for(int x=0;x<=36;x+=18){
-            for(int y=0;y<=36;y+=18){
-                this.addSlot(new Slot(container2,i,y-2,x+17));
+        for (int x = 0; x <= 36; x += 18) {
+            for (int y = 0; y <= 36; y += 18) {
+                this.addSlot(new Slot(container2, i, y - 2, x + 17));
                 ++i;
             }
         }
-        this.addSlot(new Slot(container2,9,69,53));
+        this.addSlot(new Slot(container2, 9, 69, 53));
         this.addSlot(outputSlot);
     }
     @Override
