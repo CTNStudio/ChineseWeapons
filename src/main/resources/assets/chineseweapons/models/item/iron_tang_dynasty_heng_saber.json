@@ -7,7 +7,7 @@
   "base": {
     "parent": "chineseweapons:custom/tang_dynasty_heng_saber",
     "textures": {
-      "8": "chineseweapons:block/iron_tang_dynasty_heng_saber",
+      "5": "chineseweapons:block/iron_tang_dynasty_heng_saber",
       "particle": "chineseweapons:block/iron_tang_dynasty_heng_saber"
     }
   },
