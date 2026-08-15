@@ -24,7 +24,7 @@ public class DaggerAxeAndGlaiveItemjizhongProcedure {
         if (RANDOM.nextFloat() < chance) {
             if (entity instanceof LivingEntity livingEntity) {
                 livingEntity.addEffect(new MobEffectInstance(
-                        ChineseWeaponsModEffects.CusEffectSupplier.get(),
+                        ChineseWeaponsModEffects.CusEffectSupplier,
                         120,
                         0,
                         true,

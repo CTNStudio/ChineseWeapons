@@ -13,9 +13,10 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.client.extensions.common.IClientItemExtensions;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
+import net.neoforged.neoforge.client.extensions.common.IClientItemExtensions;
+import net.mirrorloong.chineseweapons.init.ChineseWeaponsArmorMaterials;
 import net.mirrorloong.chineseweapons.client.model.Modellate_tang_dynasty_ming_guang_armor;
 import net.mirrorloong.chineseweapons.procedures.DyeableItem;
 
@@ -24,66 +25,28 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
+import net.minecraft.resources.ResourceLocation;
 
 public abstract class NetheritelatetangdynastymingguangarmorItem extends ArmorItem implements DyeableItem {
 	public NetheritelatetangdynastymingguangarmorItem(Type type, Properties properties) {
-		super(new ArmorMaterial() {
-			@Override
-			public int getDurabilityForType(Type type) {
-				return new int[]{13, 15, 16, 11}[type.getSlot().getIndex()] * 38;
-			}
-
-			@Override
-			public int getDefenseForType(Type type) {
-				return new int[]{2, 7, 9, 4}[type.getSlot().getIndex()];
-			}
-
-			@Override
-			public int getEnchantmentValue() {
-				return 16;
-			}
-
-			@Override
-			public SoundEvent getEquipSound() {
-				return SoundEvents.ARMOR_EQUIP_NETHERITE;
-			}
-
-			@Override
-			public Ingredient getRepairIngredient() {
-				return Ingredient.of(new ItemStack(Items.NETHERITE_INGOT));
-			}
-
-			@Override
-			public String getName() {
-				return "netheritelatetangdynastymingguangarmor";
-			}
-
-			@Override
-			public float getToughness() {
-				return 3f;
-			}
-
-			@Override
-			public float getKnockbackResistance() {
-				return 0.1f;
-			}
-		}, type, properties);
+				super(ChineseWeaponsArmorMaterials.holder("netheritelatetangdynastymingguangarmor", new int[]{2, 7, 9, 4}, 16, SoundEvents.ARMOR_EQUIP_NETHERITE, Items.NETHERITE_INGOT, 3f, 0.1f), type, properties.durability(new int[]{13, 15, 16, 11}[type.getSlot().getIndex()] * 38));
 	}
 
     public static final String TEXTURE_BASE = "chineseweapons:textures/entities/netherite_late_tang_dynasty_ming_guang_armor.png";
     public static final String TEXTURE_OVERLAY = "chineseweapons:textures/entities/late_tang_dynasty_ming_guang_armor_color.png";
+    @Override
+    public ResourceLocation getArmorTexture(ItemStack stack, Entity entity, EquipmentSlot slot, ArmorMaterial.Layer layer, boolean innerModel) {
+        return ResourceLocation.tryParse(DyeableItem.getArmorTexture(stack, "armor", TEXTURE_BASE, TEXTURE_OVERLAY));
+    }
+
 
     @Override
-    public void appendHoverText(ItemStack stack, @Nullable Level level,
+    public void appendHoverText(ItemStack stack, Item.TooltipContext context,
                                 List<Component> tooltip, TooltipFlag flag) {
-        super.appendHoverText(stack, level, tooltip, flag);
+        super.appendHoverText(stack, context, tooltip, flag);
         DyeableItem.addDyeTooltip(stack, tooltip);
     }
 
-    @Override
-    public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlot slot, String type) {
-        return DyeableItem.getArmorTexture(stack, type, TEXTURE_BASE, TEXTURE_OVERLAY);
-    }
 
     public static class Helmet extends NetheritelatetangdynastymingguangarmorItem {
 		public Helmet() {

@@ -4,8 +4,8 @@ package net.mirrorloong.chineseweapons.init;
 
 import net.mirrorloong.chineseweapons.ChineseweaponsMod;
 
-import net.minecraftforge.registries.RegistryObject;
-import net.minecraftforge.registries.DeferredRegister;
+import net.neoforged.neoforge.registries.DeferredHolder;
+import net.neoforged.neoforge.registries.DeferredRegister;
 
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.CreativeModeTab;
@@ -14,7 +14,7 @@ import net.minecraft.core.registries.Registries;
 
 public class ChineseweaponsModTabs {
 	public static final DeferredRegister<CreativeModeTab> REGISTRY = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, ChineseweaponsMod.MODID);
-	public static final RegistryObject<CreativeModeTab> CHINESE_WEAPONS = REGISTRY.register("chinese_weapons",
+	public static final DeferredHolder<CreativeModeTab, CreativeModeTab> CHINESE_WEAPONS = REGISTRY.register("chinese_weapons",
 			() -> CreativeModeTab.builder().title(Component.translatable("item_group.chineseweapons.chinese_weapons")).icon(() -> new ItemStack(ChineseweaponsModItems.IRONMOUNTAINCHARACTERARMOR_HELMET.get())).displayItems((parameters, tabData) -> {
 				tabData.accept(ChineseweaponsModItems.NETHERITEMOUNTAINCHARACTERARMOR_HELMET.get());
 				tabData.accept(ChineseweaponsModItems.NETHERITEMOUNTAINCHARACTERARMOR_CHESTPLATE.get());

@@ -12,21 +12,22 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.event.TickEvent;
-import net.minecraftforge.event.entity.player.PlayerInteractEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.registries.RegistryObject;
+import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
+import net.neoforged.neoforge.event.tick.PlayerTickEvent;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.fml.common.Mod;
+import net.neoforged.neoforge.registries.DeferredHolder;
 import net.mirrorloong.chineseweapons.ChineseweaponsMod;
 import net.mirrorloong.chineseweapons.init.ChineseWeaponsModEffects;
 import net.mirrorloong.chineseweapons.init.ChineseweaponsModItems;
 
 import java.util.*;
 
-@Mod.EventBusSubscriber(modid = ChineseweaponsMod.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
+@EventBusSubscriber(modid = ChineseweaponsMod.MODID, bus = EventBusSubscriber.Bus.GAME)
 public class TangDynastyHengSabeCutsProcedures {
 
-    private static final List<RegistryObject<Item>> CAN_REGISTRY_OBJECTS = List.of(
+    private static final List<DeferredHolder<Item, Item>> CAN_REGISTRY_OBJECTS = List.of(
             ChineseweaponsModItems.WOODEN_TANG_DYNASTY_HENG_SABER,
             ChineseweaponsModItems.STONE_TANG_DYNASTY_HENG_SABER,
             ChineseweaponsModItems.IRON_TANG_DYNASTY_HENG_SABER,
@@ -40,7 +41,7 @@ public class TangDynastyHengSabeCutsProcedures {
     private static Set<Item> getCanSet() {
         if (canSet == null) {
             Set<Item> items = new HashSet<>();
-            for (RegistryObject<Item> regObj : CAN_REGISTRY_OBJECTS) {
+            for (DeferredHolder<Item, Item> regObj : CAN_REGISTRY_OBJECTS) {
                 items.add(regObj.get());
             }
             canSet = Collections.unmodifiableSet(items);
@@ -107,22 +108,21 @@ public class TangDynastyHengSabeCutsProcedures {
         player.level().getEntities(player, killBox, e -> e instanceof LivingEntity living && living != player && !(living instanceof Horse horse && horse.isTamed() && horse.getOwnerUUID() != null && horse.getOwnerUUID().equals(player.getUUID())))
                 .forEach(entity -> {
                     LivingEntity target = (LivingEntity) entity;
-                    float baseDamage = (float) handItem.getAttributeModifiers(EquipmentSlot.MAINHAND)
-                            .get(Attributes.ATTACK_DAMAGE)
-                            .stream()
-                            .mapToDouble(AttributeModifier::getAmount)
+                    float baseDamage = (float) handItem.getAttributeModifiers().modifiers().stream()
+                            .filter(entry -> entry.attribute().is(Attributes.ATTACK_DAMAGE))
+                            .mapToDouble(entry -> entry.modifier().amount())
                             .sum();
                     float dmg = baseDamage + 2;
                     target.hurt(player.damageSources().playerAttack(player), dmg);
-                    target.addEffect(new MobEffectInstance(ChineseWeaponsModEffects.CusEffectSupplier.get(), 60, 0, false, true));
+                    target.addEffect(new MobEffectInstance(ChineseWeaponsModEffects.CusEffectSupplier, 60, 0, false, true));
                 });
 
         itemAnimData.put(player.getUUID(), new StabAnimData(bindWeapon, DH_TICK, true));
     }
 
     @SubscribeEvent
-    public static void tickUpdate(TickEvent.PlayerTickEvent event) {
-        Player player = event.player;
+    public static void tickUpdate(PlayerTickEvent.Post event) {
+        Player player = event.getEntity();
         UUID uid = player.getUUID();
         if (!itemAnimData.containsKey(uid)) return;
         StabAnimData anim = itemAnimData.get(uid);

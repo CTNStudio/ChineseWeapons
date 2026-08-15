@@ -14,59 +14,26 @@ import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraftforge.client.extensions.common.IClientItemExtensions;
+import net.neoforged.neoforge.client.extensions.common.IClientItemExtensions;
+import net.mirrorloong.chineseweapons.init.ChineseWeaponsArmorMaterials;
 import net.mirrorloong.chineseweapons.client.model.Modelsuanni_helmet;
 
 import java.util.Collections;
 import java.util.Map;
 import java.util.function.Consumer;
+import net.minecraft.resources.ResourceLocation;
 
 public abstract class DiamondSuanniHelmetItem extends ArmorItem {
 	public DiamondSuanniHelmetItem(Type type, Properties properties) {
-		super(new ArmorMaterial() {
-			@Override
-			public int getDurabilityForType(Type type) {
-				return new int[]{13, 15, 16, 11}[type.getSlot().getIndex()] * 34;
-			}
-
-			@Override
-			public int getDefenseForType(Type type) {
-				return new int[]{2, 7, 9, 4}[type.getSlot().getIndex()];
-			}
-
-			@Override
-			public int getEnchantmentValue() {
-				return 11;
-			}
-
-			@Override
-			public SoundEvent getEquipSound() {
-				return SoundEvents.ARMOR_EQUIP_DIAMOND;
-			}
-
-			@Override
-			public Ingredient getRepairIngredient() {
-				return Ingredient.of(new ItemStack(Items.DIAMOND));
-			}
-
-			@Override
-			public String getName() {
-				return "diamondsuannihelmet";
-			}
-
-			@Override
-			public float getToughness() {
-				return 2f;
-			}
-
-			@Override
-			public float getKnockbackResistance() {
-				return 0f;
-			}
-		}, type, properties);
+				super(ChineseWeaponsArmorMaterials.holder("diamondsuannihelmet", new int[]{2, 7, 9, 4}, 11, SoundEvents.ARMOR_EQUIP_DIAMOND, Items.DIAMOND, 2f, 0f), type, properties.durability(new int[]{13, 15, 16, 11}[type.getSlot().getIndex()] * 34));
 	}
 
 	public static class Helmet extends DiamondSuanniHelmetItem {
+    @Override
+    public ResourceLocation getArmorTexture(ItemStack stack, Entity entity, EquipmentSlot slot, ArmorMaterial.Layer layer, boolean innerModel) {
+        return ResourceLocation.parse("chineseweapons:textures/entities/diamond_suanni_helmet.png");
+    }
+
 		public Helmet() {
 			super(Type.HELMET, new Properties());
 		}
@@ -89,9 +56,5 @@ public abstract class DiamondSuanniHelmetItem extends ArmorItem {
 			});
 		}
 
-		@Override
-		public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlot slot, String type) {
-			return "chineseweapons:textures/entities/diamond_suanni_helmet.png";
-		}
 	}
 }

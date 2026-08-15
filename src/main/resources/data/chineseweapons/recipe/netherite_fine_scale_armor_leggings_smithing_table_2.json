@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:smithing_transform", 
+  "addition": {
+    "item": "minecraft:quartz"
+  }, 
+  "base": {
+    "item": "minecraft:netherite_leggings"
+  }, 
+  "result": {
+    "id": "chineseweapons:netherite_fine_scale_armor_leggings"
+  }, 
+  "template": {
+    "item": "chineseweapons:fine_scale_armor_forging_stone"
+  }
+}

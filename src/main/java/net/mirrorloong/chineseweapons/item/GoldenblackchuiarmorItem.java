@@ -6,11 +6,10 @@ import net.minecraft.world.item.*;
 import net.minecraft.world.level.Level;
 import net.mirrorloong.chineseweapons.client.model.Modelblack_chui_armor;
 
-import net.minecraftforge.client.extensions.common.IClientItemExtensions;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.api.distmarker.Dist;
+import net.neoforged.neoforge.client.extensions.common.IClientItemExtensions;
+import net.neoforged.api.distmarker.OnlyIn;
+import net.neoforged.api.distmarker.Dist;
 
-import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.Entity;
@@ -19,6 +18,7 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.Minecraft;
+import net.mirrorloong.chineseweapons.init.ChineseWeaponsArmorMaterials;
 import net.mirrorloong.chineseweapons.procedures.DyeableItem;
 
 import javax.annotation.Nullable;
@@ -26,66 +26,28 @@ import java.util.List;
 import java.util.function.Consumer;
 import java.util.Map;
 import java.util.Collections;
+import net.minecraft.resources.ResourceLocation;
 
 public abstract class GoldenblackchuiarmorItem extends ArmorItem implements DyeableItem {
 	public GoldenblackchuiarmorItem(ArmorItem.Type type, Item.Properties properties) {
-		super(new ArmorMaterial() {
-			@Override
-			public int getDurabilityForType(ArmorItem.Type type) {
-				return new int[]{13, 15, 16, 11}[type.getSlot().getIndex()] * 15;
-			}
-
-			@Override
-			public int getDefenseForType(ArmorItem.Type type) {
-				return new int[]{2, 4, 6, 3}[type.getSlot().getIndex()];
-			}
-
-			@Override
-			public int getEnchantmentValue() {
-				return 26;
-			}
-
-			@Override
-			public SoundEvent getEquipSound() {
-				return SoundEvents.ARMOR_EQUIP_GOLD;
-			}
-
-			@Override
-			public Ingredient getRepairIngredient() {
-				return Ingredient.of(new ItemStack(Items.GOLD_INGOT));
-			}
-
-			@Override
-			public String getName() {
-				return "goldenblackchuiarmor";
-			}
-
-			@Override
-			public float getToughness() {
-				return 1f;
-			}
-
-			@Override
-			public float getKnockbackResistance() {
-				return 0f;
-			}
-		}, type, properties);
+		super(ChineseWeaponsArmorMaterials.holder("goldenblackchuiarmor", new int[]{2, 4, 6, 3}, 26, SoundEvents.ARMOR_EQUIP_GOLD, Items.GOLD_INGOT, 1f, 0f), type, properties.durability(new int[]{13, 15, 16, 11}[type.getSlot().getIndex()] * 15));
 	}
 
     public static final String TEXTURE_BASE = "chineseweapons:textures/entities/golden_black_chui_armor.png";
     public static final String TEXTURE_OVERLAY = "chineseweapons:textures/entities/black_chui_armor_color.png";
+    @Override
+    public ResourceLocation getArmorTexture(ItemStack stack, Entity entity, EquipmentSlot slot, ArmorMaterial.Layer layer, boolean innerModel) {
+        return ResourceLocation.tryParse(DyeableItem.getArmorTexture(stack, "armor", TEXTURE_BASE, TEXTURE_OVERLAY));
+    }
+
 
     @Override
-    public void appendHoverText(ItemStack stack, @Nullable Level level,
+    public void appendHoverText(ItemStack stack, Item.TooltipContext context,
                                 List<Component> tooltip, TooltipFlag flag) {
-        super.appendHoverText(stack, level, tooltip, flag);
+        super.appendHoverText(stack, context, tooltip, flag);
         DyeableItem.addDyeTooltip(stack, tooltip);
     }
 
-    @Override
-    public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlot slot, String type) {
-        return DyeableItem.getArmorTexture(stack, type, TEXTURE_BASE, TEXTURE_OVERLAY);
-    }
 
     public static class Helmet extends GoldenblackchuiarmorItem {
 		public Helmet() {

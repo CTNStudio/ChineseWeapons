@@ -1,0 +1,26 @@
+{
+  "type": "chineseweapons:weapon_casting_shaped", 
+  "pattern": [
+    "ACA", 
+    "BAB", 
+    "B B"
+  ], 
+  "main_material": {
+    "item": "chineseweapons:ancient_gem"
+  }, 
+  "key": {
+    "A": {
+      "item": "chineseweapons:diamond_armor_pieces"
+    }, 
+    "B": {
+      "item": "chineseweapons:diamond_armor_pieces_plate"
+    }, 
+    "C": {
+      "item": "minecraft:diamond"
+    }
+  }, 
+  "result": {
+    "count": 1, 
+    "id": "chineseweapons:diamond_suanni_helmet"
+  }
+}

@@ -1,7 +1,8 @@
 
 package net.mirrorloong.chineseweapons.procedures;
 
-import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.neoforged.neoforge.registries.NeoForgeRegistries;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.entity.player.Player;
@@ -94,7 +95,7 @@ public class ArmorcastingtableguisyntheticjudgmentProcedure {
             List<String> currentItems = new ArrayList<>();
             for (int slotId = 1; slotId <= 10; slotId++) {
                 Slot slot = (Slot) slots.get(slotId);
-                currentItems.add(ForgeRegistries.ITEMS.getKey(slot.getItem().getItem()).toString());
+                currentItems.add(BuiltInRegistries.ITEM.getKey(slot.getItem().getItem()).toString());
             }
 
             for (int recipeIndex = 0; recipeIndex < recipeLists.get(1).size(); recipeIndex++) {
@@ -109,7 +110,7 @@ public class ArmorcastingtableguisyntheticjudgmentProcedure {
                 if (match) {
                     ResourceLocation output = ResourceLocation.tryParse(recipeLists.get(11).get(recipeIndex));
                     if (output != null) {
-                        ItemStack outputStack = new ItemStack(ForgeRegistries.ITEMS.getValue(output));
+                        ItemStack outputStack = new ItemStack(BuiltInRegistries.ITEM.get(output));
                         ((Slot)slots.get(11)).set(outputStack);
                         player.containerMenu.broadcastChanges();
                         return true;

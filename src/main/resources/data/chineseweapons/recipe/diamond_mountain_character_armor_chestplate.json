@@ -1,0 +1,26 @@
+{
+  "type": "chineseweapons:weapon_casting_shaped", 
+  "pattern": [
+    "   ", 
+    "ABA", 
+    "CAC"
+  ], 
+  "main_material": {
+    "item": "minecraft:diamond"
+  }, 
+  "key": {
+    "A": {
+      "item": "chineseweapons:diamond_mountain_character_armor_pieces_plate"
+    }, 
+    "B": {
+      "item": "chineseweapons:diamond_mountain_character_armor_pieces"
+    }, 
+    "C": {
+      "item": "minecraft:leather"
+    }
+  }, 
+  "result": {
+    "count": 1, 
+    "id": "chineseweapons:diamond_mountain_character_armor_chestplate"
+  }
+}

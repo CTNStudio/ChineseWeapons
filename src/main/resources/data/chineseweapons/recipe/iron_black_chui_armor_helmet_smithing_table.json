@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:smithing_transform", 
+  "addition": {
+    "item": "minecraft:quartz"
+  }, 
+  "base": {
+    "item": "minecraft:iron_helmet"
+  }, 
+  "result": {
+    "id": "chineseweapons:iron_black_chui_armor_helmet"
+  }, 
+  "template": {
+    "item": "chineseweapons:black_chui_armor_forging_stone"
+  }
+}

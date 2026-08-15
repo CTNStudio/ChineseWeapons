@@ -64,14 +64,14 @@ public class Modeltang_dynasty_infantry_armor<T extends Entity> extends EntityMo
 	}
 
 	@Override
-	public void renderToBuffer(PoseStack poseStack, VertexConsumer vertexConsumer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
-		bipedHead.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
-		bipedRightArm.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
-		bipedLeftArm.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
-		bipedLeftLeg.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
-		bipedBody.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
-		bipedRightLeg.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
-		LeftBoots.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
-		RightBoots.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
+	public void renderToBuffer(PoseStack poseStack, VertexConsumer vertexConsumer, int packedLight, int packedOverlay, int color) {
+		bipedHead.render(poseStack, vertexConsumer, packedLight, packedOverlay, color);
+		bipedRightArm.render(poseStack, vertexConsumer, packedLight, packedOverlay, color);
+		bipedLeftArm.render(poseStack, vertexConsumer, packedLight, packedOverlay, color);
+		bipedLeftLeg.render(poseStack, vertexConsumer, packedLight, packedOverlay, color);
+		bipedBody.render(poseStack, vertexConsumer, packedLight, packedOverlay, color);
+		bipedRightLeg.render(poseStack, vertexConsumer, packedLight, packedOverlay, color);
+		LeftBoots.render(poseStack, vertexConsumer, packedLight, packedOverlay, color);
+		RightBoots.render(poseStack, vertexConsumer, packedLight, packedOverlay, color);
 	}
 }

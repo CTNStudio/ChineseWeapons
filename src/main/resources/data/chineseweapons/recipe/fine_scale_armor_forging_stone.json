@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped", 
+  "category": "misc", 
+  "pattern": [
+    " b ", 
+    "bab", 
+    " b "
+  ], 
+  "key": {
+    "a": {
+      "item": "chineseweapons:ancient_gem"
+    }, 
+    "b": {
+      "item": "minecraft:stone"
+    }
+  }, 
+  "result": {
+    "count": 4, 
+    "id": "chineseweapons:fine_scale_armor_forging_stone"
+  }
+}

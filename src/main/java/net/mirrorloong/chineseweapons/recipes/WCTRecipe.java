@@ -1,18 +1,18 @@
 package net.mirrorloong.chineseweapons.recipes;
 
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
-import net.minecraft.core.RegistryAccess;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.Container;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeInput;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 
 
-public class WCTRecipe implements Recipe<Container> {
+public class WCTRecipe implements Recipe<RecipeInput> {
     private final ResourceLocation id;
     private final NonNullList<Ingredient> input;
     private final ItemStack output;
@@ -23,7 +23,7 @@ public class WCTRecipe implements Recipe<Container> {
         this.output = output;
     }
     @Override
-    public boolean matches(Container inv, Level level) {
+    public boolean matches(RecipeInput inv, Level level) {
         for (int i = 0; i < 10; ++i) {
             if (!input.get(i).test(inv.getItem(i))) {
                 return false;
@@ -33,7 +33,7 @@ public class WCTRecipe implements Recipe<Container> {
     }
 
     @Override
-    public ItemStack assemble(Container inv, RegistryAccess registryAccess) {
+    public ItemStack assemble(RecipeInput inv, HolderLookup.Provider registryAccess) {
         return output.copy();
     }
 
@@ -43,7 +43,7 @@ public class WCTRecipe implements Recipe<Container> {
     }
 
     @Override
-    public ItemStack getResultItem(RegistryAccess registryAccess) {
+    public ItemStack getResultItem(HolderLookup.Provider registryAccess) {
         return output.copy();
     }
     @Override
@@ -52,10 +52,6 @@ public class WCTRecipe implements Recipe<Container> {
     }
     public ItemStack getResultItem2(){
         return output.copy();
-    }
-    @Override
-    public ResourceLocation getId() {
-        return id;
     }
 
     @Override

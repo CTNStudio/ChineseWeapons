@@ -3,6 +3,7 @@ package net.mirrorloong.chineseweapons.procedures;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
@@ -11,11 +12,12 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.event.TickEvent;
-import net.minecraftforge.event.entity.player.PlayerEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.common.MinecraftForge;
+import net.neoforged.neoforge.event.entity.player.PlayerEvent;
+import net.neoforged.neoforge.event.tick.PlayerTickEvent;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.fml.common.Mod;
+import net.neoforged.neoforge.common.NeoForge;
 import net.mirrorloong.chineseweapons.ChineseweaponsMod;
 import net.mirrorloong.chineseweapons.event.GlaiveSpinStartedEvent;
 
@@ -24,7 +26,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
-@Mod.EventBusSubscriber(modid = ChineseweaponsMod.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
+@EventBusSubscriber(modid = ChineseweaponsMod.MODID, bus = EventBusSubscriber.Bus.GAME)
 public final class GlaiveItemGetLostKillProcedure {
     private static final int SKILL_DURATION_TICKS = 30;
     private static final int DAMAGE_PULSE_INTERVAL_TICKS = 11;
@@ -68,7 +70,7 @@ public final class GlaiveItemGetLostKillProcedure {
 
         player.getCooldowns().addCooldown(itemStack.getItem(), COOLDOWN_TICKS);
         if (world.isClientSide()) {
-            MinecraftForge.EVENT_BUS.post(new GlaiveSpinStartedEvent(player, itemStack.copy()));
+            NeoForge.EVENT_BUS.post(new GlaiveSpinStartedEvent(player, itemStack.copy()));
             return true;
         }
 
@@ -83,17 +85,16 @@ public final class GlaiveItemGetLostKillProcedure {
         damageTargetsInFront(world, player, activeSpin.damageForCurrentPulse());
         activeSpin.markPulseApplied();
         player.causeFoodExhaustion(EXHAUSTION_COST);
-        itemStack.hurtAndBreak(DURABILITY_COST, player, owner -> owner.broadcastBreakEvent(InteractionHand.MAIN_HAND));
+        itemStack.hurtAndBreak(DURABILITY_COST, player, EquipmentSlot.MAINHAND);
         return true;
     }
 
     @SubscribeEvent
-    public static void onPlayerTick(TickEvent.PlayerTickEvent event) {
-        if (event.phase != TickEvent.Phase.END || event.player.level().isClientSide()) {
+    public static void onPlayerTick(PlayerTickEvent.Post event) {
+        Player player = event.getEntity();
+        if (player.level().isClientSide()) {
             return;
         }
-
-        Player player = event.player;
         ActiveSpin activeSpin = ACTIVE_SPINS.get(player.getUUID());
         if (activeSpin == null) {
             return;

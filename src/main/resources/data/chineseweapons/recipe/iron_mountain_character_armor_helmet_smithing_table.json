@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:smithing_transform", 
+  "addition": {
+    "item": "minecraft:quartz"
+  }, 
+  "base": {
+    "item": "minecraft:iron_helmet"
+  }, 
+  "result": {
+    "id": "chineseweapons:iron_mountain_character_armor_helmet"
+  }, 
+  "template": {
+    "item": "chineseweapons:mountain_character_armor_forging_stone"
+  }
+}

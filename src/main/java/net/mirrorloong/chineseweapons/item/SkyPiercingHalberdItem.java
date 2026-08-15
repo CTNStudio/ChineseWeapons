@@ -35,7 +35,7 @@ public class SkyPiercingHalberdItem extends FourBlockReachSwordItem {
 
         if (player.isShiftKeyDown()) {
             target.knockback(2.0D, player.getX() - target.getX(), player.getZ() - target.getZ());
-            target.addEffect(new MobEffectInstance(ChineseWeaponsModEffects.BleedEffectSupplier.get(), 5 * 20, 0, false, true));
+            target.addEffect(new MobEffectInstance(ChineseWeaponsModEffects.BleedEffectSupplier, 5 * 20, 0, false, true));
         }
 
         if (player.getVehicle() != null && target.getVehicle() == null) {

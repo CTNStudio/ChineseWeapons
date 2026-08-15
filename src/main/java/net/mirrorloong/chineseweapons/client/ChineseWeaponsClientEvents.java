@@ -2,19 +2,20 @@ package net.mirrorloong.chineseweapons.client;
 
 import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.client.color.item.ItemColor;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.event.RegisterColorHandlersEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
-import net.minecraftforge.registries.ForgeRegistries;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.fml.common.Mod;
+import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.mirrorloong.chineseweapons.ChineseweaponsMod;
 import net.mirrorloong.chineseweapons.init.ChineseweaponsModItems;
 import net.mirrorloong.chineseweapons.procedures.DyeableItem;
 
-@Mod.EventBusSubscriber(modid = ChineseweaponsMod.MODID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
+@EventBusSubscriber(modid = ChineseweaponsMod.MODID, bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public final class ChineseWeaponsClientEvents {
     private static final ResourceLocation BLOCKING = ResourceLocation.fromNamespaceAndPath(ChineseweaponsMod.MODID, "blocking");
 
@@ -36,14 +37,14 @@ public final class ChineseWeaponsClientEvents {
     public static void registerItemColors(RegisterColorHandlersEvent.Item event) {
         ItemColor dyeableColor = (stack, tintIndex) -> {
             if (tintIndex == 1 && DyeableItem.hasCustomColor(stack)) {
-                return DyeableItem.getColor(stack);
+                return DyeableItem.getColor(stack) | 0xFF000000;
             }
-            return 0xFFFFFF;
+            return 0xFFFFFFFF;
         };
 
-        Item[] coloredItems = ForgeRegistries.ITEMS.getValues().stream()
+        Item[] coloredItems = BuiltInRegistries.ITEM.stream()
                 .filter(item -> {
-                    ResourceLocation key = ForgeRegistries.ITEMS.getKey(item);
+                    ResourceLocation key = BuiltInRegistries.ITEM.getKey(item);
                     if (key == null) {
                         return false;
                     }

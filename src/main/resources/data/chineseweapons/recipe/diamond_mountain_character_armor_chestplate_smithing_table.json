@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:smithing_transform", 
+  "addition": {
+    "item": "minecraft:quartz"
+  }, 
+  "base": {
+    "item": "minecraft:diamond_chestplate"
+  }, 
+  "result": {
+    "id": "chineseweapons:diamond_mountain_character_armor_chestplate"
+  }, 
+  "template": {
+    "item": "chineseweapons:mountain_character_armor_forging_stone"
+  }
+}

@@ -9,13 +9,14 @@ public class CutsEffect extends MobEffect {
         super(MobEffectCategory.HARMFUL,0x000000);
     }
     @Override
-    public void applyEffectTick(LivingEntity entity, int p_19468_) {
+    public boolean applyEffectTick(LivingEntity entity, int p_19468_) {
         if(entity.isSprinting()){
             entity.hurt(entity.damageSources().generic(),1f);
         }
+        return true;
     }
     @Override
-    public boolean isDurationEffectTick(int duration, int amplifier) {
+    public boolean shouldApplyEffectTickThisTick(int duration, int amplifier) {
         return duration % 20 == 0;
     }
 }

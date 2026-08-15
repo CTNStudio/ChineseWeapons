@@ -1,6 +1,10 @@
 
 package net.mirrorloong.chineseweapons.item;
 
+import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.level.block.Block;
+
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.LivingEntity;
@@ -31,6 +35,10 @@ public class NetheritedaggeraxeItem extends FiveBlockReachSwordItem {
 			public float getAttackDamageBonus() {
 				return 5f;
 			}
+
+				public TagKey<Block> getIncorrectBlocksForDrops() {
+					return BlockTags.INCORRECT_FOR_NETHERITE_TOOL;
+				}
 
 			public int getLevel() {
 				return 4;

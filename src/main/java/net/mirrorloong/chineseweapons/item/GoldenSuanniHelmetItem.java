@@ -14,62 +14,29 @@ import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.client.extensions.common.IClientItemExtensions;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
+import net.neoforged.neoforge.client.extensions.common.IClientItemExtensions;
+import net.mirrorloong.chineseweapons.init.ChineseWeaponsArmorMaterials;
 import net.mirrorloong.chineseweapons.client.model.Modelearly_tang_dynasty_ming_guang_armor;
 import net.mirrorloong.chineseweapons.client.model.Modelsuanni_helmet;
 
 import java.util.Collections;
 import java.util.Map;
 import java.util.function.Consumer;
+import net.minecraft.resources.ResourceLocation;
 
 public abstract class GoldenSuanniHelmetItem extends ArmorItem {
 	public GoldenSuanniHelmetItem(Type type, Properties properties) {
-		super(new ArmorMaterial() {
-			@Override
-			public int getDurabilityForType(Type type) {
-				return new int[]{13, 15, 16, 11}[type.getSlot().getIndex()] * 15;
-			}
-
-			@Override
-			public int getDefenseForType(Type type) {
-				return new int[]{2, 4, 6, 3}[type.getSlot().getIndex()];
-			}
-
-			@Override
-			public int getEnchantmentValue() {
-				return 26;
-			}
-
-			@Override
-			public SoundEvent getEquipSound() {
-				return SoundEvents.ARMOR_EQUIP_GOLD;
-			}
-
-			@Override
-			public Ingredient getRepairIngredient() {
-				return Ingredient.of(new ItemStack(Items.GOLD_INGOT));
-			}
-
-			@Override
-			public String getName() {
-				return "goldensuannihelmet";
-			}
-
-			@Override
-			public float getToughness() {
-				return 1f;
-			}
-
-			@Override
-			public float getKnockbackResistance() {
-				return 0f;
-			}
-		}, type, properties);
+				super(ChineseWeaponsArmorMaterials.holder("goldensuannihelmet", new int[]{2, 4, 6, 3}, 26, SoundEvents.ARMOR_EQUIP_GOLD, Items.GOLD_INGOT, 1f, 0f), type, properties.durability(new int[]{13, 15, 16, 11}[type.getSlot().getIndex()] * 15));
 	}
 
 	public static class Helmet extends GoldenSuanniHelmetItem {
+    @Override
+    public ResourceLocation getArmorTexture(ItemStack stack, Entity entity, EquipmentSlot slot, ArmorMaterial.Layer layer, boolean innerModel) {
+        return ResourceLocation.parse("chineseweapons:textures/entities/golden_suanni_helmet.png");
+    }
+
         public Helmet() {
             super(Type.HELMET, new Properties());
         }
@@ -92,9 +59,5 @@ public abstract class GoldenSuanniHelmetItem extends ArmorItem {
             });
         }
 
-        @Override
-        public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlot slot, String type) {
-            return "chineseweapons:textures/entities/golden_suanni_helmet.png";
-        }
     }
 }

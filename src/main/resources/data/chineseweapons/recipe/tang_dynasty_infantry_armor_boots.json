@@ -1,0 +1,23 @@
+{
+  "type": "chineseweapons:weapon_casting_shaped", 
+  "pattern": [
+    "   ", 
+    "A A", 
+    "B B"
+  ], 
+  "main_material": {
+    "item": "minecraft:iron_ingot"
+  }, 
+  "key": {
+    "A": {
+      "item": "minecraft:iron_nugget"
+    }, 
+    "B": {
+      "item": "minecraft:leather"
+    }
+  }, 
+  "result": {
+    "count": 1, 
+    "id": "chineseweapons:tang_dynasty_infantry_armor_boots"
+  }
+}

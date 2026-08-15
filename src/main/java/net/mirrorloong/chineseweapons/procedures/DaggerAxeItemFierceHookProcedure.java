@@ -7,6 +7,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.util.RandomSource;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.core.registries.Registries;
 import java.util.List;
@@ -135,9 +136,13 @@ public class DaggerAxeItemFierceHookProcedure {
 
         boolean damaged = target.hurt(new DamageSource(world.registryAccess().registryOrThrow(Registries.DAMAGE_TYPE).getHolderOrThrow(DamageTypes.PLAYER_ATTACK)), 2);
 
-        if (damaged && itemstack.hurt(1, RandomSource.create(), null)) {
-            itemstack.shrink(1);
-            itemstack.setDamageValue(0);
+        if (damaged && world instanceof ServerLevel serverLevel && sourceEntity instanceof LivingEntity living) {
+            itemstack.hurtAndBreak(1, serverLevel, living, item -> {
+            });
+            if (itemstack.isEmpty()) {
+                itemstack.shrink(1);
+                itemstack.setDamageValue(0);
+            }
         }
 
         return damaged;

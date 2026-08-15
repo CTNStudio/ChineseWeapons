@@ -2,81 +2,94 @@ package net.mirrorloong.chineseweapons;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.item.crafting.RecipeSerializer;
-import net.minecraftforge.event.entity.living.LivingHurtEvent;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.RegistryObject;
+import net.neoforged.bus.api.IEventBus;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.ModContainer;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.fml.common.Mod;
+import net.neoforged.neoforge.common.NeoForge;
+import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
+import net.neoforged.neoforge.event.tick.ServerTickEvent;
+import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
+import net.neoforged.neoforge.network.registration.PayloadRegistrar;
+import net.neoforged.neoforge.registries.DeferredHolder;
+import net.neoforged.neoforge.registries.DeferredRegister;
+import net.mirrorloong.chineseweapons.compat.WeaponScriptSettings;
 import net.mirrorloong.chineseweapons.gui.recipe.DeferredGui;
-import net.mirrorloong.chineseweapons.init.*;
-import net.mirrorloong.chineseweapons.item.*;
+import net.mirrorloong.chineseweapons.init.ChineseWeaponsModEffects;
+import net.mirrorloong.chineseweapons.init.ChineseWeaponsModEnchantments;
+import net.mirrorloong.chineseweapons.init.ChineseweaponsModBlocks;
+import net.mirrorloong.chineseweapons.init.ChineseweaponsModItems;
+import net.mirrorloong.chineseweapons.init.ChineseweaponsModTabs;
+import net.mirrorloong.chineseweapons.item.DiamondglaiveItem;
+import net.mirrorloong.chineseweapons.item.GoldenglaiveItem;
+import net.mirrorloong.chineseweapons.item.GreenloongglaiveItem;
+import net.mirrorloong.chineseweapons.item.IronglaiveItem;
+import net.mirrorloong.chineseweapons.item.NetheriteglaiveItem;
+import net.mirrorloong.chineseweapons.item.StoneglaiveItem;
+import net.mirrorloong.chineseweapons.item.WoodenglaiveItem;
+import net.mirrorloong.chineseweapons.network.ArmorcastingtableguiSlotMessage;
 import net.mirrorloong.chineseweapons.procedures.DyeableItem;
 import net.mirrorloong.chineseweapons.recipes.DeferredRecipe;
 import net.mirrorloong.chineseweapons.recipes.DyeableArmorRecipe;
-import net.mirrorloong.chineseweapons.compat.WeaponScriptSettings;
-import org.apache.logging.log4j.Logger;
-import org.apache.logging.log4j.LogManager;
-import net.minecraftforge.network.simple.SimpleChannel;
-import net.minecraftforge.network.NetworkRegistry;
-import net.minecraftforge.network.NetworkEvent;
-import net.minecraftforge.fml.util.thread.SidedThreadGroups;
-import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.event.TickEvent;
-import net.minecraftforge.common.MinecraftForge;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.network.FriendlyByteBuf;
-
-import java.util.*;
-import java.util.function.Supplier;
-import java.util.function.Function;
-import java.util.function.BiConsumer;
+import java.util.AbstractMap;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.Random;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 @Mod(ChineseweaponsMod.MODID)
 public class ChineseweaponsMod {
-	public static final Logger LOGGER = LogManager.getLogger(ChineseweaponsMod.class);
+	public static final Logger LOGGER = LoggerFactory.getLogger(ChineseweaponsMod.class);
 	public static final String MODID = "chineseweapons";
 
     public static final DeferredRegister<RecipeSerializer<?>> RECIPE_SERIALIZERS =
-            DeferredRegister.create(ForgeRegistries.RECIPE_SERIALIZERS, ChineseweaponsMod.MODID);
+            DeferredRegister.create(BuiltInRegistries.RECIPE_SERIALIZER, ChineseweaponsMod.MODID);
 
-    public static final RegistryObject<RecipeSerializer<DyeableArmorRecipe>> DYEABLE_ARMOR_RECIPE =
+    public static final DeferredHolder<RecipeSerializer<?>, RecipeSerializer<DyeableArmorRecipe>> DYEABLE_ARMOR_RECIPE =
             RECIPE_SERIALIZERS.register("crafting_special_dyeablearmor",
                     () -> DyeableArmorRecipe.SERIALIZER);
 
+    public ChineseweaponsMod(IEventBus modEventBus, ModContainer modContainer) {
+        DeferredRecipe.DeferredRecipeSer.register(modEventBus);
+        DeferredRecipe.DeferredRecipe.register(modEventBus);
+        DeferredGui.Deferred.register(modEventBus);
+        ChineseweaponsModBlocks.REGISTRY.register(modEventBus);
+        ChineseweaponsModItems.REGISTRY.register(modEventBus);
+        ChineseweaponsModTabs.REGISTRY.register(modEventBus);
+        ChineseWeaponsModEffects.REGISTER.register(modEventBus);
+        ChineseWeaponsModEnchantments.REGISTRY.register(modEventBus);
+        RECIPE_SERIALIZERS.register(modEventBus);
+        modEventBus.addListener(ChineseweaponsMod::registerPayloads);
+        NeoForge.EVENT_BUS.register(this);
+    }
 
-    public ChineseweaponsMod(FMLJavaModLoadingContext context) {
-        IEventBus bus = context.getModEventBus();
-
-        MinecraftForge.EVENT_BUS.register(this);
-        DeferredRecipe.DeferredRecipeSer.register(bus);
-        DeferredRecipe.DeferredRecipe.register(bus);
-        DeferredGui.Deferred.register(bus);
-        ChineseweaponsModBlocks.REGISTRY.register(bus);
-        ChineseweaponsModItems.REGISTRY.register(bus);
-        ChineseweaponsModTabs.REGISTRY.register(bus);
-        ChineseWeaponsModEffects.REGISTER.register(bus);
-        ChineseWeaponsModEnchantments.REGISTRY.register(bus);
-        RECIPE_SERIALIZERS.register(bus);
+    private static void registerPayloads(RegisterPayloadHandlersEvent event) {
+        final PayloadRegistrar registrar = event.registrar(MODID).versioned("1").optional();
+        registrar.playToServer(ArmorcastingtableguiSlotMessage.TYPE,
+                ArmorcastingtableguiSlotMessage.STREAM_CODEC,
+                ArmorcastingtableguiSlotMessage::handle);
     }
 
 	private static final Random random = new Random();
-	@Mod.EventBusSubscriber(modid = ChineseweaponsMod.MODID,bus= Mod.EventBusSubscriber.Bus.FORGE)
-	public static class ForgeEvent{
+	@EventBusSubscriber(modid = ChineseweaponsMod.MODID, bus = EventBusSubscriber.Bus.GAME)
+	public static class ForgeEvent {
 		@SubscribeEvent
-		public static void onLivingHurt(LivingHurtEvent event){
-			if( event.getEntity().getVehicle() !=null){
+		public static void onLivingHurt(LivingDamageEvent.Pre event) {
+			if (event.getEntity().getVehicle() != null) {
 				DamageSource source = event.getSource();
-				if(source.getEntity() instanceof Player player){
+				if (source.getEntity() instanceof Player player) {
 					Item item = player.getMainHandItem().getItem();
-					if(item instanceof DiamondglaiveItem || item instanceof GoldenglaiveItem
-					|| item instanceof IronglaiveItem || item instanceof NetheriteglaiveItem
-					|| item instanceof GreenloongglaiveItem
-					|| item instanceof WoodenglaiveItem ||item instanceof StoneglaiveItem ){
+					if (item instanceof DiamondglaiveItem || item instanceof GoldenglaiveItem
+							|| item instanceof IronglaiveItem || item instanceof NetheriteglaiveItem
+							|| item instanceof GreenloongglaiveItem
+							|| item instanceof WoodenglaiveItem || item instanceof StoneglaiveItem) {
 						float chance = WeaponScriptSettings.getChance(item, WeaponScriptSettings.Skill.GLAIVE_DISMOUNT, 0.60F);
 						if (random.nextFloat() < chance) {
 							event.getEntity().stopRiding();
@@ -86,33 +99,22 @@ public class ChineseweaponsMod {
 			}
 		}
 	}
-	private static final String PROTOCOL_VERSION = "1";
-	public static final SimpleChannel PACKET_HANDLER = NetworkRegistry.newSimpleChannel(ResourceLocation.fromNamespaceAndPath(MODID, MODID), () -> PROTOCOL_VERSION, PROTOCOL_VERSION::equals, PROTOCOL_VERSION::equals);
-	private static int messageID = 0;
-
-	public static <T> void addNetworkMessage(Class<T> messageType, BiConsumer<T, FriendlyByteBuf> encoder, Function<FriendlyByteBuf, T> decoder, BiConsumer<T, Supplier<NetworkEvent.Context>> messageConsumer) {
-		PACKET_HANDLER.registerMessage(messageID, messageType, encoder, decoder, messageConsumer);
-		messageID++;
-	}
 	private static final Collection<AbstractMap.SimpleEntry<Runnable, Integer>> workQueue = new ConcurrentLinkedQueue<>();
 
 	public static void queueServerWork(int tick, Runnable action) {
-		if (Thread.currentThread().getThreadGroup() == SidedThreadGroups.SERVER)
-			workQueue.add(new AbstractMap.SimpleEntry<>(action, tick));
+		workQueue.add(new AbstractMap.SimpleEntry<>(action, tick));
 	}
 
 	@SubscribeEvent
-	public void tick(TickEvent.ServerTickEvent event) {
-		if (event.phase == TickEvent.Phase.END) {
-			List<AbstractMap.SimpleEntry<Runnable, Integer>> actions = new ArrayList<>();
-			workQueue.forEach(work -> {
-				work.setValue(work.getValue() - 1);
-				if (work.getValue() == 0)
-					actions.add(work);
-			});
-			actions.forEach(e -> e.getKey().run());
-			workQueue.removeAll(actions);
-		}
+	public void tick(ServerTickEvent.Post event) {
+		List<AbstractMap.SimpleEntry<Runnable, Integer>> actions = new ArrayList<>();
+		workQueue.forEach(work -> {
+			work.setValue(work.getValue() - 1);
+			if (work.getValue() == 0) {
+				actions.add(work);
+			}
+		});
+		actions.forEach(e -> e.getKey().run());
+		workQueue.removeAll(actions);
 	}
-
 }

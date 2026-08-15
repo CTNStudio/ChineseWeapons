@@ -1,0 +1,26 @@
+{
+  "type": "chineseweapons:weapon_casting_shaped", 
+  "pattern": [
+    " A ", 
+    "BBB", 
+    "C C"
+  ], 
+  "main_material": {
+    "item": "minecraft:iron_ingot"
+  }, 
+  "key": {
+    "A": {
+      "item": "minecraft:string"
+    }, 
+    "B": {
+      "item": "chineseweapons:golden_mountain_character_armor_pieces_plate"
+    }, 
+    "C": {
+      "item": "chineseweapons:golden_mountain_character_armor_pieces"
+    }
+  }, 
+  "result": {
+    "count": 1, 
+    "id": "chineseweapons:golden_mountain_character_armor_helmet"
+  }
+}
