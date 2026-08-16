@@ -9,6 +9,7 @@ import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
@@ -26,6 +27,7 @@ import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.mirrorloong.chineseweapons.ChineseweaponsMod;
 import net.mirrorloong.chineseweapons.init.ChineseWeaponsModEffects;
+import net.mirrorloong.chineseweapons.init.ChineseweaponsModItems;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
@@ -40,7 +42,8 @@ import java.util.UUID;
 /**
  * Server-side combat rules shared by the armour sets and the sky-piercing halberd.
  * Full-set-only effects deliberately require four matching armour-family pieces;
- * mixed material tiers of the same family still count as one complete set.
+ * mixed material tiers of the same family still count as one complete set, and
+ * the documented Suanni and Bohai helmets can replace a Ming Guang helmet.
  */
 @Mod.EventBusSubscriber(modid = ChineseweaponsMod.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public final class ChineseWeaponsCombatEvents {
@@ -544,7 +547,21 @@ public final class ChineseWeaponsCombatEvents {
                 count++;
             }
         }
+        if (isMingGuang(family) && isMingGuangHelmetSubstitute(entity.getItemBySlot(EquipmentSlot.HEAD))) {
+            count++;
+        }
         return count;
+    }
+
+    private static boolean isMingGuangHelmetSubstitute(ItemStack helmet) {
+        return helmet.is(ChineseweaponsModItems.DIAMOND_SUANNI_HELMET.get())
+                || helmet.is(ChineseweaponsModItems.IRON_SUANNI_HELMET.get())
+                || helmet.is(ChineseweaponsModItems.NETHERITE_SUANNI_HELMET.get())
+                || helmet.is(ChineseweaponsModItems.GOLDEN_SUANNI_HELMET.get())
+                || helmet.is(ChineseweaponsModItems.DIAMOND_BOHAI_HELMET.get())
+                || helmet.is(ChineseweaponsModItems.IRON_BOHAI_HELMET.get())
+                || helmet.is(ChineseweaponsModItems.NETHERITE_BOHAI_HELMET.get())
+                || helmet.is(ChineseweaponsModItems.GOLDEN_BOHAI_HELMET.get());
     }
 
     private static String itemPath(ItemStack stack) {
