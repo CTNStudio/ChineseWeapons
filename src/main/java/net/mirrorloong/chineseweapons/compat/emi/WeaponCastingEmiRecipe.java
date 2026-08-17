@@ -21,8 +21,8 @@ public final class WeaponCastingEmiRecipe extends BasicEmiRecipe {
     private final List<EmiIngredient> ingredients;
     private final EmiStack result;
 
-    public WeaponCastingEmiRecipe(WCTRecipe recipe) {
-        super(ChineseWeaponsEmiPlugin.WEAPON_CASTING, recipe.getId(), WIDTH, HEIGHT);
+    public WeaponCastingEmiRecipe(ResourceLocation id, WCTRecipe recipe) {
+        super(ChineseWeaponsEmiPlugin.WEAPON_CASTING, id, WIDTH, HEIGHT);
         this.ingredients = recipe.getIngredients().stream().map(EmiIngredient::of).toList();
         this.result = EmiStack.of(recipe.getResultItem2());
         this.inputs.addAll(this.ingredients);

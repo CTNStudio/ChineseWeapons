@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped", 
+  "category": "misc", 
+  "pattern": [
+    " b ", 
+    "bab", 
+    " b "
+  ], 
+  "key": {
+    "a": {
+      "item": "chineseweapons:ancient_gem"
+    }, 
+    "b": {
+      "item": "minecraft:tuff"
+    }
+  }, 
+  "result": {
+    "count": 4, 
+    "id": "chineseweapons:early_tang_dynasty_ming_guang_armor_forging_stone"
+  }
+}

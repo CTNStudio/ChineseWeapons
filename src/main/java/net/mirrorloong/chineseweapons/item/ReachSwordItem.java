@@ -1,38 +1,36 @@
 package net.mirrorloong.chineseweapons.item;
 
-import com.google.common.collect.ImmutableMultimap;
-import com.google.common.collect.Multimap;
-import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.entity.ai.attributes.Attribute;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.EquipmentSlotGroup;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.SwordItem;
 import net.minecraft.world.item.Tier;
-import net.minecraftforge.common.ForgeMod;
+import net.minecraft.world.item.component.ItemAttributeModifiers;
 import net.mirrorloong.chineseweapons.compat.WeaponScriptSettings;
 
-import java.util.UUID;
-
 public abstract class ReachSwordItem extends SwordItem {
-    private static final UUID ENTITY_REACH_MODIFIER_ID = UUID.fromString("a6796eb5-9d73-4f19-b846-a2e1efc874f2");
+    private static final ResourceLocation REACH_MODIFIER_ID = ResourceLocation.fromNamespaceAndPath("chineseweapons", "entity_reach_bonus");
 
+    private final int attackDamageModifier;
+    private final float attackSpeedModifier;
     private final double entityReachBonus;
 
     protected ReachSwordItem(Tier tier, int attackDamageModifier, float attackSpeedModifier, Item.Properties properties, double entityReachBonus) {
-        super(tier, attackDamageModifier, attackSpeedModifier, properties);
+        super(tier, properties);
+        this.attackDamageModifier = attackDamageModifier;
+        this.attackSpeedModifier = attackSpeedModifier;
         this.entityReachBonus = entityReachBonus;
     }
 
     @Override
-    public Multimap<Attribute, AttributeModifier> getDefaultAttributeModifiers(EquipmentSlot equipmentSlot) {
-        if (equipmentSlot != EquipmentSlot.MAINHAND) {
-            return super.getDefaultAttributeModifiers(equipmentSlot);
-        }
-
-        return ImmutableMultimap.<Attribute, AttributeModifier>builder()
-                .putAll(super.getDefaultAttributeModifiers(equipmentSlot))
-                .put(ForgeMod.ENTITY_REACH.get(), new AttributeModifier(ENTITY_REACH_MODIFIER_ID, "Weapon entity reach", WeaponScriptSettings.getReachBonus(this, this.entityReachBonus), AttributeModifier.Operation.ADDITION))
-                .build();
+    public ItemAttributeModifiers getDefaultAttributeModifiers(ItemStack stack) {
+        return SwordItem.createAttributes(getTier(), attackDamageModifier, attackSpeedModifier)
+                .withModifierAdded(Attributes.ENTITY_INTERACTION_RANGE,
+                        new AttributeModifier(REACH_MODIFIER_ID, WeaponScriptSettings.getReachBonus(this, this.entityReachBonus), AttributeModifier.Operation.ADD_VALUE),
+                        EquipmentSlotGroup.MAINHAND);
     }
 }
 

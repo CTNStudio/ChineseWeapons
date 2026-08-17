@@ -1,7 +1,6 @@
 package net.mirrorloong.chineseweapons.gui.recipe;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.network.protocol.game.ClientboundContainerSetSlotPacket;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.SimpleContainer;
@@ -11,17 +10,20 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.RecipeHolder;
+import net.minecraft.world.item.crafting.RecipeInput;
 import net.minecraft.world.item.crafting.RecipeManager;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.fml.common.Mod;
+import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
 import net.mirrorloong.chineseweapons.ChineseweaponsMod;
 import net.mirrorloong.chineseweapons.recipes.DeferredRecipe;
 import net.mirrorloong.chineseweapons.recipes.WCTRecipe;
 
 import java.util.List;
-@Mod.EventBusSubscriber(modid = ChineseweaponsMod.MODID,value = Dist.CLIENT,bus= Mod.EventBusSubscriber.Bus.MOD)
+@EventBusSubscriber(modid = ChineseweaponsMod.MODID,value = Dist.CLIENT,bus= EventBusSubscriber.Bus.MOD)
 public class WeaponsCastingTableTypeGuiMenu extends AbstractContainerMenu {
     public static RecipeManager recipeManager;
     private final Player player;
@@ -85,9 +87,20 @@ public class WeaponsCastingTableTypeGuiMenu extends AbstractContainerMenu {
                 }
 
                 if (recipeManager != null) {
-                    List<WCTRecipe> AllWCTRecipe = recipeManager.getAllRecipesFor(DeferredRecipe.WeaponCastingShapedType.get());
+                    List<WCTRecipe> AllWCTRecipe = recipeManager.getAllRecipesFor(DeferredRecipe.WeaponCastingShapedType.get()).stream().map(RecipeHolder::value).toList();
                     for (WCTRecipe wctRecipe : AllWCTRecipe) {
-                        if (wctRecipe.matches(container2, null)) {
+                        RecipeInput recipeInput = new RecipeInput() {
+                            @Override
+                            public ItemStack getItem(int index) {
+                                return container2.getItem(index);
+                            }
+
+                            @Override
+                            public int size() {
+                                return container2.getContainerSize();
+                            }
+                        };
+                        if (wctRecipe.matches(recipeInput, null)) {
                             outputContainer.setItem(0, wctRecipe.getResultItem2());
                             break;
                         } else if (!outputContainer.getItem(0).is(Items.AIR)) {
@@ -169,9 +182,7 @@ public class WeaponsCastingTableTypeGuiMenu extends AbstractContainerMenu {
         return true;
     }
     @SubscribeEvent
-    public static void onClientSetup(FMLClientSetupEvent event){
-        event.enqueueWork(()->{
-            MenuScreens.register(DeferredGui.RegMenu.get(),WeaponsCastingTableScreen::new);
-        });
+    public static void onRegisterMenuScreens(RegisterMenuScreensEvent event){
+        event.register(DeferredGui.RegMenu.get(),WeaponsCastingTableScreen::new);
     }
 }

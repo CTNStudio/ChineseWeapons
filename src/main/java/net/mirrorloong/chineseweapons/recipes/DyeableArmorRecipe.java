@@ -1,12 +1,11 @@
 package net.mirrorloong.chineseweapons.recipes;
 
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
-import net.minecraft.core.RegistryAccess;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.item.DyeItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.CraftingBookCategory;
+import net.minecraft.world.item.crafting.CraftingInput;
 import net.minecraft.world.item.crafting.CustomRecipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.SimpleCraftingRecipeSerializer;
@@ -18,17 +17,17 @@ public class DyeableArmorRecipe extends CustomRecipe {
     public static final RecipeSerializer<DyeableArmorRecipe> SERIALIZER =
             new SimpleCraftingRecipeSerializer<>(DyeableArmorRecipe::new);
 
-    public DyeableArmorRecipe(ResourceLocation id, CraftingBookCategory category) {
-        super(id, category);
+    public DyeableArmorRecipe(CraftingBookCategory category) {
+        super(category);
     }
 
     @Override
-    public boolean matches(CraftingContainer container, Level level) {
+    public boolean matches(CraftingInput input, Level level) {
         ItemStack armorStack = ItemStack.EMPTY;
         boolean hasDye = false;
 
-        for (int i = 0; i < container.getContainerSize(); i++) {
-            ItemStack stack = container.getItem(i);
+        for (int i = 0; i < input.size(); i++) {
+            ItemStack stack = input.getItem(i);
             if (!stack.isEmpty()) {
                 if (isDyeableItem(stack)) {
                     if (!armorStack.isEmpty()) return false;
@@ -45,11 +44,11 @@ public class DyeableArmorRecipe extends CustomRecipe {
     }
 
     @Override
-    public ItemStack assemble(CraftingContainer container, RegistryAccess registryAccess) {
+    public ItemStack assemble(CraftingInput input, HolderLookup.Provider registryAccess) {
         ItemStack armorStack = ItemStack.EMPTY;
 
-        for (int i = 0; i < container.getContainerSize(); i++) {
-            ItemStack stack = container.getItem(i);
+        for (int i = 0; i < input.size(); i++) {
+            ItemStack stack = input.getItem(i);
             if (!stack.isEmpty() && isDyeableItem(stack)) {
                 armorStack = stack.copy();
                 armorStack.setCount(1);
@@ -77,13 +76,13 @@ public class DyeableArmorRecipe extends CustomRecipe {
             dyeCount++;
         }
 
-        for (int i = 0; i < container.getContainerSize(); i++) {
-            ItemStack stack = container.getItem(i);
+        for (int i = 0; i < input.size(); i++) {
+            ItemStack stack = input.getItem(i);
             if (!stack.isEmpty() && stack.getItem() instanceof DyeItem dyeItem) {
-                float[] dyeColors = dyeItem.getDyeColor().getTextureDiffuseColors();
-                int r = (int)(dyeColors[0] * 255.0F);
-                int g = (int)(dyeColors[1] * 255.0F);
-                int b = (int)(dyeColors[2] * 255.0F);
+                int c = dyeItem.getDyeColor().getTextureDiffuseColor();
+                int r = (c >> 16) & 255;
+                int g = (c >> 8) & 255;
+                int b = c & 255;
                 maxComponent += Math.max(r, Math.max(g, b));
                 colorComponents[0] += r;
                 colorComponents[1] += g;
@@ -115,11 +114,11 @@ public class DyeableArmorRecipe extends CustomRecipe {
     }
 
     @Override
-    public NonNullList<ItemStack> getRemainingItems(CraftingContainer container) {
-        NonNullList<ItemStack> remainingItems = NonNullList.withSize(container.getContainerSize(), ItemStack.EMPTY);
+    public NonNullList<ItemStack> getRemainingItems(CraftingInput input) {
+        NonNullList<ItemStack> remainingItems = NonNullList.withSize(input.size(), ItemStack.EMPTY);
 
         for (int i = 0; i < remainingItems.size(); i++) {
-            ItemStack stack = container.getItem(i);
+            ItemStack stack = input.getItem(i);
             if (stack.getItem() instanceof DyeItem) {
                 remainingItems.set(i, ItemStack.EMPTY);
             }

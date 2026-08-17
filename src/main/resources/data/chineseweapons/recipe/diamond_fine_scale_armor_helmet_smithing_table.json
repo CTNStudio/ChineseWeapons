@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:smithing_transform", 
+  "addition": {
+    "item": "minecraft:quartz"
+  }, 
+  "base": {
+    "item": "minecraft:diamond_helmet"
+  }, 
+  "result": {
+    "id": "chineseweapons:diamond_fine_scale_armor_helmet"
+  }, 
+  "template": {
+    "item": "chineseweapons:fine_scale_armor_forging_stone"
+  }
+}

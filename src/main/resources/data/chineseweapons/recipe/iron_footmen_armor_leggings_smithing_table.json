@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:smithing_transform", 
+  "addition": {
+    "item": "minecraft:quartz"
+  }, 
+  "base": {
+    "item": "minecraft:iron_leggings"
+  }, 
+  "result": {
+    "id": "chineseweapons:iron_footmen_armor_leggings"
+  }, 
+  "template": {
+    "item": "chineseweapons:footmen_armor_forging_stone"
+  }
+}

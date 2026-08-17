@@ -6,6 +6,7 @@ import dev.emi.emi.api.EmiRegistry;
 import dev.emi.emi.api.recipe.EmiRecipeCategory;
 import dev.emi.emi.api.stack.EmiStack;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.crafting.RecipeHolder;
 import net.mirrorloong.chineseweapons.ChineseweaponsMod;
 import net.mirrorloong.chineseweapons.init.ChineseweaponsModBlocks;
 import net.mirrorloong.chineseweapons.recipes.DeferredRecipe;
@@ -24,7 +25,7 @@ public final class ChineseWeaponsEmiPlugin implements EmiPlugin {
         registry.getRecipeManager()
                 .getAllRecipesFor(DeferredRecipe.WeaponCastingShapedType.get())
                 .stream()
-                .map(WeaponCastingEmiRecipe::new)
+                .map(holder -> new WeaponCastingEmiRecipe(holder.id(), holder.value()))
                 .forEach(registry::addRecipe);
     }
 }

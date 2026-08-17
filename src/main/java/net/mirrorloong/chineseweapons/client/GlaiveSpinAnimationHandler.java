@@ -9,12 +9,12 @@ import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.client.event.RenderHandEvent;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.TickEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
+import net.neoforged.neoforge.client.event.ClientTickEvent;
+import net.neoforged.neoforge.client.event.RenderHandEvent;
+import net.neoforged.neoforge.common.NeoForge;
+import net.neoforged.bus.api.SubscribeEvent;
 
 import java.util.UUID;
 
@@ -49,7 +49,7 @@ public final class GlaiveSpinAnimationHandler {
 
     public static void start(Player player, ItemStack itemStack) {
         if (!registered) {
-            MinecraftForge.EVENT_BUS.register(INSTANCE);
+            NeoForge.EVENT_BUS.register(INSTANCE);
             registered = true;
         }
 
@@ -61,8 +61,8 @@ public final class GlaiveSpinAnimationHandler {
     }
 
     @SubscribeEvent
-    public void onClientTick(TickEvent.ClientTickEvent event) {
-        if (event.phase != TickEvent.Phase.END || !rotating) {
+    public void onClientTick(ClientTickEvent.Post event) {
+        if (!rotating) {
             return;
         }
 

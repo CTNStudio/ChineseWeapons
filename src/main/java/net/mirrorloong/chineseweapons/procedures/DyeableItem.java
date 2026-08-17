@@ -5,13 +5,15 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.texture.DynamicTexture;
 import net.minecraft.client.renderer.texture.TextureManager;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.Resource;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraft.world.item.component.CustomData;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -29,28 +31,30 @@ public interface DyeableItem {
 
     static boolean hasCustomColor(ItemStack stack) {
         if (stack.isEmpty()) return false;
-        CompoundTag tag = stack.getTagElement(TAG_DISPLAY);
-        return tag != null && tag.contains(TAG_COLOR);
+        CompoundTag tag = stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag();
+        return tag.contains(TAG_COLOR);
     }
 
     static int getColor(ItemStack stack) {
-        CompoundTag tag = stack.getTagElement(TAG_DISPLAY);
-        if (tag != null && tag.contains(TAG_COLOR)) {
+        CompoundTag tag = stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag();
+        if (tag.contains(TAG_COLOR)) {
             return tag.getInt(TAG_COLOR);
         }
         return 0xFFFFFF;
     }
 
     static void setColor(ItemStack stack, int color) {
-        stack.getOrCreateTagElement(TAG_DISPLAY).putInt(TAG_COLOR, color);
+        stack.update(DataComponents.CUSTOM_DATA, CustomData.EMPTY, cd -> cd.update(tag -> tag.putInt(TAG_COLOR, color)));
     }
 
     static void removeColor(ItemStack stack) {
-        CompoundTag tag = stack.getTagElement(TAG_DISPLAY);
-        if (tag != null) {
+        CompoundTag tag = stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag();
+        if (tag.contains(TAG_COLOR)) {
             tag.remove(TAG_COLOR);
             if (tag.isEmpty()) {
-                stack.removeTagKey(TAG_DISPLAY);
+                stack.remove(DataComponents.CUSTOM_DATA);
+            } else {
+                stack.set(DataComponents.CUSTOM_DATA, CustomData.of(tag));
             }
         }
     }

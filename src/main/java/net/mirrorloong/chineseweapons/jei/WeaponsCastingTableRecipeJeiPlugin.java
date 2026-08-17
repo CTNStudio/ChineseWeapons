@@ -9,6 +9,7 @@ import mezz.jei.api.registration.IRecipeRegistration;
 import net.minecraft.client.Minecraft;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeManager;
 import net.mirrorloong.chineseweapons.ChineseweaponsMod;
 import net.mirrorloong.chineseweapons.gui.recipe.WeaponsCastingTableTypeGuiMenu;
@@ -41,7 +42,10 @@ public class WeaponsCastingTableRecipeJeiPlugin implements IModPlugin {
     @Override
     public void registerRecipes(IRecipeRegistration registration) {
         RecipeManager recipeManager = Minecraft.getInstance().getConnection().getRecipeManager();
-        List<WCTRecipe> recipes = recipeManager.getAllRecipesFor(DeferredRecipe.WeaponCastingShapedType.get());
+        List<WCTRecipe> recipes = recipeManager.getAllRecipesFor(DeferredRecipe.WeaponCastingShapedType.get())
+                .stream()
+                .map(RecipeHolder::value)
+                .toList();
         registration.addRecipes(RECIPE_TYPE, recipes);
     }
 

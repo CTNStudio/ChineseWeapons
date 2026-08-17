@@ -1,0 +1,23 @@
+{
+  "type": "chineseweapons:weapon_casting_shaped", 
+  "pattern": [
+    " AA", 
+    "ABA", 
+    "BA "
+  ], 
+  "main_material": {
+    "item": "minecraft:gold_ingot"
+  }, 
+  "key": {
+    "A": {
+      "tag": "minecraft:stone_crafting_materials"
+    }, 
+    "B": {
+      "item": "minecraft:stick"
+    }
+  }, 
+  "result": {
+    "count": 1, 
+    "id": "chineseweapons:stone_glaive"
+  }
+}

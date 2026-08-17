@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped", 
+  "category": "misc", 
+  "pattern": [
+    "aba", 
+    "bab"
+  ], 
+  "key": {
+    "a": {
+      "item": "minecraft:iron_ingot"
+    }, 
+    "b": {
+      "tag": "minecraft:planks"
+    }
+  }, 
+  "result": {
+    "count": 1, 
+    "id": "chineseweapons:armor_casting_table"
+  }
+}

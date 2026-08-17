@@ -1,6 +1,6 @@
 {
   "gui_light": "front",
-  "loader": "forge:separate_transforms",
+  "loader": "neoforge:separate_transforms",
   "textures": {
     "particle": "chineseweapons:item/netherite_sky_piercing_halberd"
   },

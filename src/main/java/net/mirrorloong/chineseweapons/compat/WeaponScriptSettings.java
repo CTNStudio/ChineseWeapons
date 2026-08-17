@@ -1,8 +1,8 @@
 package net.mirrorloong.chineseweapons.compat;
 
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
-import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.EnumMap;
 import java.util.Map;
@@ -29,7 +29,7 @@ public final class WeaponScriptSettings {
     }
 
     public static double getReachBonus(Item item, double fallback) {
-        ResourceLocation itemId = ForgeRegistries.ITEMS.getKey(item);
+        ResourceLocation itemId = BuiltInRegistries.ITEM.getKey(item);
         return itemId == null ? fallback : REACH_BONUSES.getOrDefault(itemId, fallback);
     }
 
@@ -41,7 +41,7 @@ public final class WeaponScriptSettings {
     }
 
     public static float getChance(Item item, Skill skill, float fallback) {
-        ResourceLocation itemId = ForgeRegistries.ITEMS.getKey(item);
+        ResourceLocation itemId = BuiltInRegistries.ITEM.getKey(item);
         EnumMap<Skill, Float> values = itemId == null ? null : SKILL_CHANCES.get(itemId);
         return values == null ? fallback : values.getOrDefault(skill, fallback);
     }

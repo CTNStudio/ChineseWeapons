@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:smithing_transform", 
+  "addition": {
+    "item": "minecraft:netherite_ingot"
+  }, 
+  "base": {
+    "item": "chineseweapons:diamond_late_tang_dynasty_ming_guang_armor_helmet"
+  }, 
+  "result": {
+    "id": "chineseweapons:netherite_late_tang_dynasty_ming_guang_armor_helmet"
+  }, 
+  "template": {
+    "item": "minecraft:netherite_upgrade_smithing_template"
+  }
+}

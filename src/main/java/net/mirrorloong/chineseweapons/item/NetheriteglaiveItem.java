@@ -1,6 +1,10 @@
 
 package net.mirrorloong.chineseweapons.item;
 
+import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.level.block.Block;
+
 import net.minecraft.world.entity.LivingEntity;
 import net.mirrorloong.chineseweapons.init.ChineseweaponsModItems;
 
@@ -27,6 +31,10 @@ public class NetheriteglaiveItem extends GlaiveItemBase {
 			public float getAttackDamageBonus() {
 				return 5f;
 			}
+
+				public TagKey<Block> getIncorrectBlocksForDrops() {
+					return BlockTags.INCORRECT_FOR_NETHERITE_TOOL;
+				}
 
 			public int getLevel() {
 				return 4;

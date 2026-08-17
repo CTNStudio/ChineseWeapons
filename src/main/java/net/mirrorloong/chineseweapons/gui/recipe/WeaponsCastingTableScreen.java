@@ -17,7 +17,7 @@ public class WeaponsCastingTableScreen extends AbstractContainerScreen<WeaponsCa
     }
     @Override
     public void render(GuiGraphics guiGraphics, int x, int y, float v) {
-        this.renderBackground(guiGraphics);
+        this.renderBackground(guiGraphics, x, y, v);
         super.render(guiGraphics,x,y,v);
         this.renderTooltip(guiGraphics, x,y);
     }

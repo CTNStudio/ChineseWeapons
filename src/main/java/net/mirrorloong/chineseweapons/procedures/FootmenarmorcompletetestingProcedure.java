@@ -6,6 +6,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.animal.horse.AbstractHorse;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.damagesource.DamageSource;
@@ -80,16 +81,24 @@ public class FootmenarmorcompletetestingProcedure {
     }
 
     public static void checkCollisions(Player player) {
-        var nearbyEntities = player.level().getEntities(player,
-                player.getBoundingBox().inflate(1.0, 0.5, 1.0));
+        if (player.level().isClientSide()) {
+            return;
+        }
+        Entity collisionEntity = player.getVehicle() instanceof AbstractHorse horse ? horse : player;
+        var nearbyEntities = player.level().getEntities(collisionEntity,
+                collisionEntity.getBoundingBox().inflate(1.0, 0.5, 1.0));
 
         boolean hitAnyEntity = false;
 
         for (Entity entity : nearbyEntities) {
-            if (entity == player || !(entity instanceof LivingEntity)) continue;
+            if (!(entity instanceof LivingEntity livingEntity)
+                    || entity == player
+                    || entity.isPassengerOfSameVehicle(player)) {
+                continue;
+            }
 
-            if (player.getBoundingBox().intersects(entity.getBoundingBox())) {
-                handleCollision(player, (LivingEntity) entity);
+            if (collisionEntity.getBoundingBox().intersects(entity.getBoundingBox())) {
+                handleCollision(player, livingEntity);
                 hitAnyEntity = true;
             }
         }

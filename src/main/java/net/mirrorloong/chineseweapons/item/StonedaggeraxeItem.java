@@ -1,6 +1,10 @@
 
 package net.mirrorloong.chineseweapons.item;
 
+import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.level.block.Block;
+
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.LivingEntity;
@@ -8,7 +12,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.mirrorloong.chineseweapons.init.ChineseweaponsModItems;
 
-import net.minecraftforge.common.crafting.CompoundIngredient;
+import net.neoforged.neoforge.common.crafting.CompoundIngredient;
 
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.Tier;
@@ -34,6 +38,10 @@ public class StonedaggeraxeItem extends FiveBlockReachSwordItem {
 			public float getAttackDamageBonus() {
 				return 2f;
 			}
+
+				public TagKey<Block> getIncorrectBlocksForDrops() {
+					return BlockTags.INCORRECT_FOR_STONE_TOOL;
+				}
 
 			public int getLevel() {
 				return 1;

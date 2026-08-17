@@ -3,6 +3,7 @@ package net.mirrorloong.chineseweapons.item;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.geom.ModelPart;
+import net.minecraft.core.Holder;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
@@ -10,12 +11,12 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.*;
-import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import net.mirrorloong.chineseweapons.client.model.Modelfine_scale_armor;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.client.extensions.common.IClientItemExtensions;
+import net.mirrorloong.chineseweapons.init.ChineseWeaponsArmorMaterials;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
+import net.neoforged.neoforge.client.extensions.common.IClientItemExtensions;
 import net.mirrorloong.chineseweapons.procedures.DyeableItem;
 
 import javax.annotation.Nullable;
@@ -23,14 +24,20 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
+import net.minecraft.resources.ResourceLocation;
 
 public class FinescalearmorItem extends ArmorItem implements DyeableItem {
 	private final MaterialVariant materialVariant;
     private final String TEXTURE_BASE;
     public static final String TEXTURE_OVERLAY = "chineseweapons:textures/entities/fine_scale_armor_color.png";
+    @Override
+    public ResourceLocation getArmorTexture(ItemStack stack, Entity entity, EquipmentSlot slot, ArmorMaterial.Layer layer, boolean innerModel) {
+        return ResourceLocation.tryParse(DyeableItem.getArmorTexture(stack, "armor", TEXTURE_BASE, TEXTURE_OVERLAY));
+    }
+
 
     public FinescalearmorItem(MaterialVariant materialVariant, ArmorItem.Type type) {
-		super(materialVariant, type, materialVariant == MaterialVariant.NETHERITE ? new Item.Properties().fireResistant() : new Item.Properties());
+		super(materialVariant.buildArmorMaterial(), type, (materialVariant == MaterialVariant.NETHERITE ? new Item.Properties().fireResistant() : new Item.Properties()).durability(new int[]{13, 15, 16, 11}[type.getSlot().getIndex()] * materialVariant.durabilityMultiplier));
         this.TEXTURE_BASE = "chineseweapons:textures/entities/" + materialVariant.textureName;
 		this.materialVariant = materialVariant;
 	}
@@ -50,6 +57,8 @@ public class FinescalearmorItem extends ArmorItem implements DyeableItem {
 					Map.of("left_leg", model.bipedLeftLeg, "right_leg", model.bipedRightLeg, "head", emptyPart(), "hat", emptyPart(), "body", emptyPart(), "right_arm", emptyPart(), "left_arm", emptyPart());
 			case BOOTS ->
 					Map.of("left_leg", model.LeftBoots, "right_leg", model.RightBoots, "head", emptyPart(), "hat", emptyPart(), "body", emptyPart(), "right_arm", emptyPart(), "left_arm", emptyPart());
+			case BODY ->
+					Map.of("head", emptyPart(), "hat", emptyPart(), "body", emptyPart(), "right_arm", emptyPart(), "left_arm", emptyPart(), "right_leg", emptyPart(), "left_leg", emptyPart());
 		};
 		HumanoidModel armorModel = new HumanoidModel(new ModelPart(Collections.emptyList(), parts));
 		armorModel.crouching = living.isShiftKeyDown();
@@ -69,15 +78,11 @@ public class FinescalearmorItem extends ArmorItem implements DyeableItem {
 		});
 	}
 
-    @Override
-    public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlot slot, String type) {
-        return DyeableItem.getArmorTexture(stack, type, TEXTURE_BASE, TEXTURE_OVERLAY);
-    }
 
     @Override
-    public void appendHoverText(ItemStack stack, @Nullable Level level,
+    public void appendHoverText(ItemStack stack, Item.TooltipContext context,
                                 List<Component> tooltip, TooltipFlag flag) {
-        super.appendHoverText(stack, level, tooltip, flag);
+        super.appendHoverText(stack, context, tooltip, flag);
         DyeableItem.addDyeTooltip(stack, tooltip);
     }
     @Override
@@ -85,7 +90,7 @@ public class FinescalearmorItem extends ArmorItem implements DyeableItem {
 		return materialVariant == MaterialVariant.GOLDEN;
 	}
 
-	public enum MaterialVariant implements ArmorMaterial {
+	public enum MaterialVariant {
 		IRON(16, new int[]{3, 6, 7, 3}, 10, 0f, 0f, Items.IRON_INGOT, "iron_fine_scale_armor", "iron_fine_scale_armor.png"),
 		GOLDEN(15, new int[]{2, 4, 6, 3}, 26, 1f, 0f, Items.GOLD_INGOT, "golden_fine_scale_armor", "golden_fine_scale_armor.png"),
 		DIAMOND(34, new int[]{2, 7, 9, 4}, 11, 2f, 0f, Items.DIAMOND, "diamond_fine_scale_armor", "diamond_fine_scale_armor.png"),
@@ -111,50 +116,14 @@ public class FinescalearmorItem extends ArmorItem implements DyeableItem {
 			this.textureName = textureName;
 		}
 
-		@Override
-		public int getDurabilityForType(ArmorItem.Type type) {
-			return new int[]{13, 15, 16, 11}[type.getSlot().getIndex()] * durabilityMultiplier;
-		}
-
-		@Override
-		public int getDefenseForType(ArmorItem.Type type) {
-			return defenseValues[type.getSlot().getIndex()];
-		}
-
-		@Override
-		public int getEnchantmentValue() {
-			return enchantmentValue;
-		}
-
-		@Override
-		public SoundEvent getEquipSound() {
-			// 按材质返回对应原版穿戴音效
-			return switch (this) {
+		private Holder<ArmorMaterial> buildArmorMaterial() {
+			Holder<SoundEvent> equipSound = switch (this) {
 				case IRON -> SoundEvents.ARMOR_EQUIP_IRON;
 				case GOLDEN -> SoundEvents.ARMOR_EQUIP_GOLD;
 				case DIAMOND -> SoundEvents.ARMOR_EQUIP_DIAMOND;
 				case NETHERITE -> SoundEvents.ARMOR_EQUIP_NETHERITE;
 			};
-		}
-
-		@Override
-		public Ingredient getRepairIngredient() {
-			return Ingredient.of(repairItem);
-		}
-
-		@Override
-		public String getName() {
-			return materialName;
-		}
-
-		@Override
-		public float getToughness() {
-			return toughness;
-		}
-
-		@Override
-		public float getKnockbackResistance() {
-			return knockbackResistance;
+			return ChineseWeaponsArmorMaterials.holder(materialName, defenseValues, enchantmentValue, equipSound, repairItem, toughness, knockbackResistance);
 		}
 	}
 }

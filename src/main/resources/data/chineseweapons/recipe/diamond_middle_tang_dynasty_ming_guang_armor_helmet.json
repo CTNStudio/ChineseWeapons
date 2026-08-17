@@ -1,0 +1,26 @@
+{
+  "type": "chineseweapons:weapon_casting_shaped", 
+  "pattern": [
+    " A ", 
+    "BBB", 
+    "C C"
+  ], 
+  "main_material": {
+    "item": "minecraft:iron_nugget"
+  }, 
+  "key": {
+    "A": {
+      "item": "minecraft:gold_nugget"
+    }, 
+    "B": {
+      "item": "chineseweapons:diamond_armor_pieces_plate"
+    }, 
+    "C": {
+      "item": "chineseweapons:diamond_armor_pieces"
+    }
+  }, 
+  "result": {
+    "count": 1, 
+    "id": "chineseweapons:diamond_middle_tang_dynasty_ming_guang_armor_helmet"
+  }
+}
