@@ -1,24 +1,25 @@
 package net.mirrorloong.chineseweapons.item;
 
+import net.minecraft.core.Holder;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.AnimalArmorItem;
+import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.RecipeType;
 
-public class TangDynastyHorseItem extends Item {
-    public TangDynastyHorseItem(int defense, ResourceLocation texture) {
-        super(new Item.Properties()
-                .stacksTo(1)
-                .durability(0));
+/**
+ * Tang Dynasty horse armor. Extends {@link AnimalArmorItem} so {@link net.minecraft.world.entity.animal.horse.Horse#isBodyArmorItem}
+ * accepts it and it renders on the horse's armor slot. The custom texture is returned via {@link #getTexture()}.
+ */
+public class TangDynastyHorseItem extends AnimalArmorItem {
+    private final ResourceLocation texture;
+
+    public TangDynastyHorseItem(int defense, ResourceLocation texture, Holder<ArmorMaterial> material) {
+        super(material, AnimalArmorItem.BodyType.EQUESTRIAN, false, new Item.Properties().stacksTo(1));
+        this.texture = texture;
     }
 
     @Override
-    public int getMaxDamage(ItemStack stack) {
-        return 0;
-    }
-
-    @Override
-    public int getBurnTime(ItemStack itemStack, RecipeType<?> recipeType) {
-        return 0;
+    public ResourceLocation getTexture() {
+        return this.texture;
     }
 }

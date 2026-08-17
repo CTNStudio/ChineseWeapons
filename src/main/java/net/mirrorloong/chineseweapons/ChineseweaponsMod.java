@@ -20,6 +20,7 @@ import net.mirrorloong.chineseweapons.compat.WeaponScriptSettings;
 import net.mirrorloong.chineseweapons.gui.recipe.DeferredGui;
 import net.mirrorloong.chineseweapons.init.ChineseWeaponsModEffects;
 import net.mirrorloong.chineseweapons.init.ChineseWeaponsModEnchantments;
+import net.mirrorloong.chineseweapons.init.ChineseWeaponsModHorseArmorMaterials;
 import net.mirrorloong.chineseweapons.init.ChineseweaponsModBlocks;
 import net.mirrorloong.chineseweapons.init.ChineseweaponsModItems;
 import net.mirrorloong.chineseweapons.init.ChineseweaponsModTabs;
@@ -65,6 +66,7 @@ public class ChineseweaponsMod {
         ChineseweaponsModTabs.REGISTRY.register(modEventBus);
         ChineseWeaponsModEffects.REGISTER.register(modEventBus);
         ChineseWeaponsModEnchantments.REGISTRY.register(modEventBus);
+        ChineseWeaponsModHorseArmorMaterials.REGISTRY.register(modEventBus);
         RECIPE_SERIALIZERS.register(modEventBus);
         modEventBus.addListener(ChineseweaponsMod::registerPayloads);
         NeoForge.EVENT_BUS.register(this);

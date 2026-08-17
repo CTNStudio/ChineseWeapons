@@ -1,0 +1,30 @@
+{
+  "replace": false,
+  "values": [
+    "chineseweapons:golden_dagger_axe",
+    "chineseweapons:diamond_dagger_axe",
+    "chineseweapons:iron_dagger_axe",
+    "chineseweapons:wooden_dagger_axe",
+    "chineseweapons:netherite_dagger_axe",
+    "chineseweapons:stone_dagger_axe",
+    "chineseweapons:diamond_glaive",
+    "chineseweapons:golden_glaive",
+    "chineseweapons:netherite_glaive",
+    "chineseweapons:iron_glaive",
+    "chineseweapons:stone_glaive",
+    "chineseweapons:wooden_glaive",
+    "chineseweapons:green_loong_glaive",
+    "chineseweapons:diamond_tang_dynasty_heng_saber",
+    "chineseweapons:golden_tang_dynasty_heng_saber",
+    "chineseweapons:netherite_tang_dynasty_heng_saber",
+    "chineseweapons:iron_tang_dynasty_heng_saber",
+    "chineseweapons:stone_tang_dynasty_heng_saber",
+    "chineseweapons:wooden_tang_dynasty_heng_saber",
+    "chineseweapons:wooden_sky_piercing_halberd",
+    "chineseweapons:stone_sky_piercing_halberd",
+    "chineseweapons:golden_sky_piercing_halberd",
+    "chineseweapons:iron_sky_piercing_halberd",
+    "chineseweapons:diamond_sky_piercing_halberd",
+    "chineseweapons:netherite_sky_piercing_halberd"
+  ]
+}
