@@ -7,7 +7,7 @@
       {
         "target": {
           "predicate_type": "tag_match",
-          "tag": "forge:stone"
+          "tag": "minecraft:stone_ore_replaceables"
         },
         "state": {
           "Name": "chineseweapons:ancient_gem_ore"
