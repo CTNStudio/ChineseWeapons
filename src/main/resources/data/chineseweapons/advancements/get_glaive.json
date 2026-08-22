@@ -1,0 +1,42 @@
+{
+  "display": {
+    "icon": {
+      "item": "chineseweapons:diamond_glaive"
+    },
+    "title": {
+      "translate": "advancement.chineseweapons.get_glaive.title"
+    },
+    "description": {
+      "translate": "advancement.chineseweapons.get_glaive.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "parent": "chineseweapons:root",
+  "criteria": {
+    "get_glaive": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "chineseweapons:netherite_glaive",
+              "chineseweapons:diamond_glaive",
+              "chineseweapons:iron_glaive",
+              "chineseweapons:golden_glaive",
+              "chineseweapons:wooden_glaive",
+              "chineseweapons:stone_glaive"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "get_glaive"
+    ]
+  ]
+}

@@ -1,0 +1,40 @@
+{
+  "display": {
+    "icon": {
+      "item": "chineseweapons:diamond_bohai_helmet"
+    },
+    "title": {
+      "translate": "advancement.chineseweapons.get_armor_piece.get_bohai_hat.title"
+    },
+    "description": {
+      "translate": "advancement.chineseweapons.get_armor_piece.get_bohai_hat.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "parent": "chineseweapons:get_armor_piece/forging_stone",
+  "criteria": {
+    "has_bohai_helmet": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "chineseweapons:iron_bohai_helmet",
+              "chineseweapons:golden_bohai_helmet",
+              "chineseweapons:diamond_bohai_helmet",
+              "chineseweapons:netherite_bohai_helmet"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_bohai_helmet"
+    ]
+  ]
+}

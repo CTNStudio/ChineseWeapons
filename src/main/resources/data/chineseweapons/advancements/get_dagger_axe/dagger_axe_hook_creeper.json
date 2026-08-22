@@ -1,0 +1,28 @@
+{
+  "display": {
+    "icon": {
+      "item": "minecraft:creeper_head"
+    },
+    "title": {
+      "translate": "advancement.chineseweapons.get_dagger_axe.dagger_axe_hook_creeper.title"
+    },
+    "description": {
+      "translate": "advancement.chineseweapons.get_dagger_axe.dagger_axe_hook_creeper.description"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": true
+  },
+  "parent": "chineseweapons:get_dagger_axe",
+  "criteria": {
+    "ge_hook_creeper": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "requirements": [
+    [
+      "ge_hook_creeper"
+    ]
+  ]
+}

@@ -1,0 +1,50 @@
+{
+  "display": {
+    "icon": {
+      "item": "chineseweapons:diamond_armor_pieces"
+    },
+    "title": {
+      "translate": "advancement.chineseweapons.get_armor_piece.title"
+    },
+    "description": {
+      "translate": "advancement.chineseweapons.get_armor_piece.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "parent": "chineseweapons:root",
+  "criteria": {
+    "get_armor_piece": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "chineseweapons:diamond_armor_pieces",
+              "chineseweapons:diamond_armor_pieces_plate",
+              "chineseweapons:diamond_mountain_character_armor_pieces_plate",
+              "chineseweapons:golden_armor_pieces",
+              "chineseweapons:golden_armor_pieces_plate",
+              "chineseweapons:golden_mountain_character_armor_pieces",
+              "chineseweapons:golden_mountain_character_armor_pieces_plate",
+              "chineseweapons:iron_mountain_character_armor_pieces",
+              "chineseweapons:iron_mountain_character_armor_pieces_plate",
+              "chineseweapons:stone_armor_pieces",
+              "chineseweapons:stone_armor_pieces_plate",
+              "chineseweapons:iron_armor_pieces",
+              "chineseweapons:iron_armor_pieces_plate",
+              "chineseweapons:diamond_mountain_character_armor_pieces"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "get_armor_piece"
+    ]
+  ]
+}

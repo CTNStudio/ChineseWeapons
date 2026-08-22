@@ -1,0 +1,94 @@
+{
+  "display": {
+    "icon": {
+      "item": "chineseweapons:diamond_footmen_armor_helmet"
+    },
+    "title": {
+      "translate": "advancement.chineseweapons.get_armor_piece.get_buren_armor.title"
+    },
+    "description": {
+      "translate": "advancement.chineseweapons.get_armor_piece.get_buren_armor.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "parent": "chineseweapons:get_armor_piece/forging_stone",
+  "criteria": {
+    "has_helmet": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "chineseweapons:iron_footmen_armor_helmet",
+              "chineseweapons:golden_footmen_armor_helmet",
+              "chineseweapons:diamond_footmen_armor_helmet",
+              "chineseweapons:netherite_footmen_armor_helmet"
+            ]
+          }
+        ]
+      }
+    },
+    "has_chestplate": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "chineseweapons:iron_footmen_armor_chestplate",
+              "chineseweapons:golden_footmen_armor_chestplate",
+              "chineseweapons:diamond_footmen_armor_chestplate",
+              "chineseweapons:netherite_footmen_armor_chestplate"
+            ]
+          }
+        ]
+      }
+    },
+    "has_leggings": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "chineseweapons:iron_footmen_armor_leggings",
+              "chineseweapons:golden_footmen_armor_leggings",
+              "chineseweapons:diamond_footmen_armor_leggings",
+              "chineseweapons:netherite_footmen_armor_leggings"
+            ]
+          }
+        ]
+      }
+    },
+    "has_boots": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "chineseweapons:iron_footmen_armor_boots",
+              "chineseweapons:golden_footmen_armor_boots",
+              "chineseweapons:diamond_footmen_armor_boots",
+              "chineseweapons:netherite_footmen_armor_boots"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_helmet"
+    ],
+    [
+      "has_chestplate"
+    ],
+    [
+      "has_leggings"
+    ],
+    [
+      "has_boots"
+    ]
+  ]
+}

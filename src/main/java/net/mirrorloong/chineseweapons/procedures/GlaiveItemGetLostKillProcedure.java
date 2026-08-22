@@ -1,7 +1,11 @@
 package net.mirrorloong.chineseweapons.procedures;
 
 import net.minecraft.ChatFormatting;
+import net.minecraft.advancements.Advancement;
+import net.minecraft.advancements.AdvancementProgress;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -84,8 +88,22 @@ public final class GlaiveItemGetLostKillProcedure {
         activeSpin.markPulseApplied();
         player.causeFoodExhaustion(EXHAUSTION_COST);
         itemStack.hurtAndBreak(DURABILITY_COST, player, owner -> owner.broadcastBreakEvent(InteractionHand.MAIN_HAND));
+
+        if(player instanceof ServerPlayer sp){
+            Advancement adv = sp.server.getAdvancements().getAdvancement(ResourceLocation.fromNamespaceAndPath(ChineseweaponsMod.MODID,"get_glaive/use_gs"));
+            if(adv != null){
+                AdvancementProgress ap = sp.getAdvancements().getOrStartProgress(adv);
+                if(!ap.isDone()){
+                    for(String cri : ap.getRemainingCriteria()){
+                        sp.getAdvancements().award(adv, cri);
+                    }
+                }
+            }
+        }
+
         return true;
     }
+
 
     @SubscribeEvent
     public static void onPlayerTick(TickEvent.PlayerTickEvent event) {

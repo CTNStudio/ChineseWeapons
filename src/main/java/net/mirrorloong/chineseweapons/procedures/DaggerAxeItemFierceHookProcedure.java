@@ -1,5 +1,6 @@
 package net.mirrorloong.chineseweapons.procedures;
 
+import net.minecraft.advancements.AdvancementProgress;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.entity.player.Player;
@@ -11,7 +12,11 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.core.registries.Registries;
 import java.util.List;
 import net.minecraft.world.entity.LivingEntity;
+import net.mirrorloong.chineseweapons.ChineseweaponsMod;
 import net.mirrorloong.chineseweapons.compat.WeaponScriptSettings;
+import net.minecraft.world.entity.monster.Creeper;
+import net.minecraft.advancements.Advancement;
+import net.minecraft.resources.ResourceLocation;
 
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.AABB;
@@ -65,8 +70,6 @@ public class DaggerAxeItemFierceHookProcedure {
             }
         }
 
-        // Mount hitboxes can hide their riders from the sampled collision box.
-        // Check direct and indirect passengers before falling back to the hit mob.
         for (Entity candidate : hitEntities) {
             for (Entity passenger : candidate.getIndirectPassengers()) {
                 if (passenger instanceof LivingEntity living && living.getVehicle() != null) {
@@ -95,8 +98,6 @@ public class DaggerAxeItemFierceHookProcedure {
         }
 
         target.stopRiding();
-        // Keep this explicit for entities whose vehicle implementation delays
-        // passenger removal until the next tick.
         target.removeVehicle();
         return target.getVehicle() == null;
     }
@@ -113,11 +114,33 @@ public class DaggerAxeItemFierceHookProcedure {
             return false;
         }
 
-        // The hook always pulls and damages first; only a successful hit can
-        // trigger the rider dismount effect, and that effect remains 30%.
         float chance = WeaponScriptSettings.getChance(itemstack.getItem(), WeaponScriptSettings.Skill.HOOK_DISMOUNT, DEFAULT_DISMOUNT_CHANCE);
         if (targetEntity.getVehicle() != null && world.getRandom().nextFloat() < chance) {
             dismount(targetEntity);
+        }
+
+        if(sourceEntity instanceof ServerPlayer sp) {
+            Advancement hookAdv = sp.server.getAdvancements().getAdvancement(ResourceLocation.fromNamespaceAndPath(ChineseweaponsMod.MODID, "get_dagger_axe/dagger_axe_hook"));
+            if(hookAdv != null) {
+                AdvancementProgress ap = sp.getAdvancements().getOrStartProgress(hookAdv);
+                if(!ap.isDone()) {
+                    for(String cri : ap.getRemainingCriteria()) {
+                        sp.getAdvancements().award(hookAdv, cri);
+                    }
+                }
+            }
+
+            if(targetEntity instanceof Creeper) {
+                Advancement creeperAdv = sp.server.getAdvancements().getAdvancement(ResourceLocation.fromNamespaceAndPath(ChineseweaponsMod.MODID, "get_dagger_axe/dagger_axe_hook_creeper"));
+                if(creeperAdv != null) {
+                    AdvancementProgress ap2 = sp.getAdvancements().getOrStartProgress(creeperAdv);
+                    if(!ap2.isDone()) {
+                        for(String cri : ap2.getRemainingCriteria()) {
+                            sp.getAdvancements().award(creeperAdv, cri);
+                        }
+                    }
+                }
+            }
         }
 
         return true;

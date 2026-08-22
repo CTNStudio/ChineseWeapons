@@ -1,0 +1,37 @@
+{
+  "display": {
+    "icon": {
+      "item": "chineseweapons:ancient_gem"
+    },
+    "title": {
+      "translate": "advancement.chineseweapons.get_ancient_gem.title"
+    },
+    "description": {
+      "translate": "advancement.chineseweapons.get_ancient_gem.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "parent": "chineseweapons:root",
+  "criteria": {
+    "get_ancient_gem": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "chineseweapons:ancient_gem"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "get_ancient_gem"
+    ]
+  ]
+}

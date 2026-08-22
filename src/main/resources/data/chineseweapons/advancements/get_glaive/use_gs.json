@@ -1,0 +1,28 @@
+{
+  "display": {
+    "icon": {
+      "item": "chineseweapons:netherite_glaive"
+    },
+    "title": {
+      "translate": "advancement.chineseweapons.get_glaive.use_gs.title"
+    },
+    "description": {
+      "translate": "advancement.chineseweapons.get_glaive.use_gs.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "parent": "chineseweapons:get_glaive",
+  "criteria": {
+    "use_gs": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "requirements": [
+    [
+      "use_gs"
+    ]
+  ]
+}

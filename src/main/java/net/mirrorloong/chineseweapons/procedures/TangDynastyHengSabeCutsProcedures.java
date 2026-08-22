@@ -1,5 +1,10 @@
 package net.mirrorloong.chineseweapons.procedures;
 
+import net.minecraft.advancements.Advancement;
+import net.minecraft.advancements.AdvancementProgress;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -115,6 +120,19 @@ public class TangDynastyHengSabeCutsProcedures {
                     float dmg = baseDamage + 2;
                     target.hurt(player.damageSources().playerAttack(player), dmg);
                     target.addEffect(new MobEffectInstance(ChineseWeaponsModEffects.CusEffectSupplier.get(), 60, 0, false, true));
+
+                    if (player instanceof ServerPlayer sp) {
+                        ResourceLocation rootRl = ResourceLocation.fromNamespaceAndPath(ChineseweaponsMod.MODID, "get_ancient_gem/xiao_tang_dynasty_heng_saber");
+                        Advancement rootAdv = sp.server.getAdvancements().getAdvancement(rootRl);
+                        if(rootAdv != null) {
+                            AdvancementProgress ap = sp.getAdvancements().getOrStartProgress(rootAdv);
+                            if (!ap.isDone()) {
+                                for (String criteria : ap.getRemainingCriteria()) {
+                                    sp.getAdvancements().award(rootAdv, criteria);
+                                }
+                            }
+                        }
+                    }
                 });
 
         itemAnimData.put(player.getUUID(), new StabAnimData(bindWeapon, DH_TICK, true));
