@@ -122,7 +122,7 @@ public class TangDynastyHengSabeCutsProcedures {
                     target.addEffect(new MobEffectInstance(ChineseWeaponsModEffects.CusEffectSupplier.get(), 60, 0, false, true));
 
                     if (player instanceof ServerPlayer sp) {
-                        ResourceLocation rootRl = ResourceLocation.fromNamespaceAndPath(ChineseweaponsMod.MODID, "get_ancient_gem/xiao_tang_dynasty_heng_saber");
+                        ResourceLocation rootRl = new ResourceLocation(ChineseweaponsMod.MODID, "get_ancient_gem/xiao_tang_dynasty_heng_saber");
                         Advancement rootAdv = sp.server.getAdvancements().getAdvancement(rootRl);
                         if(rootAdv != null) {
                             AdvancementProgress ap = sp.getAdvancements().getOrStartProgress(rootAdv);

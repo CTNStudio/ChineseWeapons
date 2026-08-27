@@ -12,6 +12,7 @@ import net.minecraft.server.packs.resources.Resource;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.mirrorloong.chineseweapons.ChineseweaponsMod;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -108,7 +109,7 @@ public interface DyeableItem {
             }
 
             String textureKey = "merged_armor/" + Math.abs(cacheKey.hashCode());
-            ResourceLocation textureLocation = ResourceLocation.fromNamespaceAndPath("chineseweapons", textureKey);
+            ResourceLocation textureLocation = new ResourceLocation(ChineseweaponsMod.MODID, textureKey);
 
             TextureManager textureManager = mc.getTextureManager();
             DynamicTexture dynamicTexture = new DynamicTexture(mergedImage);
@@ -231,7 +232,7 @@ public interface DyeableItem {
             }
 
             String textureKey = "dyed_armor/" + Math.abs(cacheKey.hashCode());
-            ResourceLocation textureLocation = ResourceLocation.fromNamespaceAndPath("chineseweapons", textureKey);
+            ResourceLocation textureLocation = new ResourceLocation(ChineseweaponsMod.MODID, textureKey);
 
             TextureManager textureManager = mc.getTextureManager();
             DynamicTexture dynamicTexture = new DynamicTexture(mergedImage);
@@ -253,7 +254,7 @@ public interface DyeableItem {
 
     @OnlyIn(Dist.CLIENT)
     private static NativeImage loadTexture(String texturePath) throws IOException {
-        ResourceLocation resourceLocation = ResourceLocation.parse(texturePath);
+        ResourceLocation resourceLocation = new ResourceLocation(texturePath);
         Minecraft mc = Minecraft.getInstance();
 
         Optional<Resource> resource = mc.getResourceManager().getResource(resourceLocation);

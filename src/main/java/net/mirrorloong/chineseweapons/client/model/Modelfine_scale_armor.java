@@ -16,7 +16,7 @@ import net.minecraft.world.entity.Entity;
 import net.mirrorloong.chineseweapons.ChineseweaponsMod;
 
 public class Modelfine_scale_armor<T extends Entity> extends EntityModel<T> {
-	public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(ChineseweaponsMod.MODID, "fine_scale_armor"), "main");
+	public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(new ResourceLocation(ChineseweaponsMod.MODID, "fine_scale_armor"), "main");
 	public final ModelPart bipedHead;
 	public final ModelPart bipedRightArm;
 	public final ModelPart bipedLeftArm;

@@ -38,7 +38,7 @@ public class DaggerAxeAndGlaiveItemjizhongProcedure {
 
                 if(livingEntity instanceof ServerPlayer hitPlayer) {
                     Advancement adv = hitPlayer.server.getAdvancements()
-                            .getAdvancement(ResourceLocation.fromNamespaceAndPath(ChineseweaponsMod.MODID, "get_dagger_axe/dagger_axe_hook_has_cuts_xg"));
+                            .getAdvancement(new ResourceLocation(ChineseweaponsMod.MODID, "get_dagger_axe/dagger_axe_hook_has_cuts_xg"));
                     if(adv != null) {
                         AdvancementProgress ap = hitPlayer.getAdvancements().getOrStartProgress(adv);
                         if(!ap.isDone()) {

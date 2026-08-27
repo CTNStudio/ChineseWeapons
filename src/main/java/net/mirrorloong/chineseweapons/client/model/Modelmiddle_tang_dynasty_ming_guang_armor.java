@@ -23,7 +23,7 @@ import net.mirrorloong.chineseweapons.ChineseweaponsMod;
 
 public class Modelmiddle_tang_dynasty_ming_guang_armor<T extends Entity> extends EntityModel<T> {
     // This layer location should be baked with EntityRendererProvider.Context in the entity renderer and passed into this model's constructor
-    public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(ChineseweaponsMod.MODID, "modelmiddle_tang_dynasty_ming_guang_armor"), "main");
+    public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(new ResourceLocation(ChineseweaponsMod.MODID, "modelmiddle_tang_dynasty_ming_guang_armor"), "main");
     public final ModelPart bipedHead;
     public final ModelPart bipedBody;
     public final ModelPart bipedLeftArm;

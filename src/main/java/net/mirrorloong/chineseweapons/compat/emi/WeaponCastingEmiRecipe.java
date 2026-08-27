@@ -11,7 +11,7 @@ import net.mirrorloong.chineseweapons.recipes.WCTRecipe;
 import java.util.List;
 
 public final class WeaponCastingEmiRecipe extends BasicEmiRecipe {
-    private static final ResourceLocation BACKGROUND = ResourceLocation.fromNamespaceAndPath(
+    private static final ResourceLocation BACKGROUND = new ResourceLocation(
             ChineseweaponsMod.MODID,
             "textures/gui/jei/weapons_casting_table.png"
     );

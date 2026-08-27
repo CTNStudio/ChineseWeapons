@@ -16,7 +16,7 @@ import net.mirrorloong.chineseweapons.procedures.DyeableItem;
 
 @Mod.EventBusSubscriber(modid = ChineseweaponsMod.MODID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public final class ChineseWeaponsClientEvents {
-    private static final ResourceLocation BLOCKING = ResourceLocation.fromNamespaceAndPath(ChineseweaponsMod.MODID, "blocking");
+    private static final ResourceLocation BLOCKING = new ResourceLocation(ChineseweaponsMod.MODID, "blocking");
 
     private ChineseWeaponsClientEvents() {
     }

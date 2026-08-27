@@ -90,7 +90,7 @@ public final class GlaiveItemGetLostKillProcedure {
         itemStack.hurtAndBreak(DURABILITY_COST, player, owner -> owner.broadcastBreakEvent(InteractionHand.MAIN_HAND));
 
         if(player instanceof ServerPlayer sp){
-            Advancement adv = sp.server.getAdvancements().getAdvancement(ResourceLocation.fromNamespaceAndPath(ChineseweaponsMod.MODID,"get_glaive/use_gs"));
+            Advancement adv = sp.server.getAdvancements().getAdvancement(new ResourceLocation(ChineseweaponsMod.MODID,"get_glaive/use_gs"));
             if(adv != null){
                 AdvancementProgress ap = sp.getAdvancements().getOrStartProgress(adv);
                 if(!ap.isDone()){

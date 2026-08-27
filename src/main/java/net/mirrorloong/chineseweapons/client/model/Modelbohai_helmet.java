@@ -17,7 +17,7 @@ import net.mirrorloong.chineseweapons.ChineseweaponsMod;
 
 public class Modelbohai_helmet<T extends Entity> extends EntityModel<T> {
     // This layer location should be baked with EntityRendererProvider.Context in the entity renderer and passed into this model's constructor
-    public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(ChineseweaponsMod.MODID, "bohai_helmet"), "main");
+    public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(new ResourceLocation(ChineseweaponsMod.MODID, "bohai_helmet"), "main");
     public final ModelPart bipedHead;
 
 	public Modelbohai_helmet(ModelPart root) {

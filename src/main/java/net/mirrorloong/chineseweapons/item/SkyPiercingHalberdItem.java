@@ -60,7 +60,7 @@ public class SkyPiercingHalberdItem extends FourBlockReachSwordItem {
 
             if (player.getServer() != null) {
                 Advancement adv = player.getServer().getAdvancements().getAdvancement(
-                        ResourceLocation.fromNamespaceAndPath(ChineseweaponsMod.MODID, "get_sky_piercing_halberd/use_fangtian_hengzhan"));
+                        new ResourceLocation(ChineseweaponsMod.MODID, "get_sky_piercing_halberd/use_fangtian_hengzhan"));
 
                 if (adv != null) {
                     AdvancementProgress prog = player.getAdvancements().getOrStartProgress(adv);

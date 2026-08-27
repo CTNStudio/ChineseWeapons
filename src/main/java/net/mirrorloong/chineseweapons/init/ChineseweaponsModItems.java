@@ -202,10 +202,10 @@ public class ChineseweaponsModItems {
     public static final RegistryObject<Item> NETHERITE_BOHAI_HELMET = REGISTRY.register("netherite_bohai_helmet", NetheriteBohaiHelmetItem.Helmet::new);
     public static final RegistryObject<Item> GOLDEN_BOHAI_HELMET = REGISTRY.register("golden_bohai_helmet", GoldenBohaiHelmetItem.Helmet::new);
 
-    public static final RegistryObject<Item> DIAMOND_TANG_DYNASTY_HORSE = REGISTRY.register("diamond_tang_dynasty_horse_armor", () -> new TangDynastyHorseItem(18, ResourceLocation.fromNamespaceAndPath(ChineseweaponsMod.MODID, "textures/entities/horse/armor/diamond_tang_dynasty_horse_armor.png")));
-    public static final RegistryObject<Item> IRON_TANG_DYNASTY_HORSE = REGISTRY.register("iron_tang_dynasty_horse_armor", () -> new TangDynastyHorseItem(8, ResourceLocation.fromNamespaceAndPath(ChineseweaponsMod.MODID, "textures/entities/horse/armor/iron_tang_dynasty_horse_armor.png")));
-    public static final RegistryObject<Item> NETHERITE_TANG_DYNASTY_HORSE = REGISTRY.register("netherite_tang_dynasty_horse_armor", () -> new TangDynastyHorseItem(25, ResourceLocation.fromNamespaceAndPath(ChineseweaponsMod.MODID, "textures/entities/horse/armor/netherite_tang_dynasty_horse_armor.png")));
-    public static final RegistryObject<Item> GOLDEN_TANG_DYNASTY_HORSE = REGISTRY.register("golden_tang_dynasty_horse_armor", () -> new TangDynastyHorseItem(11, ResourceLocation.fromNamespaceAndPath(ChineseweaponsMod.MODID, "textures/entities/horse/armor/golden_tang_dynasty_horse_armor.png")));
+    public static final RegistryObject<Item> DIAMOND_TANG_DYNASTY_HORSE = REGISTRY.register("diamond_tang_dynasty_horse_armor", () -> new TangDynastyHorseItem(18, new ResourceLocation(ChineseweaponsMod.MODID, "textures/entities/horse/armor/diamond_tang_dynasty_horse_armor.png")));
+    public static final RegistryObject<Item> IRON_TANG_DYNASTY_HORSE = REGISTRY.register("iron_tang_dynasty_horse_armor", () -> new TangDynastyHorseItem(8, new ResourceLocation(ChineseweaponsMod.MODID, "textures/entities/horse/armor/iron_tang_dynasty_horse_armor.png")));
+    public static final RegistryObject<Item> NETHERITE_TANG_DYNASTY_HORSE = REGISTRY.register("netherite_tang_dynasty_horse_armor", () -> new TangDynastyHorseItem(25, new ResourceLocation(ChineseweaponsMod.MODID, "textures/entities/horse/armor/netherite_tang_dynasty_horse_armor.png")));
+    public static final RegistryObject<Item> GOLDEN_TANG_DYNASTY_HORSE = REGISTRY.register("golden_tang_dynasty_horse_armor", () -> new TangDynastyHorseItem(11, new ResourceLocation(ChineseweaponsMod.MODID, "textures/entities/horse/armor/golden_tang_dynasty_horse_armor.png")));
 
     private static RegistryObject<Item> block(RegistryObject<Block> block) {
         return REGISTRY.register(block.getId().getPath(), () -> new BlockItem(block.get(), new Item.Properties()));

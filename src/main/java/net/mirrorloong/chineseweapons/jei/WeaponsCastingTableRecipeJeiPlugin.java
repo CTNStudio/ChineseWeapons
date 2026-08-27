@@ -21,7 +21,7 @@ import java.util.List;
 
 @JeiPlugin
 public class WeaponsCastingTableRecipeJeiPlugin implements IModPlugin {
-    private static final ResourceLocation PLUGIN_ID = ResourceLocation.fromNamespaceAndPath(ChineseweaponsMod.MODID, "jei_plugin");
+    private static final ResourceLocation PLUGIN_ID = new ResourceLocation(ChineseweaponsMod.MODID, "jei_plugin");
     public static final RecipeType<WCTRecipe> RECIPE_TYPE = RecipeType.create(
             ChineseweaponsMod.MODID,
             "weapon_casting_shaped",

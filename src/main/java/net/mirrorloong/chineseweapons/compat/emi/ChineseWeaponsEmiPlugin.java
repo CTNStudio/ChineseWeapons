@@ -13,7 +13,7 @@ import net.mirrorloong.chineseweapons.recipes.DeferredRecipe;
 @EmiEntrypoint
 public final class ChineseWeaponsEmiPlugin implements EmiPlugin {
     public static final EmiRecipeCategory WEAPON_CASTING = new EmiRecipeCategory(
-            ResourceLocation.fromNamespaceAndPath(ChineseweaponsMod.MODID, "weapon_casting_shaped"),
+            new ResourceLocation(ChineseweaponsMod.MODID, "weapon_casting_shaped"),
             EmiStack.of(ChineseweaponsModBlocks.ARMOR_CASTING_TABLE.get())
     );
 

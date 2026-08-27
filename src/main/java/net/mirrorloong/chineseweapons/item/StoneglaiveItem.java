@@ -40,7 +40,7 @@ public class StoneglaiveItem extends GlaiveItemBase {
 			}
 
 			public Ingredient getRepairIngredient() {
-				return CompoundIngredient.of(Ingredient.of(ItemTags.create(ResourceLocation.fromNamespaceAndPath("forge", "stone"))), Ingredient.of(new ItemStack(ChineseweaponsModItems.STONE_GLAIVE.get())));
+				return CompoundIngredient.of(Ingredient.of(ItemTags.create(new ResourceLocation("forge", "stone"))), Ingredient.of(new ItemStack(ChineseweaponsModItems.STONE_GLAIVE.get())));
 			}
 		}, 3, -2.4f, new Item.Properties());
 	}

@@ -120,7 +120,7 @@ public class DaggerAxeItemFierceHookProcedure {
         }
 
         if(sourceEntity instanceof ServerPlayer sp) {
-            Advancement hookAdv = sp.server.getAdvancements().getAdvancement(ResourceLocation.fromNamespaceAndPath(ChineseweaponsMod.MODID, "get_dagger_axe/dagger_axe_hook"));
+            Advancement hookAdv = sp.server.getAdvancements().getAdvancement(new ResourceLocation(ChineseweaponsMod.MODID, "get_dagger_axe/dagger_axe_hook"));
             if(hookAdv != null) {
                 AdvancementProgress ap = sp.getAdvancements().getOrStartProgress(hookAdv);
                 if(!ap.isDone()) {
@@ -131,7 +131,7 @@ public class DaggerAxeItemFierceHookProcedure {
             }
 
             if(targetEntity instanceof Creeper) {
-                Advancement creeperAdv = sp.server.getAdvancements().getAdvancement(ResourceLocation.fromNamespaceAndPath(ChineseweaponsMod.MODID, "get_dagger_axe/dagger_axe_hook_creeper"));
+                Advancement creeperAdv = sp.server.getAdvancements().getAdvancement(new ResourceLocation(ChineseweaponsMod.MODID, "get_dagger_axe/dagger_axe_hook_creeper"));
                 if(creeperAdv != null) {
                     AdvancementProgress ap2 = sp.getAdvancements().getOrStartProgress(creeperAdv);
                     if(!ap2.isDone()) {
