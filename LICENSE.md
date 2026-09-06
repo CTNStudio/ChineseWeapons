@@ -1,13 +1,14 @@
--Artwork (ARR):
+# Artwork (ARR):
 
 All art assets involved in this project, including but not limited to textures, models, sound effects, music, UI materials, illustrations, special effects, animations and other related resources, are exclusively copyrighted by CTN STUDIO and its original creators.
 These art assets are NOT covered by the BSD-3 license.
 No individual or organization may copy, modify, redistribute, use for commercial purposes, or reuse any of the above art assets without explicit written authorization from CTN STUDIO.
 
 
--Code (BSD-3):
+# Code (BSD-3):
 
-Copyright 2026 CTN STUDIO
+## Copyright 2026 CTN STUDIO
+
 
 Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
 

@@ -1,4 +1,10 @@
 
+Chinese Weapons [![Curseforge](https://cf.way2muchnoise.eu/full_1628670_miaomiao%20ovo.svg)](https://www.curseforge.com/minecraft/mc-mods/chinese-weapons) [![Curseforge](https://cf.way2muchnoise.eu/versions/For%20MiaoCraft_1628670_all.svg)](https://www.curseforge.com/minecraft/mc-mods/chinese-weapons)
+=====
+
+## Licensing
+Code unless otherwise stated default to our [LICENSE](LICENSE.md)
+
 Source installation information for modders
 -------------------------------------------
 This code follows the Minecraft Forge installation methodology. It will apply
