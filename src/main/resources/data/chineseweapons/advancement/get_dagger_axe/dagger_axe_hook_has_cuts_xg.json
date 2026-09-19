@@ -1,0 +1,28 @@
+{
+  "display": {
+    "icon": {
+      "item": "minecraft:enchanted_golden_apple"
+    },
+    "title": {
+      "translate": "advancement.chineseweapons.get_dagger_axe.dagger_axe_hook_has_cuts_xg.title"
+    },
+    "description": {
+      "translate": "advancement.chineseweapons.get_dagger_axe.dagger_axe_hook_has_cuts_xg.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "parent": "chineseweapons:get_dagger_axe",
+  "criteria": {
+    "get_ge_wound": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "requirements": [
+    [
+      "get_ge_wound"
+    ]
+  ]
+}

@@ -1,4 +1,22 @@
 
+# Chinese Weapons - NeoForge
+![CurseForge Game Versions](https://img.shields.io/curseforge/game-versions/1628670?style=for-the-badge&logo=educative&logoColor=%23F16436&label=For%20MiaoCraft%20Version&link=https%3A%2F%2Fwww.curseforge.com%2Fminecraft%2Fmc-mods%2Fchinese-weapons)
+![Modrinth Downloads](https://img.shields.io/modrinth/dt/nweFmOF7?style=for-the-badge&logo=modrinth&logoColor=%2300AF5C&label=modrinth%20miaomiao%20ovo&link=https%3A%2F%2Fmodrinth.com%2Fmod%2Fchinese-weapons)
+![CurseForge Downloads](https://img.shields.io/curseforge/dt/1628670?style=for-the-badge&logo=curseforge&logoColor=%23F16436&label=curseforge%20miaomiao%20ovo&link=https%3A%2F%2Fwww.curseforge.com%2Fminecraft%2Fmc-mods%2Fchinese-weapons)
+
+## Licensing
+Code and Art unless otherwise stated default to our [LICENSE](LICENSE.md)
+
+---
+### Extra code
+
+.<br>
+└─p_run<br>
+&emsp; └─up_di_png.py [JUMP](p_run/up_di_png.py) Batch conversion of item icon
+&emsp; └─rp_up1.21.py [JUMP](p_run/rp_up1.21.py) Have recipe 1.20.1 -> 1.21.1
+
+---
+
 Source installation information for modders
 -------------------------------------------
 This code follows the Minecraft Forge installation methodology. It will apply

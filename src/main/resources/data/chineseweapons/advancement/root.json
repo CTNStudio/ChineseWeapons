@@ -1,0 +1,37 @@
+{
+  "display": {
+    "icon": {
+      "item": "chineseweapons:armor_casting_table"
+    },
+    "title": {
+      "translate": "advancement.chineseweapons.root.title"
+    },
+    "description": {
+      "translate": "advancement.chineseweapons.root.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false,
+    "background": "minecraft:textures/gui/advancements/backgrounds/adventure.png"
+  },
+  "criteria": {
+    "has_armor_casting_table": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "chineseweapons:armor_casting_table"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_armor_casting_table"
+    ]
+  ]
+}

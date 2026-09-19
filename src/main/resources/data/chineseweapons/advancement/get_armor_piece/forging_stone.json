@@ -1,0 +1,44 @@
+{
+  "display": {
+    "icon": {
+      "item": "chineseweapons:footmen_armor_forging_stone"
+    },
+    "title": {
+      "translate": "advancement.chineseweapons.get_armor_piece.forging_stone.title"
+    },
+    "description": {
+      "translate": "advancement.chineseweapons.get_armor_piece.forging_stone.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "parent": "chineseweapons:get_armor_piece",
+  "criteria": {
+    "get_armor_piece": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "chineseweapons:early_tang_dynasty_ming_guang_armor_forging_stone",
+              "chineseweapons:footmen_armor_forging_stone",
+              "chineseweapons:late_tang_dynasty_ming_guang_armor_forging_stone",
+              "chineseweapons:middle_tang_dynasty_ming_guang_armor_forging_stone",
+              "chineseweapons:mountain_character_armor_forging_stone",
+              "chineseweapons:black_chui_armor_forging_stone",
+              "chineseweapons:fine_scale_armor_forging_stone",
+              "chineseweapons:tang_dynasty_infantry_armor_forging_stone"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "get_armor_piece"
+    ]
+  ]
+}

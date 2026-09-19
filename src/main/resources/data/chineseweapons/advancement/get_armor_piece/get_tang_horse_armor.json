@@ -1,0 +1,40 @@
+{
+  "display": {
+    "icon": {
+      "item": "chineseweapons:diamond_tang_dynasty_horse_armor"
+    },
+    "title": {
+      "translate": "advancement.chineseweapons.get_armor_piece.get_tang_horse_armor.title"
+    },
+    "description": {
+      "translate": "advancement.chineseweapons.get_armor_piece.get_tang_horse_armor.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "parent": "chineseweapons:get_armor_piece/forging_stone",
+  "criteria": {
+    "has_horse_armor": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "chineseweapons:iron_tang_dynasty_horse_armor",
+              "chineseweapons:golden_tang_dynasty_horse_armor",
+              "chineseweapons:diamond_tang_dynasty_horse_armor",
+              "chineseweapons:netherite_tang_dynasty_horse_armor"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_horse_armor"
+    ]
+  ]
+}

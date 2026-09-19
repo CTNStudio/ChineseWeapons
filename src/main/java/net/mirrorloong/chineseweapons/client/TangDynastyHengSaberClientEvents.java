@@ -13,7 +13,7 @@ import net.mirrorloong.chineseweapons.procedures.TangDynastyHengSabeCutsProcedur
 
 import java.util.UUID;
 
-@EventBusSubscriber(modid = ChineseweaponsMod.MODID, bus = EventBusSubscriber.Bus.GAME, value = Dist.CLIENT)
+@EventBusSubscriber(modid = ChineseweaponsMod.MODID, value = Dist.CLIENT)
 public final class TangDynastyHengSaberClientEvents {
     private static final float ITEM_OFFSET = 3.0F / 16.0F;
     private static final float ROTATION = -60.0F;

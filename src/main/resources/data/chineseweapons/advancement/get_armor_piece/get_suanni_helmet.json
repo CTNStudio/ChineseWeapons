@@ -1,0 +1,40 @@
+{
+  "display": {
+    "icon": {
+      "item": "chineseweapons:diamond_suanni_helmet"
+    },
+    "title": {
+      "translate": "advancement.chineseweapons.get_armor_piece.get_suanni_helmet.title"
+    },
+    "description": {
+      "translate": "advancement.chineseweapons.get_armor_piece.get_suanni_helmet.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "parent": "chineseweapons:get_armor_piece/forging_stone",
+  "criteria": {
+    "has_suanni_helmet": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "chineseweapons:iron_suanni_helmet",
+              "chineseweapons:golden_suanni_helmet",
+              "chineseweapons:diamond_suanni_helmet",
+              "chineseweapons:netherite_suanni_helmet"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_suanni_helmet"
+    ]
+  ]
+}

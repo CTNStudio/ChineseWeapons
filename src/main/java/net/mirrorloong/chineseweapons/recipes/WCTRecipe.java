@@ -11,7 +11,6 @@ import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 
-
 public class WCTRecipe implements Recipe<RecipeInput> {
     private final ResourceLocation id;
     private final NonNullList<Ingredient> input;
@@ -20,11 +19,21 @@ public class WCTRecipe implements Recipe<RecipeInput> {
     public WCTRecipe(ResourceLocation id, NonNullList<Ingredient> input, ItemStack output) {
         this.id = id;
         this.input = input;
+        // 允许空ItemStack，因为OPTIONAL_STREAM_CODEC可以处理
         this.output = output;
     }
+
+    public ResourceLocation getId() {
+        return id;
+    }
+
     @Override
     public boolean matches(RecipeInput inv, Level level) {
-        for (int i = 0; i < 10; ++i) {
+        // 检查配方输入是否匹配
+        if (inv.size() < input.size()) {
+            return false;
+        }
+        for (int i = 0; i < input.size(); ++i) {
             if (!input.get(i).test(inv.getItem(i))) {
                 return false;
             }
@@ -34,7 +43,7 @@ public class WCTRecipe implements Recipe<RecipeInput> {
 
     @Override
     public ItemStack assemble(RecipeInput inv, HolderLookup.Provider registryAccess) {
-        return output.copy();
+        return getResultItem(registryAccess);
     }
 
     @Override
@@ -46,11 +55,13 @@ public class WCTRecipe implements Recipe<RecipeInput> {
     public ItemStack getResultItem(HolderLookup.Provider registryAccess) {
         return output.copy();
     }
+
     @Override
-    public NonNullList<Ingredient> getIngredients(){
+    public NonNullList<Ingredient> getIngredients() {
         return input;
     }
-    public ItemStack getResultItem2(){
+
+    public ItemStack getResultItem2() {
         return output.copy();
     }
 

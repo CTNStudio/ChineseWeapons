@@ -1,0 +1,28 @@
+{
+  "display": {
+    "icon": {
+      "item": "chineseweapons:golden_tang_dynasty_heng_saber"
+    },
+    "title": {
+      "translate": "advancement.chineseweapons.get_ancient_gem.xiao_tang_dynasty_heng_saber.title"
+    },
+    "description": {
+      "translate": "advancement.chineseweapons.get_ancient_gem.xiao_tang_dynasty_heng_saber.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "parent": "chineseweapons:get_ancient_gem/get_tang_dynasty_heng_saber",
+  "criteria": {
+    "xiao_tang_dynasty_heng_saber": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "requirements": [
+    [
+      "xiao_tang_dynasty_heng_saber"
+    ]
+  ]
+}

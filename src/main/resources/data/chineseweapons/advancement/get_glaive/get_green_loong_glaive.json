@@ -1,0 +1,37 @@
+{
+  "display": {
+    "icon": {
+      "item": "chineseweapons:green_loong_glaive"
+    },
+    "title": {
+      "translate": "advancement.chineseweapons.get_glaive.get_green_loong_glaive.title"
+    },
+    "description": {
+      "translate": "advancement.chineseweapons.get_glaive.get_green_loong_glaive.description"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "parent": "chineseweapons:get_glaive",
+  "criteria": {
+    "get_green_loong_glaive": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "chineseweapons:green_loong_glaive"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "get_green_loong_glaive"
+    ]
+  ]
+}

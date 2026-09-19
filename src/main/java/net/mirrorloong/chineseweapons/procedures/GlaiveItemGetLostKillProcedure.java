@@ -1,7 +1,11 @@
 package net.mirrorloong.chineseweapons.procedures;
 
 import net.minecraft.ChatFormatting;
+import net.minecraft.advancements.Advancement;
+import net.minecraft.advancements.AdvancementProgress;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
@@ -26,7 +30,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
-@EventBusSubscriber(modid = ChineseweaponsMod.MODID, bus = EventBusSubscriber.Bus.GAME)
+@EventBusSubscriber(modid = ChineseweaponsMod.MODID)
 public final class GlaiveItemGetLostKillProcedure {
     private static final int SKILL_DURATION_TICKS = 30;
     private static final int DAMAGE_PULSE_INTERVAL_TICKS = 11;
@@ -86,6 +90,23 @@ public final class GlaiveItemGetLostKillProcedure {
         activeSpin.markPulseApplied();
         player.causeFoodExhaustion(EXHAUSTION_COST);
         itemStack.hurtAndBreak(DURABILITY_COST, player, EquipmentSlot.MAINHAND);
+
+        if (player instanceof ServerPlayer sp) {
+            var advancementLookup = sp.server.getAdvancements();
+            var adv = advancementLookup.get(
+                    ResourceLocation.fromNamespaceAndPath(ChineseweaponsMod.MODID, "get_glaive/use_gs")
+            );
+
+            if (adv != null) {
+                var ap = sp.getAdvancements().getOrStartProgress(adv);
+                if (!ap.isDone()) {
+                    for (String cri : ap.getRemainingCriteria()) {
+                        sp.getAdvancements().award(adv, cri);
+                    }
+                }
+            }
+        }
+
         return true;
     }
 

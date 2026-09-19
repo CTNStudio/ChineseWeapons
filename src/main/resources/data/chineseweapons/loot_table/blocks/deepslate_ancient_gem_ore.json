@@ -1,6 +1,6 @@
 {
   "type": "minecraft:block",
-  "random_sequence": "chineseweapons:blocks/ancient_gem_ore",
+  "random_sequence": "chineseweapons:blocks/deepslate_ancient_gem_ore",
   "pools": [
     {
       "bonus_rolls": 0.0,
@@ -8,6 +8,24 @@
         {
           "type": "minecraft:alternatives",
           "children": [
+            {
+              "type": "minecraft:item",
+              "functions": [
+                {
+                  "function": "minecraft:apply_bonus",
+                  "enchantment": "minecraft:fortune",
+                  "formula": "minecraft:binomial_with_bonus_count",
+                  "parameters": {
+                    "extra": 1,
+                    "probability": 0.5
+                  }
+                },
+                {
+                  "function": "minecraft:explosion_decay"
+                }
+              ],
+              "name": "chineseweapons:ancient_gem"
+            },
             {
               "type": "minecraft:item",
               "conditions": [
@@ -25,21 +43,7 @@
                   }
                 }
               ],
-              "name": "chineseweapons:ancient_gem_ore"
-            },
-            {
-              "type": "minecraft:item",
-              "functions": [
-                {
-                  "enchantment": "minecraft:fortune",
-                  "formula": "minecraft:ore_drops",
-                  "function": "minecraft:apply_bonus"
-                },
-                {
-                  "function": "minecraft:explosion_decay"
-                }
-              ],
-              "name": "chineseweapons:ancient_gem"
+              "name": "chineseweapons:deepslate_ancient_gem_ore"
             }
           ]
         }

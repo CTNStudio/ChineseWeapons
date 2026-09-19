@@ -1,5 +1,9 @@
 package net.mirrorloong.chineseweapons.procedures;
 
+import net.minecraft.advancements.Advancement;
+import net.minecraft.advancements.AdvancementProgress;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -24,7 +28,7 @@ import net.mirrorloong.chineseweapons.init.ChineseweaponsModItems;
 
 import java.util.*;
 
-@EventBusSubscriber(modid = ChineseweaponsMod.MODID, bus = EventBusSubscriber.Bus.GAME)
+@EventBusSubscriber(modid = ChineseweaponsMod.MODID)
 public class TangDynastyHengSabeCutsProcedures {
 
     private static final List<DeferredHolder<Item, Item>> CAN_REGISTRY_OBJECTS = List.of(
@@ -115,6 +119,21 @@ public class TangDynastyHengSabeCutsProcedures {
                     float dmg = baseDamage + 2;
                     target.hurt(player.damageSources().playerAttack(player), dmg);
                     target.addEffect(new MobEffectInstance(ChineseWeaponsModEffects.CusEffectSupplier, 60, 0, false, true));
+
+                    if (player instanceof ServerPlayer sp) {
+                        ResourceLocation rootRl = ResourceLocation.fromNamespaceAndPath(ChineseweaponsMod.MODID, "get_ancient_gem/xiao_tang_dynasty_heng_saber");
+                        var advancementLookup = sp.server.getAdvancements();
+                        var rootAdv = advancementLookup.get(rootRl);
+
+                        if (rootAdv != null) {
+                            var ap = sp.getAdvancements().getOrStartProgress(rootAdv);
+                            if (!ap.isDone()) {
+                                for (String criteria : ap.getRemainingCriteria()) {
+                                    sp.getAdvancements().award(rootAdv, criteria);
+                                }
+                            }
+                        }
+                    }
                 });
 
         itemAnimData.put(player.getUUID(), new StabAnimData(bindWeapon, DH_TICK, true));

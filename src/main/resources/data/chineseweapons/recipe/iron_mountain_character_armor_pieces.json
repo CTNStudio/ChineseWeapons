@@ -1,17 +1,17 @@
 {
-  "type": "minecraft:crafting_shaped", 
-  "category": "misc", 
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
   "pattern": [
-    "aaa", 
+    "aaa",
     " a "
-  ], 
+  ],
   "key": {
     "a": {
       "item": "minecraft:iron_ingot"
     }
-  }, 
+  },
   "result": {
-    "count": 12, 
-    "id": "chineseweapons:iron_mountain_character_armor_pieces"
+    "id": "chineseweapons:iron_mountain_character_armor_pieces",
+    "count": 12
   }
 }

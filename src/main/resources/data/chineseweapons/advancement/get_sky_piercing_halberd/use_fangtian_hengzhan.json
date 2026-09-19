@@ -1,0 +1,28 @@
+{
+  "display": {
+    "icon": {
+      "item": "chineseweapons:golden_sky_piercing_halberd"
+    },
+    "title": {
+      "translate": "advancement.chineseweapons.get_sky_piercing_halberd.use_fangtian_hengzhan.title"
+    },
+    "description": {
+      "translate": "advancement.chineseweapons.get_sky_piercing_halberd.use_fangtian_hengzhan.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "parent": "chineseweapons:get_sky_piercing_halberd",
+  "criteria": {
+    "use_fangtian_hengzhan": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "requirements": [
+    [
+      "use_fangtian_hengzhan"
+    ]
+  ]
+}

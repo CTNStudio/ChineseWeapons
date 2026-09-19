@@ -1,5 +1,9 @@
 package net.mirrorloong.chineseweapons.procedures;
 
+import net.minecraft.advancements.Advancement;
+import net.minecraft.advancements.AdvancementProgress;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.monster.Creeper;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.entity.player.Player;
@@ -12,6 +16,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.core.registries.Registries;
 import java.util.List;
 import net.minecraft.world.entity.LivingEntity;
+import net.mirrorloong.chineseweapons.ChineseweaponsMod;
 import net.mirrorloong.chineseweapons.compat.WeaponScriptSettings;
 
 import net.minecraft.world.phys.Vec3;
@@ -114,11 +119,35 @@ public class DaggerAxeItemFierceHookProcedure {
             return false;
         }
 
-        // The hook always pulls and damages first; only a successful hit can
-        // trigger the rider dismount effect, and that effect remains 30%.
         float chance = WeaponScriptSettings.getChance(itemstack.getItem(), WeaponScriptSettings.Skill.HOOK_DISMOUNT, DEFAULT_DISMOUNT_CHANCE);
         if (targetEntity.getVehicle() != null && world.getRandom().nextFloat() < chance) {
             dismount(targetEntity);
+        }
+
+        if (sourceEntity instanceof ServerPlayer sp) {
+            var advancementLookup = sp.server.getAdvancements();
+
+            var hookAdv = advancementLookup.get(ResourceLocation.fromNamespaceAndPath(ChineseweaponsMod.MODID, "get_dagger_axe/dagger_axe_hook"));
+            if (hookAdv != null) {
+                var ap = sp.getAdvancements().getOrStartProgress(hookAdv);
+                if (!ap.isDone()) {
+                    for (String cri : ap.getRemainingCriteria()) {
+                        sp.getAdvancements().award(hookAdv, cri);
+                    }
+                }
+            }
+
+            if (targetEntity instanceof Creeper) {
+                var creeperAdv = advancementLookup.get(ResourceLocation.fromNamespaceAndPath(ChineseweaponsMod.MODID, "get_dagger_axe/dagger_axe_hook_creeper"));
+                if (creeperAdv != null) {
+                    var ap2 = sp.getAdvancements().getOrStartProgress(creeperAdv);
+                    if (!ap2.isDone()) {
+                        for (String cri : ap2.getRemainingCriteria()) {
+                            sp.getAdvancements().award(creeperAdv, cri);
+                        }
+                    }
+                }
+            }
         }
 
         return true;

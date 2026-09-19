@@ -1,0 +1,42 @@
+{
+  "display": {
+    "icon": {
+      "item": "chineseweapons:diamond_sky_piercing_halberd"
+    },
+    "title": {
+      "translate": "advancement.chineseweapons.get_sky_piercing_halberd.title"
+    },
+    "description": {
+      "translate": "advancement.chineseweapons.get_sky_piercing_halberd.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "parent": "chineseweapons:root",
+  "criteria": {
+    "get_sky_piercing_halberd": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "chineseweapons:diamond_sky_piercing_halberd",
+              "chineseweapons:netherite_sky_piercing_halberd",
+              "chineseweapons:iron_sky_piercing_halberd",
+              "chineseweapons:golden_sky_piercing_halberd",
+              "chineseweapons:stone_sky_piercing_halberd",
+              "chineseweapons:wooden_sky_piercing_halberd"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "get_sky_piercing_halberd"
+    ]
+  ]
+}

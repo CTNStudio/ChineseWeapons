@@ -1,14 +1,14 @@
 {
-  "type": "minecraft:smithing_transform", 
+  "type": "minecraft:smithing_transform",
   "addition": {
     "item": "minecraft:netherite_ingot"
-  }, 
+  },
   "base": {
     "item": "chineseweapons:diamond_dagger_axe"
-  }, 
+  },
   "result": {
     "id": "chineseweapons:netherite_dagger_axe"
-  }, 
+  },
   "template": {
     "item": "minecraft:netherite_upgrade_smithing_template"
   }

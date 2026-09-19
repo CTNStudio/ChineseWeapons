@@ -1,0 +1,37 @@
+{
+  "display": {
+    "icon": {
+      "item": "chineseweapons:tang_dynasty_shield"
+    },
+    "title": {
+      "translate": "advancement.chineseweapons.get_ancient_gem.get_tang_dynasty_shield.title"
+    },
+    "description": {
+      "translate": "advancement.chineseweapons.get_ancient_gem.get_tang_dynasty_shield.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "parent": "chineseweapons:get_ancient_gem",
+  "criteria": {
+    "get_tang_dynasty_shield": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "chineseweapons:tang_dynasty_shield"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "get_tang_dynasty_shield"
+    ]
+  ]
+}

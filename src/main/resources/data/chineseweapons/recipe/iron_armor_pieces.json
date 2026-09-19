@@ -1,18 +1,18 @@
 {
-  "type": "minecraft:crafting_shaped", 
-  "category": "misc", 
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
   "pattern": [
-    "a a", 
-    "   ", 
+    "a a",
+    "   ",
     " a "
-  ], 
+  ],
   "key": {
     "a": {
       "item": "minecraft:iron_ingot"
     }
-  }, 
+  },
   "result": {
-    "count": 9, 
-    "id": "chineseweapons:iron_armor_pieces"
+    "id": "chineseweapons:iron_armor_pieces",
+    "count": 9
   }
 }

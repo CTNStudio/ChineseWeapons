@@ -1,0 +1,28 @@
+{
+  "display": {
+    "icon": {
+      "item": "chineseweapons:golden_dagger_axe"
+    },
+    "title": {
+      "translate": "advancement.chineseweapons.get_dagger_axe.dagger_axe_hook.title"
+    },
+    "description": {
+      "translate": "advancement.chineseweapons.get_dagger_axe.dagger_axe_hook.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "parent": "chineseweapons:get_dagger_axe",
+  "criteria": {
+    "use_ge_hook": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "requirements": [
+    [
+      "use_ge_hook"
+    ]
+  ]
+}

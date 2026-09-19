@@ -1,12 +1,22 @@
 package net.mirrorloong.chineseweapons.procedures;
 
+import net.minecraft.advancements.Advancement;
+import net.minecraft.advancements.AdvancementProgress;
+import net.minecraft.core.Holder;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
+import net.mirrorloong.chineseweapons.ChineseweaponsMod;
 import net.mirrorloong.chineseweapons.compat.WeaponScriptSettings;
 import net.mirrorloong.chineseweapons.init.ChineseWeaponsModEffects;
+
+import java.util.function.Supplier;
 
 public class DaggerAxeAndGlaiveItemjizhongProcedure {
     private static final RandomSource RANDOM = RandomSource.create();
@@ -23,13 +33,30 @@ public class DaggerAxeAndGlaiveItemjizhongProcedure {
         float chance = WeaponScriptSettings.getChance(weapon.getItem(), WeaponScriptSettings.Skill.HIT_EFFECT, 0.80F);
         if (RANDOM.nextFloat() < chance) {
             if (entity instanceof LivingEntity livingEntity) {
+                Holder<MobEffect> effectHolder = ChineseWeaponsModEffects.CusEffectSupplier;
                 livingEntity.addEffect(new MobEffectInstance(
-                        ChineseWeaponsModEffects.CusEffectSupplier,
+                        effectHolder,
                         120,
                         0,
                         true,
                         true
                 ));
+
+                if (livingEntity instanceof ServerPlayer hitPlayer) {
+                    var advancementLookup = hitPlayer.server.getAdvancements();
+                    var adv = advancementLookup.get(
+                            ResourceLocation.fromNamespaceAndPath(ChineseweaponsMod.MODID, "get_dagger_axe/dagger_axe_hook_has_cuts_xg")
+                    );
+
+                    if (adv != null) {
+                        var ap = hitPlayer.getAdvancements().getOrStartProgress(adv);
+                        if (!ap.isDone()) {
+                            for (String cri : ap.getRemainingCriteria()) {
+                                hitPlayer.getAdvancements().award(adv, cri);
+                            }
+                        }
+                    }
+                }
             }
         }
     }

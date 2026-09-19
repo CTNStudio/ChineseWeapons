@@ -47,7 +47,7 @@ import java.util.UUID;
  * Full-set-only effects deliberately require four matching armour-family pieces;
  * mixed material tiers of the same family still count as one complete set.
  */
-@EventBusSubscriber(modid = ChineseweaponsMod.MODID, bus = EventBusSubscriber.Bus.GAME)
+@EventBusSubscriber(modid = ChineseweaponsMod.MODID)
 public final class ChineseWeaponsCombatEvents {
     private static final ResourceLocation MING_GUANG_SPEED_ID = ResourceLocation.fromNamespaceAndPath(ChineseweaponsMod.MODID, "ming_guang_speed");
     private static final AttributeModifier MING_GUANG_SPEED = new AttributeModifier(
@@ -419,7 +419,7 @@ public final class ChineseWeaponsCombatEvents {
         data.remove(TETHER_UNTIL);
     }
 
-    private static boolean isTethered(LivingEntity entity) {
+    public static boolean isTethered(LivingEntity entity) {
         return entity.getPersistentData().contains(TETHER_UNTIL);
     }
 
