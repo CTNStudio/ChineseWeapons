@@ -1,0 +1,26 @@
+{
+  "type": "chineseweapons:weapon_casting_shaped",
+  "pattern": [
+    "ABA",
+    "ACA",
+    " A "
+  ],
+  "main_material": {
+    "item": "minecraft:iron_ingot"
+  },
+  "key": {
+    "A": {
+      "tag": "minecraft:planks"
+    },
+    "B": {
+      "item": "minecraft:shield"
+    },
+    "C": {
+      "item": "chineseweapons:iron_armor_pieces"
+    }
+  },
+  "result": {
+    "count": 1,
+    "item": "chineseweapons:song_standing_shield"
+  }
+}

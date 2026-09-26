@@ -1,12 +1,12 @@
 {
   "parent": "chineseweapons:custom/iron_glaive",
   "textures": {
-    "0": "chineseweapons:block/stone_glaive",
+    "0": "chineseweapons:block/weapon/stone_glaive",
     "1": "chineseweapons:block/stone_glaive_head_1",
     "2": "chineseweapons:block/stone_glaive_head_2",
     "3": "chineseweapons:block/stone_glaive_head_3",
     "4": "chineseweapons:block/stone_glaive_head_4",
-    "5": "chineseweapons:block/standard_glaive_head",
+    "5": "chineseweapons:block/weapon/standard_glaive_head",
     "particle": "chineseweapons:item/stone_glaive"
   }
 }

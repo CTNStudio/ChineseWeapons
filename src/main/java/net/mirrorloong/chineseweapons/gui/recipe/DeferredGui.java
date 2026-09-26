@@ -10,6 +10,8 @@ import net.mirrorloong.chineseweapons.ChineseweaponsMod;
 public class DeferredGui{
     public static final DeferredRegister<MenuType<?>> Deferred = DeferredRegister.create(ForgeRegistries.MENU_TYPES, ChineseweaponsMod.MODID);
 
-    public static final RegistryObject<MenuType<WeaponsCastingTableTypeGuiMenu>> RegMenu = Deferred.register("gui.chineseweapons.weapons_casting_table",()-> IForgeMenuType.create((windowId, inv, data) -> new WeaponsCastingTableTypeGuiMenu(windowId, inv)));
-
+    public static final RegistryObject<MenuType<WeaponsCastingTableTypeGuiMenu>> RegMenu =
+            Deferred.register("gui.chineseweapons.weapons_casting_table",
+                    () -> IForgeMenuType.create((windowId, inv, data) ->
+                            new WeaponsCastingTableTypeGuiMenu(windowId, inv, data.readBlockPos())));
  }

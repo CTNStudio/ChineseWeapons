@@ -4,6 +4,8 @@ import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.entity.LivingEntity;
 
+import java.util.Random;
+
 public class CutsEffect extends MobEffect {
     public CutsEffect() {
         super(MobEffectCategory.HARMFUL,0x000000);
@@ -13,6 +15,13 @@ public class CutsEffect extends MobEffect {
         if(entity.isSprinting()){
             entity.hurt(entity.damageSources().generic(),1f);
         }
+
+        if (entity.level().getRandom().nextFloat() <= 0.3) {
+            if (!entity.level().isClientSide()) {
+                entity.hurt(entity.damageSources().generic(), 1.0F);
+            }
+        }
+
     }
     @Override
     public boolean isDurationEffectTick(int duration, int amplifier) {

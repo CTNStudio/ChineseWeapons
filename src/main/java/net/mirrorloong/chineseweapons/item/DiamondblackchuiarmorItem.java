@@ -1,9 +1,7 @@
 
 package net.mirrorloong.chineseweapons.item;
 
-import com.mojang.blaze3d.platform.NativeImage;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.Level;
 import net.mirrorloong.chineseweapons.client.model.Modelblack_chui_armor;
@@ -21,16 +19,9 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.Minecraft;
-import net.mirrorloong.chineseweapons.procedures.DyeableItem;
-import org.apache.commons.compress.utils.IOUtils;
-import org.stringtemplate.v4.ST;
+import net.mirrorloong.chineseweapons.procedures.armor.DyeableItem;
 
 import javax.annotation.Nullable;
-import java.io.ByteArrayOutputStream;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.URL;
 import java.util.*;
 import java.util.function.Consumer;
 

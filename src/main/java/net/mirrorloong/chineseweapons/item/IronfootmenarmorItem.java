@@ -21,8 +21,8 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.Minecraft;
-import net.mirrorloong.chineseweapons.procedures.DyeableItem;
-import net.mirrorloong.chineseweapons.procedures.FootmenarmorcompletetestingProcedure;
+import net.mirrorloong.chineseweapons.procedures.armor.DyeableItem;
+import net.mirrorloong.chineseweapons.procedures.armor.FootmenarmorcompletetestingProcedure;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -40,7 +40,7 @@ public abstract class IronfootmenarmorItem extends ArmorItem implements DyeableI
 
 			@Override
 			public int getDefenseForType(ArmorItem.Type type) {
-				return new int[]{3, 6, 7, 3}[type.getSlot().getIndex()];
+				return new int[]{4, 7, 8, 4}[type.getSlot().getIndex()];
 			}
 
 			@Override

@@ -1,0 +1,14 @@
+{
+  "parent": "chineseweapons:custom/song_standing_shield",
+  "textures": {
+    "particle": "chineseweapons:block/song_standing_shield"
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "chineseweapons:blocking": 1.0
+      },
+      "model": "chineseweapons:custom/song_standing_shield_on"
+    }
+  ]
+}

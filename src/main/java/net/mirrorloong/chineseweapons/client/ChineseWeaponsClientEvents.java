@@ -12,7 +12,7 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.mirrorloong.chineseweapons.ChineseweaponsMod;
 import net.mirrorloong.chineseweapons.init.ChineseweaponsModItems;
-import net.mirrorloong.chineseweapons.procedures.DyeableItem;
+import net.mirrorloong.chineseweapons.procedures.armor.DyeableItem;
 
 @Mod.EventBusSubscriber(modid = ChineseweaponsMod.MODID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public final class ChineseWeaponsClientEvents {
@@ -23,13 +23,22 @@ public final class ChineseWeaponsClientEvents {
 
     @SubscribeEvent
     public static void onClientSetup(FMLClientSetupEvent event) {
-        event.enqueueWork(() -> ItemProperties.register(
-                ChineseweaponsModItems.TangDynastyShield.get(),
-                BLOCKING,
-                (stack, level, entity, seed) -> entity != null
-                        && entity.isUsingItem()
-                        && entity.getUseItem() == stack ? 1.0F : 0.0F
-        ));
+        event.enqueueWork(() -> {
+            ItemProperties.register(
+                    ChineseweaponsModItems.TangDynastyShield.get(),
+                    BLOCKING,
+                    (stack, level, entity, seed) -> entity != null
+                            && entity.isUsingItem()
+                            && entity.getUseItem() == stack ? 1.0F : 0.0F
+            );
+            ItemProperties.register(
+                    ChineseweaponsModItems.SongStandingShield.get(),
+                    BLOCKING,
+                    (stack, level, entity, seed) -> entity != null
+                            && entity.isUsingItem()
+                            && entity.getUseItem() == stack ? 1.0F : 0.0F
+            );
+        });
     }
 
     @SubscribeEvent
@@ -55,7 +64,8 @@ public final class ChineseWeaponsClientEvents {
                             || path.contains("footmen_armor_")
                             || path.contains("late_tang_dynasty_ming_guang_armor_")
                             || path.contains("middle_tang_dynasty_ming_guang_armor_")
-                            || path.contains("mountain_character_armor_");
+                            || path.contains("mountain_character_armor_")
+                            || path.contains("song_dynasty_infantry_armor_");
                 })
                 .toArray(Item[]::new);
         event.register(dyeableColor, coloredItems);

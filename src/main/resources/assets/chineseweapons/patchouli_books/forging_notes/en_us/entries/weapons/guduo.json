@@ -1,0 +1,25 @@
+{
+  "sortnum": 0,
+  "name": "patchouli.chineseweapons.book.entries.weapons.guduo.name",
+  "icon": "chineseweapons:iron_guduo",
+  "category": "chineseweapons:weapons",
+  "pages": [
+    {
+      "type": "spotlight",
+      "item": "chineseweapons:iron_guduo",
+      "text": "patchouli.chineseweapons.book.entries.weapons.guduo.pages.0.text"
+    },
+    {
+      "type": "spotlight",
+      "item": "chineseweapons:iron_guduo",
+      "text": "patchouli.chineseweapons.book.entries.weapons.guduo.pages.1.text"
+    },
+    {
+      "type": "image",
+      "images": [
+        "chineseweapons:textures/book/weapons_7.png"
+      ],
+      "text": "patchouli.chineseweapons.book.entries.weapons.text"
+    }
+  ]
+}

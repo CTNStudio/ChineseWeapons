@@ -1,0 +1,19 @@
+{
+  "sortnum": 0,
+  "name": "item.chineseweapons.tang_dynasty_shield",
+  "icon": "chineseweapons:tang_dynasty_shield",
+  "category": "chineseweapons:weapons",
+  "pages": [
+    {
+      "type": "text",
+      "text": "patchouli.chineseweapons.book.entries.tang_dynasty_shield.pages.0.text"
+    },
+    {
+      "type": "image",
+      "images": [
+        "chineseweapons:textures/book/weapons_5.png"
+      ],
+      "text": "patchouli.chineseweapons.book.entries.weapons.text"
+    }
+  ]
+}

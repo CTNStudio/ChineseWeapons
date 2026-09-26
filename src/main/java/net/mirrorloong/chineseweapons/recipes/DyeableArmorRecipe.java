@@ -11,7 +11,7 @@ import net.minecraft.world.item.crafting.CustomRecipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.SimpleCraftingRecipeSerializer;
 import net.minecraft.world.level.Level;
-import net.mirrorloong.chineseweapons.procedures.DyeableItem;
+import net.mirrorloong.chineseweapons.procedures.armor.DyeableItem;
 
 public class DyeableArmorRecipe extends CustomRecipe {
 

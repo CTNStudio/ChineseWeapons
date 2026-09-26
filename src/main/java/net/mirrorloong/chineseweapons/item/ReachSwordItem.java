@@ -6,6 +6,7 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.SwordItem;
 import net.minecraft.world.item.Tier;
 import net.minecraftforge.common.ForgeMod;
@@ -40,6 +41,14 @@ abstract class FourBlockReachSwordItem extends ReachSwordItem {
     protected FourBlockReachSwordItem(Tier tier, int attackDamageModifier, float attackSpeedModifier, Item.Properties properties) {
         super(tier, attackDamageModifier, attackSpeedModifier, properties, 1.0D);
     }
+}
+
+abstract class SixBlockReachSwordItem extends ReachSwordItem {
+    protected SixBlockReachSwordItem(Tier tier, int attackDamageModifier, float attackSpeedModifier, Item.Properties properties) {
+        super(tier, attackDamageModifier, attackSpeedModifier, properties, 1.0D);
+    }
+
+    public abstract boolean canPerformSweepAttack(ItemStack stack);
 }
 
 abstract class FiveBlockReachSwordItem extends ReachSwordItem {

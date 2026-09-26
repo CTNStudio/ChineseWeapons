@@ -1,16 +1,20 @@
 package net.mirrorloong.chineseweapons;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
+import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import net.mirrorloong.chineseweapons.gui.recipe.DeferredGui;
 import net.mirrorloong.chineseweapons.init.*;
 import net.mirrorloong.chineseweapons.item.*;
-import net.mirrorloong.chineseweapons.procedures.DyeableItem;
+import net.mirrorloong.chineseweapons.network.ArmorCastingTableBlockProgressPacket;
+import net.mirrorloong.chineseweapons.network.ShieldActionPacket;
 import net.mirrorloong.chineseweapons.recipes.DeferredRecipe;
 import net.mirrorloong.chineseweapons.recipes.DyeableArmorRecipe;
 import net.mirrorloong.chineseweapons.compat.WeaponScriptSettings;
@@ -48,6 +52,17 @@ public class ChineseweaponsMod {
             RECIPE_SERIALIZERS.register("crafting_special_dyeablearmor",
                     () -> DyeableArmorRecipe.SERIALIZER);
 
+    public static final DeferredRegister<SoundEvent> SOUNDS =
+            DeferredRegister.create(ForgeRegistries.SOUND_EVENTS, ChineseweaponsMod.MODID);
+
+    public static final RegistryObject<SoundEvent> GUDUO =
+            SOUNDS.register("guduo", () -> SoundEvent.createVariableRangeEvent(
+                    new ResourceLocation(ChineseweaponsMod.MODID, "guduo")
+            ));
+
+    //握手
+    public static final SimpleChannel CHANNEL = NetworkRegistry.newSimpleChannel(
+            new ResourceLocation(MODID, "main"), () -> "1", "1"::equals, "1"::equals);
 
     public ChineseweaponsMod(FMLJavaModLoadingContext context) {
         IEventBus bus = context.getModEventBus();
@@ -61,7 +76,39 @@ public class ChineseweaponsMod {
         ChineseweaponsModTabs.REGISTRY.register(bus);
         ChineseWeaponsModEffects.REGISTER.register(bus);
         ChineseWeaponsModEnchantments.REGISTRY.register(bus);
+        ChineseweaponsModEntities.ENTITIES.register(bus);
+        ChineseweaponsMod.SOUNDS.register(bus);
         RECIPE_SERIALIZERS.register(bus);
+        ChineseweaponsModBlockEntities.REGISTRY.register(bus);
+        bus.addListener(ChineseweaponsMod::network);
+        bus.addListener(ChineseweaponsMod::registerKeys);
+    }
+
+    @SubscribeEvent
+    public static void registerKeys(RegisterKeyMappingsEvent e) {
+        e.register(ChineseweaponsModKeyHandler.ACTION_KEY);
+    }
+
+    @SubscribeEvent
+    public static void network(FMLCommonSetupEvent event) {
+        ChineseweaponsMod.CHANNEL.registerMessage(
+                0,
+                GuDuoItem.SquashPacket.class,
+                GuDuoItem.SquashPacket::encode,
+                GuDuoItem.SquashPacket::decode,
+                GuDuoItem.SquashPacket::handle);
+        ChineseweaponsMod.CHANNEL.registerMessage(
+                1,
+                ShieldActionPacket.class,
+                ShieldActionPacket::encode,
+                ShieldActionPacket::new,
+                ShieldActionPacket::handle);
+        ChineseweaponsMod.CHANNEL.registerMessage(
+                2,
+                ArmorCastingTableBlockProgressPacket.class,
+                ArmorCastingTableBlockProgressPacket::encode,
+                ArmorCastingTableBlockProgressPacket::decode,
+                ArmorCastingTableBlockProgressPacket::handle);
     }
 
 	private static final Random random = new Random();

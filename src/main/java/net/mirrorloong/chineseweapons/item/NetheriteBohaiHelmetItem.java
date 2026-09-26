@@ -15,7 +15,7 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.client.extensions.common.IClientItemExtensions;
 import net.mirrorloong.chineseweapons.client.model.Modelbohai_helmet;
-import net.mirrorloong.chineseweapons.procedures.DyeableItem;
+import net.mirrorloong.chineseweapons.procedures.armor.DyeableItem;
 
 import javax.annotation.Nullable;
 import java.util.Collections;

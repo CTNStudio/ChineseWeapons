@@ -1,0 +1,19 @@
+{
+  "sortnum": 0,
+  "name": "item.chineseweapons.song_standing_shield",
+  "icon": "chineseweapons:song_standing_sheild",
+  "category": "chineseweapons:weapons",
+  "pages": [
+    {
+      "type": "text",
+      "text": "patchouli.chineseweapons.book.entries.song_standing_shield.pages.0.text"
+    },
+    {
+      "type": "image",
+      "images": [
+        "chineseweapons:textures/book/weapons_4.png"
+      ],
+      "text": "patchouli.chineseweapons.book.entries.weapons.text"
+    }
+  ]
+}

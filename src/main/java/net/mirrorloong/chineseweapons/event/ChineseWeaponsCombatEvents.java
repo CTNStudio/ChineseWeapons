@@ -22,10 +22,13 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.SwordItem;
 import net.minecraft.world.item.TridentItem;
 import net.minecraft.world.level.ClipContext;
+import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.event.level.ExplosionEvent;
 import net.mirrorloong.chineseweapons.ChineseweaponsMod;
+import net.mirrorloong.chineseweapons.entity.SongStandingShieldEntity;
 import net.mirrorloong.chineseweapons.init.ChineseWeaponsModEffects;
 import net.mirrorloong.chineseweapons.init.ChineseweaponsModItems;
 import net.minecraftforge.event.TickEvent;
@@ -432,5 +435,14 @@ public final class ChineseWeaponsCombatEvents {
 
     private static boolean roll(LivingEntity entity, float probability) {
         return entity.getRandom().nextFloat() < probability;
+    }
+
+    @SubscribeEvent
+    public static void onExplosion(ExplosionEvent.Detonate event) {
+        var level = event.getLevel();
+        var center = event.getExplosion().getPosition();
+        level.getEntitiesOfClass(SongStandingShieldEntity.class,
+                        new AABB(center, center).inflate(32))
+                .forEach(e -> e.handleExplosion(event));
     }
 }

@@ -2,8 +2,6 @@ package net.mirrorloong.chineseweapons.init;
 
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.*;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.mirrorloong.chineseweapons.item.*;
 import net.mirrorloong.chineseweapons.ChineseweaponsMod;
 
@@ -12,8 +10,6 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.DeferredRegister;
 
 import net.minecraft.world.level.block.Block;
-
-import java.util.Objects;
 
 public class ChineseweaponsModItems {
 	public static final DeferredRegister<Item> REGISTRY = DeferredRegister.create(ForgeRegistries.ITEMS, ChineseweaponsMod.MODID);
@@ -147,6 +143,20 @@ public class ChineseweaponsModItems {
 	public static final RegistryObject<Item> DIAMOND_SKY_PIERCING_HALBERD = REGISTRY.register("diamond_sky_piercing_halberd", () -> new SkyPiercingHalberdItem(Tiers.DIAMOND, 7, 1.2F,false));
 	public static final RegistryObject<Item> NETHERITE_SKY_PIERCING_HALBERD = REGISTRY.register("netherite_sky_piercing_halberd", () -> new SkyPiercingHalberdItem(Tiers.NETHERITE, 8, 1F,true));
 
+    public static final RegistryObject<Item> WOODEN_SONG_JAVENLIN = REGISTRY.register("wooden_song_javelin", () -> new SongJavelinItem(Tiers.WOOD, 0, 1.7F,false, +20));
+    public static final RegistryObject<Item> STONE_SONG_JAVENLIN = REGISTRY.register("stone_song_javelin", () -> new SongJavelinItem(Tiers.STONE, 0, 1.7F,false, +20));
+    public static final RegistryObject<Item> GOLDEN_SONG_JAVENLIN = REGISTRY.register("golden_song_javelin", () -> new SongJavelinItem(Tiers.GOLD, 0, 1.7F,false, +20));
+    public static final RegistryObject<Item> IRON_SONG_JAVENLIN = REGISTRY.register("iron_song_javelin", () -> new SongJavelinItem(Tiers.IRON, 0, 1.7F,false, +20));
+    public static final RegistryObject<Item> DIAMOND_SONG_JAVENLIN = REGISTRY.register("diamond_song_javelin", () -> new SongJavelinItem(Tiers.DIAMOND, 0, 1.7F,false, +20));
+    public static final RegistryObject<Item> NETHERITE_SONG_JAVENLIN = REGISTRY.register("netherite_song_javelin", () -> new SongJavelinItem(Tiers.NETHERITE, 0, 1.7F,true, +20));
+
+    public static final RegistryObject<Item> WOODEN_GU_DUO = REGISTRY.register("wooden_guduo", () -> new GuDuoItem(Tiers.WOOD, 5, 1.2F,false, 89));
+    public static final RegistryObject<Item> STONE_GU_DUO = REGISTRY.register("stone_guduo", () -> new GuDuoItem(Tiers.STONE, 6, 1.2F,false, 154));
+    public static final RegistryObject<Item> GOLDEN_GU_DUO = REGISTRY.register("golden_guduo", () -> new GuDuoItem(Tiers.GOLD, 5, 1.4F,false, 87));
+    public static final RegistryObject<Item> IRON_GU_DUO = REGISTRY.register("iron_guduo", () -> new GuDuoItem(Tiers.IRON, 7, 1.4F,false, 574));
+    public static final RegistryObject<Item> DIAMOND_GU_DUO = REGISTRY.register("diamond_guduo", () -> new GuDuoItem(Tiers.DIAMOND, 8, 1.6F,false, 1572));
+    public static final RegistryObject<Item> NETHERITE_GU_DUO = REGISTRY.register("netherite_guduo", () -> new GuDuoItem(Tiers.NETHERITE, 9, 1.6F,true, 2048));
+
 	public static final RegistryObject<Item> ARMOR_CASTING_TABLE = block(ChineseweaponsModBlocks.ARMOR_CASTING_TABLE);
 	public static final RegistryObject<Item> DiamondArmorPieces = REGISTRY.register("diamond_armor_pieces", () -> new Item(new Item.Properties()));
 	public static final RegistryObject<Item> DiamondArmorPiecesPlate = REGISTRY.register("diamond_armor_pieces_plate", () -> new Item(new Item.Properties()));
@@ -190,7 +200,13 @@ public class ChineseweaponsModItems {
     public static final RegistryObject<Item> NETHERITELATETANGDYNASTYMINGGUANGARMOR_LEGGINGS = REGISTRY.register("netherite_late_tang_dynasty_ming_guang_armor_leggings", NetheritelatetangdynastymingguangarmorItem.Leggings::new);
     public static final RegistryObject<Item> NETHERITELATETANGDYNASTYMINGGUANGARMOR_BOOTS = REGISTRY.register("netherite_late_tang_dynasty_ming_guang_armor_boots", NetheritelatetangdynastymingguangarmorItem.Boots::new);
 
+    public static final RegistryObject<Item> SONGDYNASTYINFANTRYARMOR_HELMET = REGISTRY.register("song_dynasty_infantry_armor_helmet", SongDynastyInfantryarmorItem.Helmet::new);
+    public static final RegistryObject<Item> SONGDYNASTYINFANTRYARMOR_CHESTPLATE = REGISTRY.register("song_dynasty_infantry_armor_chestplate", SongDynastyInfantryarmorItem.Chestplate::new);
+    public static final RegistryObject<Item> SONGDYNASTYINFANTRYARMOR_LEGGINGS = REGISTRY.register("song_dynasty_infantry_armor_leggings", SongDynastyInfantryarmorItem.Leggings::new);
+    public static final RegistryObject<Item> SONGDYNASTYINFANTRYARMOR_BOOTS = REGISTRY.register("song_dynasty_infantry_armor_boots", SongDynastyInfantryarmorItem.Boots::new);
+
     public static final RegistryObject<Item> TangDynastyShield = REGISTRY.register("tang_dynasty_shield", TangDynastyShield::new);
+    public static final RegistryObject<Item> SongStandingShield = REGISTRY.register("song_standing_shield", SongStandingShield::new);
 
     public static final RegistryObject<Item> DIAMOND_SUANNI_HELMET = REGISTRY.register("diamond_suanni_helmet", DiamondSuanniHelmetItem.Helmet::new);
     public static final RegistryObject<Item> IRON_SUANNI_HELMET = REGISTRY.register("iron_suanni_helmet", IronSuanniHelmetItem.Helmet::new);
@@ -201,6 +217,11 @@ public class ChineseweaponsModItems {
     public static final RegistryObject<Item> IRON_BOHAI_HELMET = REGISTRY.register("iron_bohai_helmet", IronBohaiHelmetItem.Helmet::new);
     public static final RegistryObject<Item> NETHERITE_BOHAI_HELMET = REGISTRY.register("netherite_bohai_helmet", NetheriteBohaiHelmetItem.Helmet::new);
     public static final RegistryObject<Item> GOLDEN_BOHAI_HELMET = REGISTRY.register("golden_bohai_helmet", GoldenBohaiHelmetItem.Helmet::new);
+
+    public static final RegistryObject<Item> DIAMOND_FACE_GUARD_HELMET = REGISTRY.register("diamond_face_guard_helmet", DiamondFaceGuardHelmetItem.Helmet::new);
+    public static final RegistryObject<Item> IRON_FACE_GUARD_HELMET = REGISTRY.register("iron_face_guard_helmet", IronFaceGuardHelmetItem.Helmet::new);
+    public static final RegistryObject<Item> NETHERITE_FACE_GUARD_HELMET = REGISTRY.register("netherite_face_guard_helmet", NetheriteFaceGuardHelmetItem.Helmet::new);
+    public static final RegistryObject<Item> GOLDEN_FACE_GUARD_HELMET = REGISTRY.register("golden_face_guard_helmet", GoldenFaceGuardHelmetItem.Helmet::new);
 
     public static final RegistryObject<Item> DIAMOND_TANG_DYNASTY_HORSE = REGISTRY.register("diamond_tang_dynasty_horse_armor", () -> new TangDynastyHorseItem(18, new ResourceLocation(ChineseweaponsMod.MODID, "textures/entities/horse/armor/diamond_tang_dynasty_horse_armor.png")));
     public static final RegistryObject<Item> IRON_TANG_DYNASTY_HORSE = REGISTRY.register("iron_tang_dynasty_horse_armor", () -> new TangDynastyHorseItem(8, new ResourceLocation(ChineseweaponsMod.MODID, "textures/entities/horse/armor/iron_tang_dynasty_horse_armor.png")));

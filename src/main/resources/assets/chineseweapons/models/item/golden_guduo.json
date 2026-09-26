@@ -1,0 +1,22 @@
+{
+  "gui_light": "front",
+  "loader": "forge:separate_transforms",
+  "textures": {
+    "particle": "chineseweapons:block/weapon/golden_guduo"
+  },
+  "base": {
+    "parent": "chineseweapons:custom/guduo",
+    "textures": {
+      "1": "chineseweapons:block/weapon/golden_guduo",
+      "particle": "chineseweapons:block/weapon/golden_guduo"
+    }
+  },
+  "perspectives": {
+    "gui": {
+      "parent": "minecraft:item/generated",
+      "textures": {
+        "layer0": "chineseweapons:item/mini_golden_guduo"
+      }
+    }
+  }
+}

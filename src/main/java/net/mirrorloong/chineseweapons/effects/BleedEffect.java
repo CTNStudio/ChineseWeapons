@@ -14,9 +14,12 @@ public class BleedEffect extends MobEffect {
     public void applyEffectTick(LivingEntity entity, int p_19468_) {
         entity.addEffect(new MobEffectInstance(MobEffects.WEAKNESS,25));
         entity.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN,25));
+        if(entity.getHealth() >= 2.0F){
+            entity.hurt(entity.damageSources().generic(),1F);
+        }
     }
     @Override
     public boolean isDurationEffectTick(int duration, int amplifier) {
-        return duration%20 == 0;
+        return duration % 20 == 0;
     }
 }

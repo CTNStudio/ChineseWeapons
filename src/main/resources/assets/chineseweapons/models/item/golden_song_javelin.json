@@ -1,0 +1,22 @@
+{
+  "gui_light": "front",
+  "loader": "forge:separate_transforms",
+  "textures": {
+    "particle": "chineseweapons:block/weapon/golden_song_javelin"
+  },
+  "base": {
+    "parent": "chineseweapons:custom/song_javelin",
+    "textures": {
+      "2": "chineseweapons:block/weapon/golden_song_javelin",
+      "particle": "chineseweapons:block/weapon/golden_song_javelin"
+    }
+  },
+  "perspectives": {
+    "gui": {
+      "parent": "minecraft:item/generated",
+      "textures": {
+        "layer0": "chineseweapons:item/mini_golden_song_javelin"
+      }
+    }
+  }
+}

@@ -7,8 +7,8 @@
   "base": {
     "parent": "chineseweapons:custom/tang_dynasty_heng_saber",
     "textures": {
-      "5": "chineseweapons:block/netherite_tang_dynasty_heng_saber",
-      "particle": "chineseweapons:block/netherite_tang_dynasty_heng_saber"
+      "5": "chineseweapons:block/weapon/netherite_tang_dynasty_heng_saber",
+      "particle": "chineseweapons:block/weapon/netherite_tang_dynasty_heng_saber"
     }
   },
   "perspectives": {

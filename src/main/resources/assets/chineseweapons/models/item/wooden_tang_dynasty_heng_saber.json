@@ -7,8 +7,8 @@
   "base": {
     "parent": "chineseweapons:custom/tang_dynasty_heng_saber",
     "textures": {
-      "5": "chineseweapons:block/wooden_tang_dynasty_heng_saber",
-      "particle": "chineseweapons:block/wooden_tang_dynasty_heng_saber"
+      "5": "chineseweapons:block/weapon/wooden_tang_dynasty_heng_saber",
+      "particle": "chineseweapons:block/weapon/wooden_tang_dynasty_heng_saber"
     }
   },
   "perspectives": {

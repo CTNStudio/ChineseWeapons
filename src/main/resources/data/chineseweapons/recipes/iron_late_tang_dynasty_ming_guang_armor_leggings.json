@@ -16,7 +16,7 @@
         "item": "chineseweapons:iron_armor_pieces_plate"
       },
       "C":{
-        "item": "minecraft:white_wool"
+        "tag": "minecraft:wool"
       }
     },
     "result": {

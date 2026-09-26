@@ -10,8 +10,9 @@ import net.minecraft.world.level.Level;
 import net.mirrorloong.chineseweapons.init.ChineseweaponsModItems;
 
 import net.minecraft.world.item.crafting.Ingredient;
-import net.mirrorloong.chineseweapons.procedures.DaggerAxeItemFierceHookProcedure;
-import net.mirrorloong.chineseweapons.procedures.DaggerAxeAndGlaiveItemjizhongProcedure;
+import net.mirrorloong.chineseweapons.procedures.weapon.DaggerAxeHurtFiyyProcedure;
+import net.mirrorloong.chineseweapons.procedures.weapon.DaggerAxeItemFierceHookProcedure;
+import net.mirrorloong.chineseweapons.procedures.weapon.DaggerAxeAndGlaiveItemjizhongProcedure;
 
 public class DiamonddaggeraxeItem extends FiveBlockReachSwordItem {
 	public DiamonddaggeraxeItem() {
@@ -25,7 +26,7 @@ public class DiamonddaggeraxeItem extends FiveBlockReachSwordItem {
 			}
 
 			public float getAttackDamageBonus() {
-				return 4f;
+				return 3f;
 			}
 
 			public int getLevel() {
@@ -52,8 +53,10 @@ public class DiamonddaggeraxeItem extends FiveBlockReachSwordItem {
     @Override
     public boolean hurtEnemy(ItemStack itemstack, LivingEntity entity, LivingEntity sourceentity) {
         boolean retval = super.hurtEnemy(itemstack, entity, sourceentity);
-        DaggerAxeAndGlaiveItemjizhongProcedure.execute(entity, itemstack);
+        if (!entity.level().isClientSide()) {
+            DaggerAxeAndGlaiveItemjizhongProcedure.execute(entity, itemstack);
+            DaggerAxeHurtFiyyProcedure.execute(sourceentity, entity);
+        }
         return retval;
     }
-
 }

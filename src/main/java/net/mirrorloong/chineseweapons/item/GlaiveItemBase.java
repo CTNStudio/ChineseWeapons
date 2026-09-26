@@ -7,7 +7,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Tier;
 import net.minecraft.world.level.Level;
-import net.mirrorloong.chineseweapons.procedures.GlaiveItemGetLostKillProcedure;
+import net.mirrorloong.chineseweapons.procedures.weapon.GlaiveItemGetLostKillProcedure;
 
 public abstract class GlaiveItemBase extends FourBlockReachSwordItem {
     protected GlaiveItemBase(Tier tier, int attackDamageModifier, float attackSpeedModifier, Item.Properties properties) {

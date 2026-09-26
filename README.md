@@ -1,9 +1,16 @@
 
 # Chinese Weapons
-![CurseForge Game Versions](https://img.shields.io/curseforge/game-versions/1628670?style=for-the-badge&logo=educative&logoColor=%23F16436&label=For%20MiaoCraft%20Version&link=https%3A%2F%2Fwww.curseforge.com%2Fminecraft%2Fmc-mods%2Fchinese-weapons)
-![Modrinth Downloads](https://img.shields.io/modrinth/dt/nweFmOF7?style=for-the-badge&logo=modrinth&logoColor=%2300AF5C&label=modrinth%20miaomiao%20ovo&link=https%3A%2F%2Fmodrinth.com%2Fmod%2Fchinese-weapons)
-![CurseForge Downloads](https://img.shields.io/curseforge/dt/1628670?style=for-the-badge&logo=curseforge&logoColor=%23F16436&label=curseforge%20miaomiao%20ovo&link=https%3A%2F%2Fwww.curseforge.com%2Fminecraft%2Fmc-mods%2Fchinese-weapons)
+[![CurseForge Game Versions](https://img.shields.io/curseforge/game-versions/1628670?style=for-the-badge&logo=educative&logoColor=%23F16436&label=For%20MiaoCraft%20Version)](https://www.curseforge.com/minecraft/mc-mods/chinese-weapons)
+[![Modrinth Downloads](https://img.shields.io/modrinth/dt/nweFmOF7?style=for-the-badge&logo=modrinth&logoColor=%2300AF5C&label=modrinth%20miaomiao%20ovo)](https://modrinth.com/mod/chinese-weapons)
+[![CurseForge Downloads](https://img.shields.io/curseforge/dt/1628670?style=for-the-badge&logo=curseforge&logoColor=%23F16436&label=curseforge%20miaomiao%20ovo)](https://www.curseforge.com/minecraft/mc-mods/chinese-weapons)
 
+### This mod provides KubeJS compatibility support, allowing you to modify the basic attributes, attack distance, skill probability of weapons through scripts, as well as add or remove weapon casting table formulas for this mod. [JUMP TO WIKI](KUBEJS_COMPAT.md)
+
+## ReadMe Language
+
+[中文](README_CN.md) | [English](README.md)
+
+---
 ## Licensing
 Code and Art unless otherwise stated default to our [LICENSE](LICENSE.md)
 
@@ -12,7 +19,8 @@ Code and Art unless otherwise stated default to our [LICENSE](LICENSE.md)
 
 .<br>
 └─p_run<br>
-&emsp; └─up_di_png.py [JUMP](p_run/up_di_png.py) Batch conversion of item icon
+&emsp; └─up_di_png.py [JUMP](p_run/up_di_png.py) Batch conversion of item icon<br>
+&emsp; └─sp_w.py [JUMP](p_run/sp_w.py) Batch adaptation to other module actions
 
 ---
 

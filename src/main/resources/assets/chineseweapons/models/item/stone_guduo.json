@@ -1,0 +1,22 @@
+{
+  "gui_light": "front",
+  "loader": "forge:separate_transforms",
+  "textures": {
+    "particle": "chineseweapons:block/weapon/stone_guduo"
+  },
+  "base": {
+    "parent": "chineseweapons:custom/guduo",
+    "textures": {
+      "1": "chineseweapons:block/weapon/stone_guduo",
+      "particle": "chineseweapons:block/weapon/stone_guduo"
+    }
+  },
+  "perspectives": {
+    "gui": {
+      "parent": "minecraft:item/generated",
+      "textures": {
+        "layer0": "chineseweapons:item/mini_stone_guduo"
+      }
+    }
+  }
+}

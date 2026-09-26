@@ -2,6 +2,7 @@
 package net.mirrorloong.chineseweapons.item;
 
 import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -10,13 +11,11 @@ import net.mirrorloong.chineseweapons.init.ChineseweaponsModItems;
 
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.Tier;
-import net.minecraft.world.item.SwordItem;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Item;
-import net.mirrorloong.chineseweapons.procedures.DaggerAxeAndGlaiveItemjizhongProcedure;
-import net.mirrorloong.chineseweapons.procedures.GlaiveItemBlockProcedure;
-import net.mirrorloong.chineseweapons.procedures.GlaiveItemGetLostKillProcedure;
+import net.mirrorloong.chineseweapons.procedures.weapon.DaggerAxeAndGlaiveItemjizhongProcedure;
+import net.mirrorloong.chineseweapons.procedures.weapon.GlaiveItemStopRunProcedure;
 
 public class DiamondglaiveItem extends GlaiveItemBase {
 	public DiamondglaiveItem() {
@@ -51,7 +50,13 @@ public class DiamondglaiveItem extends GlaiveItemBase {
     public boolean hurtEnemy(ItemStack itemstack, LivingEntity entity, LivingEntity sourceentity) {
         boolean retval = super.hurtEnemy(itemstack, entity, sourceentity);
         DaggerAxeAndGlaiveItemjizhongProcedure.execute(entity, itemstack);
+
         return retval;
     }
 
+    @Override
+    public InteractionResult interactLivingEntity(ItemStack itemstack, Player player, LivingEntity target, InteractionHand hand) {
+        GlaiveItemStopRunProcedure.execute(target, player, itemstack);
+        return InteractionResult.SUCCESS;
+    }
 }

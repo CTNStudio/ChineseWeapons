@@ -112,6 +112,10 @@ public class ChineseweaponsModTabs {
 				tabData.accept(ChineseweaponsModItems.NETHERITELATETANGDYNASTYMINGGUANGARMOR_CHESTPLATE.get());
 				tabData.accept(ChineseweaponsModItems.NETHERITELATETANGDYNASTYMINGGUANGARMOR_LEGGINGS.get());
 				tabData.accept(ChineseweaponsModItems.NETHERITELATETANGDYNASTYMINGGUANGARMOR_BOOTS.get());
+                tabData.accept(ChineseweaponsModItems.SONGDYNASTYINFANTRYARMOR_HELMET.get());
+                tabData.accept(ChineseweaponsModItems.SONGDYNASTYINFANTRYARMOR_CHESTPLATE.get());
+                tabData.accept(ChineseweaponsModItems.SONGDYNASTYINFANTRYARMOR_LEGGINGS.get());
+                tabData.accept(ChineseweaponsModItems.SONGDYNASTYINFANTRYARMOR_BOOTS.get());
 				tabData.accept(ChineseweaponsModItems.IRONFINE_SCALE_ARMOR_HELMET.get());
 				tabData.accept(ChineseweaponsModItems.IRONFINE_SCALE_ARMOR_CHESTPLATE.get());
 				tabData.accept(ChineseweaponsModItems.IRONFINE_SCALE_ARMOR_LEGGINGS.get());
@@ -140,6 +144,10 @@ public class ChineseweaponsModTabs {
 				tabData.accept(ChineseweaponsModItems.GOLDEN_BOHAI_HELMET .get());
 				tabData.accept(ChineseweaponsModItems.DIAMOND_BOHAI_HELMET.get());
 				tabData.accept(ChineseweaponsModItems.NETHERITE_BOHAI_HELMET.get());
+                tabData.accept(ChineseweaponsModItems.IRON_FACE_GUARD_HELMET.get());
+                tabData.accept(ChineseweaponsModItems.GOLDEN_FACE_GUARD_HELMET.get());
+                tabData.accept(ChineseweaponsModItems.DIAMOND_FACE_GUARD_HELMET.get());
+                tabData.accept(ChineseweaponsModItems.NETHERITE_FACE_GUARD_HELMET.get());
 				tabData.accept(ChineseweaponsModItems.IRON_TANG_DYNASTY_HORSE.get());
 				tabData.accept(ChineseweaponsModItems.GOLDEN_TANG_DYNASTY_HORSE.get());
 				tabData.accept(ChineseweaponsModItems.DIAMOND_TANG_DYNASTY_HORSE.get());
@@ -163,6 +171,18 @@ public class ChineseweaponsModTabs {
 				tabData.accept(ChineseweaponsModItems.GOLDEN_SKY_PIERCING_HALBERD.get());
 				tabData.accept(ChineseweaponsModItems.DIAMOND_SKY_PIERCING_HALBERD.get());
 				tabData.accept(ChineseweaponsModItems.NETHERITE_SKY_PIERCING_HALBERD.get());
+                tabData.accept(ChineseweaponsModItems.NETHERITE_SONG_JAVENLIN.get());
+                tabData.accept(ChineseweaponsModItems.DIAMOND_SONG_JAVENLIN.get());
+                tabData.accept(ChineseweaponsModItems.IRON_SONG_JAVENLIN.get());
+                tabData.accept(ChineseweaponsModItems.GOLDEN_SONG_JAVENLIN.get());
+                tabData.accept(ChineseweaponsModItems.STONE_SONG_JAVENLIN.get());
+                tabData.accept(ChineseweaponsModItems.WOODEN_SONG_JAVENLIN.get());
+                tabData.accept(ChineseweaponsModItems.WOODEN_GU_DUO.get());
+                tabData.accept(ChineseweaponsModItems.STONE_GU_DUO.get());
+                tabData.accept(ChineseweaponsModItems.GOLDEN_GU_DUO.get());
+                tabData.accept(ChineseweaponsModItems.IRON_GU_DUO.get());
+                tabData.accept(ChineseweaponsModItems.DIAMOND_GU_DUO.get());
+                tabData.accept(ChineseweaponsModItems.NETHERITE_GU_DUO.get());
 				tabData.accept(ChineseweaponsModItems.WOODEN_TANG_DYNASTY_HENG_SABER.get());
 				tabData.accept(ChineseweaponsModItems.STONE_TANG_DYNASTY_HENG_SABER.get());
 				tabData.accept(ChineseweaponsModItems.IRON_TANG_DYNASTY_HENG_SABER.get());
@@ -170,6 +190,7 @@ public class ChineseweaponsModTabs {
 				tabData.accept(ChineseweaponsModItems.DIAMOND_TANG_DYNASTY_HENG_SABER.get());
 				tabData.accept(ChineseweaponsModItems.NETHERITE_TANG_DYNASTY_HENG_SABER.get());
 				tabData.accept(ChineseweaponsModItems.TangDynastyShield.get());
+                tabData.accept(ChineseweaponsModItems.SongStandingShield.get());
 				tabData.accept(ChineseweaponsModBlocks.ARMOR_CASTING_TABLE.get().asItem());
 				tabData.accept(ChineseweaponsModBlocks.ANCIENT_GEM_ORE.get().asItem());
 				tabData.accept(ChineseweaponsModBlocks.DeepslateANCIENT_GEM_ORE.get().asItem());

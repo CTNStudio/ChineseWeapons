@@ -35,6 +35,8 @@ kubejs/
 
 ## 二、修改物品属性
 
+## 注意，目前暂时不支持盔甲设置属性，等待添加代码。
+
 在以下位置新建文件：
 
 ```text
@@ -71,7 +73,9 @@ chineseweapons:tang_dynasty_shield
 
 修改 `startup_scripts` 后必须完全退出并重新启动游戏或服务器，单独执行 `/reload` 不会重新执行启动脚本。
 
-## 三、修改武器技能参数
+## 三、修改技能/参数/概率/基础设置
+
+## 所有 技能/参数/概率/基础设置 可以在[ChineseWeaponsKubeJSBindings.java 点击跳转](src/main/java/net/mirrorloong/chineseweapons/compat/kubejs/ChineseWeaponsKubeJSBindings.java) 查看，代码内包含所有可以自定义选项的注释和详细用法 ***放心食用ovo***。
 
 下面的接口由 Chinese Weapons 提供，写在 `startup_scripts` 中即可：
 

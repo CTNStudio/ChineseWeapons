@@ -13,7 +13,7 @@ public class ArmorcastingtableguipreventgivingawayitemsforfreeProcedure {
 	public static void execute(Entity entity) {
 		if (entity == null)
 			return;
-		if (((entity instanceof Player _plrSlotItem && _plrSlotItem.containerMenu instanceof Supplier _splr && _splr.get() instanceof Map _slt ? ((Slot) _slt.get(11)).getItem() : ItemStack.EMPTY).getItem() == Blocks.AIR.asItem()) == false) {
+		if (!((entity instanceof Player _plrSlotItem && _plrSlotItem.containerMenu instanceof Supplier _splr && _splr.get() instanceof Map _slt ? ((Slot) _slt.get(11)).getItem() : ItemStack.EMPTY).getItem() == Blocks.AIR.asItem())) {
 			if (entity instanceof Player _player && _player.containerMenu instanceof Supplier _current && _current.get() instanceof Map _slots) {
 				((Slot) _slots.get(11)).set(ItemStack.EMPTY);
 				_player.containerMenu.broadcastChanges();

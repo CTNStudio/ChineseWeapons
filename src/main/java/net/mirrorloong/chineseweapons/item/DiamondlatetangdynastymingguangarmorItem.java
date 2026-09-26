@@ -17,7 +17,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.extensions.common.IClientItemExtensions;
 import net.mirrorloong.chineseweapons.client.model.Modellate_tang_dynasty_ming_guang_armor;
-import net.mirrorloong.chineseweapons.procedures.DyeableItem;
+import net.mirrorloong.chineseweapons.procedures.armor.DyeableItem;
 
 import javax.annotation.Nullable;
 import java.util.Collections;

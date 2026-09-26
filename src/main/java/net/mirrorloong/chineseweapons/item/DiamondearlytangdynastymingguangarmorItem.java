@@ -19,7 +19,7 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.Minecraft;
-import net.mirrorloong.chineseweapons.procedures.DyeableItem;
+import net.mirrorloong.chineseweapons.procedures.armor.DyeableItem;
 
 import javax.annotation.Nullable;
 import java.util.List;

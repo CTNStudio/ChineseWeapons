@@ -1,0 +1,20 @@
+{
+  "sortnum": 8,
+  "name": "patchouli.chineseweapons.book.entries.armor.face_guard_helmet.name",
+  "icon": "chineseweapons:iron_face_guard_helmet",
+  "category": "chineseweapons:armor",
+  "pages": [
+    {
+      "type": "spotlight",
+      "item": "chineseweapons:iron_face_guard_helmet",
+      "text": "patchouli.chineseweapons.book.entries.armor.face_guard_helmet.pages.0.text"
+    },
+    {
+      "type": "image",
+      "images": [
+        "chineseweapons:textures/book/armor_11.png"
+      ],
+      "text": "patchouli.chineseweapons.book.entries.armor.text"
+    }
+  ]
+}

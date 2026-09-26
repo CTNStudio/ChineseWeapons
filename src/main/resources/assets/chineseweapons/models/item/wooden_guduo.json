@@ -1,0 +1,22 @@
+{
+  "gui_light": "front",
+  "loader": "forge:separate_transforms",
+  "textures": {
+    "particle": "chineseweapons:block/weapon/wooden_guduo"
+  },
+  "base": {
+    "parent": "chineseweapons:custom/guduo",
+    "textures": {
+      "1": "chineseweapons:block/weapon/wooden_guduo",
+      "particle": "chineseweapons:block/weapon/wooden_guduo"
+    }
+  },
+  "perspectives": {
+    "gui": {
+      "parent": "minecraft:item/generated",
+      "textures": {
+        "layer0": "chineseweapons:item/mini_wooden_guduo"
+      }
+    }
+  }
+}

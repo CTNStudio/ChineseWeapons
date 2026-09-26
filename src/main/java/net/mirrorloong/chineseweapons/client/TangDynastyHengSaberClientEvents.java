@@ -8,13 +8,13 @@ import net.minecraftforge.client.event.RenderHandEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.mirrorloong.chineseweapons.ChineseweaponsMod;
-import net.mirrorloong.chineseweapons.procedures.TangDynastyHengSabeCutsProcedures;
+import net.mirrorloong.chineseweapons.procedures.weapon.TangDynastyHengSabeCutsProcedures;
 
 import java.util.UUID;
 
 @Mod.EventBusSubscriber(modid = ChineseweaponsMod.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE, value = Dist.CLIENT)
 public final class TangDynastyHengSaberClientEvents {
-    private static final float ITEM_OFFSET = 3.0F / 16.0F;
+    private static final float ITEM_OFFSET = 1F;
     private static final float ROTATION = -60.0F;
 
     private TangDynastyHengSaberClientEvents() {
@@ -32,8 +32,7 @@ public final class TangDynastyHengSaberClientEvents {
         if (progress <= 0.0F) {
             return;
         }
-
+        event.getPoseStack().translate(0, 0, -ITEM_OFFSET * progress);
         event.getPoseStack().mulPose(Axis.XP.rotationDegrees(ROTATION * progress));
-        event.getPoseStack().translate(0, 0, ITEM_OFFSET * progress);
     }
 }
