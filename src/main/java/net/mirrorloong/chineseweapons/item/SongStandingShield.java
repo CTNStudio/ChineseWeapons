@@ -52,9 +52,11 @@ public class SongStandingShield extends ShieldItem {
         SongStandingShieldEntity entity = ChineseweaponsModEntities.STANDING_SHIELD.get().create(level);
         if (entity == null) return;
 
+        float yaw = player.getYRot() + 180.0F;
+
         Vec3 spawn = hit.getLocation();
-        entity.moveTo(spawn.x, spawn.y, spawn.z, player.getYRot(), 0);
-        entity.setShieldYaw(player.getYRot());
+        entity.moveTo(spawn.x, spawn.y, spawn.z, yaw, 0);
+        entity.setShieldYaw(yaw);
         entity.setStoredItem(stack.copy());
         entity.setHealth(stack.getMaxDamage() - stack.getDamageValue());
         level.addFreshEntity(entity);

@@ -30,7 +30,7 @@ public class WoodenglaiveItem extends GlaiveItemBase {
 			}
 
 			public float getAttackDamageBonus() {
-				return 1f;
+				return 3f;
 			}
 
 			public int getLevel() {

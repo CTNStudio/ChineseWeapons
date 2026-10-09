@@ -27,7 +27,7 @@ public final class WeaponScriptSettings {
     }
     public enum Logic {
         SONGSTANDINGSHIELD_ENDURANCEDISPLAY,
-        FOOTMENARMOR_GAIN
+        ARMOR_GAIN
     }
 
     private static final Map<ResourceLocation, Double> REACH_BONUSES = new ConcurrentHashMap<>();

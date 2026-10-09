@@ -20,6 +20,9 @@ import net.minecraft.resources.ResourceLocation;
 
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.AABB;
+import net.mirrorloong.chineseweapons.init.ChineseweaponsModItems;
+import net.mirrorloong.chineseweapons.procedures.armor.FootmenarmorcompletetestingProcedure;
+import net.minecraftforge.registries.ForgeRegistries;
 
 public class DaggerAxeItemFierceHookProcedure {
     private static final double PULL_STOP_DISTANCE = 2.0D;
@@ -28,6 +31,10 @@ public class DaggerAxeItemFierceHookProcedure {
     private static final int SAFE_DESTINATION_ATTEMPTS = 12;
     private static final int HOOK_COOLDOWN_TICKS = 10;
     private static final float DEFAULT_DISMOUNT_CHANCE = 0.30F;
+
+    private static final String EARLY_MING_GUANG_MARKER = "early_tang_dynasty_ming_guang_armor_";
+    private static final String MIDDLE_MING_GUANG_MARKER = "middle_tang_dynasty_ming_guang_armor_";
+    private static final String LATE_MING_GUANG_MARKER = "late_tang_dynasty_ming_guang_armor_";
 
     private static void spawnAndMoveCollision(LevelAccessor world, double startX, double startY, double startZ, Entity sourceEntity, ItemStack itemstack) {
         if (world.isClientSide()) return;
@@ -64,6 +71,15 @@ public class DaggerAxeItemFierceHookProcedure {
                 break;
             }
         }
+    }
+
+    public static boolean isDaggerAxe(ItemStack stack) {
+        return stack.getItem() == ChineseweaponsModItems.STONE_DAGGER_AXE.get()
+                || stack.getItem() == ChineseweaponsModItems.IRON_DAGGER_AXE.get()
+                || stack.getItem() == ChineseweaponsModItems.DIAMOND_DAGGER_AXE.get()
+                || stack.getItem() == ChineseweaponsModItems.NETHERITE_DAGGER_AXE.get()
+                || stack.getItem() == ChineseweaponsModItems.WOODEN_DAGGER_AXE.get()
+                || stack.getItem() == ChineseweaponsModItems.GOLDEN_DAGGER_AXE.get();
     }
 
     private static LivingEntity resolveHookTarget(List<Entity> hitEntities) {
@@ -117,7 +133,8 @@ public class DaggerAxeItemFierceHookProcedure {
             return false;
         }
 
-        float chance = WeaponScriptSettings.getChance(itemstack.getItem(), WeaponScriptSettings.Skill.HOOK_DISMOUNT, DEFAULT_DISMOUNT_CHANCE);
+        float chance = getDismountChance(itemstack, targetEntity);
+
         if (targetEntity.getVehicle() != null && world.getRandom().nextFloat() < chance) {
             dismount(targetEntity);
         }
@@ -147,6 +164,41 @@ public class DaggerAxeItemFierceHookProcedure {
         }
 
         return true;
+    }
+
+    private static float getDismountChance(ItemStack itemstack, LivingEntity targetEntity) {
+        if (FootmenarmorcompletetestingProcedure.isFullFootmenArmorSet(targetEntity)) {
+            return 0.10F;
+        }
+
+        if (isFullArmorSet(targetEntity, EARLY_MING_GUANG_MARKER)) {
+            return 0.15F;
+        }
+
+        if (isFullArmorSet(targetEntity, MIDDLE_MING_GUANG_MARKER)) {
+            return 0.15F;
+        }
+
+        if (isFullArmorSet(targetEntity, LATE_MING_GUANG_MARKER)) {
+            return 0.10F;
+        }
+
+        return WeaponScriptSettings.getChance(
+                itemstack.getItem(),
+                WeaponScriptSettings.Skill.HOOK_DISMOUNT,
+                DEFAULT_DISMOUNT_CHANCE
+        );
+    }
+
+    private static boolean isFullArmorSet(LivingEntity entity, String itemPathMarker) {
+        int count = 0;
+        for (ItemStack armor : entity.getArmorSlots()) {
+            ResourceLocation key = ForgeRegistries.ITEMS.getKey(armor.getItem());
+            if (key != null && key.getPath().contains(itemPathMarker)) {
+                count++;
+            }
+        }
+        return count == 4;
     }
 
     private static boolean teleportAndDamage(LevelAccessor world, Entity sourceEntity, Entity target, ItemStack itemstack) {

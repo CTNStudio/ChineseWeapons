@@ -113,7 +113,7 @@ public class ChineseweaponsModItems {
 	public static final RegistryObject<Item> NETHERITEFINE_SCALE_ARMOR_CHESTPLATE = REGISTRY.register("netherite_fine_scale_armor_chestplate", () -> new FinescalearmorItem(FinescalearmorItem.MaterialVariant.NETHERITE, ArmorItem.Type.CHESTPLATE));
 	public static final RegistryObject<Item> NETHERITEFINE_SCALE_ARMOR_LEGGINGS = REGISTRY.register("netherite_fine_scale_armor_leggings", () -> new FinescalearmorItem(FinescalearmorItem.MaterialVariant.NETHERITE, ArmorItem.Type.LEGGINGS));
 	public static final RegistryObject<Item> NETHERITEFINE_SCALE_ARMOR_BOOTS = REGISTRY.register("netherite_fine_scale_armor_boots", () -> new FinescalearmorItem(FinescalearmorItem.MaterialVariant.NETHERITE, ArmorItem.Type.BOOTS));
-    //铁=a，石=a-1，木=a-2，金伤害=a-2，钻石=a+1
+
 	public static final RegistryObject<Item> GOLDEN_DAGGER_AXE = REGISTRY.register("golden_dagger_axe", GoldendaggeraxeItem::new);
 	public static final RegistryObject<Item> DIAMOND_DAGGER_AXE = REGISTRY.register("diamond_dagger_axe", DiamonddaggeraxeItem::new);
 	public static final RegistryObject<Item> IRON_DAGGER_AXE = REGISTRY.register("iron_dagger_axe", IrondaggeraxeItem::new);

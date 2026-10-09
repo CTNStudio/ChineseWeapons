@@ -27,7 +27,7 @@ public class NetheriteglaiveItem extends GlaiveItemBase {
 			}
 
 			public float getAttackDamageBonus() {
-				return 5f;
+				return 7f;
 			}
 
 			public int getLevel() {

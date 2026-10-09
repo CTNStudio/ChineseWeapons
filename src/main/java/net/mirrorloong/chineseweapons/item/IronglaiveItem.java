@@ -27,7 +27,7 @@ public class IronglaiveItem extends GlaiveItemBase {
 			}
 
 			public float getAttackDamageBonus() {
-				return 3f;
+				return 5f;
 			}
 
 			public int getLevel() {

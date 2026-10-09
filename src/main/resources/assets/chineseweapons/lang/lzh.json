@@ -179,7 +179,6 @@
   "item.chineseweapons.tang_dynasty_infantry_armor_forging_stone": "锻灵石",
   "block.chineseweapons.ancient_gem_ore": "太古灵璞矿",
   "block.chineseweapons.deepslate_ancient_gem_ore": "深岩太古灵璞矿",
-  "enchantment.chineseweapons.cavalry_buster_star": "破骑星纹",
   "item.chineseweapons.footmen_armor_forging_stone.tile": "§7步人甲范",
   "item.chineseweapons.mountain_character_armor_forging_stone.tile": "§7山文甲范",
   "item.chineseweapons.tang_dynasty_infantry_armor_forging_stone.tile": "§7唐步卒甲范",
@@ -353,7 +352,7 @@
   "item.chineseweapons.diamond_song_javelin": "金剛梭槍",
   "item.chineseweapons.netherite_song_javelin": "下界合金梭槍",
   "item.chineseweapons.song_standing_shield": "宋制立盾",
-  "key.standing_shield.onground": "置／取 宋制立盾",
+  "key.skill.text": "置／取 宋制立盾",
   "entity.standing_shield.hp": "餘耐久：%d",
   "patchouli.chineseweapons.book.entries.weapons.song_javelin.name": "梭槍",
   "patchouli.chineseweapons.book.entries.weapons.song_javelin.pages.0.text": "梭槍者，投擲之長兵也，可擲可刺。右擊則擲之，其勢類三叉戟，用以擊遠近之敵。",
@@ -379,5 +378,9 @@
   "patchouli.chineseweapons.book.entries.weapons.tang_dynasty_horse_armor.pages.1.text": "马覆此铠，则箭矢不能伤之。",
   "patchouli.chineseweapons.book.entries.tang_dynasty_shield.pages.0.text":"唐盾，堅久勝於常盾。",
   "patchouli.chineseweapons.book.entries.armor.face_guard_helmet.name": "面甲",
-  "patchouli.chineseweapons.book.entries.armor.face_guard_helmet.pages.0.text": "面甲者，蔽面之護具也，兼有防護、威懾之用。著之而潛行，可懾玩家周遭三至十三格內之實體，冷卻三息。"
+  "patchouli.chineseweapons.book.entries.armor.face_guard_helmet.pages.0.text": "面甲者，蔽面之護具也，兼有防護、威懾之用。著之而潛行，可懾玩家周遭三至十三格內之實體，冷卻三息。",
+  "patchouli.chineseweapons.book.categories.ovo.name": "贊助之列",
+  "patchouli.chineseweapons.book.categories.ovo.description": "$(#FFDDE1)$(k)$(l)|$(#FFDDE1)$(l) $()$(#FFD7DA)$(l)中$(#FFC3C6)$(l)式$(#FFA2A5)$(l)甲$(#F59BA3)$(l)兵$(l) $(#FFDBDF)$(l)感$(#FFCED2)$(l)謝$(#FFB4B7)$(l)有$(#FB9AA0)$(l)汝$(l) $(#FFDDE1)$(k)$(l)|",
+  "patchouli.chineseweapons.book.categories.ovo.title": "| 中式甲兵 感念有汝 |",
+  "patchouli.chineseweapons.book.entries.ovo.ovo.pages.0.text": "中式甲兵感念有汝，兼謝下列諸君贊助此模。若前曾有贊助而未列於此，請與吾等相告。信未來模組日臻佳境！(排名不分先後)$(br2)GhAli，珠联璧合"
 }

@@ -15,10 +15,10 @@ import org.lwjgl.glfw.GLFW;
 @Mod.EventBusSubscriber(modid = ChineseweaponsMod.MODID, value = Dist.CLIENT)
 public class ChineseweaponsModKeyHandler {
     public static final KeyMapping ACTION_KEY = new KeyMapping(
-            "key.standing_shield.onground",
+            "key.skill.text",
             KeyConflictContext.IN_GAME,
             InputConstants.Type.KEYSYM,
-            GLFW.GLFW_KEY_LEFT_ALT,
+            GLFW.GLFW_KEY_J,
             "item_group.chineseweapons.chinese_weapons");
 
     @SubscribeEvent

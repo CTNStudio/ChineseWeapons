@@ -62,9 +62,9 @@ public final class ChineseWeaponsKubeJSBindings {
         WeaponScriptSettings.setLogicChance(null, WeaponScriptSettings.Logic.SONGSTANDINGSHIELD_ENDURANCEDISPLAY, chance);
     }
 
-    //设置步人甲增益开关 用法 ChineseWeapons.setFootmenArmorGain('物品ID', true/false)
-    public static void setFootmenArmorGain(String itemId, String chance) {
-        WeaponScriptSettings.setLogicChance(parseItemId(itemId), WeaponScriptSettings.Logic.FOOTMENARMOR_GAIN, chance);
+    //设置盔甲增益开关 用法 ChineseWeapons.setArmorGain('物品ID', true/false)
+    public static void setArmorGain(String itemId, String chance) {
+        WeaponScriptSettings.setLogicChance(parseItemId(itemId), WeaponScriptSettings.Logic.ARMOR_GAIN, chance);
     }
 
     //设置面甲驱逐生物最大格数 用法 ChineseWeapons.setFaceGuardHelmetFarFromChance('物品ID', 格数)

@@ -178,7 +178,6 @@
   "item.chineseweapons.black_chui_armor_forging_stone": "Forging Stone",
   "block.chineseweapons.ancient_gem_ore": "Ancient Gem Ore",
   "block.chineseweapons.deepslate_ancient_gem_ore": "Deepslate Ancient Gem Ore",
-  "enchantment.chineseweapons.cavalry_buster_star": "Cavalry Buster Star",
   "item.chineseweapons.tang_dynasty_infantry_armor_forging_stone.tile": "§7Tang Dynasty Infantry Armor Tempplate",
   "item.chineseweapons.fine_scale_armor_forging_stone.tile": "§7Fine Scale Armor Template",
   "item.chineseweapons.footmen_armor_forging_stone.tile": "§7Footman Armor Template",
@@ -357,7 +356,7 @@
   "item.chineseweapons.diamond_song_javelin": "Diamond Song Javelin",
   "item.chineseweapons.netherite_song_javelin": "Netherite Song Javelin",
   "item.chineseweapons.song_standing_shield": "Song Standing Shield",
-  "key.standing_shield.onground": "Place/Take Song Standing Shield",
+  "key.skill.text": "Place/Take Song Standing Shield",
   "entity.standing_shield.hp": "Remaining Durability: %d",
   "patchouli.chineseweapons.book.entries.song_standing_shield.pages.0.text": "The Song Standing Shield has two usage modes: held in hand or placed on the ground. When held, it functions like an ordinary shield. Press Left ALT to place the shield on the ground. Right-click to rotate the standing shield left and right; it can block attacks such as swords and arrows.",
 
@@ -376,6 +375,10 @@
   "item.chineseweapons.song_dynasty_infantry_armor_helmet": "Song Dynasty Infantry Armor Helmet",
   "patchouli.chineseweapons.book.entries.armor.face_guard_helmet.name": "Face Guard Helmet",
   "patchouli.chineseweapons.book.entries.armor.face_guard_helmet.pages.0.text": "The Face Guard Helmet is a piece of armor that covers the face, serving both for protection and intimidation. When worn, sneaking will frighten entities within 3 to 13 blocks around the player, with a 3-second cooldown.",
+  "patchouli.chineseweapons.book.categories.ovo.name": "Sponsors",
+  "patchouli.chineseweapons.book.categories.ovo.description": "$(#FFDDE1)$(k)$(l)|$(#FFDDE1)$(l) $()$(#FFD7DA)$(l)C$(#FFC3C6)$(l)h$(#FFA2A5)$(l)i$(#F59BA3)$(l)n$(#FFDBDF)$(l)e$(#FFCED2)$(l)s$(#FFB4B7)$(l)e$(#FB9AA0)$(l) $(l)$(#FFDDE1)$(k)$(l)|",
+  "patchouli.chineseweapons.book.categories.ovo.title": "| Chinese Armorers — Thank You |",
+  "patchouli.chineseweapons.book.entries.ovo.ovo.pages.0.text": "Chinese Armorers thanks you, and also thanks the following sponsors for supporting this mod. If you have sponsored before but are not listed here, please contact us. We believe the mod will keep getting better! (In no particular order)$(br2)GhAli，珠联璧合",
 
   "patchouli.chineseweapons.book.entries.weapons.tang_dynasty_horse_armor.name": "Tang Horse Armor",
   "patchouli.chineseweapons.book.entries.weapons.tang_dynasty_horse_armor.pages.0.text": "Tang Horse Armor greatly boosts the defensive capability of horses.",

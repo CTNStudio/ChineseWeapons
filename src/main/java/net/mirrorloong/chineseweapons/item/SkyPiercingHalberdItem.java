@@ -9,7 +9,7 @@ import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementProgress;
 import net.minecraft.resources.ResourceLocation;
 import net.mirrorloong.chineseweapons.ChineseweaponsMod;
-import net.mirrorloong.chineseweapons.event.ChineseWeaponsCombatEvents;
+import net.mirrorloong.chineseweapons.procedures.armor.ChineseWeaponsCombatEvents;
 import net.mirrorloong.chineseweapons.init.ChineseWeaponsModEffects;
 
 public class SkyPiercingHalberdItem extends FourBlockReachSwordItem {

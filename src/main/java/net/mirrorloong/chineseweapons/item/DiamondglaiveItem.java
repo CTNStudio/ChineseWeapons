@@ -29,7 +29,7 @@ public class DiamondglaiveItem extends GlaiveItemBase {
 			}
 
 			public float getAttackDamageBonus() {
-				return 4f;
+				return 6f;
 			}
 
 			public int getLevel() {

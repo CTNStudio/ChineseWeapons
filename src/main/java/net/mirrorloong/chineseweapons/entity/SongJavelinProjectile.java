@@ -8,6 +8,7 @@ import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LightningBolt;
 import net.minecraft.world.entity.LivingEntity;
@@ -125,23 +126,55 @@ public class SongJavelinProjectile extends AbstractArrow {
     protected void onHitEntity(EntityHitResult result) {
         if (this.level().isClientSide) return;
 
-        if (!(result.getEntity() instanceof LivingEntity target)) {
-            return;
-        }
-        float damage = (float) this.getBaseDamage();
-        target.hurt(this.damageSources().thrown(this, this.getOwner()), damage + 2);
+        Entity hit = result.getEntity();
 
-        if (this.getKnockback() > 0) {
-            Vec3 knockback = this.getDeltaMovement().scale(this.getKnockback() * 0.6);
-            target.setDeltaMovement(target.getDeltaMovement().add(knockback));
-        }
+        //Not LivingEntity can Fiyyyyyyy
+        if (!(hit instanceof LivingEntity)) {
+            Vec3 motion = this.getDeltaMovement();
+            if (motion.lengthSqr() > 1.0E-6) {
+                Vec3 hitDir = new Vec3(
+                        hit.getX() - this.getX(),
+                        hit.getY() - this.getY(),
+                        hit.getZ() - this.getZ()
+                );
 
-        this.playSound(SoundEvents.TRIDENT_HIT, 1.0F, 1.0F);
+                if (hitDir.lengthSqr() < 1.0E-6) {
+                    this.setDeltaMovement(motion.scale(-0.4));
+                } else {
+                    Vec3 normal = hitDir.normalize();
+                    double dot = motion.dot(normal);
+                    Vec3 reflected = motion.subtract(normal.scale(2.0 * dot));
+                    this.setDeltaMovement(reflected.scale(0.4));
+                }
+            }
 
-        if (this.hasChanneling && this.level().isThundering()) {
-            LightningBolt bolt = new LightningBolt(EntityType.LIGHTNING_BOLT, this.level());
-            bolt.setPos(target.getX(), target.getY(), target.getZ());
-            this.level().addFreshEntity(bolt);
+            this.playSound(SoundEvents.ARROW_HIT, 0.8F, 1.0F);
+
+            float damage = (float) this.getBaseDamage();
+            hit.hurt(this.damageSources().thrown(this, this.getOwner()), damage + 2);
+
+            if (this.hasChanneling && this.level().isThundering()) {
+                LightningBolt bolt = new LightningBolt(EntityType.LIGHTNING_BOLT, this.level());
+                bolt.setPos(hit.getX(), hit.getY(), hit.getZ());
+                this.level().addFreshEntity(bolt);
+            }
+        } else {
+            LivingEntity target = (LivingEntity) hit;
+            float damage = (float) this.getBaseDamage();
+            target.hurt(this.damageSources().thrown(this, this.getOwner()), damage + 2);
+
+            if (this.getKnockback() > 0) {
+                Vec3 knockback = this.getDeltaMovement().scale(this.getKnockback() * 0.6);
+                target.setDeltaMovement(target.getDeltaMovement().add(knockback));
+            }
+
+            this.playSound(SoundEvents.TRIDENT_HIT, 1.0F, 1.0F);
+
+            if (this.hasChanneling && this.level().isThundering()) {
+                LightningBolt bolt = new LightningBolt(EntityType.LIGHTNING_BOLT, this.level());
+                bolt.setPos(target.getX(), target.getY(), target.getZ());
+                this.level().addFreshEntity(bolt);
+            }
         }
 
         if (this.loyaltyLevel <= 0) {

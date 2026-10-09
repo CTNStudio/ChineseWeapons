@@ -179,7 +179,6 @@
   "item.chineseweapons.tang_dynasty_infantry_armor_forging_stone": "鍛造之石",
   "block.chineseweapons.ancient_gem_ore": "遠古寶石礦",
   "block.chineseweapons.deepslate_ancient_gem_ore": "深層遠古寶石礦",
-  "enchantment.chineseweapons.cavalry_buster_star": "我真求你了",
   "item.chineseweapons.footmen_armor_forging_stone.tile": "§7步兵甲模具",
   "item.chineseweapons.mountain_character_armor_forging_stone.tile": "§7山文甲模具",
   "item.chineseweapons.tang_dynasty_infantry_armor_forging_stone.tile": "§7唐代步兵甲模具",
@@ -353,7 +352,7 @@
   "item.chineseweapons.diamond_song_javelin": "鑽石梭槍",
   "item.chineseweapons.netherite_song_javelin": "下界合金梭槍",
   "item.chineseweapons.song_standing_shield": "宋代立盾",
-  "key.standing_shield.onground": "放置／拿取 宋代立盾",
+  "key.skill.text": "放置／拿取 宋代立盾",
   "entity.standing_shield.hp": "剩餘耐久：%d",
   "item.chineseweapons.diamond_face_guard_helmet": "鑽面甲",
   "item.chineseweapons.iron_face_guard_helmet": "鐵面甲",
@@ -380,6 +379,9 @@
   "patchouli.chineseweapons.book.entries.weapons.tang_dynasty_horse_armor.name": "唐代馬鎧",
   "patchouli.chineseweapons.book.entries.weapons.tang_dynasty_horse_armor.pages.0.text": "披戴唐代馬鎧之駿馬，護禦之力大為提升",
   "patchouli.chineseweapons.book.entries.weapons.tang_dynasty_horse_armor.pages.1.text": "馬匹覆上此鎧，便能抵禦箭矢攻擊",
-  "patchouli.chineseweapons.book.entries.tang_dynasty_shield.pages.0.text":"唐代盾牌有著更高的耐久。"
-
+  "patchouli.chineseweapons.book.entries.tang_dynasty_shield.pages.0.text":"唐代盾牌有著更高的耐久。",
+  "patchouli.chineseweapons.book.categories.ovo.name": "贊助列表",
+  "patchouli.chineseweapons.book.categories.ovo.description": "$(#FFDDE1)$(k)$(l)|$(#FFDDE1)$(l) $()$(#FFD7DA)$(l)中$(#FFC3C6)$(l)式$(#FFA2A5)$(l)甲$(#F59BA3)$(l)兵$(l) $(#FFDBDF)$(l)感$(#FFCED2)$(l)謝$(#FFB4B7)$(l)有$(#FB9AA0)$(l)你$(l) $(#FFDDE1)$(k)$(l)|",
+  "patchouli.chineseweapons.book.categories.ovo.title": "| 中式甲兵 感謝有你 |",
+  "patchouli.chineseweapons.book.entries.ovo.ovo.pages.0.text": "中式甲兵感謝有你，同時感謝以下贊助者對本模組的支持。如果您在先前有贊助卻沒有出現在此名單上，請聯繫我們。相信，未來模組越來越好！(排序不分先後)$(br2)GhAli，珠联璧合"
 }

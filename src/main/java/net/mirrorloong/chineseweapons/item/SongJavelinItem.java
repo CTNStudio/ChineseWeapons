@@ -7,7 +7,6 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Tier;
 import net.minecraft.world.item.UseAnim;
@@ -16,7 +15,7 @@ import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import net.mirrorloong.chineseweapons.entity.SongJavelinProjectile;
-import net.mirrorloong.chineseweapons.event.ChineseWeaponsCombatEvents;
+import net.mirrorloong.chineseweapons.procedures.armor.ChineseWeaponsCombatEvents;
 
 public class SongJavelinItem extends FourBlockReachSwordItem {
 
@@ -102,7 +101,7 @@ public class SongJavelinItem extends FourBlockReachSwordItem {
             SongJavelinProjectile projectile = new SongJavelinProjectile(level, player, copyStack);
             projectile.setBaseDamage(this.attackDamage * charge);
             projectile.setKnockback(1);
-            projectile.setCritArrow(charge > 1.0F);
+            projectile.setCritArrow(charge >= 0.9F);
 
             int loyalty = EnchantmentHelper.getTagEnchantmentLevel(Enchantments.LOYALTY, stack);
             projectile.setLoyaltyLevel(loyalty);

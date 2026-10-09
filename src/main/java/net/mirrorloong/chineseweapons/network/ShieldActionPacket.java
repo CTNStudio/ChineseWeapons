@@ -3,15 +3,20 @@ package net.mirrorloong.chineseweapons.network;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.network.NetworkEvent;
 import net.mirrorloong.chineseweapons.entity.SongStandingShieldEntity;
 import net.mirrorloong.chineseweapons.item.SongStandingShield;
+import net.mirrorloong.chineseweapons.procedures.weapon.DaggerAxeItemFierceHookProcedure;
+import net.mirrorloong.chineseweapons.procedures.weapon.GlaiveItemStopRunProcedure;
 
 import java.util.Optional;
 import java.util.function.Supplier;
+
+import static net.mirrorloong.chineseweapons.item.GlaiveItemBase.isGlaiveItem;
 
 public class ShieldActionPacket {
 
@@ -31,11 +36,56 @@ public class ShieldActionPacket {
             }
 
             ItemStack main = player.getMainHandItem();
+
+            if (DaggerAxeItemFierceHookProcedure.isDaggerAxe(main)) {
+                DaggerAxeItemFierceHookProcedure.execute(
+                        player.level(),
+                        player.getX(), player.getY(), player.getZ(),
+                        player,
+                        main
+                );
+                return;
+            }
+
+            if (isGlaiveItem(main)) {
+                LivingEntity livingTarget = findLivingTarget(player, 3.0D);
+                if (livingTarget != null) {
+                    GlaiveItemStopRunProcedure.execute(livingTarget, player, main);
+                }
+                return;
+            }
+
             if (main.getItem() instanceof SongStandingShield) {
                 SongStandingShield.placeShield(player, main);
             }
         });
         ctx.get().setPacketHandled(true);
+    }
+
+    private static LivingEntity findLivingTarget(ServerPlayer player, double reach) {
+        Vec3 eye = player.getEyePosition();
+        Vec3 look = player.getLookAngle();
+        Vec3 end = eye.add(look.scale(reach));
+
+        LivingEntity best = null;
+        double bestDist = Double.MAX_VALUE;
+
+        for (LivingEntity living : player.level().getEntitiesOfClass(
+                LivingEntity.class,
+                player.getBoundingBox().inflate(reach),
+                e -> e != player && e.isAlive())) {
+
+            AABB box = living.getBoundingBox().inflate(0.3D);
+            Optional<Vec3> hit = box.clip(eye, end);
+            if (hit.isEmpty()) continue;
+
+            double dist = eye.distanceToSqr(hit.get());
+            if (dist < bestDist) {
+                bestDist = dist;
+                best = living;
+            }
+        }
+        return best;
     }
 
     // 收回
@@ -91,22 +141,12 @@ public class ShieldActionPacket {
         for (SongStandingShieldEntity shield : player.level().getEntitiesOfClass(
                 SongStandingShieldEntity.class, player.getBoundingBox().inflate(reach))) {
 
-            AABB box = shield.getBoundingBox().inflate(0.5);
+            AABB box = shield.getBoundingBox().inflate(0);
+
             Optional<Vec3> hit = box.clip(eye, end);
+            if (hit.isEmpty()) continue;
 
-            double dist;
-            if (hit.isPresent()) {
-                dist = eye.distanceToSqr(hit.get());
-            } else {
-                Vec3 center = shield.position().add(0, shield.getBbHeight() / 2, 0);
-                Vec3 toEntity = center.subtract(eye);
-                double proj = toEntity.dot(look);
-                if (proj < 0 || proj > reach) continue;
-                Vec3 closest = eye.add(look.scale(proj));
-                dist = closest.distanceToSqr(center);
-                if (dist > 1.5 * 1.5) continue;
-            }
-
+            double dist = eye.distanceToSqr(hit.get());
             if (dist < bestDist) {
                 bestDist = dist;
                 best = shield;

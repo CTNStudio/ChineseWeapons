@@ -20,7 +20,7 @@ import net.mirrorloong.chineseweapons.procedures.weapon.DaggerAxeHurtFiyyProcedu
 import net.mirrorloong.chineseweapons.procedures.weapon.DaggerAxeItemFierceHookProcedure;
 import net.mirrorloong.chineseweapons.procedures.weapon.DaggerAxeAndGlaiveItemjizhongProcedure;
 
-public class StonedaggeraxeItem extends FiveBlockReachSwordItem {
+public class StonedaggeraxeItem extends DaggerAxeItemBase {
 	public StonedaggeraxeItem() {
 		super(new Tier() {
 			public int getUses() {
@@ -32,7 +32,7 @@ public class StonedaggeraxeItem extends FiveBlockReachSwordItem {
 			}
 
 			public float getAttackDamageBonus() {
-				return 1f;
+				return 4f;
 			}
 
 			public int getLevel() {
@@ -51,9 +51,7 @@ public class StonedaggeraxeItem extends FiveBlockReachSwordItem {
 
     @Override
     public InteractionResultHolder<ItemStack> use(Level world, Player entity, InteractionHand hand) {
-        InteractionResultHolder<ItemStack> ar = super.use(world, entity, hand);
-        DaggerAxeItemFierceHookProcedure.execute(world, entity.getX(), entity.getY(), entity.getZ(), entity, ar.getObject());
-        return ar;
+        return super.use(world, entity, hand);
     }
 
     @Override

@@ -30,7 +30,7 @@ public class StoneglaiveItem extends GlaiveItemBase {
 			}
 
 			public float getAttackDamageBonus() {
-				return 2f;
+				return 4f;
 			}
 
 			public int getLevel() {

@@ -1,6 +1,7 @@
 package net.mirrorloong.chineseweapons.entity;
 
 import net.minecraft.ChatFormatting;
+import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
@@ -9,6 +10,7 @@ import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.DamageTypeTags;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
@@ -65,19 +67,37 @@ public class SongStandingShieldEntity extends Entity {
             null,
             WeaponScriptSettings.Logic.SONGSTANDINGSHIELD_ENDURANCEDISPLAY, true);
 
+    public AABB getSafeZone() {
+        Vec3 shieldPos = this.position();
+        float yaw = this.getShieldYaw();
+        double fx = -Math.sin(Math.toRadians(yaw));
+        double fz =  Math.cos(Math.toRadians(yaw));
+        Vec3 forward = new Vec3(fx, 0, fz).normalize();
+
+        double yBehindCenter = WeaponScriptSettings.getArmorThreshold(
+                null,
+                WeaponScriptSettings.ALLWeapon.SONGSTANDINGSHIELD_BEHINDCENTER, 4.0);
+
+        Vec3 frontCenter = shieldPos.add(forward.scale(yBehindCenter));
+        return new AABB(
+                frontCenter.x - 4, frontCenter.y - 4, frontCenter.z - 4,
+                frontCenter.x + 4, frontCenter.y + 4, frontCenter.z + 4
+        );
+    }
+
     public void setHealth(float hp) {
+        this.entityData.set(DATA_HP, hp);
         if (setHealthLogic) {
-            this.entityData.set(DATA_HP, hp);
 
             MutableComponent name = Component.translatable("entity.standing_shield.hp", (int) hp);
-            if (hp <= 30f) {
+            if (hp <= 100f) {
                 name = name.withStyle(ChatFormatting.RED);
             }
 
             this.setCustomName(name);
-            this.setCustomNameVisible(true);
         }
     }
+
 
     public float getShieldYaw() { return this.entityData.get(DATA_YAW); }
 
@@ -95,35 +115,70 @@ public class SongStandingShieldEntity extends Entity {
             return InteractionResult.SUCCESS;
         }
 
-        // 实体位置朝向
-        Vec3 selfPos = this.position();
-        float yaw = this.getShieldYaw();
+        ItemStack held = player.getItemInHand(hand);
 
-        // 实体正前方单位向量
-        double fx = -Math.sin(Math.toRadians(yaw));
-        double fz =  Math.cos(Math.toRadians(yaw));
+        // 蹲下 + 右键：执行旋转
+        if (player.isShiftKeyDown()) {
+            Vec3 selfPos = this.position();
+            float yaw = this.getShieldYaw();
 
-        // 实体右侧单位向量
-        double rx = -fz;
-        double rz =  fx;
+            double fx = -Math.sin(Math.toRadians(yaw));
+            double fz =  Math.cos(Math.toRadians(yaw));
 
-        // 相对实体的向量
-        Vec3 toPlayer = player.position().subtract(selfPos);
-        double dot = toPlayer.x * rx + toPlayer.z * rz;
+            double rx = -fz;
+            double rz =  fx;
 
+            Vec3 toPlayer = player.position().subtract(selfPos);
+            double dot = toPlayer.x * rx + toPlayer.z * rz;
 
-        double ANGLE = WeaponScriptSettings.getArmorThreshold(
-                null,
-                WeaponScriptSettings.ALLWeapon.SONGSTANDINGSHIELD_ANGLE, 15f);
+            double ANGLE = WeaponScriptSettings.getArmorThreshold(
+                    null,
+                    WeaponScriptSettings.ALLWeapon.SONGSTANDINGSHIELD_ANGLE, 15f);
 
-        float newYaw = (float) (yaw + (dot > 0 ? -ANGLE : ANGLE));
+            float newYaw = (float) (yaw + (dot > 0 ? -ANGLE : ANGLE));
 
-        this.setShieldYaw(newYaw);
+            this.setShieldYaw(newYaw);
 
-        this.level().playSound(null, this.getX(), this.getY(), this.getZ(),
-                SoundEvents.WOODEN_BUTTON_CLICK_ON, this.getSoundSource(), 1.3F, 0.8F);
+            this.level().playSound(null, this.getX(), this.getY(), this.getZ(),
+                    SoundEvents.WOODEN_BUTTON_CLICK_ON, this.getSoundSource(), 1.3F, 0.8F);
 
-        return InteractionResult.CONSUME;
+            return InteractionResult.CONSUME;
+        }
+
+        if (held.is(ItemTags.PLANKS)) {
+            ItemStack recovered = getStoredItem();
+            float hp = this.getHealth();
+
+            float maxHp = recovered.getMaxDamage();
+
+            if (maxHp <= 0) {
+                return InteractionResult.PASS;
+            }
+
+            if (hp >= maxHp) {
+                return InteractionResult.CONSUME;
+            }
+
+            float newHp;
+            if (hp < 50f) {
+                newHp = maxHp;
+            } else {
+                newHp = Math.min(hp + 50f, maxHp);
+            }
+
+            this.setHealth(newHp);
+
+            if (!player.getAbilities().instabuild) {
+                held.shrink(1);
+            }
+
+            this.level().playSound(null, this.getX(), this.getY(), this.getZ(),
+                    SoundEvents.WOODEN_BUTTON_CLICK_ON, this.getSoundSource(), 1.3F, 0.8F);
+
+            return InteractionResult.CONSUME;
+        }
+
+        return InteractionResult.PASS;
     }
 
     @Override
@@ -202,6 +257,9 @@ public class SongStandingShieldEntity extends Entity {
             this.setYRot(this.getShieldYaw());
             this.yRotO = this.getShieldYaw();
         }
+
+        Player local = Minecraft.getInstance().player;
+        this.setCustomNameVisible(local != null && this.getSafeZone().contains(local.position()));
 
         zhuannimation();
     }

@@ -26,15 +26,15 @@ public class FootmenarmorcompletetestingProcedure {
         ItemStack feet = livingEntity.getItemBySlot(EquipmentSlot.FEET);
 
         boolean checkHead = WeaponScriptSettings.getLogicChance(
-                head.getItem(), WeaponScriptSettings.Logic.FOOTMENARMOR_GAIN, true);
+                head.getItem(), WeaponScriptSettings.Logic.ARMOR_GAIN, true);
         boolean checkChest = WeaponScriptSettings.getLogicChance(
-                chest.getItem(), WeaponScriptSettings.Logic.FOOTMENARMOR_GAIN, true);
+                chest.getItem(), WeaponScriptSettings.Logic.ARMOR_GAIN, true);
         boolean checkLegs = WeaponScriptSettings.getLogicChance(
-                legs.getItem(), WeaponScriptSettings.Logic.FOOTMENARMOR_GAIN, true);
+                legs.getItem(), WeaponScriptSettings.Logic.ARMOR_GAIN, true);
         boolean checkFeet = WeaponScriptSettings.getLogicChance(
-                feet.getItem(), WeaponScriptSettings.Logic.FOOTMENARMOR_GAIN, true);
+                feet.getItem(), WeaponScriptSettings.Logic.ARMOR_GAIN, true);
 
-        boolean validHelmet = !checkHead || head.getItem() == ChineseweaponsModItems.DIAMONDFOOTMENARMOR_HELMET.get()
+        boolean validHelmet = checkHead && (head.getItem() == ChineseweaponsModItems.DIAMONDFOOTMENARMOR_HELMET.get()
                 || head.getItem() == ChineseweaponsModItems.IRONFOOTMENARMOR_HELMET.get()
                 || head.getItem() == ChineseweaponsModItems.GOLDENFOOTMENARMOR_HELMET.get()
                 || head.getItem() == ChineseweaponsModItems.NETHERITEFOOTMENARMOR_HELMET.get()
@@ -44,22 +44,22 @@ public class FootmenarmorcompletetestingProcedure {
                 || head.getItem() == ChineseweaponsModItems.GOLDEN_SUANNI_HELMET.get()
                 || head.getItem() == ChineseweaponsModItems.GOLDEN_BOHAI_HELMET.get()
                 || head.getItem() == ChineseweaponsModItems.NETHERITE_BOHAI_HELMET.get()
-                || head.getItem() == ChineseweaponsModItems.IRON_BOHAI_HELMET.get();
+                || head.getItem() == ChineseweaponsModItems.IRON_BOHAI_HELMET.get());
 
-        boolean validChest = !checkChest || chest.getItem() == ChineseweaponsModItems.DIAMONDFOOTMENARMOR_CHESTPLATE.get()
+        boolean validChest = checkChest && (chest.getItem() == ChineseweaponsModItems.DIAMONDFOOTMENARMOR_CHESTPLATE.get()
                 || chest.getItem() == ChineseweaponsModItems.IRONFOOTMENARMOR_CHESTPLATE.get()
                 || chest.getItem() == ChineseweaponsModItems.GOLDENFOOTMENARMOR_CHESTPLATE.get()
-                || chest.getItem() == ChineseweaponsModItems.NETHERITEFOOTMENARMOR_CHESTPLATE.get();
+                || chest.getItem() == ChineseweaponsModItems.NETHERITEFOOTMENARMOR_CHESTPLATE.get());
 
-        boolean validLegs = !checkLegs || legs.getItem() == ChineseweaponsModItems.DIAMONDFOOTMENARMOR_LEGGINGS.get()
+        boolean validLegs = checkLegs && (legs.getItem() == ChineseweaponsModItems.DIAMONDFOOTMENARMOR_LEGGINGS.get()
                 || legs.getItem() == ChineseweaponsModItems.IRONFOOTMENARMOR_LEGGINGS.get()
                 || legs.getItem() == ChineseweaponsModItems.GOLDENFOOTMENARMOR_LEGGINGS.get()
-                || legs.getItem() == ChineseweaponsModItems.NETHERITEFOOTMENARMOR_LEGGINGS.get();
+                || legs.getItem() == ChineseweaponsModItems.NETHERITEFOOTMENARMOR_LEGGINGS.get());
 
-        boolean validFeet = !checkFeet || feet.getItem() == ChineseweaponsModItems.DIAMONDFOOTMENARMOR_BOOTS.get()
+        boolean validFeet = checkFeet && (feet.getItem() == ChineseweaponsModItems.DIAMONDFOOTMENARMOR_BOOTS.get()
                 || feet.getItem() == ChineseweaponsModItems.IRONFOOTMENARMOR_BOOTS.get()
                 || feet.getItem() == ChineseweaponsModItems.GOLDENFOOTMENARMOR_BOOTS.get()
-                || feet.getItem() == ChineseweaponsModItems.NETHERITEFOOTMENARMOR_BOOTS.get();
+                || feet.getItem() == ChineseweaponsModItems.NETHERITEFOOTMENARMOR_BOOTS.get());
 
         return validHelmet && validChest && validLegs && validFeet;
     }
@@ -86,7 +86,7 @@ public class FootmenarmorcompletetestingProcedure {
             }
         }
 
-        if (livingEntity.getHealth() <= livingEntity.getMaxHealth() / 4) {
+        if (livingEntity.getHealth() <= 3) {
             livingEntity.addEffect(new MobEffectInstance(MobEffects.DAMAGE_BOOST, 100, 1, false, true));
             livingEntity.addEffect(new MobEffectInstance(MobEffects.ABSORPTION, 100, 1, false, true));
             livingEntity.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 100, 2, false, true));
@@ -137,6 +137,18 @@ public class FootmenarmorcompletetestingProcedure {
         DamageSource source = event.getSource();
         Entity directEntity = source.getDirectEntity();
 
+        if (victim.getHealth() <= 3f && isFullFootmenArmorSet(victim)) {
+            Entity trueAttacker = source.getEntity();
+
+            if (trueAttacker instanceof LivingEntity attacker
+                    && isHoldingGlaive(attacker)) {
+                if (attacker instanceof Player attackerPlayer) {
+                    attackerPlayer.getCooldowns().addCooldown(
+                            attacker.getMainHandItem().getItem(), 40);
+                }
+            }
+        }
+
         if (isFullFootmenArmorSet(victim) && directEntity instanceof AbstractArrow arrow) {
             event.setCanceled(true);
             arrow.setDeltaMovement(victim.getLookAngle().scale(1.8D));
@@ -149,7 +161,8 @@ public class FootmenarmorcompletetestingProcedure {
         if (trueAttacker instanceof LivingEntity attackerLiving
                 && isFullFootmenArmorSet(attackerLiving)
                 && (source.is(DamageTypes.PLAYER_ATTACK) || source.is(DamageTypes.MOB_ATTACK))) {
-            event.setAmount(event.getAmount() + 1.0F);
+            event.setAmount(event.getAmount() + 2.0F);
+            event.setAmount(Math.max(0f, event.getAmount() - 2f));
         }
     }
 }
