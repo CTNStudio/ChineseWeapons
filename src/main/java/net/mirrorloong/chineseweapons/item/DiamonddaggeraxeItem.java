@@ -14,8 +14,8 @@ import net.minecraft.world.level.Level;
 import net.mirrorloong.chineseweapons.init.ChineseweaponsModItems;
 
 import net.minecraft.world.item.crafting.Ingredient;
-import net.mirrorloong.chineseweapons.procedures.DaggerAxeItemFierceHookProcedure;
-import net.mirrorloong.chineseweapons.procedures.DaggerAxeAndGlaiveItemjizhongProcedure;
+import net.mirrorloong.chineseweapons.procedures.weapon.DaggerAxeAndGlaiveItemjizhongProcedure;
+import net.mirrorloong.chineseweapons.procedures.weapon.DaggerAxeItemFierceHookProcedure;
 
 public class DiamonddaggeraxeItem extends FiveBlockReachSwordItem {
 	public DiamonddaggeraxeItem() {

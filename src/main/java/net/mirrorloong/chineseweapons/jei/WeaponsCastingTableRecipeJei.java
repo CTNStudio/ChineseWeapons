@@ -12,14 +12,17 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeHolder;
 import net.mirrorloong.chineseweapons.ChineseweaponsMod;
 import net.mirrorloong.chineseweapons.init.ChineseweaponsModBlocks;
 import net.mirrorloong.chineseweapons.recipes.WCTRecipe;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public class WeaponsCastingTableRecipeJei implements IRecipeCategory<WCTRecipe> {
-    public static final ResourceLocation BACKGROUND_TEXTURE = ResourceLocation.fromNamespaceAndPath(ChineseweaponsMod.MODID, "textures/gui/jei/weapons_casting_table.png");
+public class WeaponsCastingTableRecipeJei implements IRecipeCategory<RecipeHolder<WCTRecipe>> {
+
+    public static final ResourceLocation BACKGROUND_TEXTURE =
+            ResourceLocation.fromNamespaceAndPath(ChineseweaponsMod.MODID, "textures/gui/jei/weapons_casting_table.png");
     public static final int WIDTH = 157;
     public static final int HEIGHT = 62;
 
@@ -31,7 +34,7 @@ public class WeaponsCastingTableRecipeJei implements IRecipeCategory<WCTRecipe> 
 
     @Override
     @NotNull
-    public RecipeType<WCTRecipe> getRecipeType() {
+    public RecipeType<RecipeHolder<WCTRecipe>> getRecipeType() {
         return WeaponsCastingTableRecipeJeiPlugin.RECIPE_TYPE;
     }
 
@@ -57,13 +60,19 @@ public class WeaponsCastingTableRecipeJei implements IRecipeCategory<WCTRecipe> 
     }
 
     @Override
-    public void draw(@NotNull WCTRecipe recipe, @NotNull IRecipeSlotsView recipeSlotsView,
+    // old api -> new api: RecipeHolder<WCTRecipe>
+    public void draw(@NotNull RecipeHolder<WCTRecipe> recipeHolder, @NotNull IRecipeSlotsView recipeSlotsView,
                      @NotNull GuiGraphics guiGraphics, double mouseX, double mouseY) {
         guiGraphics.blit(BACKGROUND_TEXTURE, 0, 0, 0, 0, WIDTH, HEIGHT, WIDTH, HEIGHT);
     }
 
     @Override
-    public void setRecipe(@NotNull IRecipeLayoutBuilder builder, @NotNull WCTRecipe recipe, @NotNull IFocusGroup focuses) {
+    // old api -> new api:RecipeHolder<WCTRecipe>
+    public void setRecipe(@NotNull IRecipeLayoutBuilder builder,
+                          @NotNull RecipeHolder<WCTRecipe> recipeHolder,
+                          @NotNull IFocusGroup focuses) {
+        WCTRecipe recipe = recipeHolder.value();
+
         var ingredients = recipe.getIngredients();
         int index = 0;
 

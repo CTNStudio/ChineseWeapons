@@ -19,7 +19,6 @@ public class WCTRecipe implements Recipe<RecipeInput> {
     public WCTRecipe(ResourceLocation id, NonNullList<Ingredient> input, ItemStack output) {
         this.id = id;
         this.input = input;
-        // 允许空ItemStack，因为OPTIONAL_STREAM_CODEC可以处理
         this.output = output;
     }
 
@@ -29,7 +28,6 @@ public class WCTRecipe implements Recipe<RecipeInput> {
 
     @Override
     public boolean matches(RecipeInput inv, Level level) {
-        // 检查配方输入是否匹配
         if (inv.size() < input.size()) {
             return false;
         }

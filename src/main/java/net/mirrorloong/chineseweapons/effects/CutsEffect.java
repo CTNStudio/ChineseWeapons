@@ -10,10 +10,19 @@ public class CutsEffect extends MobEffect {
     }
 
     @Override
-    public boolean applyEffectTick(LivingEntity entity, int p_19468_) {
-        if (entity.isSprinting()) {
-            entity.hurt(entity.damageSources().generic(), 1f);
+    public boolean applyEffectTick(LivingEntity entity, int amplifier) {
+        if (entity.level().isClientSide()) {
+            return true;
         }
+
+        if (entity.isSprinting()) {
+            entity.hurt(entity.damageSources().generic(), 1.0F);
+        }
+
+        if (entity.level().getRandom().nextFloat() <= 0.3F) {
+            entity.hurt(entity.damageSources().generic(), 1.0F);
+        }
+
         return true;
     }
 

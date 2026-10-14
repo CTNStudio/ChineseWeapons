@@ -126,7 +126,6 @@ public class WCTRecipeSer implements RecipeSerializer<WCTRecipe> {
             String signature = generateRecipeSignature(ingredients, jsonObject);
             if (trueRegRecipe.containsKey(signature)) {
                 ResourceLocation existingRecipe = trueRegRecipe.get(signature);
-                //由猫猫修复 给猫猫买颗猫薄荷叭ovo
                 //防粗心Xiris喵
                 ChineseweaponsMod.LOGGER.error("Duplicate recipe detected: " + existingRecipe + " <--> " + "same ingredients but different output");
             } else {

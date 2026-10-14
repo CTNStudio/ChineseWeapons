@@ -1,0 +1,20 @@
+{
+  "sortnum": 0,
+  "name": "patchouli.chineseweapons.book.entries.weapons.song_javelin.name",
+  "icon": "chineseweapons:iron_song_javelin",
+  "category": "chineseweapons:weapons",
+  "pages": [
+    {
+      "type": "spotlight",
+      "item": "chineseweapons:iron_song_javelin",
+      "text": "patchouli.chineseweapons.book.entries.weapons.song_javelin.pages.0.text"
+    },
+    {
+      "type": "image",
+      "images": [
+        "chineseweapons:textures/book/weapons_6.png"
+      ],
+      "text": "patchouli.chineseweapons.book.entries.weapons.text"
+    }
+  ]
+}

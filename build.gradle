@@ -1,9 +1,16 @@
+import net.neoforged.moddevgradle.internal.RunGameTask
+
 plugins {
     id 'java-library'
     id 'maven-publish'
-    id 'net.neoforged.moddev' version '2.0.143'
+    id 'net.neoforged.moddev' version '2.0.148'
     id 'idea'
 }
+
+//tasks.withType(JavaCompile).configureEach {
+//    options.compilerArgs << '-Xlint:none'
+//}
+
 
 tasks.named('wrapper', Wrapper).configure {
     // Define wrapper values here so as to not have to always do so when updating gradlew.properties.

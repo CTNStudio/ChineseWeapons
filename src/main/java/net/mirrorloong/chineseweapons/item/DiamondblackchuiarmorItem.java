@@ -8,6 +8,7 @@ import net.minecraft.world.item.*;
 import net.minecraft.world.level.Level;
 import net.mirrorloong.chineseweapons.client.model.Modelblack_chui_armor;
 
+import net.mirrorloong.chineseweapons.procedures.armor.DyeableItem;
 import net.neoforged.neoforge.client.extensions.common.IClientItemExtensions;
 import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.api.distmarker.Dist;
@@ -21,9 +22,6 @@ import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.Minecraft;
 import net.mirrorloong.chineseweapons.init.ChineseWeaponsArmorMaterials;
-import net.mirrorloong.chineseweapons.procedures.DyeableItem;
-import org.apache.commons.compress.utils.IOUtils;
-
 import javax.annotation.Nullable;
 import java.io.ByteArrayOutputStream;
 import java.io.FileInputStream;

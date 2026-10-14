@@ -118,7 +118,7 @@ public class ChineseweaponsModItems {
 	public static final DeferredHolder<Item, Item> NETHERITEFINE_SCALE_ARMOR_CHESTPLATE = REGISTRY.register("netherite_fine_scale_armor_chestplate", () -> new FinescalearmorItem(FinescalearmorItem.MaterialVariant.NETHERITE, ArmorItem.Type.CHESTPLATE));
 	public static final DeferredHolder<Item, Item> NETHERITEFINE_SCALE_ARMOR_LEGGINGS = REGISTRY.register("netherite_fine_scale_armor_leggings", () -> new FinescalearmorItem(FinescalearmorItem.MaterialVariant.NETHERITE, ArmorItem.Type.LEGGINGS));
 	public static final DeferredHolder<Item, Item> NETHERITEFINE_SCALE_ARMOR_BOOTS = REGISTRY.register("netherite_fine_scale_armor_boots", () -> new FinescalearmorItem(FinescalearmorItem.MaterialVariant.NETHERITE, ArmorItem.Type.BOOTS));
-    //铁=a，石=a-1，木=a-2，金伤害=a-2，钻石=a+1
+
 	public static final DeferredHolder<Item, Item> GOLDEN_DAGGER_AXE = REGISTRY.register("golden_dagger_axe", GoldendaggeraxeItem::new);
 	public static final DeferredHolder<Item, Item> DIAMOND_DAGGER_AXE = REGISTRY.register("diamond_dagger_axe", DiamonddaggeraxeItem::new);
 	public static final DeferredHolder<Item, Item> IRON_DAGGER_AXE = REGISTRY.register("iron_dagger_axe", IrondaggeraxeItem::new);
@@ -148,6 +148,19 @@ public class ChineseweaponsModItems {
 	public static final DeferredHolder<Item, Item> DIAMOND_SKY_PIERCING_HALBERD = REGISTRY.register("diamond_sky_piercing_halberd", () -> new SkyPiercingHalberdItem(Tiers.DIAMOND, 7, 1.2F,false));
 	public static final DeferredHolder<Item, Item> NETHERITE_SKY_PIERCING_HALBERD = REGISTRY.register("netherite_sky_piercing_halberd", () -> new SkyPiercingHalberdItem(Tiers.NETHERITE, 8, 1F,true));
 
+    public static final DeferredHolder<Item, Item> WOODEN_SONG_JAVENLIN = REGISTRY.register("wooden_song_javelin", () -> new SongJavelinItem(Tiers.WOOD, 0, 1.7F,false, +20));
+    public static final DeferredHolder<Item, Item> STONE_SONG_JAVENLIN = REGISTRY.register("stone_song_javelin", () -> new SongJavelinItem(Tiers.STONE, 0, 1.7F,false, +20));
+    public static final DeferredHolder<Item, Item> GOLDEN_SONG_JAVENLIN = REGISTRY.register("golden_song_javelin", () -> new SongJavelinItem(Tiers.GOLD, 0, 1.7F,false, +20));
+    public static final DeferredHolder<Item, Item> IRON_SONG_JAVENLIN = REGISTRY.register("iron_song_javelin", () -> new SongJavelinItem(Tiers.IRON, 0, 1.7F,false, +20));
+    public static final DeferredHolder<Item, Item> DIAMOND_SONG_JAVENLIN = REGISTRY.register("diamond_song_javelin", () -> new SongJavelinItem(Tiers.DIAMOND, 0, 1.7F,false, +20));
+    public static final DeferredHolder<Item, Item> NETHERITE_SONG_JAVENLIN = REGISTRY.register("netherite_song_javelin", () -> new SongJavelinItem(Tiers.NETHERITE, 0, 1.7F,true, +20));
+
+    public static final DeferredHolder<Item, Item> WOODEN_GU_DUO = REGISTRY.register("wooden_guduo", () -> new GuDuoItem(Tiers.WOOD, 5, 1.2F,false, 89));
+    public static final DeferredHolder<Item, Item> STONE_GU_DUO = REGISTRY.register("stone_guduo", () -> new GuDuoItem(Tiers.STONE, 6, 1.2F,false, 154));
+    public static final DeferredHolder<Item, Item> GOLDEN_GU_DUO = REGISTRY.register("golden_guduo", () -> new GuDuoItem(Tiers.GOLD, 5, 1.4F,false, 87));
+    public static final DeferredHolder<Item, Item> IRON_GU_DUO = REGISTRY.register("iron_guduo", () -> new GuDuoItem(Tiers.IRON, 7, 1.4F,false, 574));
+    public static final DeferredHolder<Item, Item> DIAMOND_GU_DUO = REGISTRY.register("diamond_guduo", () -> new GuDuoItem(Tiers.DIAMOND, 8, 1.6F,false, 1572));
+    public static final DeferredHolder<Item, Item> NETHERITE_GU_DUO = REGISTRY.register("netherite_guduo", () -> new GuDuoItem(Tiers.NETHERITE, 9, 1.6F,true, 2048));
 	public static final DeferredHolder<Item, Item> ARMOR_CASTING_TABLE = block(ChineseweaponsModBlocks.ARMOR_CASTING_TABLE);
 	public static final DeferredHolder<Item, Item> DiamondArmorPieces = REGISTRY.register("diamond_armor_pieces", () -> new Item(new Item.Properties()));
 	public static final DeferredHolder<Item, Item> DiamondArmorPiecesPlate = REGISTRY.register("diamond_armor_pieces_plate", () -> new Item(new Item.Properties()));
@@ -191,7 +204,14 @@ public class ChineseweaponsModItems {
     public static final DeferredHolder<Item, Item> NETHERITELATETANGDYNASTYMINGGUANGARMOR_LEGGINGS = REGISTRY.register("netherite_late_tang_dynasty_ming_guang_armor_leggings", NetheritelatetangdynastymingguangarmorItem.Leggings::new);
     public static final DeferredHolder<Item, Item> NETHERITELATETANGDYNASTYMINGGUANGARMOR_BOOTS = REGISTRY.register("netherite_late_tang_dynasty_ming_guang_armor_boots", NetheritelatetangdynastymingguangarmorItem.Boots::new);
 
+
+    public static final DeferredHolder<Item, Item> SONGDYNASTYINFANTRYARMOR_HELMET = REGISTRY.register("song_dynasty_infantry_armor_helmet", SongDynastyInfantryarmorItem.Helmet::new);
+    public static final DeferredHolder<Item, Item> SONGDYNASTYINFANTRYARMOR_CHESTPLATE = REGISTRY.register("song_dynasty_infantry_armor_chestplate", SongDynastyInfantryarmorItem.Chestplate::new);
+    public static final DeferredHolder<Item, Item> SONGDYNASTYINFANTRYARMOR_LEGGINGS = REGISTRY.register("song_dynasty_infantry_armor_leggings", SongDynastyInfantryarmorItem.Leggings::new);
+    public static final DeferredHolder<Item, Item> SONGDYNASTYINFANTRYARMOR_BOOTS = REGISTRY.register("song_dynasty_infantry_armor_boots", SongDynastyInfantryarmorItem.Boots::new);
+
     public static final DeferredHolder<Item, Item> TangDynastyShield = REGISTRY.register("tang_dynasty_shield", TangDynastyShield::new);
+    public static final DeferredHolder<Item, Item> SongStandingShield = REGISTRY.register("song_standing_shield", SongStandingShield::new);
 
     public static final DeferredHolder<Item, Item> DIAMOND_SUANNI_HELMET = REGISTRY.register("diamond_suanni_helmet", DiamondSuanniHelmetItem.Helmet::new);
     public static final DeferredHolder<Item, Item> IRON_SUANNI_HELMET = REGISTRY.register("iron_suanni_helmet", IronSuanniHelmetItem.Helmet::new);
@@ -203,6 +223,11 @@ public class ChineseweaponsModItems {
     public static final DeferredHolder<Item, Item> NETHERITE_BOHAI_HELMET = REGISTRY.register("netherite_bohai_helmet", NetheriteBohaiHelmetItem.Helmet::new);
     public static final DeferredHolder<Item, Item> GOLDEN_BOHAI_HELMET = REGISTRY.register("golden_bohai_helmet", GoldenBohaiHelmetItem.Helmet::new);
 
+    public static final DeferredHolder<Item, Item> DIAMOND_FACE_GUARD_HELMET = REGISTRY.register("diamond_face_guard_helmet", DiamondFaceGuardHelmetItem.Helmet::new);
+    public static final DeferredHolder<Item, Item> IRON_FACE_GUARD_HELMET = REGISTRY.register("iron_face_guard_helmet", IronFaceGuardHelmetItem.Helmet::new);
+    public static final DeferredHolder<Item, Item> NETHERITE_FACE_GUARD_HELMET = REGISTRY.register("netherite_face_guard_helmet", NetheriteFaceGuardHelmetItem.Helmet::new);
+    public static final DeferredHolder<Item, Item> GOLDEN_FACE_GUARD_HELMET = REGISTRY.register("golden_face_guard_helmet", GoldenFaceGuardHelmetItem.Helmet::new);
+
     public static final DeferredHolder<Item, Item> DIAMOND_TANG_DYNASTY_HORSE = REGISTRY.register("diamond_tang_dynasty_horse_armor", () -> new TangDynastyHorseItem(18, ResourceLocation.fromNamespaceAndPath(ChineseweaponsMod.MODID, "textures/entities/horse/armor/diamond_tang_dynasty_horse_armor.png"), ChineseWeaponsModHorseArmorMaterials.DIAMOND_TANG_DYNASTY_HORSE));
     public static final DeferredHolder<Item, Item> IRON_TANG_DYNASTY_HORSE = REGISTRY.register("iron_tang_dynasty_horse_armor", () -> new TangDynastyHorseItem(8, ResourceLocation.fromNamespaceAndPath(ChineseweaponsMod.MODID, "textures/entities/horse/armor/iron_tang_dynasty_horse_armor.png"), ChineseWeaponsModHorseArmorMaterials.IRON_TANG_DYNASTY_HORSE));
     public static final DeferredHolder<Item, Item> NETHERITE_TANG_DYNASTY_HORSE = REGISTRY.register("netherite_tang_dynasty_horse_armor", () -> new TangDynastyHorseItem(25, ResourceLocation.fromNamespaceAndPath(ChineseweaponsMod.MODID, "textures/entities/horse/armor/netherite_tang_dynasty_horse_armor.png"), ChineseWeaponsModHorseArmorMaterials.NETHERITE_TANG_DYNASTY_HORSE));
@@ -212,3 +237,4 @@ public class ChineseweaponsModItems {
         return REGISTRY.register(block.getId().getPath(), () -> new BlockItem(block.get(), new Item.Properties()));
     }
 }
+

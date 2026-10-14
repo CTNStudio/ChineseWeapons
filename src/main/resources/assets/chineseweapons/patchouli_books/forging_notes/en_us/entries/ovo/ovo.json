@@ -1,0 +1,21 @@
+{
+  "sortnum": 0,
+  "name": "patchouli.chineseweapons.book.categories.ovo.name",
+  "icon": "minecraft:emerald",
+  "category": "chineseweapons:ovo",
+  "read_by_default": "false",
+  "pages": [
+    {
+      "type": "image",
+      "images": [
+        "chineseweapons:textures/book/logo.png"
+      ],
+      "text": "patchouli.chineseweapons.book.categories.ovo.description"
+    },
+    {
+      "type": "text",
+      "title": "patchouli.chineseweapons.book.categories.ovo.title",
+      "text": "patchouli.chineseweapons.book.entries.ovo.ovo.pages.0.text"
+    }
+  ]
+}

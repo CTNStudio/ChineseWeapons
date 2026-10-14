@@ -8,6 +8,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.entity.LivingEntity;
 import net.mirrorloong.chineseweapons.init.ChineseweaponsModItems;
 
+import net.mirrorloong.chineseweapons.procedures.weapon.DaggerAxeAndGlaiveItemjizhongProcedure;
 import net.neoforged.neoforge.common.crafting.CompoundIngredient;
 
 import net.minecraft.world.item.crafting.Ingredient;
@@ -17,8 +18,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Item;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.resources.ResourceLocation;
-import net.mirrorloong.chineseweapons.procedures.DaggerAxeAndGlaiveItemjizhongProcedure;
-import net.mirrorloong.chineseweapons.procedures.GlaiveItemGetLostKillProcedure;
 
 public class StoneglaiveItem extends GlaiveItemBase {
 	public StoneglaiveItem() {

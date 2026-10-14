@@ -14,8 +14,7 @@ import net.minecraft.world.item.SwordItem;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Item;
-import net.mirrorloong.chineseweapons.procedures.DaggerAxeAndGlaiveItemjizhongProcedure;
-import net.mirrorloong.chineseweapons.procedures.GlaiveItemGetLostKillProcedure;
+import net.mirrorloong.chineseweapons.procedures.weapon.DaggerAxeAndGlaiveItemjizhongProcedure;
 
 public class IronglaiveItem extends GlaiveItemBase {
 	public IronglaiveItem() {

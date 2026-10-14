@@ -5,6 +5,7 @@ import net.minecraft.client.color.item.ItemColor;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
+import net.mirrorloong.chineseweapons.procedures.armor.DyeableItem;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -13,9 +14,8 @@ import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.mirrorloong.chineseweapons.ChineseweaponsMod;
 import net.mirrorloong.chineseweapons.init.ChineseweaponsModItems;
-import net.mirrorloong.chineseweapons.procedures.DyeableItem;
 
-@EventBusSubscriber(modid = ChineseweaponsMod.MODID, bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
+@EventBusSubscriber(modid = ChineseweaponsMod.MODID, value = Dist.CLIENT)
 public final class ChineseWeaponsClientEvents {
     private static final ResourceLocation BLOCKING = ResourceLocation.fromNamespaceAndPath(ChineseweaponsMod.MODID, "blocking");
 

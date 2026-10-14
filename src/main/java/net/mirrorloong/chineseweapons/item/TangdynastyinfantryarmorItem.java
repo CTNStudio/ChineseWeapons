@@ -14,10 +14,10 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import net.mirrorloong.chineseweapons.init.ChineseWeaponsArmorMaterials;
 import net.mirrorloong.chineseweapons.client.model.Modeltang_dynasty_infantry_armor;
+import net.mirrorloong.chineseweapons.procedures.armor.DyeableItem;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.neoforge.client.extensions.common.IClientItemExtensions;
-import net.mirrorloong.chineseweapons.procedures.DyeableItem;
 
 import javax.annotation.Nullable;
 import java.util.Collections;

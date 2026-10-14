@@ -1,0 +1,20 @@
+{
+  "sortnum": 4,
+  "name": "patchouli.chineseweapons.book.entries.armor.bohai_helmet.name",
+  "icon": "chineseweapons:iron_suanni_helmet",
+  "category": "chineseweapons:armor",
+  "pages": [
+    {
+      "type": "spotlight",
+      "item": "chineseweapons:iron_suanni_helmet",
+      "text":   "patchouli.chineseweapons.book.entries.armor.bohai_helmet.pages.0.text"
+    },
+    {
+      "type": "image",
+      "images": [
+        "chineseweapons:textures/book/armor_9.png"
+      ],
+      "text": "patchouli.chineseweapons.book.entries.armor.text"
+    }
+  ]
+}

@@ -12,6 +12,8 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.mirrorloong.chineseweapons.init.ChineseweaponsModItems;
 
+import net.mirrorloong.chineseweapons.procedures.weapon.DaggerAxeAndGlaiveItemjizhongProcedure;
+import net.mirrorloong.chineseweapons.procedures.weapon.DaggerAxeItemFierceHookProcedure;
 import net.neoforged.neoforge.common.crafting.CompoundIngredient;
 
 import net.minecraft.world.item.crafting.Ingredient;
@@ -21,8 +23,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Item;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.resources.ResourceLocation;
-import net.mirrorloong.chineseweapons.procedures.DaggerAxeItemFierceHookProcedure;
-import net.mirrorloong.chineseweapons.procedures.DaggerAxeAndGlaiveItemjizhongProcedure;
 
 public class StonedaggeraxeItem extends FiveBlockReachSwordItem {
 	public StonedaggeraxeItem() {

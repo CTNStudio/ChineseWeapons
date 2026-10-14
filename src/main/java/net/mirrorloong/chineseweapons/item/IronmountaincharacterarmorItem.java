@@ -7,6 +7,7 @@ import net.minecraft.world.level.Level;
 import net.mirrorloong.chineseweapons.init.ChineseWeaponsArmorMaterials;
 import net.mirrorloong.chineseweapons.client.model.Modelmountain_character_armor;
 
+import net.mirrorloong.chineseweapons.procedures.armor.DyeableItem;
 import net.neoforged.neoforge.client.extensions.common.IClientItemExtensions;
 import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.api.distmarker.Dist;
@@ -20,7 +21,6 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.Minecraft;
-import net.mirrorloong.chineseweapons.procedures.DyeableItem;
 
 import javax.annotation.Nullable;
 import java.util.List;

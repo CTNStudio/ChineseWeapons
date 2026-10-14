@@ -14,8 +14,8 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.SwordItem;
 import net.minecraft.world.item.Tier;
 import net.mirrorloong.chineseweapons.ChineseweaponsMod;
-import net.mirrorloong.chineseweapons.event.ChineseWeaponsCombatEvents;
 import net.mirrorloong.chineseweapons.init.ChineseWeaponsModEffects;
+import net.mirrorloong.chineseweapons.procedures.armor.ChineseWeaponsCombatEvents;
 
 public class SkyPiercingHalberdItem extends FourBlockReachSwordItem {
 

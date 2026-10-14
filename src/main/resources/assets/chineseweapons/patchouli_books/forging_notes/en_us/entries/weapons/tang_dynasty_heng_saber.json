@@ -13,6 +13,13 @@
       "type": "spotlight",
       "item": "chineseweapons:iron_tang_dynasty_heng_saber",
       "text": "patchouli.chineseweapons.book.entries.weapons.tang_dynasty_heng_saber.pages.1.text"
+    },
+    {
+      "type": "image",
+      "images": [
+        "chineseweapons:textures/book/weapons_3.png"
+      ],
+      "text": "patchouli.chineseweapons.book.entries.weapons.text"
     }
   ]
 }

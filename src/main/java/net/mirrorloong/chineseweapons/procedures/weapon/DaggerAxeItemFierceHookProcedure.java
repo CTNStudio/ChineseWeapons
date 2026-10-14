@@ -1,0 +1,253 @@
+package net.mirrorloong.chineseweapons.procedures.weapon;
+
+import net.minecraft.advancements.AdvancementHolder;
+import net.minecraft.advancements.AdvancementProgress;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.damagesource.DamageTypes;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.util.RandomSource;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.core.registries.Registries;
+import java.util.List;
+import net.minecraft.world.entity.LivingEntity;
+import net.mirrorloong.chineseweapons.ChineseweaponsMod;
+import net.mirrorloong.chineseweapons.compat.WeaponScriptSettings;
+import net.minecraft.world.entity.monster.Creeper;
+import net.minecraft.advancements.Advancement;
+import net.minecraft.resources.ResourceLocation;
+
+import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.phys.AABB;
+import net.mirrorloong.chineseweapons.init.ChineseweaponsModItems;
+import net.mirrorloong.chineseweapons.procedures.armor.FootmenarmorcompletetestingProcedure;
+
+public class DaggerAxeItemFierceHookProcedure {
+    private static final double PULL_STOP_DISTANCE = 2.0D;
+    private static final double MAX_PULL_DISTANCE_PER_USE = 4.0D;
+    private static final double SAFE_DESTINATION_STEP = 0.25D;
+    private static final int SAFE_DESTINATION_ATTEMPTS = 12;
+    private static final int HOOK_COOLDOWN_TICKS = 10;
+    private static final float DEFAULT_DISMOUNT_CHANCE = 0.30F;
+
+    private static final String EARLY_MING_GUANG_MARKER = "early_tang_dynasty_ming_guang_armor_";
+    private static final String MIDDLE_MING_GUANG_MARKER = "middle_tang_dynasty_ming_guang_armor_";
+    private static final String LATE_MING_GUANG_MARKER = "late_tang_dynasty_ming_guang_armor_";
+
+    private static void spawnAndMoveCollision(LevelAccessor world, double startX, double startY, double startZ, Entity sourceEntity, ItemStack itemstack) {
+        if (world.isClientSide()) return;
+        if (sourceEntity instanceof Player player && player.getCooldowns().isOnCooldown(itemstack.getItem())) return;
+
+        Vec3 direction = sourceEntity.getLookAngle().normalize();
+
+        for (int distance = 1; distance <= 7; distance++) {
+            double currentX = startX + direction.x * distance;
+            double currentY = startY + direction.y * distance;
+            double currentZ = startZ + direction.z * distance;
+            AABB collisionBox = new AABB(
+                    currentX - 0.5D, currentY - 0.5D, currentZ - 0.5D,
+                    currentX + 0.5D, currentY + 0.5D, currentZ + 0.5D
+            );
+            List<Entity> hitEntities = world.getEntitiesOfClass(
+                    Entity.class,
+                    collisionBox,
+                    candidate -> candidate != sourceEntity && candidate.isAlive()
+            );
+
+            if (!hitEntities.isEmpty()) {
+                if (sourceEntity.getVehicle() != null && hitEntities.contains(sourceEntity.getVehicle())) {
+                    continue;
+                }
+                LivingEntity target = resolveHookTarget(hitEntities);
+                if (target == null) {
+                    continue;
+                }
+                boolean hookTriggered = executeOriginalLogic(world, sourceEntity, itemstack, target);
+                if (hookTriggered && sourceEntity instanceof Player player) {
+                    player.getCooldowns().addCooldown(itemstack.getItem(), HOOK_COOLDOWN_TICKS);
+                }
+                break;
+            }
+        }
+    }
+
+    public static boolean isDaggerAxe(ItemStack stack) {
+        return stack.getItem() == ChineseweaponsModItems.STONE_DAGGER_AXE.get()
+                || stack.getItem() == ChineseweaponsModItems.IRON_DAGGER_AXE.get()
+                || stack.getItem() == ChineseweaponsModItems.DIAMOND_DAGGER_AXE.get()
+                || stack.getItem() == ChineseweaponsModItems.NETHERITE_DAGGER_AXE.get()
+                || stack.getItem() == ChineseweaponsModItems.WOODEN_DAGGER_AXE.get()
+                || stack.getItem() == ChineseweaponsModItems.GOLDEN_DAGGER_AXE.get();
+    }
+
+    private static LivingEntity resolveHookTarget(List<Entity> hitEntities) {
+        for (Entity candidate : hitEntities) {
+            if (candidate instanceof LivingEntity living && living.getVehicle() != null) {
+                return living;
+            }
+        }
+
+        for (Entity candidate : hitEntities) {
+            for (Entity passenger : candidate.getIndirectPassengers()) {
+                if (passenger instanceof LivingEntity living && living.getVehicle() != null) {
+                    return living;
+                }
+            }
+            for (Entity passenger : candidate.getPassengers()) {
+                if (passenger instanceof LivingEntity living) {
+                    return living;
+                }
+            }
+        }
+
+        for (Entity candidate : hitEntities) {
+            if (candidate instanceof LivingEntity living) {
+                return living;
+            }
+        }
+
+        return null;
+    }
+
+    private static boolean dismount(LivingEntity target) {
+        if (target.getVehicle() == null) {
+            return false;
+        }
+
+        target.stopRiding();
+        target.removeVehicle();
+        return target.getVehicle() == null;
+    }
+
+    public static void execute(LevelAccessor world, double x, double y, double z, Entity entity, ItemStack itemstack) {
+        if (entity == null) return;
+
+        spawnAndMoveCollision(world, x, y, z, entity, itemstack);
+    }
+
+    private static boolean executeOriginalLogic(LevelAccessor world, Entity sourceEntity, ItemStack itemstack, LivingEntity targetEntity) {
+        boolean damaged = teleportAndDamage(world, sourceEntity, targetEntity, itemstack);
+        if (!damaged) {
+            return false;
+        }
+
+        float chance = getDismountChance(itemstack, targetEntity);
+
+        if (targetEntity.getVehicle() != null && world.getRandom().nextFloat() < chance) {
+            dismount(targetEntity);
+        }
+        if (sourceEntity instanceof ServerPlayer sp) {
+            AdvancementHolder hookAdv = sp.server.getAdvancements().get(
+                    ResourceLocation.fromNamespaceAndPath(ChineseweaponsMod.MODID, "get_dagger_axe/dagger_axe_hook"));
+            if (hookAdv != null) {
+                AdvancementProgress ap = sp.getAdvancements().getOrStartProgress(hookAdv);
+                if (!ap.isDone()) {
+                    for (String cri : ap.getRemainingCriteria()) {
+                        sp.getAdvancements().award(hookAdv, cri);
+                    }
+                }
+            }
+
+            if (targetEntity instanceof Creeper) {
+                AdvancementHolder creeperAdv = sp.server.getAdvancements().get(
+                        ResourceLocation.fromNamespaceAndPath(ChineseweaponsMod.MODID, "get_dagger_axe/dagger_axe_hook_creeper"));
+                if (creeperAdv != null) {
+                    AdvancementProgress ap2 = sp.getAdvancements().getOrStartProgress(creeperAdv);
+                    if (!ap2.isDone()) {
+                        for (String cri : ap2.getRemainingCriteria()) {
+                            sp.getAdvancements().award(creeperAdv, cri);
+                        }
+                    }
+                }
+            }
+        }
+
+        return true;
+    }
+
+    private static float getDismountChance(ItemStack itemstack, LivingEntity targetEntity) {
+        if (FootmenarmorcompletetestingProcedure.isFullFootmenArmorSet(targetEntity)) {
+            return 0.10F;
+        }
+
+        if (isFullArmorSet(targetEntity, EARLY_MING_GUANG_MARKER)) {
+            return 0.15F;
+        }
+
+        if (isFullArmorSet(targetEntity, MIDDLE_MING_GUANG_MARKER)) {
+            return 0.15F;
+        }
+
+        if (isFullArmorSet(targetEntity, LATE_MING_GUANG_MARKER)) {
+            return 0.10F;
+        }
+
+        return WeaponScriptSettings.getChance(
+                itemstack.getItem(),
+                WeaponScriptSettings.Skill.HOOK_DISMOUNT,
+                DEFAULT_DISMOUNT_CHANCE
+        );
+    }
+
+    private static boolean isFullArmorSet(LivingEntity entity, String itemPathMarker) {
+        int count = 0;
+        for (ItemStack armor : entity.getArmorSlots()) {
+            // old api -> new api: ForgeRegistries.ITEMS -> BuiltInRegistries.ITEM
+            ResourceLocation key = BuiltInRegistries.ITEM.getKey(armor.getItem());
+            if (key != null && key.getPath().contains(itemPathMarker)) {
+                count++;
+            }
+        }
+        return count == 4;
+    }
+
+    private static boolean teleportAndDamage(LevelAccessor world, Entity sourceEntity, Entity target, ItemStack itemstack) {
+        Vec3 safeDestination = findSafeDestination(world, target, findPullDestination(sourceEntity, target));
+        if (safeDestination != null) {
+            target.setDeltaMovement(Vec3.ZERO);
+            if (target instanceof ServerPlayer serverPlayer) {
+                serverPlayer.connection.teleport(safeDestination.x, safeDestination.y, safeDestination.z,
+                        target.getYRot(), target.getXRot());
+            } else {
+                target.teleportTo(safeDestination.x, safeDestination.y, safeDestination.z);
+            }
+        }
+
+        boolean damaged = target.hurt(
+                target.damageSources().playerAttack(
+                        sourceEntity instanceof Player player ? player : null),
+                2);
+
+        if (damaged) {
+            itemstack.hurtAndBreak(2, (LivingEntity) world, null);
+        }
+        return damaged;
+    }
+
+    private static Vec3 findPullDestination(Entity sourceEntity, Entity target) {
+        Vec3 horizontalOffset = target.position().subtract(sourceEntity.position()).multiply(1.0D, 0.0D, 1.0D);
+        double horizontalDistance = horizontalOffset.length();
+        if (horizontalDistance <= PULL_STOP_DISTANCE || horizontalDistance < 1.0E-4D) {
+            return target.position();
+        }
+
+        double pullDistance = Math.min(MAX_PULL_DISTANCE_PER_USE, horizontalDistance - PULL_STOP_DISTANCE);
+        return target.position().subtract(horizontalOffset.scale(pullDistance / horizontalDistance));
+    }
+
+    private static Vec3 findSafeDestination(LevelAccessor world, Entity target, Vec3 hitPosition) {
+        for (int attempt = 0; attempt <= SAFE_DESTINATION_ATTEMPTS; attempt++) {
+            Vec3 candidate = new Vec3(hitPosition.x, target.getY() + attempt * SAFE_DESTINATION_STEP, hitPosition.z);
+            AABB movedBounds = target.getBoundingBox().move(candidate.subtract(target.position()));
+            if (world.noCollision(target, movedBounds)) {
+                return candidate;
+            }
+        }
+
+        return null;
+    }
+}

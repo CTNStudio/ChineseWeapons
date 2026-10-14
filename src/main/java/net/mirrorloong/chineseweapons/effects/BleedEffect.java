@@ -12,9 +12,18 @@ public class BleedEffect extends MobEffect {
     }
 
     @Override
-    public boolean applyEffectTick(LivingEntity entity, int p_19468_) {
-        entity.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 25));
-        entity.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 25));
+    public boolean applyEffectTick(LivingEntity entity, int amplifier) {
+        if (entity.level().isClientSide()) {
+            return true;
+        }
+
+        entity.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 25, 0, false, false));
+        entity.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 25, 0, false, false));
+
+        if (entity.getHealth() >= 2.0F) {
+            entity.hurt(entity.damageSources().generic(), 1.0F);
+        }
+
         return true;
     }
 
