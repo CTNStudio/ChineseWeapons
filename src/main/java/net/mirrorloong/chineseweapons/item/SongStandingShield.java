@@ -20,8 +20,8 @@ public class SongStandingShield extends ShieldItem {
     }
 
     @Override
-    public boolean isValidRepairItem(ItemStack stack, ItemStack repair) {
-        return Ingredient.of(new ItemStack(Items.OAK_PLANKS)).test(repair);
+    public boolean isValidRepairItem(ItemStack itemstack, ItemStack repairitem) {
+        return Ingredient.of(new ItemStack(Items.OAK_PLANKS)).test(repairitem);
     }
 
     @Override

@@ -27,7 +27,7 @@ public class GreenloongglaiveItem extends GlaiveItemBase {
 			}
 
 			public float getAttackDamageBonus() {
-				return 6f;
+				return 8f;
 			}
 
 				public TagKey<Block> getIncorrectBlocksForDrops() {

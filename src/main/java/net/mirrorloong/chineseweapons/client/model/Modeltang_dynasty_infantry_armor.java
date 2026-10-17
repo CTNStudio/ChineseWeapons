@@ -37,41 +37,55 @@ public class Modeltang_dynasty_infantry_armor<T extends Entity> extends EntityMo
 		this.RightBoots = root.getChild("RightBoots");
 	}
 
-	public static LayerDefinition createBodyLayer() {
-		MeshDefinition meshdefinition = new MeshDefinition();
-		PartDefinition partdefinition = meshdefinition.getRoot();
-		PartDefinition bipedHead = partdefinition.addOrReplaceChild("bipedHead", CubeListBuilder.create().texOffs(0, 0).addBox(-4.0F, -8.0F, -4.0F, 8.0F, 8.0F, 8.0F, new CubeDeformation(0.6F))
-				.texOffs(49, 14).addBox(-1.5F, -10.6F, -2.5F, 3.0F, 2.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 0.0F, 0.0F));
-		bipedHead.addOrReplaceChild("cube_r1", CubeListBuilder.create().texOffs(39, 10).addBox(-3.5F, -1.5F, 0.0F, 7.0F, 3.0F, 0.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, -11.1F, -2.1F, 0.4538F, 0.0F, 0.0F));
-		bipedHead.addOrReplaceChild("armorHead_r1", CubeListBuilder.create().texOffs(39, 31).mirror().addBox(-3.8F, -2.3F, -2.2F, 8.0F, 4.0F, 4.0F, new CubeDeformation(0.7F)).mirror(false)
-				.texOffs(39, 31).addBox(-4.2F, -2.3F, -2.2F, 8.0F, 4.0F, 4.0F, new CubeDeformation(0.7F)), PartPose.offsetAndRotation(0.0F, -13.0F, 1.6F, 0.1745F, 0.0F, 0.0F));
-		bipedHead.addOrReplaceChild("armorHead_r2", CubeListBuilder.create().texOffs(29, 20).addBox(-4.0F, -2.5F, -2.0F, 8.0F, 5.0F, 4.0F, new CubeDeformation(0.5F)), PartPose.offsetAndRotation(0.0F, -12.0F, 1.6F, 0.1745F, 0.0F, 0.0F));
-		partdefinition.addOrReplaceChild("bipedRightArm", CubeListBuilder.create().texOffs(19, 38).addBox(-4.4F, -2.5F, -2.0F, 4.0F, 12.0F, 4.0F, new CubeDeformation(0.5F)), PartPose.offset(-5.0F, 2.0F, 0.0F));
-		partdefinition.addOrReplaceChild("bipedLeftArm", CubeListBuilder.create().texOffs(19, 38).mirror().addBox(0.4F, -2.5F, -2.0F, 4.0F, 12.0F, 4.0F, new CubeDeformation(0.52F)).mirror(false), PartPose.offset(5.0F, 2.0F, 0.0F));
-		PartDefinition bipedLeftLeg = partdefinition.addOrReplaceChild("bipedLeftLeg", CubeListBuilder.create(), PartPose.offset(1.9F, 12.0F, 0.0F));
-		bipedLeftLeg.addOrReplaceChild("LeftLegArmor_r1", CubeListBuilder.create().texOffs(0, 33).mirror().addBox(-2.5F, -4.0F, -2.0F, 5.0F, 8.0F, 4.0F, new CubeDeformation(0.91F)).mirror(false), PartPose.offsetAndRotation(0.6F, 3.5F, 0.0F, 0.0F, 0.0F, -0.1745F));
-        partdefinition.addOrReplaceChild("bipedBody", CubeListBuilder.create()
-                .texOffs(0, 17).addBox(-4.0F, 1.0F, -2.0F, 8.0F, 12.0F, 4.0F, new CubeDeformation(1.0F)), PartPose.offset(0.0F, 0.0F, 0.0F));
-		PartDefinition bipedRightLeg = partdefinition.addOrReplaceChild("bipedRightLeg", CubeListBuilder.create(), PartPose.offset(-1.9F, 12.0F, 0.0F));
-		bipedRightLeg.addOrReplaceChild("RightLegArmor_r1", CubeListBuilder.create().texOffs(0, 33).addBox(-2.5F, -4.0F, -2.0F, 5.0F, 8.0F, 4.0F, new CubeDeformation(0.9F)), PartPose.offsetAndRotation(-0.6F, 3.5F, 0.0F, 0.0F, 0.0F, 0.1745F));
-		partdefinition.addOrReplaceChild("LeftBoots", CubeListBuilder.create().texOffs(34, 55).addBox(-1.9F, 6.5F, -2.0F, 4.0F, 5.0F, 4.0F, new CubeDeformation(0.88F)), PartPose.offset(1.9F, 12.0F, 0.0F));
-		partdefinition.addOrReplaceChild("RightBoots", CubeListBuilder.create().texOffs(34, 55).mirror().addBox(-2.1F, 6.5F, -2.0F, 4.0F, 5.0F, 4.0F, new CubeDeformation(0.88F)).mirror(false), PartPose.offset(-1.9F, 12.0F, 0.0F));
-		return LayerDefinition.create(meshdefinition, 64, 64);
-	}
+    public static LayerDefinition createBodyLayer() {
+        MeshDefinition meshdefinition = new MeshDefinition();
+        PartDefinition partdefinition = meshdefinition.getRoot();
 
-	@Override
-	public void setupAnim(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
-	}
+        PartDefinition bipedHead = partdefinition.addOrReplaceChild("bipedHead", CubeListBuilder.create().texOffs(0, 0).addBox(-4.0F, -9.0F, -4.0F, 8.0F, 8.0F, 8.0F, new CubeDeformation(0.6F))
+                .texOffs(49, 14).addBox(-1.5F, -11.6F, -2.5F, 3.0F, 2.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 0.0F, 0.0F));
 
-	@Override
-	public void renderToBuffer(PoseStack poseStack, VertexConsumer vertexConsumer, int packedLight, int packedOverlay, int color) {
-		bipedHead.render(poseStack, vertexConsumer, packedLight, packedOverlay, color);
-		bipedRightArm.render(poseStack, vertexConsumer, packedLight, packedOverlay, color);
-		bipedLeftArm.render(poseStack, vertexConsumer, packedLight, packedOverlay, color);
-		bipedLeftLeg.render(poseStack, vertexConsumer, packedLight, packedOverlay, color);
-		bipedBody.render(poseStack, vertexConsumer, packedLight, packedOverlay, color);
-		bipedRightLeg.render(poseStack, vertexConsumer, packedLight, packedOverlay, color);
-		LeftBoots.render(poseStack, vertexConsumer, packedLight, packedOverlay, color);
-		RightBoots.render(poseStack, vertexConsumer, packedLight, packedOverlay, color);
-	}
+        PartDefinition cube_r1 = bipedHead.addOrReplaceChild("cube_r1", CubeListBuilder.create().texOffs(39, 10).addBox(-3.5F, -1.5F, 0.0F, 7.0F, 3.0F, 0.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, -11.1F, -2.1F, 0.4538F, 0.0F, 0.0F));
+
+        PartDefinition armorHead_r1 = bipedHead.addOrReplaceChild("armorHead_r1", CubeListBuilder.create().texOffs(39, 31).mirror().addBox(-3.8F, -2.3F, -2.2F, 8.0F, 4.0F, 4.0F, new CubeDeformation(0.7F)).mirror(false)
+                .texOffs(39, 31).addBox(-4.2F, -2.3F, -2.2F, 8.0F, 4.0F, 4.0F, new CubeDeformation(0.7F)), PartPose.offsetAndRotation(0.0F, -12.2F, 1.6F, 0.1745F, 0.0F, 0.0F));
+
+        PartDefinition armorHead_r2 = bipedHead.addOrReplaceChild("armorHead_r2", CubeListBuilder.create().texOffs(29, 20).addBox(-4.0F, -2.5F, -2.0F, 8.0F, 5.0F, 4.0F, new CubeDeformation(0.5F)), PartPose.offsetAndRotation(0.0F, -11.6F, 1.6F, 0.1745F, 0.0F, 0.0F));
+
+        PartDefinition bipedRightArm = partdefinition.addOrReplaceChild("bipedRightArm", CubeListBuilder.create().texOffs(19, 38).addBox(-4.4F, -2.5F, -2.0F, 4.0F, 12.0F, 4.0F, new CubeDeformation(0.5F)), PartPose.offset(-5.0F, 2.0F, 0.0F));
+
+        PartDefinition bipedLeftArm = partdefinition.addOrReplaceChild("bipedLeftArm", CubeListBuilder.create().texOffs(19, 38).mirror().addBox(0.4F, -2.5F, -2.0F, 4.0F, 12.0F, 4.0F, new CubeDeformation(0.52F)).mirror(false), PartPose.offset(5.0F, 2.0F, 0.0F));
+
+        PartDefinition bipedLeftLeg = partdefinition.addOrReplaceChild("bipedLeftLeg", CubeListBuilder.create(), PartPose.offset(1.5F, 15.5F, 0.0F));
+
+        PartDefinition LeftLegArmor_r1 = bipedLeftLeg.addOrReplaceChild("LeftLegArmor_r1", CubeListBuilder.create().texOffs(0, 33).mirror().addBox(-2.5F, -4.0F, -2.0F, 5.0F, 8.0F, 4.0F, new CubeDeformation(0.91F)).mirror(false), PartPose.offsetAndRotation(0.0F, 0.0F, 0.0F, 0.0F, 0.0F, -0.0436F));
+
+        PartDefinition bipedBody = partdefinition.addOrReplaceChild("bipedBody", CubeListBuilder.create().texOffs(0, 17).addBox(-4.0F, -0.5F, -2.0F, 8.0F, 12.0F, 4.0F, new CubeDeformation(1.0F)), PartPose.offset(0.0F, 0.0F, 0.0F));
+
+        PartDefinition bipedRightLeg = partdefinition.addOrReplaceChild("bipedRightLeg", CubeListBuilder.create(), PartPose.offset(-1.5F, 15.5F, 0.0F));
+
+        PartDefinition RightLegArmor_r1 = bipedRightLeg.addOrReplaceChild("RightLegArmor_r1", CubeListBuilder.create().texOffs(0, 33).addBox(-2.5F, -4.0F, -2.0F, 5.0F, 8.0F, 4.0F, new CubeDeformation(0.9F)), PartPose.offsetAndRotation(0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0436F));
+
+        PartDefinition LeftBoots = partdefinition.addOrReplaceChild("LeftBoots", CubeListBuilder.create().texOffs(34, 55).addBox(-1.9F, 6.5F, -2.0F, 4.0F, 5.0F, 4.0F, new CubeDeformation(0.88F)), PartPose.offset(1.9F, 12.0F, 0.0F));
+
+        PartDefinition RightBoots = partdefinition.addOrReplaceChild("RightBoots", CubeListBuilder.create().texOffs(34, 55).mirror().addBox(-2.1F, 6.5F, -2.0F, 4.0F, 5.0F, 4.0F, new CubeDeformation(0.88F)).mirror(false), PartPose.offset(-1.9F, 12.0F, 0.0F));
+
+        return LayerDefinition.create(meshdefinition, 64, 64);
+    }
+
+    @Override
+    public void setupAnim(Entity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+
+    }
+
+    @Override
+    public void renderToBuffer(PoseStack poseStack, VertexConsumer vertexConsumer, int packedLight, int packedOverlay, int color) {
+        bipedHead.render(poseStack, vertexConsumer, packedLight, packedOverlay, color);
+        bipedRightArm.render(poseStack, vertexConsumer, packedLight, packedOverlay, color);
+        bipedLeftArm.render(poseStack, vertexConsumer, packedLight, packedOverlay, color);
+        bipedLeftLeg.render(poseStack, vertexConsumer, packedLight, packedOverlay, color);
+        bipedBody.render(poseStack, vertexConsumer, packedLight, packedOverlay, color);
+        bipedRightLeg.render(poseStack, vertexConsumer, packedLight, packedOverlay, color);
+        LeftBoots.render(poseStack, vertexConsumer, packedLight, packedOverlay, color);
+        RightBoots.render(poseStack, vertexConsumer, packedLight, packedOverlay, color);
+    }
 }

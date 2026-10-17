@@ -24,7 +24,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.resources.ResourceLocation;
 
-public class StonedaggeraxeItem extends FiveBlockReachSwordItem {
+public class StonedaggeraxeItem extends DaggerAxeItemBase {
 	public StonedaggeraxeItem() {
 		super(new Tier() {
 			public int getUses() {
@@ -36,7 +36,7 @@ public class StonedaggeraxeItem extends FiveBlockReachSwordItem {
 			}
 
 			public float getAttackDamageBonus() {
-				return 2f;
+				return 4f;
 			}
 
 				public TagKey<Block> getIncorrectBlocksForDrops() {
@@ -56,13 +56,6 @@ public class StonedaggeraxeItem extends FiveBlockReachSwordItem {
 			}
 		}, 3, -2.5f, new Item.Properties());
 	}
-
-    @Override
-    public InteractionResultHolder<ItemStack> use(Level world, Player entity, InteractionHand hand) {
-        InteractionResultHolder<ItemStack> ar = super.use(world, entity, hand);
-        DaggerAxeItemFierceHookProcedure.execute(world, entity.getX(), entity.getY(), entity.getZ(), entity, ar.getObject());
-        return ar;
-    }
 
     @Override
     public boolean hurtEnemy(ItemStack itemstack, LivingEntity entity, LivingEntity sourceentity) {

@@ -73,11 +73,12 @@ public class ChineseweaponsMod {
         ChineseWeaponsModHorseArmorMaterials.REGISTRY.register(modEventBus);
 
         modEventBus.addListener(this::registerPayloads);
-        modEventBus.addListener(this::registerKeys);
+        if(FMLEnvironment.dist.isClient()){
+            modEventBus.addListener(this::registerKeys);
+        }
     }
 
     public void registerKeys(RegisterKeyMappingsEvent e) {
-        if (!FMLEnvironment.dist.isClient()) return;
         e.register(ChineseweaponsModKeyHandler.ACTION_KEY);
     }
 

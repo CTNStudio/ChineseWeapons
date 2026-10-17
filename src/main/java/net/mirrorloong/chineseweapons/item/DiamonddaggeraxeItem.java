@@ -17,7 +17,7 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.mirrorloong.chineseweapons.procedures.weapon.DaggerAxeAndGlaiveItemjizhongProcedure;
 import net.mirrorloong.chineseweapons.procedures.weapon.DaggerAxeItemFierceHookProcedure;
 
-public class DiamonddaggeraxeItem extends FiveBlockReachSwordItem {
+public class DiamonddaggeraxeItem extends DaggerAxeItemBase {
 	public DiamonddaggeraxeItem() {
 		super(new Tier() {
 			public int getUses() {
@@ -49,13 +49,6 @@ public class DiamonddaggeraxeItem extends FiveBlockReachSwordItem {
 			}
 		}, 3, -2.1f, new Item.Properties());
 	}
-
-    @Override
-    public InteractionResultHolder<ItemStack> use(Level world, Player entity, InteractionHand hand) {
-        InteractionResultHolder<ItemStack> ar = super.use(world, entity, hand);
-        DaggerAxeItemFierceHookProcedure.execute(world, entity.getX(), entity.getY(), entity.getZ(), entity, ar.getObject());
-        return ar;
-    }
 
     @Override
     public boolean hurtEnemy(ItemStack itemstack, LivingEntity entity, LivingEntity sourceentity) {

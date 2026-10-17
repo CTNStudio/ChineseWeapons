@@ -21,7 +21,7 @@ import net.minecraft.world.item.Item;
 import net.mirrorloong.chineseweapons.procedures.weapon.DaggerAxeAndGlaiveItemjizhongProcedure;
 import net.mirrorloong.chineseweapons.procedures.weapon.DaggerAxeItemFierceHookProcedure;
 
-public class NetheritedaggeraxeItem extends FiveBlockReachSwordItem {
+public class NetheritedaggeraxeItem extends DaggerAxeItemBase {
 	public NetheritedaggeraxeItem() {
 		super(new Tier() {
 			public int getUses() {
@@ -33,7 +33,7 @@ public class NetheritedaggeraxeItem extends FiveBlockReachSwordItem {
 			}
 
 			public float getAttackDamageBonus() {
-				return 5f;
+				return 7f;
 			}
 
 				public TagKey<Block> getIncorrectBlocksForDrops() {
@@ -53,13 +53,6 @@ public class NetheritedaggeraxeItem extends FiveBlockReachSwordItem {
 			}
 		}, 3, -2.1f, new Item.Properties().fireResistant());
 	}
-
-    @Override
-    public InteractionResultHolder<ItemStack> use(Level world, Player entity, InteractionHand hand) {
-        InteractionResultHolder<ItemStack> ar = super.use(world, entity, hand);
-        DaggerAxeItemFierceHookProcedure.execute(world, entity.getX(), entity.getY(), entity.getZ(), entity, ar.getObject());
-        return ar;
-    }
 
     @Override
     public boolean hurtEnemy(ItemStack itemstack, LivingEntity entity, LivingEntity sourceentity) {

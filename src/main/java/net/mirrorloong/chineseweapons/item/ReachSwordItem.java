@@ -21,7 +21,9 @@ public abstract class ReachSwordItem extends SwordItem {
 
     protected ReachSwordItem(Tier tier, int attackDamageModifier, float attackSpeedModifier,
                              Item.Properties properties, double entityReachBonus) {
-        super(tier, properties);
+        super(tier, properties.attributes(
+                SwordItem.createAttributes(tier, attackDamageModifier, attackSpeedModifier)
+        ));
         this.entityReachBonus = entityReachBonus;
     }
 

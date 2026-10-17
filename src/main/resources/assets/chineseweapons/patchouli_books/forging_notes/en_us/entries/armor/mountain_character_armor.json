@@ -20,11 +20,6 @@
       "text": "patchouli.chineseweapons.book.entries.armor.mountain_character_armor.pages.2.text"
     },
     {
-      "type": "spotlight",
-      "item": "chineseweapons:iron_mountain_character_armor_boots",
-      "text": "patchouli.chineseweapons.book.entries.armor.mountain_character_armor.pages.3.text"
-    },
-    {
       "type": "image",
       "images": [
         "chineseweapons:textures/book/armor_3.png"
