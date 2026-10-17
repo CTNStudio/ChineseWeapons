@@ -4,9 +4,11 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.minecraftforge.fml.loading.FMLEnvironment;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
@@ -81,7 +83,9 @@ public class ChineseweaponsMod {
         RECIPE_SERIALIZERS.register(bus);
         ChineseweaponsModBlockEntities.REGISTRY.register(bus);
         bus.addListener(ChineseweaponsMod::network);
-        bus.addListener(ChineseweaponsMod::registerKeys);
+        if (FMLEnvironment.dist == Dist.CLIENT) {
+            bus.addListener(ChineseweaponsMod::registerKeys);
+        }
     }
 
     @SubscribeEvent
