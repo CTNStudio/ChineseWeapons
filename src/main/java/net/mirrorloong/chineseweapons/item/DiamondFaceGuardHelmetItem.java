@@ -4,15 +4,18 @@ import com.google.common.collect.Iterables;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.geom.ModelPart;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ArmorItem;
+import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
+import net.mirrorloong.chineseweapons.ChineseweaponsMod;
 import net.mirrorloong.chineseweapons.client.model.Modelface_guard;
 import net.mirrorloong.chineseweapons.init.ChineseWeaponsArmorMaterials;
 import net.mirrorloong.chineseweapons.procedures.armor.FaceGuardHelmetKHProcedures;
@@ -48,6 +51,11 @@ public abstract class DiamondFaceGuardHelmetItem extends ArmorItem {
             if (entity instanceof Player player && Iterables.contains(player.getArmorSlots(), itemstack)) {
                 FaceGuardHelmetKHProcedures.execute(world, entity, itemstack);
             }
+        }
+
+        @Override
+        public ResourceLocation getArmorTexture(ItemStack stack, Entity entity, EquipmentSlot slot, ArmorMaterial.Layer layer, boolean innerModel) {
+            return ResourceLocation.fromNamespaceAndPath(ChineseweaponsMod.MODID, "textures/entities/diamond_face_guard.png");
         }
 
         @Override

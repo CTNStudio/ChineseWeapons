@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "chineseweapons:ancient_gem_block"
+    }
+  ],
+  "result": {
+    "id": "chineseweapons:ancient_gem",
+    "count": 9
+  }
+}

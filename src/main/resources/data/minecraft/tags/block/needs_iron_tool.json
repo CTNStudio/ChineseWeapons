@@ -1,6 +1,8 @@
 {
   "values": [
     "chineseweapons:ancient_gem_ore",
-    "chineseweapons:deepslate_ancient_gem_ore"
+    "chineseweapons:deepslate_ancient_gem_ore",
+    "chineseweapons:armor_casting_table",
+    "chineseweapons:ancient_gem_block"
   ]
 }

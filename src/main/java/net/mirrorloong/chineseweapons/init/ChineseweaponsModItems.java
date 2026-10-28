@@ -233,6 +233,7 @@ public class ChineseweaponsModItems {
     public static final DeferredHolder<Item, Item> NETHERITE_TANG_DYNASTY_HORSE = REGISTRY.register("netherite_tang_dynasty_horse_armor", () -> new TangDynastyHorseItem(25, ResourceLocation.fromNamespaceAndPath(ChineseweaponsMod.MODID, "textures/entities/horse/armor/netherite_tang_dynasty_horse_armor.png"), ChineseWeaponsModHorseArmorMaterials.NETHERITE_TANG_DYNASTY_HORSE));
     public static final DeferredHolder<Item, Item> GOLDEN_TANG_DYNASTY_HORSE = REGISTRY.register("golden_tang_dynasty_horse_armor", () -> new TangDynastyHorseItem(11, ResourceLocation.fromNamespaceAndPath(ChineseweaponsMod.MODID, "textures/entities/horse/armor/golden_tang_dynasty_horse_armor.png"), ChineseWeaponsModHorseArmorMaterials.GOLDEN_TANG_DYNASTY_HORSE));
 
+	public static final DeferredHolder<Item, Item> ANCIENT_GEM_BLOCK = block(ChineseweaponsModBlocks.ANCIENT_GEM_BLOCK);
     private static DeferredHolder<Item, Item> block(DeferredHolder<Block, Block> block) {
         return REGISTRY.register(block.getId().getPath(), () -> new BlockItem(block.get(), new Item.Properties()));
     }

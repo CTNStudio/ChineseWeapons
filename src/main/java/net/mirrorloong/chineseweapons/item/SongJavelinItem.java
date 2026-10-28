@@ -123,7 +123,7 @@ public class SongJavelinItem extends FourBlockReachSwordItem {
                     enchants.getOrThrow(Enchantments.CHANNELING), stack) > 0;
             projectile.setHasChanneling(hasChanneling);
 
-            projectile.shootFromRotation(player, player.getXRot() - 20.0F, player.getYRot(),
+            projectile.shootFromRotation(player, player.getXRot() - 50.0F, player.getYRot(),
                     0.0F, velocity, 1.0F);
             level.addFreshEntity(projectile);
 
