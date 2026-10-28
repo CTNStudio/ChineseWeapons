@@ -194,6 +194,7 @@ public class ChineseweaponsModTabs {
 				tabData.accept(ChineseweaponsModBlocks.ARMOR_CASTING_TABLE.get().asItem());
 				tabData.accept(ChineseweaponsModBlocks.ANCIENT_GEM_ORE.get().asItem());
 				tabData.accept(ChineseweaponsModBlocks.DeepslateANCIENT_GEM_ORE.get().asItem());
+                tabData.accept(ChineseweaponsModBlocks.ANCIENT_GEM_BLOCK.get().asItem());
 				tabData.accept(ChineseweaponsModItems.AncientGem.get());
 				tabData.accept(ChineseweaponsModItems.DiamondArmorPieces.get());
 				tabData.accept(ChineseweaponsModItems.DiamondArmorPiecesPlate.get());

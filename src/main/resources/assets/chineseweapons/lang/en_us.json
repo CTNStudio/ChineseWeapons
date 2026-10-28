@@ -378,6 +378,9 @@
   "patchouli.chineseweapons.book.categories.ovo.description": "$(#FFDDE1)$(k)$(l)|$(#FFDDE1)$(l) $()$(#FFD7DA)$(l)C$(#FFC3C6)$(l)h$(#FFA2A5)$(l)i$(#F59BA3)$(l)n$(#FFDBDF)$(l)e$(#FFCED2)$(l)s$(#FFB4B7)$(l)e$(#FB9AA0)$(l) $(l)$(#FFDDE1)$(k)$(l)|",
   "patchouli.chineseweapons.book.categories.ovo.title": "| Chinese Armorers — Thank You |",
   "patchouli.chineseweapons.book.entries.ovo.ovo.pages.0.text": "Chinese Armorers thanks you, and also thanks the following sponsors for supporting this mod. If you have sponsored before but are not listed here, please contact us. We believe the mod will keep getting better! (In no particular order)$(br2)GhAli，珠联璧合",
+  "entity.chineseweapons.song_javelin": "Fangtian Huaji Entity O.o",
+  "entity.chineseweapons.standing_shield": "Song Dynasty Standing Shield Entity O.o",
+  "block.chineseweapons.ancient_gem_block": "Ancient Gem Block",
 
   "patchouli.chineseweapons.book.entries.weapons.tang_dynasty_horse_armor.name": "Tang Horse Armor",
   "patchouli.chineseweapons.book.entries.weapons.tang_dynasty_horse_armor.pages.0.text": "Tang Horse Armor greatly boosts the defensive capability of horses.",

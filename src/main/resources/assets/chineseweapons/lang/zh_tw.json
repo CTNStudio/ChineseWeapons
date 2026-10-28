@@ -368,6 +368,9 @@
   "patchouli.chineseweapons.book.entries.weapons.guduo.pages.1.text": "若目標身處水中，攻擊會使其氧氣值下降 3 點，並在 3 秒內向下沉 4 格；水深不足 4 格則直接沉底。$(br)潛行時攻擊騎乘中的目標，有 30% 機率將其擊落馬下。",
   "patchouli.chineseweapons.book.entries.armor.face_guard_helmet.name": "面甲",
   "patchouli.chineseweapons.book.entries.armor.face_guard_helmet.pages.0.text": "面甲為遮蔽面容之護具，擁有防護與威懾兩項用途。穿戴後潛行，可恐嚇玩家周圍 3 至 13 格內的實體，冷卻 3 秒。",
+  "entity.chineseweapons.song_javelin": "方天畫戟實體O.o",
+  "entity.chineseweapons.standing_shield": "宋代立盾實體O.o",
+  "block.chineseweapons.ancient_gem_block": "遠古寶石塊",
 
   "patchouli.chineseweapons.book.entries.armor.suanni_helmet.name": "狻猊兜鍪",
   "patchouli.chineseweapons.book.entries.armor.bohai_helmet.name": "渤海帽",

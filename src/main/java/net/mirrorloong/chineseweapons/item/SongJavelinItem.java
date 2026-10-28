@@ -110,7 +110,7 @@ public class SongJavelinItem extends FourBlockReachSwordItem {
             int pierce = EnchantmentHelper.getTagEnchantmentLevel(Enchantments.PIERCING, stack);
             projectile.setPierceLevel((byte) pierce);
 
-            projectile.shootFromRotation(player, player.getXRot() - 20.0F, player.getYRot(), 0.0F, velocity, 1.0F);
+            projectile.shootFromRotation(player, player.getXRot() - 50.0F, player.getYRot(), 0.0F, velocity, 1.0F);
             level.addFreshEntity(projectile);
 
             level.playSound(null, player.blockPosition(), SoundEvents.TRIDENT_THROW, SoundSource.PLAYERS, 1.0F, 1.0F);

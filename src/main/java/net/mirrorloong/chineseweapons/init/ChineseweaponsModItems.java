@@ -228,6 +228,8 @@ public class ChineseweaponsModItems {
     public static final RegistryObject<Item> NETHERITE_TANG_DYNASTY_HORSE = REGISTRY.register("netherite_tang_dynasty_horse_armor", () -> new TangDynastyHorseItem(25, new ResourceLocation(ChineseweaponsMod.MODID, "textures/entities/horse/armor/netherite_tang_dynasty_horse_armor.png")));
     public static final RegistryObject<Item> GOLDEN_TANG_DYNASTY_HORSE = REGISTRY.register("golden_tang_dynasty_horse_armor", () -> new TangDynastyHorseItem(11, new ResourceLocation(ChineseweaponsMod.MODID, "textures/entities/horse/armor/golden_tang_dynasty_horse_armor.png")));
 
+    public static final RegistryObject<Item> ANCIENT_GEM_BLOCK = block(ChineseweaponsModBlocks.ANCIENT_GEM_BLOCK);
+
     private static RegistryObject<Item> block(RegistryObject<Block> block) {
         return REGISTRY.register(block.getId().getPath(), () -> new BlockItem(block.get(), new Item.Properties()));
     }
