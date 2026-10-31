@@ -385,5 +385,6 @@
   "patchouli.chineseweapons.book.entries.song_standing_shield.pages.0.text": "宋立盾之用有二：手持與置地。手持如常盾。按技鍵則置盾於地，蹲而右擊可令其左右旋轉，以拒劍矢諸擊。",
   "entity.chineseweapons.song_javelin": "方天畫戟之實體O.o",
   "entity.chineseweapons.standing_shield": "宋立盾之實體O.o",
-  "block.chineseweapons.ancient_gem_block": "上古寶石之塊"
+  "block.chineseweapons.ancient_gem_block": "上古寶石之塊",
+  "text.chineseweapons.tips.miss_patchouli": "薦君裝 Patchouli 模組，以閱鍛造日記之冊"
 }

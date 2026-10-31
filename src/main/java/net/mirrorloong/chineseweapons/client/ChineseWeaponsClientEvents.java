@@ -31,6 +31,13 @@ public final class ChineseWeaponsClientEvents {
                         && entity.isUsingItem()
                         && entity.getUseItem() == stack ? 1.0F : 0.0F
         ));
+        event.enqueueWork(() -> ItemProperties.register(
+                ChineseweaponsModItems.SongStandingShield.get(),
+                BLOCKING,
+                (stack, level, entity, seed) -> entity != null
+                        && entity.isUsingItem()
+                        && entity.getUseItem() == stack ? 1.0F : 0.0F
+        ));
     }
 
     @SubscribeEvent

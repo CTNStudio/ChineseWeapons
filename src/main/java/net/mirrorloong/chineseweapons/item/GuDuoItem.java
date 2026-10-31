@@ -31,6 +31,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class GuDuoItem extends SixBlockReachSwordItem {
 
+    // 状态
     public static final Map<Integer, Long> SQUASH = new ConcurrentHashMap<>();
     public static final long T1 = 300L, T2 = 800L;
     public static final float MIN = 0.6F;
@@ -85,7 +86,7 @@ public class GuDuoItem extends SixBlockReachSwordItem {
 
     private static void DFHurt(ItemStack stack, LivingEntity target, LivingEntity attacker) {
         target.addEffect(new MobEffectInstance(
-                ChineseWeaponsModEffects.CusEffectSupplier, 60, 0));
+                ChineseWeaponsModEffects.BleedEffectSupplier, 60, 0));
 
         double GL = WeaponScriptSettings.getArmorThreshold(
                 stack.getItem(),
@@ -133,6 +134,7 @@ public class GuDuoItem extends SixBlockReachSwordItem {
             double downward = 0.3D + attacker.getRandom().nextDouble() * (downward_o - 0.1D);
             target.push(0.0D, -downward, 0.0D);
 
+            // 压扁
             if (target.level() instanceof ServerLevel sl) {
                 SquashPacket pkt = new SquashPacket(target.getId());
                 PacketDistributor.sendToPlayersNear(sl, null,
@@ -174,16 +176,20 @@ public class GuDuoItem extends SixBlockReachSwordItem {
         }
     }
 
+    //心跳包
     public static float scaleY(long t) {
         if (t < T1) {
+            // easeOutCubic
             float x = t / (float) T1;
             float ease = 1.0F - (float) Math.pow(1.0F - x, 3);
             return 1.0F - (1.0F - MIN) * ease;
         }
+        // easeInCubic
         float x = (t - T1) / (float) (T2 - T1);
         return MIN + (1.0F - MIN) * (x * x * x);
     }
 
+    //数据包
     public record SquashPacket(int id) implements CustomPacketPayload {
         public static final CustomPacketPayload.Type<SquashPacket> TYPE =
                 new CustomPacketPayload.Type<>(
@@ -205,6 +211,7 @@ public class GuDuoItem extends SixBlockReachSwordItem {
         }
     }
 
+	//客户端渲染
     @EventBusSubscriber(
             modid = ChineseweaponsMod.MODID,
             value = Dist.CLIENT

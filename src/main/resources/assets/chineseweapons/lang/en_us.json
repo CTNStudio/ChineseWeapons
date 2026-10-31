@@ -381,6 +381,7 @@
   "entity.chineseweapons.song_javelin": "Fangtian Huaji Entity O.o",
   "entity.chineseweapons.standing_shield": "Song Dynasty Standing Shield Entity O.o",
   "block.chineseweapons.ancient_gem_block": "Ancient Gem Block",
+  "text.chineseweapons.tips.miss_patchouli": "It is recommended that you install the Patchouli mod to view the Forging Notes handbook",
 
   "patchouli.chineseweapons.book.entries.weapons.tang_dynasty_horse_armor.name": "Tang Horse Armor",
   "patchouli.chineseweapons.book.entries.weapons.tang_dynasty_horse_armor.pages.0.text": "Tang Horse Armor greatly boosts the defensive capability of horses.",

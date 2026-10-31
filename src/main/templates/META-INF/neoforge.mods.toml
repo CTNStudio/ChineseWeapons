@@ -55,6 +55,7 @@ description='''${mod_description}'''
 # If this block is omitted, a fallback attempt will be made to load an AT from META-INF/accesstransformer.cfg
 #[[accessTransformers]]
 #file="META-INF/accesstransformer.cfg"
+enumExtensions="META-INF/enumextensions.json"
 
 # The coremods config file path is not configurable and is always loaded from META-INF/coremods.json
 
@@ -69,7 +70,7 @@ description='''${mod_description}'''
     # Optional field describing why the dependency is required or why it is incompatible
     # reason="..."
     # The version range of the dependency
-    versionRange="[${neo_version},)" #mandatory
+    versionRange="[21.1.200,)" #mandatory
     # An ordering relationship for the dependency.
     # BEFORE - This mod is loaded BEFORE the dependency
     # AFTER - This mod is loaded AFTER the dependency

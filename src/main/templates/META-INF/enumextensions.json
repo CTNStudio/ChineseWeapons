@@ -1,0 +1,13 @@
+{
+  "entries": [
+    {
+      "enum": "net/minecraft/client/model/HumanoidModel$ArmPose",
+      "name": "CHINESEWEAPONS_CHARGING_JAVELIN",
+      "constructor": "(ZLnet/neoforged/neoforge/client/IArmPoseTransformer;)V",
+      "parameters": {
+        "class": "net/mirrorloong/chineseweapons/item/SongJavelinItem$EnumParams",
+        "field": "CHARGING_JAVELIN_POSE_PROXY"
+      }
+    }
+  ]
+}

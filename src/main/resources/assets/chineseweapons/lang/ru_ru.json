@@ -361,6 +361,7 @@
   "patchouli.chineseweapons.book.categories.ovo.title": "| Chinese Armorers — Thank You |",
   "patchouli.chineseweapons.book.entries.ovo.ovo.pages.0.text": "Chinese Armorers thanks you, and also thanks the following sponsors for supporting this mod. If you have sponsored before but are not listed here, please contact us. We believe the mod will keep getting better! (In no particular order)$(br2)GhAli，珠联璧合",
 
+  "text.chineseweapons.tips.miss_patchouli": "It is recommended that you install the Patchouli mod to view the Forging Notes handbook",
   "block.chineseweapons.ancient_gem_block": "Ancient Gem Block",
 
   "item.chineseweapons.GlaiveItemGetLostKill": "Вы можете использовать глейфу через %s секунд",
