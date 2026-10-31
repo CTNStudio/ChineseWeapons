@@ -83,7 +83,7 @@ public class GuDuoItem extends SixBlockReachSwordItem {
 
     private static void DFHurt(ItemStack stack, LivingEntity target, LivingEntity attacker) {
         target.addEffect(new MobEffectInstance(
-                ChineseWeaponsModEffects.CusEffectSupplier.get(), 60, 0));
+                ChineseWeaponsModEffects.BleedEffectSupplier.get(), 60, 0));
 
         double GL = WeaponScriptSettings.getArmorThreshold(
                 stack.getItem(),
