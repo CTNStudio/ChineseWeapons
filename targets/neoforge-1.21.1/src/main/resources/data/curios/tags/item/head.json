@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    "chineseweapons:diamond_face_guard_helmet",
+    "chineseweapons:iron_face_guard_helmet",
+    "chineseweapons:netherite_face_guard_helmet",
+    "chineseweapons:golden_face_guard_helmet"
+  ]
+}

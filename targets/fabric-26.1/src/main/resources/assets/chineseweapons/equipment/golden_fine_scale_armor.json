@@ -1,0 +1,19 @@
+{
+  "layers": {
+    "humanoid": [
+      {
+        "texture": "chineseweapons:golden_fine_scale_armor"
+      }
+    ],
+    "humanoid_baby": [
+      {
+        "texture": "chineseweapons:golden_fine_scale_armor"
+      }
+    ],
+    "humanoid_leggings": [
+      {
+        "texture": "chineseweapons:golden_fine_scale_armor"
+      }
+    ]
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "type": "chineseweapons:weapon_casting_shaped",
+  "pattern": [
+    " AA",
+    "AAA",
+    "BC "
+  ],
+  "main_material": "minecraft:gold_ingot",
+  "key": {
+    "A": "#minecraft:stone_crafting_materials",
+    "B": "minecraft:stick",
+    "C": "chineseweapons:ancient_gem"
+  },
+  "result": {
+    "id": "chineseweapons:stone_tang_dynasty_heng_saber",
+    "count": 1
+  }
+}

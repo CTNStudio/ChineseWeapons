@@ -1,0 +1,14 @@
+{
+  "layers": {
+    "humanoid": [
+      {
+        "texture": "chineseweapons:goldenfootmenarmor"
+      }
+    ],
+    "humanoid_leggings": [
+      {
+        "texture": "chineseweapons:goldenfootmenarmor"
+      }
+    ]
+  }
+}

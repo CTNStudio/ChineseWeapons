@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "chineseweapons:item/mini_golden_dagger_axe"
+  }
+}

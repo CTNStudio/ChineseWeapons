@@ -1,0 +1,23 @@
+{
+    "type": "chineseweapons:weapon_casting_shaped",
+    "pattern": [
+      " AB",
+      "ABA",
+      "B  "
+    ],
+    "main_material": {
+      "item": "minecraft:copper_ingot"
+    },
+    "key": {
+      "A": {
+        "item": "minecraft:iron_ingot"
+      },
+      "B": {
+        "item": "minecraft:stick"
+      }
+    },
+    "result": {
+      "count": 1,
+      "item": "chineseweapons:iron_dagger_axe"
+    }
+  }

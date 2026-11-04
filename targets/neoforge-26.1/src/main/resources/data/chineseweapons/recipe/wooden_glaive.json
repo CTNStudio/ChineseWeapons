@@ -1,0 +1,17 @@
+{
+  "type": "chineseweapons:weapon_casting_shaped",
+  "pattern": [
+    " AA",
+    "ABA",
+    "BA "
+  ],
+  "main_material": "minecraft:gold_ingot",
+  "key": {
+    "A": "#minecraft:planks",
+    "B": "minecraft:stick"
+  },
+  "result": {
+    "id": "chineseweapons:wooden_glaive",
+    "count": 1
+  }
+}

@@ -1,0 +1,11 @@
+.gradle/
+.gradle-local-repo/
+build/
+**/build/
+.idea/
+*.iml
+out/
+run/
+runs/
+run-data/
+*.log

@@ -1,0 +1,19 @@
+{
+  "layers": {
+    "humanoid": [
+      {
+        "texture": "chineseweapons:golden_middle_tang_dynasty_ming_guang_armor"
+      }
+    ],
+    "humanoid_baby": [
+      {
+        "texture": "chineseweapons:golden_middle_tang_dynasty_ming_guang_armor"
+      }
+    ],
+    "humanoid_leggings": [
+      {
+        "texture": "chineseweapons:golden_middle_tang_dynasty_ming_guang_armor"
+      }
+    ]
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "gui_light": "front",
+  "parent": "chineseweapons:custom/guduo",
+  "textures": {
+    "1": "chineseweapons:block/weapon/golden_guduo",
+    "particle": "chineseweapons:block/weapon/golden_guduo"
+  }
+}

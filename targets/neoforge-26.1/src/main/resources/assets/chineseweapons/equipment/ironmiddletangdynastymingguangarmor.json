@@ -1,0 +1,14 @@
+{
+  "layers": {
+    "humanoid": [
+      {
+        "texture": "chineseweapons:ironmiddletangdynastymingguangarmor"
+      }
+    ],
+    "humanoid_leggings": [
+      {
+        "texture": "chineseweapons:ironmiddletangdynastymingguangarmor"
+      }
+    ]
+  }
+}

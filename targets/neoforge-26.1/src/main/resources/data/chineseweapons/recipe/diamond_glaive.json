@@ -1,0 +1,17 @@
+{
+  "type": "chineseweapons:weapon_casting_shaped",
+  "pattern": [
+    " AA",
+    "ABA",
+    "BA "
+  ],
+  "main_material": "minecraft:gold_ingot",
+  "key": {
+    "A": "minecraft:diamond",
+    "B": "minecraft:stick"
+  },
+  "result": {
+    "id": "chineseweapons:diamond_glaive",
+    "count": 1
+  }
+}

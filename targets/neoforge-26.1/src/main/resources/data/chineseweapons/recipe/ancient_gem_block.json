@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "aaa",
+    "aaa",
+    "aaa"
+  ],
+  "key": {
+    "a": "chineseweapons:ancient_gem"
+  },
+  "result": {
+    "id": "chineseweapons:ancient_gem_block",
+    "count": 1
+  }
+}

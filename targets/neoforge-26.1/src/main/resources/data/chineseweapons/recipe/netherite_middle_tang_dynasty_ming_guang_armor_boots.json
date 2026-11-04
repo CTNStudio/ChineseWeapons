@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smithing_transform",
+  "addition": "minecraft:netherite_ingot",
+  "base": "chineseweapons:diamond_middle_tang_dynasty_ming_guang_armor_boots",
+  "result": {
+    "id": "chineseweapons:netherite_middle_tang_dynasty_ming_guang_armor_boots"
+  },
+  "template": "minecraft:netherite_upgrade_smithing_template"
+}

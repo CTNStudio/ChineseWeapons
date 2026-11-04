@@ -1,0 +1,16 @@
+{
+  "type": "chineseweapons:weapon_casting_shaped",
+  "pattern": [
+    "AAA",
+    "A A",
+    "A A"
+  ],
+  "main_material": "minecraft:iron_nugget",
+  "key": {
+    "A": "chineseweapons:diamond_armor_pieces"
+  },
+  "result": {
+    "id": "chineseweapons:diamond_middle_tang_dynasty_ming_guang_armor_leggings",
+    "count": 1
+  }
+}

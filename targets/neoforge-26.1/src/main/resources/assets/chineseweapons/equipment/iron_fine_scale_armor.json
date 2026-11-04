@@ -1,0 +1,14 @@
+{
+  "layers": {
+    "humanoid": [
+      {
+        "texture": "chineseweapons:iron_fine_scale_armor"
+      }
+    ],
+    "humanoid_leggings": [
+      {
+        "texture": "chineseweapons:iron_fine_scale_armor"
+      }
+    ]
+  }
+}

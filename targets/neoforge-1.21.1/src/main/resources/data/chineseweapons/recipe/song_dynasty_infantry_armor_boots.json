@@ -1,0 +1,23 @@
+{
+  "type": "chineseweapons:weapon_casting_shaped",
+  "pattern": [
+    "A A",
+    "B B",
+    "A A"
+  ],
+  "main_material": {
+    "item": "minecraft:leather"
+  },
+  "key": {
+    "A": {
+      "item": "chineseweapons:iron_armor_pieces_plate"
+    },
+    "B": {
+      "item": "minecraft:string"
+    }
+  },
+  "result": {
+    "count": 1,
+    "item": "chineseweapons:song_dynasty_infantry_armor_boots"
+  }
+}

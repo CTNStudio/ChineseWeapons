@@ -1,0 +1,14 @@
+{
+  "layers": {
+    "humanoid": [
+      {
+        "texture": "chineseweapons:song_dynasty_infantry_armor"
+      }
+    ],
+    "humanoid_leggings": [
+      {
+        "texture": "chineseweapons:song_dynasty_infantry_armor"
+      }
+    ]
+  }
+}

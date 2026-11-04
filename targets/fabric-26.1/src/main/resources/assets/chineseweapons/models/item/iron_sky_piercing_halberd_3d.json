@@ -1,0 +1,7 @@
+{
+  "parent": "chineseweapons:custom/sky_piercing_halberd",
+  "textures": {
+    "1": "chineseweapons:block/weapon/iron_sky_piercing_halberd",
+    "particle": "chineseweapons:block/weapon/iron_sky_piercing_halberd"
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "required": true,
+  "package": "net.mirrorloong.chineseweapons.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "mixins": [
+    "LivingEntityMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "refmap": "chineseweapons-fabric.refmap.json"
+}

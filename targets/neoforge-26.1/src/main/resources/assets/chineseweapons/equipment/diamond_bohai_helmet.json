@@ -1,0 +1,14 @@
+{
+  "layers": {
+    "humanoid": [
+      {
+        "texture": "chineseweapons:diamond_bohai_helmet"
+      }
+    ],
+    "humanoid_leggings": [
+      {
+        "texture": "chineseweapons:diamond_bohai_helmet"
+      }
+    ]
+  }
+}

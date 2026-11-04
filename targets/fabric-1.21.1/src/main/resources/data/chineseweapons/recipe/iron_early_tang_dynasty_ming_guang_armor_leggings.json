@@ -1,0 +1,23 @@
+{
+    "type": "chineseweapons:weapon_casting_shaped",
+    "pattern": [
+      "ABA",
+      "A A",
+      "   "
+    ],
+    "main_material": {
+      "item": "minecraft:iron_nugget"
+    },
+    "key": {
+      "A": {
+        "item": "chineseweapons:iron_armor_pieces"
+      },
+      "B":{
+        "item": "chineseweapons:iron_armor_pieces_plate"
+      }
+    },
+    "result": {
+      "count": 1,
+      "item": "chineseweapons:iron_early_tang_dynasty_ming_guang_armor_leggings"
+    }
+  } 

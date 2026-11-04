@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smithing_transform",
+  "addition": "minecraft:netherite_ingot",
+  "base": "chineseweapons:diamond_tang_dynasty_heng_saber",
+  "result": {
+    "id": "chineseweapons:netherite_tang_dynasty_heng_saber"
+  },
+  "template": "minecraft:netherite_upgrade_smithing_template"
+}

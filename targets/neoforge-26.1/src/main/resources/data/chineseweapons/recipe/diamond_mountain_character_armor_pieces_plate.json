@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "aaa",
+    "bbb",
+    "aaa"
+  ],
+  "key": {
+    "a": "chineseweapons:diamond_mountain_character_armor_pieces",
+    "b": "minecraft:string"
+  },
+  "result": {
+    "id": "chineseweapons:diamond_mountain_character_armor_pieces_plate",
+    "count": 3
+  }
+}

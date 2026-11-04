@@ -1,0 +1,29 @@
+{
+    "type": "chineseweapons:weapon_casting_shaped",
+    "pattern": [
+      "C C",
+      "ABA",
+      "CDC"
+    ],
+    "main_material": {
+      "item": "minecraft:iron_nugget"
+    },
+    "key": {
+      "A": {
+        "item": "chineseweapons:golden_armor_pieces_plate"
+      },
+      "B": {
+        "item": "chineseweapons:golden_armor_pieces"
+      },
+      "C": {
+        "item": "minecraft:iron_nugget"
+      },
+      "D":{
+        "item": "minecraft:leather"
+      }
+  },
+  "result": {
+    "count": 1,
+    "item": "chineseweapons:golden_late_tang_dynasty_ming_guang_armor_chestplate"
+  }
+}

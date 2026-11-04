@@ -1,0 +1,17 @@
+{
+  "type": "chineseweapons:weapon_casting_shaped",
+  "pattern": [
+    "  A",
+    " B ",
+    "B  "
+  ],
+  "main_material": "minecraft:copper_ingot",
+  "key": {
+    "A": "#minecraft:planks",
+    "B": "minecraft:stick"
+  },
+  "result": {
+    "id": "chineseweapons:wooden_song_javelin",
+    "count": 1
+  }
+}
