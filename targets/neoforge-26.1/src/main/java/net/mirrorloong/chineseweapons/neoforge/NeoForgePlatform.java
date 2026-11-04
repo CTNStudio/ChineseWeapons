@@ -10,6 +10,7 @@ import net.neoforged.fml.loading.FMLEnvironment;
 import net.mirrorloong.chineseweapons.gui.recipe.DeferredGui;
 import net.mirrorloong.chineseweapons.gui.recipe.WeaponsCastingTableTypeGuiMenu;
 import net.mirrorloong.chineseweapons.spi.ContentFactory;
+import net.mirrorloong.chineseweapons.spi.GameplayCompat;
 import net.mirrorloong.chineseweapons.spi.Network;
 import net.mirrorloong.chineseweapons.spi.Platform;
 import net.mirrorloong.chineseweapons.spi.Registration;
@@ -19,6 +20,7 @@ public final class NeoForgePlatform implements Platform {
     private final NeoForgeRegistration registration = new NeoForgeRegistration();
     private final NeoForgeNetwork network = new NeoForgeNetwork();
     private final NeoForgeContentFactory content = new NeoForgeContentFactory();
+    private final NeoForgeGameplayCompat gameplay = new NeoForgeGameplayCompat();
 
     public NeoForgePlatform(IEventBus modBus) {
         this.modBus = modBus;
@@ -41,6 +43,11 @@ public final class NeoForgePlatform implements Platform {
     @Override
     public ContentFactory content() {
         return content;
+    }
+
+    @Override
+    public GameplayCompat gameplay() {
+        return gameplay;
     }
 
     @Override

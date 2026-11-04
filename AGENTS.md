@@ -7,12 +7,14 @@
 - 八个 target（forge-1.18.2/1.19.2/1.20.1、fabric-1.20.1/1.21.1/26.1、neoforge-1.21.1/26.1）目前均通过 `clean build`；游戏启动、AutoJS、数据包加载和渲染均未验证。
 - common 通过 `net.mirrorloong.chineseweapons.spi` 使用目标能力：`Platform`（注册、网络、菜单、客户端标记）、`Registration`/`RegistryBuilder`/`RegistryEntry`（内容注册）、`Network`/`ModPacket`/`PacketDirection`（自定义包）。`ChineseWeapons.bootstrap(Platform)` 是共享启动入口，target 在 mod 构造期设置实现并调用。
 - 目标实现放 target：Forge/NeoForge 用 DeferredRegister、SimpleChannel/payload，Fabric 用 Registry/回调/payload。不要把这些实现塞回 common。
-- 只有确认某文件在当前 target 无法编译或语义不同，才将其复制到 target 同 FQCN 并加入该 target 的 `commonJava { exclude }`；为跨版本重复的业务逻辑应优先抽回 common（例如数值/数据结构），只留下 API 适配。
+- 版本差异的落点现在是 target 内的完整实现或 `spi.ContentFactory` 分支，而不是 `commonJava { exclude }`；common 不再包含任何被排除文件。为跨版本重复的业务逻辑应优先抽回 common（数值、id、顺序、纯算法），只留下 API 适配。
 - `RegistryEntry.id()` 返回共享值类型 `spi.ResourceId`（namespace/path），不再引用 `ResourceLocation`/`Identifier`；26.1 的 `spi/RegistryEntry` fork 已删除。`Registration` 同时提供 `ResourceKey` 与 `builder(String registryId)` 两种入口，后者由各 target 映射到自己的注册表常量。
 - 具体内容构造（装备/武器/特殊物品/方块/方块实体类型/实体类型/效果/音效/创造模式标签页）由 `spi.ContentFactory` 实现，放在各 target；common 的 `init/*` 只持有注册 id、定义记录和标签页条目顺序。
-- `commonJava` 排除预算是每 target 少于 10 项，且只允许 recipes/network/gui 等无法用 SPI 表达的文件；当前矩阵见 README。新增版本差异应优先扩展 `ContentFactory`/`Platform`/`Network`，把纯数据（数值、id、顺序）放回 common，禁止按材质/套装逐个 fork 物品类。
-- 事件型 procedure 目前位于各 target（事件总线和伤害/组件 API 差异过大）；common 只保留与平台无关的定义和 SPI。若要把某段逻辑抽回 common，必须先确认它在所有 target 的 API 下可编译，并同步移除对应 target 实现。
-- `common/src/main/resources` 保持 1.20.1 布局；1.21.1/26.1 的 target 已各自提供迁移后的 recipe/loot_table/advancement/tags/worldgen/items/equipment 资源。common 的旧目录仍会打进这些 jar 但不会被读取；不要在 target 中重复同路径资源，也不要声称数据包已通过运行时验证。
+- 所有 target 的 `commonJava { exclude ... }` 已清空（0 项），当前矩阵见 README。新增版本差异时禁止继续添加 exclude：应扩展 `ContentFactory`/`Platform`/`Network`，把纯数据（数值、id、顺序）放回 common，或把完整实现放进 target；不要按材质/套装逐个 fork 物品类。若确实无法表达，先与维护者讨论调整 SPI，而不是恢复排除清单。
+- 共享玩法规则位于 common 的 `net.mirrorloong.chineseweapons.rules`：`CombatRules`（护甲伤害/仇恨/骑乘拖拽）、`ArmorRules`（套装判定）、`FootmenRules`、`GlaiveRules`、`DaggerAxeRules`、`TangSaberRules`、`FaceGuardRules`、`WeaponRules`、`CastingRules`、`DyeRules`、`GuDuoRules`、`JavelinRules`、`HalberdRules`、`ShieldRules`。特殊物品（骨朵、长矛、戟、立盾）的命中/投掷/放置/修复行为在这些规则里，target 的物品类只保留 loader 基类构造与客户端扩展（`IClientItemExtensions`、`RenderLivingEvent`、26.1 装备组件）。target 的 `procedures/*` 只保留事件订阅、事件数据读取和规则调用；新增行为先判断能否放进 rules，而不是复制到八个 target。
+- 版本/loader 差异（`level()` 与 `level` 字段、`isClientSide`、伤害源构造、冷却、物品耐久、音效、进度、属性、效果、附魔等级、`hasEffect`、`BlockPos.containing`、骑乘拖拽存储、选中槽位、仇恨清理、随机数、实体创建/定位、技能概率）统一通过 `spi.GameplayCompat` 表达，由各 target 实现（`ForgeGameplayCompat`/`NeoForgeGameplayCompat`/`FabricGameplayCompat`）。rules 中禁止反射或运行时版本判断。染料颜色存储（NBT / `DYED_COLOR` / `CUSTOM_DATA`）仍按 target 保留，`DyeRules` 只共享展示逻辑。
+- 配方与自定义包：casting 配方的槽位匹配、pattern/key/main_material 展开、重复配方检测和染料混色在 common 的 `recipes`（`CastingRecipe`、`CastingRecipeJson`、`RecipeDuplicates`、`DyeableArmorCrafting`）；target 的 `WCTRecipe`/`WCTRecipeSer`/`DyeableArmorRecipe`/`DeferredRecipe` 只保留 `Recipe` 接口、codec、序列化器和网络格式适配，1.18.2–1.20.1 的旧 JSON 解码经 `spi.RecipeSupport` 注入。`ShieldActionPacket` 与 `ArmorcastingtableguiSlotMessage` 已移入 common `network`，target 只实现 `Network` 传输；立盾实体/物品通过 `spi.StandingShieldEntity`/`spi.StandingShieldItem` 标记接入，染料读写经 `spi.DyeableArmorSupport` 注入。
+- `common/src/main/resources` 保持 1.20.1 布局，是唯一的权威资源。1.21.1/26.1 的 target 资源由 `scripts/generate-resources.py` 与 `scripts/resource-profiles/*.json` 在构建期生成到 `build/generated/resources/<profile>`（见 README「资源生成管线」）；target 的 `src/main/resources` 只允许 metadata、Mixin/AT 和明确归属 target 的覆盖（26.1 的 `assets/minecraft/models/item/shield*.json`）。禁止手工复制或编辑生成资源；新增格式差异应扩展生成器与 profile。`scripts/resource-golden/*.json` 是迁移前手写树的语义基准，只在确认资源内容有意变化后刷新。common 的旧目录仍会打进这些 jar 但不会被读取；不要声称数据包已通过运行时验证。
 
 ## 架构与修改边界
 
@@ -21,7 +23,8 @@
 - `shared.gradle` 直接将 common 原文件接入 target 源码集。禁止复制源码到 build、依赖 common jar、重复添加 common 源码根或使用 `project(':common')`。
 - 不以运行时版本判断、反射分发或 classpath 同名类覆盖隐藏兼容性问题。每个产物只对应一个 loader 和 Minecraft 版本，不发布 universal jar。
 - 单 target 改动限定在该目标；common 改动需验证所有受影响目标。不得顺手修改其他版本或未经验证统一 API。
-- 共享资源放 common；metadata、Mixin 配置、access widener / transformer 和版本专属资源放 target。同路径资源明确唯一归属，不依赖覆盖顺序。
+- 共享资源放 common；metadata、Mixin 配置、access widener / transformer 和版本专属资源放 target。同路径资源明确唯一归属，不依赖覆盖顺序。现代版本（1.21.1/26.1）的数据包/资源包由 `gradle/target-conventions/generated-resources.gradle` 调用的生成器统一产出，生成目录位于资源源集最前面；不要在两个现代 target 重复维护同一资源。
+- 生成器的权威输入除 common 资源外，还包括 common 的 `ChineseweaponsModItems`/`ChineseweaponsModBlocks`/`ArmorDefinitions`（注册 id、装备材质名与纹理路径、马铠防御值）。修改这些表后必须重新生成并运行四个 profile 的 `checkGeneratedResources`；不能用 reflection 或运行期判断替代生成期映射。
 - 共用模组元数据放根 `gradle.properties`，版本、loader、JDK 和 `debug_*` 放 target 属性。普通本地 jar 放目标 `libs/`，不假定存在传递依赖。
 - 插件和运行配置归 target；通用源码接入、热调试、发布逻辑分别复用 `gradle/target-conventions/shared.gradle`、`hot-debug.gradle`、`publish.gradle`。
 

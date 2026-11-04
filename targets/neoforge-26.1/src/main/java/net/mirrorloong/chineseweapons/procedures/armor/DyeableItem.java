@@ -58,10 +58,7 @@ public interface DyeableItem {
 
     static void addDyeTooltip(ItemStack stack, java.util.function.Consumer<Component> tooltip) {
         if (hasCustomColor(stack)) {
-            int color = getColor(stack);
-            String hexColor = String.format("#%06X", color);
-            tooltip.accept(Component.translatable("text.chineseweapons.color", hexColor)
-                    .withStyle(ChatFormatting.GRAY));
+            tooltip.accept(net.mirrorloong.chineseweapons.rules.DyeRules.tooltipLine(getColor(stack)));
         }
     }
 }

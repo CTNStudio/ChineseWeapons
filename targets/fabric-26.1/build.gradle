@@ -5,18 +5,16 @@ plugins {
 
 apply from: file('../../gradle/target-conventions/shared.gradle')
 
+ext.resourceProfile = '26.1-fabric'
+apply from: file('../../gradle/target-conventions/generated-resources.gradle')
+
 java {
     toolchain.languageVersion = JavaLanguageVersion.of(25)
 }
 
 commonJava {
-    // Only procedures, recipes, network and GUI screens/menus keep target-local forks.
-    // Every other shared content file is version neutral; concrete construction lives in this target.
-    exclude 'net/mirrorloong/chineseweapons/gui/recipe/WeaponsCastingTableScreen.java'
-    exclude 'net/mirrorloong/chineseweapons/recipes/DeferredRecipe.java'
-    exclude 'net/mirrorloong/chineseweapons/recipes/DyeableArmorRecipe.java'
-    exclude 'net/mirrorloong/chineseweapons/recipes/WCTRecipe.java'
-    exclude 'net/mirrorloong/chineseweapons/recipes/WCTRecipeSer.java'
+    // Intentionally empty: no shared source file is excluded. Target-local procedures
+    // are thin event adapters around the shared rules in common/.../rules.
 }
 
 tasks.named('sourcesJar', Jar).configure {

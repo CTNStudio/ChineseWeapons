@@ -1,7 +1,0 @@
-{
-  "parent": "chineseweapons:custom/tang_dynasty_heng_saber",
-  "textures": {
-    "5": "chineseweapons:block/weapon/diamond_tang_dynasty_heng_saber",
-    "particle": "chineseweapons:block/weapon/diamond_tang_dynasty_heng_saber"
-  }
-}

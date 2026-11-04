@@ -11,29 +11,21 @@ import net.minecraft.client.renderer.state.level.CameraRenderState;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.Identifier;
 import net.mirrorloong.chineseweapons.ChineseWeapons;
-import net.mirrorloong.chineseweapons.client.model.ModelSongStandingShield;
+import net.mirrorloong.chineseweapons.client.model.FabricModelFactory;
+import net.mirrorloong.chineseweapons.client.model.SpecEntityModel;
+import net.mirrorloong.chineseweapons.client.render.EntityRenderData;
+import net.mirrorloong.chineseweapons.client.spec.EntityModelSpecs;
 import net.mirrorloong.chineseweapons.entity.SongStandingShieldEntity;
 
 public class SongStandingShieldRenderer
         extends EntityRenderer<SongStandingShieldEntity, SongStandingShieldRenderer.SongStandingShieldRenderState> {
 
-    public static final Identifier TEXTURE =
-            Identifier.fromNamespaceAndPath(ChineseWeapons.MOD_ID, "textures/entity/song_standing_shield.png");
-    public static final Identifier TEXTURE_CRACKED_1 =
-            Identifier.fromNamespaceAndPath(ChineseWeapons.MOD_ID, "textures/entity/song_standing_shield_cracked_1.png");
-    public static final Identifier TEXTURE_CRACKED_2 =
-            Identifier.fromNamespaceAndPath(ChineseWeapons.MOD_ID, "textures/entity/song_standing_shield_cracked_2.png");
-    public static final Identifier TEXTURE_CRACKED_3 =
-            Identifier.fromNamespaceAndPath(ChineseWeapons.MOD_ID, "textures/entity/song_standing_shield_cracked_3.png");
-    public static final Identifier TEXTURE_CRACKED_4 =
-            Identifier.fromNamespaceAndPath(ChineseWeapons.MOD_ID, "textures/entity/song_standing_shield_cracked_4.png");
-
-    private final ModelSongStandingShield<SongStandingShieldEntity> model;
+    private final SpecEntityModel model;
 
     public SongStandingShieldRenderer(EntityRendererProvider.Context ctx) {
         super(ctx);
-        this.model = new ModelSongStandingShield<>(ctx.bakeLayer(ModelSongStandingShield.LAYER_LOCATION));
-        this.shadowRadius = 0.0F;
+        this.model = new SpecEntityModel(FabricModelFactory.INSTANCE.bake(EntityModelSpecs.STANDING_SHIELD));
+        this.shadowRadius = EntityRenderData.SHIELD_SHADOW_RADIUS;
     }
 
     @Override
@@ -50,17 +42,8 @@ public class SongStandingShieldRenderer
     }
 
     private static Identifier getTextureFor(SongStandingShieldEntity shield) {
-        float hp = shield.getHealth();
-        if (hp < 400) {
-            return TEXTURE_CRACKED_4;
-        } else if (hp < 700) {
-            return TEXTURE_CRACKED_3;
-        } else if (hp < 1000) {
-            return TEXTURE_CRACKED_2;
-        } else if (hp < 1300) {
-            return TEXTURE_CRACKED_1;
-        }
-        return TEXTURE;
+        return Identifier.fromNamespaceAndPath(ChineseWeapons.MOD_ID,
+                EntityRenderData.shieldTexturePath(shield.getHealth()));
     }
 
     @Override
@@ -68,8 +51,9 @@ public class SongStandingShieldRenderer
             SubmitNodeCollector collector, CameraRenderState camera) {
         poseStack.pushPose();
         poseStack.mulPose(Axis.YP.rotationDegrees(-state.shieldYaw));
-        poseStack.scale(-1.0F, -1.0F, 1.0F);
-        poseStack.translate(0.0D, -1.5D, 0.0D);
+        poseStack.scale(EntityRenderData.SHIELD_SCALE_X, EntityRenderData.SHIELD_SCALE_Y,
+                EntityRenderData.SHIELD_SCALE_Z);
+        poseStack.translate(0.0D, EntityRenderData.SHIELD_TRANSLATE_Y, 0.0D);
         collector.order(0).submitModel(this.model, state, poseStack, state.texture,
                 state.lightCoords, OverlayTexture.NO_OVERLAY, state.outlineColor, null);
         poseStack.popPose();

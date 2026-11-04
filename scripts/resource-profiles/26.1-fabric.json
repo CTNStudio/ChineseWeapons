@@ -1,0 +1,14 @@
+{
+  "family": "26.1",
+  "loader": "fabric",
+  "output": "targets/fabric-26.1/build/generated/resources/main",
+  "features": {
+    "armorRepairTags": false,
+    "dyeableArmorRecipe": true,
+    "humanoidBabyLayer": true,
+    "lootPredicateComponents": true,
+    "namespacedPredicateType": false,
+    "netheriteIgnoresLavaTag": false,
+    "shieldBaseModel": "item"
+  }
+}

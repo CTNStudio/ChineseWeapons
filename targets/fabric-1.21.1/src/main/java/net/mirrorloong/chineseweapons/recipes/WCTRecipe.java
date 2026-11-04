@@ -13,7 +13,6 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
@@ -36,8 +35,8 @@ public class WCTRecipe implements Recipe<WCTRecipeInput> {
 
     public static final StreamCodec<RegistryFriendlyByteBuf, WCTRecipe> STREAM_CODEC = StreamCodec.of(
             (buffer, recipe) -> {
-                buffer.writeVarInt(recipe.input.size());
-                for (Ingredient ingredient : recipe.input) {
+                buffer.writeVarInt(recipe.recipe.rawIngredients().size());
+                for (Ingredient ingredient : recipe.recipe.rawIngredients()) {
                     Ingredient.CONTENTS_STREAM_CODEC.encode(buffer, ingredient);
                 }
                 ItemStack.STREAM_CODEC.encode(buffer, recipe.output);
@@ -54,53 +53,33 @@ public class WCTRecipe implements Recipe<WCTRecipeInput> {
     private final List<String> pattern;
     private final Map<String, Ingredient> key;
     private final Ingredient mainMaterial;
-    private final NonNullList<Ingredient> input;
     private final ItemStack output;
+    private final CastingRecipe recipe;
 
     public WCTRecipe(List<String> pattern, Map<String, Ingredient> key, Ingredient mainMaterial, ItemStack output) {
         this.pattern = pattern;
         this.key = key;
         this.mainMaterial = mainMaterial;
         this.output = output;
-        this.input = buildIngredients(pattern, key, mainMaterial);
+        this.recipe = new CastingRecipe(CastingRecipe.paddedIngredients(pattern, key, mainMaterial), output);
     }
 
     private WCTRecipe(NonNullList<Ingredient> input, ItemStack output) {
         this.pattern = List.of();
         this.key = Map.of();
         this.mainMaterial = Ingredient.EMPTY;
-        this.input = input;
         this.output = output;
-    }
-
-    private static NonNullList<Ingredient> buildIngredients(List<String> pattern, Map<String, Ingredient> key,
-            Ingredient mainMaterial) {
-        NonNullList<Ingredient> ingredients = NonNullList.create();
-        for (int row = 0; row < 3; row++) {
-            String line = row < pattern.size() ? pattern.get(row) : "   ";
-            for (int column = 0; column < 3; column++) {
-                char symbol = column < line.length() ? line.charAt(column) : ' ';
-                Ingredient ingredient = key.get(String.valueOf(symbol));
-                ingredients.add(ingredient == null ? Ingredient.of(Items.AIR) : ingredient);
-            }
-        }
-        ingredients.add(mainMaterial);
-        return ingredients;
+        this.recipe = new CastingRecipe(input, output);
     }
 
     @Override
     public boolean matches(WCTRecipeInput inv, Level level) {
-        for (int i = 0; i < 10; ++i) {
-            if (!input.get(i).test(inv.getItem(i))) {
-                return false;
-            }
-        }
-        return true;
+        return recipe.matches(inv::getItem);
     }
 
     @Override
     public ItemStack assemble(WCTRecipeInput inv, HolderLookup.Provider registries) {
-        return output.copy();
+        return recipe.assemble();
     }
 
     @Override
@@ -110,16 +89,16 @@ public class WCTRecipe implements Recipe<WCTRecipeInput> {
 
     @Override
     public ItemStack getResultItem(HolderLookup.Provider registries) {
-        return output.copy();
+        return recipe.result();
     }
 
     @Override
     public NonNullList<Ingredient> getIngredients() {
-        return input;
+        return recipe.ingredients();
     }
 
     public ItemStack getResultItem2() {
-        return output.copy();
+        return recipe.result();
     }
 
     @Override

@@ -10,7 +10,10 @@ import net.minecraft.client.renderer.entity.state.EntityRenderState;
 import net.minecraft.client.renderer.state.level.CameraRenderState;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.Identifier;
-import net.mirrorloong.chineseweapons.client.model.ModelSongJavelinModel;
+import net.mirrorloong.chineseweapons.client.model.FabricModelFactory;
+import net.mirrorloong.chineseweapons.client.model.SpecEntityModel;
+import net.mirrorloong.chineseweapons.client.render.EntityRenderData;
+import net.mirrorloong.chineseweapons.client.spec.EntityModelSpecs;
 import net.mirrorloong.chineseweapons.entity.SongJavelinProjectile;
 
 /**
@@ -21,11 +24,11 @@ import net.mirrorloong.chineseweapons.entity.SongJavelinProjectile;
 public class SongJavelinRenderer
         extends EntityRenderer<SongJavelinProjectile, SongJavelinRenderer.SongJavelinRenderState> {
 
-    private final ModelSongJavelinModel<SongJavelinProjectile> model;
+    private final SpecEntityModel model;
 
     public SongJavelinRenderer(EntityRendererProvider.Context context) {
         super(context);
-        this.model = new ModelSongJavelinModel<>(context.bakeLayer(ModelSongJavelinModel.LAYER_LOCATION));
+        this.model = new SpecEntityModel(FabricModelFactory.INSTANCE.bake(EntityModelSpecs.JAVELIN));
     }
 
     @Override
@@ -45,8 +48,10 @@ public class SongJavelinRenderer
     public void submit(SongJavelinRenderState state, PoseStack poseStack,
             SubmitNodeCollector collector, CameraRenderState camera) {
         poseStack.pushPose();
-        poseStack.mulPose(Axis.YP.rotationDegrees(state.yRot - 90.0F));
-        poseStack.mulPose(Axis.ZP.rotationDegrees(state.xRot + 90.0F));
+        poseStack.mulPose(Axis.YP.rotationDegrees(state.yRot + EntityRenderData.JAVELIN_YAW_OFFSET));
+        poseStack.mulPose(Axis.ZP.rotationDegrees(state.xRot + EntityRenderData.JAVELIN_PITCH_OFFSET));
+        poseStack.scale(EntityRenderData.JAVELIN_SCALE, EntityRenderData.JAVELIN_SCALE,
+                EntityRenderData.JAVELIN_SCALE);
         collector.order(0).submitModel(this.model, state, poseStack, state.texture,
                 state.lightCoords, OverlayTexture.NO_OVERLAY, state.outlineColor, null);
         poseStack.popPose();

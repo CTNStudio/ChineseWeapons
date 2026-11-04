@@ -1,0 +1,13 @@
+{
+  "family": "1.21.1",
+  "loader": "neoforge",
+  "output": "targets/neoforge-1.21.1/build/generated/resources/main",
+  "features": {
+    "biomeModifier": "neoforge",
+    "conditionalRecipe": "neoforge",
+    "curiosTag": true,
+    "dyeableArmorRecipe": true,
+    "netheriteIgnoresLavaTag": true,
+    "worldgenStoneTag": "c:stones"
+  }
+}

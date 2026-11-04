@@ -17,20 +17,11 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.mirrorloong.chineseweapons.ChineseWeapons;
-import net.mirrorloong.chineseweapons.client.model.Modelface_guard;
-import net.mirrorloong.chineseweapons.client.model.ModelSongJavelinModel;
-import net.mirrorloong.chineseweapons.client.model.ModelSongStandingShield;
-import net.mirrorloong.chineseweapons.client.model.Modelbohai_helmet;
-import net.mirrorloong.chineseweapons.client.model.Modelblack_chui_armor;
-import net.mirrorloong.chineseweapons.client.model.Modelearly_tang_dynasty_ming_guang_armor;
-import net.mirrorloong.chineseweapons.client.model.Modelfine_scale_armor;
-import net.mirrorloong.chineseweapons.client.model.Modelfootmen_armor;
-import net.mirrorloong.chineseweapons.client.model.Modellate_tang_dynasty_ming_guang_armor;
-import net.mirrorloong.chineseweapons.client.model.Modelmiddle_tang_dynasty_ming_guang_armor;
-import net.mirrorloong.chineseweapons.client.model.Modelmountain_character_armor;
-import net.mirrorloong.chineseweapons.client.model.Modelsong_dynasty_infantry_armor;
-import net.mirrorloong.chineseweapons.client.model.Modelsuanni_helmet;
-import net.mirrorloong.chineseweapons.client.model.Modeltang_dynasty_infantry_armor;
+import net.mirrorloong.chineseweapons.client.model.FabricModelFactory;
+import net.mirrorloong.chineseweapons.client.spec.ArmorModelSpec;
+import net.mirrorloong.chineseweapons.client.spec.ArmorModelSpecs;
+import net.mirrorloong.chineseweapons.client.spec.EntityModelSpecs;
+import net.mirrorloong.chineseweapons.client.spec.ModelSpec;
 import net.mirrorloong.chineseweapons.fabric.client.FabricArmorRenderers;
 import net.mirrorloong.chineseweapons.gui.recipe.DeferredGui;
 import net.mirrorloong.chineseweapons.gui.recipe.WeaponsCastingTableScreen;
@@ -76,34 +67,15 @@ public final class FabricClientSetup implements ClientModInitializer {
     }
 
     private static void registerModelLayers() {
-        EntityModelLayerRegistry.registerModelLayer(Modelmountain_character_armor.LAYER_LOCATION,
-                Modelmountain_character_armor::createBodyLayer);
-        EntityModelLayerRegistry.registerModelLayer(Modelearly_tang_dynasty_ming_guang_armor.LAYER_LOCATION,
-                Modelearly_tang_dynasty_ming_guang_armor::createBodyLayer);
-        EntityModelLayerRegistry.registerModelLayer(Modelmiddle_tang_dynasty_ming_guang_armor.LAYER_LOCATION,
-                Modelmiddle_tang_dynasty_ming_guang_armor::createBodyLayer);
-        EntityModelLayerRegistry.registerModelLayer(Modellate_tang_dynasty_ming_guang_armor.LAYER_LOCATION,
-                Modellate_tang_dynasty_ming_guang_armor::createBodyLayer);
-        EntityModelLayerRegistry.registerModelLayer(Modelfootmen_armor.LAYER_LOCATION,
-                Modelfootmen_armor::createBodyLayer);
-        EntityModelLayerRegistry.registerModelLayer(Modelblack_chui_armor.LAYER_LOCATION,
-                Modelblack_chui_armor::createBodyLayer);
-        EntityModelLayerRegistry.registerModelLayer(Modeltang_dynasty_infantry_armor.LAYER_LOCATION,
-                Modeltang_dynasty_infantry_armor::createBodyLayer);
-        EntityModelLayerRegistry.registerModelLayer(Modelfine_scale_armor.LAYER_LOCATION,
-                Modelfine_scale_armor::createBodyLayer);
-        EntityModelLayerRegistry.registerModelLayer(Modelsuanni_helmet.LAYER_LOCATION,
-                Modelsuanni_helmet::createBodyLayer);
-        EntityModelLayerRegistry.registerModelLayer(Modelbohai_helmet.LAYER_LOCATION,
-                Modelbohai_helmet::createBodyLayer);
-        EntityModelLayerRegistry.registerModelLayer(ModelSongJavelinModel.LAYER_LOCATION,
-                ModelSongJavelinModel::createBodyLayer);
-        EntityModelLayerRegistry.registerModelLayer(ModelSongStandingShield.LAYER_LOCATION,
-                ModelSongStandingShield::createBodyLayer);
-        EntityModelLayerRegistry.registerModelLayer(Modelsong_dynasty_infantry_armor.LAYER_LOCATION,
-                Modelsong_dynasty_infantry_armor::createBodyLayer);
-        EntityModelLayerRegistry.registerModelLayer(Modelface_guard.LAYER_LOCATION,
-                Modelface_guard::createBodyLayer);
+        FabricModelFactory factory = FabricModelFactory.INSTANCE;
+        for (ArmorModelSpec armour : ArmorModelSpecs.all()) {
+            EntityModelLayerRegistry.registerModelLayer(factory.location(armour.model()),
+                    () -> factory.layer(armour.model()));
+        }
+        for (ModelSpec entity : EntityModelSpecs.all()) {
+            EntityModelLayerRegistry.registerModelLayer(factory.location(entity),
+                    () -> factory.layer(entity));
+        }
     }
 
     private static void registerItemProperties() {

@@ -27,9 +27,8 @@ loom {
 }
 
 commonJava {
-    // Only procedures, recipes, network and GUI screens/menus keep target-local forks.
-    // Every other shared content file is version neutral; concrete construction lives in this target.
-    exclude 'net/mirrorloong/chineseweapons/recipes/WCTRecipeSer.java'
+    // Intentionally empty: no shared source file is excluded. Target-local procedures
+    // are thin event adapters around the shared rules in common/.../rules.
 }
 
 repositories {

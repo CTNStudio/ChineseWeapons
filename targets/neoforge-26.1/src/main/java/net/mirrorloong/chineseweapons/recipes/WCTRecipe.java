@@ -2,14 +2,6 @@ package net.mirrorloong.chineseweapons.recipes;
 
 import java.util.List;
 
-import com.mojang.serialization.Codec;
-import com.mojang.serialization.MapCodec;
-import com.mojang.serialization.codecs.RecordCodecBuilder;
-
-import net.minecraft.network.RegistryFriendlyByteBuf;
-import net.minecraft.network.codec.ByteBufCodecs;
-import net.minecraft.network.codec.StreamCodec;
-import net.minecraft.util.ExtraCodecs;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -20,34 +12,27 @@ import net.minecraft.world.item.crafting.RecipeBookCategories;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
-import net.mirrorloong.chineseweapons.init.ChineseweaponsModItems;
 
 /**
  * Casting table recipe. 26.1 recipes are codec driven, so the legacy
  * pattern/key/main_material JSON is parsed through the codec in
- * {@link WCTRecipeSer} instead of a hand written serializer.
+ * {@link WCTRecipeSer}; slot matching and ingredient layout come from the
+ * shared {@link CastingRecipe}.
  */
 public class WCTRecipe implements Recipe<WCTRecipeInput> {
     private final List<Ingredient> input;
     private final ItemStackTemplate result;
+    private final CastingRecipe recipe;
 
     public WCTRecipe(List<Ingredient> input, ItemStackTemplate result) {
         this.input = input;
         this.result = result;
+        this.recipe = new CastingRecipe(input, ItemStack.EMPTY, true);
     }
 
     @Override
     public boolean matches(WCTRecipeInput inv, Level level) {
-        for (int i = 0; i < 10; ++i) {
-            Ingredient ingredient = i < input.size() ? input.get(i) : null;
-            if (ingredient == null) {
-                continue;
-            }
-            if (!ingredient.test(inv.getItem(i))) {
-                return false;
-            }
-        }
-        return true;
+        return recipe.matches(inv::getItem);
     }
 
     @Override

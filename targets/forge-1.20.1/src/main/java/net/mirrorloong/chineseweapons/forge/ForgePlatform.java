@@ -11,9 +11,12 @@ import net.minecraftforge.network.NetworkHooks;
 import net.mirrorloong.chineseweapons.ChineseWeapons;
 import net.mirrorloong.chineseweapons.gui.recipe.DeferredGui;
 import net.mirrorloong.chineseweapons.gui.recipe.WeaponsCastingTableTypeGuiMenu;
+import net.mirrorloong.chineseweapons.recipes.RecipeJsonSupport;
 import net.mirrorloong.chineseweapons.spi.ContentFactory;
+import net.mirrorloong.chineseweapons.spi.GameplayCompat;
 import net.mirrorloong.chineseweapons.spi.Network;
 import net.mirrorloong.chineseweapons.spi.Platform;
+import net.mirrorloong.chineseweapons.spi.RecipeSupport;
 import net.mirrorloong.chineseweapons.spi.Registration;
 
 public final class ForgePlatform implements Platform {
@@ -21,6 +24,7 @@ public final class ForgePlatform implements Platform {
     private final ForgeRegistration registration = new ForgeRegistration();
     private final ForgeNetwork network = new ForgeNetwork();
     private final ForgeContentFactory content = new ForgeContentFactory();
+    private final ForgeGameplayCompat gameplay = new ForgeGameplayCompat();
 
     public ForgePlatform(IEventBus modBus) {
         this.modBus = modBus;
@@ -39,6 +43,16 @@ public final class ForgePlatform implements Platform {
     @Override
     public ContentFactory content() {
         return content;
+    }
+
+    @Override
+    public GameplayCompat gameplay() {
+        return gameplay;
+    }
+
+    @Override
+    public RecipeSupport recipes() {
+        return new RecipeJsonSupport();
     }
 
     @Override

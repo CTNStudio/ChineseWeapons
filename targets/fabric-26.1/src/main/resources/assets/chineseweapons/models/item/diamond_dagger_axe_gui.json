@@ -1,6 +1,0 @@
-{
-  "parent": "minecraft:item/generated",
-  "textures": {
-    "layer0": "chineseweapons:item/mini_diamond_dagger_axe"
-  }
-}

@@ -1,19 +1,17 @@
 package net.mirrorloong.chineseweapons.item;
 
-import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.*;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.ShieldItem;
 import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.phys.*;
-import net.mirrorloong.chineseweapons.entity.SongStandingShieldEntity;
-import net.mirrorloong.chineseweapons.init.ChineseweaponsModEntities;
+import net.mirrorloong.chineseweapons.spi.StandingShieldItem;
 
-
-public class SongStandingShield extends ShieldItem {
+public class SongStandingShield extends ShieldItem implements StandingShieldItem {
 
     public SongStandingShield() {
         super(new Item.Properties().durability(1670));
@@ -34,33 +32,5 @@ public class SongStandingShield extends ShieldItem {
     @Override
     public int getUseDuration(ItemStack stack) {
         return 72000;
-    }
-
-    public static void placeShield(Player player, ItemStack stack) {
-        Level level = player.level;
-        if (level.isClientSide) return;
-
-        Vec3 eye = player.getEyePosition();
-        Vec3 end = eye.add(player.getLookAngle().scale(5));
-        BlockHitResult hit = level.clip(new ClipContext(eye, end,
-                ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, player));
-        if (hit.getType() == HitResult.Type.MISS) return;
-
-        BlockPos pos = new BlockPos(hit.getLocation());
-        if (!level.mayInteract(player, pos)) return;
-
-        SongStandingShieldEntity entity = ChineseweaponsModEntities.<SongStandingShieldEntity>type(ChineseweaponsModEntities.STANDING_SHIELD).create(level);
-        if (entity == null) return;
-
-        float yaw = player.getYRot() + 180.0F;
-
-        Vec3 spawn = hit.getLocation();
-        entity.moveTo(spawn.x, spawn.y, spawn.z, yaw, 0);
-        entity.setShieldYaw(yaw);
-        entity.setStoredItem(stack.copy());
-        entity.setHealth(stack.getMaxDamage() - stack.getDamageValue());
-        level.addFreshEntity(entity);
-
-        stack.shrink(1);
     }
 }

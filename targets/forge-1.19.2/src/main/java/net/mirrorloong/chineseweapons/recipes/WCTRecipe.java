@@ -10,30 +10,27 @@ import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 
-
 public class WCTRecipe implements Recipe<Container> {
     private final ResourceLocation id;
-    private final NonNullList<Ingredient> input;
-    private final ItemStack output;
+    private final CastingRecipe recipe;
 
     public WCTRecipe(ResourceLocation id, NonNullList<Ingredient> input, ItemStack output) {
-        this.id = id;
-        this.input = input;
-        this.output = output;
+        this(id, new CastingRecipe(input, output));
     }
+
+    public WCTRecipe(ResourceLocation id, CastingRecipe recipe) {
+        this.id = id;
+        this.recipe = recipe;
+    }
+
     @Override
     public boolean matches(Container inv, Level level) {
-        for (int i = 0; i < 10; ++i) {
-            if (!input.get(i).test(inv.getItem(i))) {
-                return false;
-            }
-        }
-        return true;
+        return recipe.matches(inv::getItem);
     }
 
     @Override
     public ItemStack assemble(Container inv) {
-        return output.copy();
+        return recipe.assemble();
     }
 
     @Override
@@ -43,15 +40,18 @@ public class WCTRecipe implements Recipe<Container> {
 
     @Override
     public ItemStack getResultItem() {
-        return output.copy();
+        return recipe.result();
     }
+
     @Override
-    public NonNullList<Ingredient> getIngredients(){
-        return input;
+    public NonNullList<Ingredient> getIngredients() {
+        return recipe.ingredients();
     }
-    public ItemStack getResultItem2(){
-        return output.copy();
+
+    public ItemStack getResultItem2() {
+        return recipe.result();
     }
+
     @Override
     public ResourceLocation getId() {
         return id;

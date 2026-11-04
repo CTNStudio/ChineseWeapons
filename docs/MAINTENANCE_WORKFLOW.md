@@ -38,9 +38,9 @@
 
 - 以运行时 loader/version 判断、反射分发或同名 class 覆盖来伪装兼容不同 target。
 - 某个 target 专属的资源路径。
-- 为掩盖某个 target 的编译错误而加入的抽象泄漏；正确做法是在该 target 的 `commonJava` 中 `exclude` 对应文件。
+- 为掩盖某个 target 的编译错误而加入的抽象泄漏。
 
-版本差异通过 target 的 `commonJava` `exclude` 登记：某个 common 文件在该 target 上有确证差异时，在该 target 的 `commonJava` 里 `exclude '<路径>'`，并把该 target 自己的实现放进 target。
+版本差异通过 `spi.GameplayCompat` 登记：`level()`/`level` 字段、`isClientSide`、伤害源构造、冷却、物品耐久、音效、进度、属性、效果、选中槽位、仇恨清理和随机数等 API 差异由各 target 的 `ForgeGameplayCompat`/`NeoForgeGameplayCompat`/`FabricGameplayCompat` 实现。共享规则放在 `common/.../rules`（`CombatRules`、`ArmorRules`、`FootmenRules`、`GlaiveRules`、`DaggerAxeRules`、`TangSaberRules`、`FaceGuardRules`、`WeaponRules`、`CastingRules`、`DyeRules`），只依赖版本中立类型与 `GameplayCompat`；target 的 `procedures/*` 仅保留事件订阅、事件数据读取和规则调用。所有 target 的 `commonJava` exclude 保持为空。
 
 ### target
 
@@ -48,8 +48,10 @@
 
 - 入口、注册、事件、网络和生命周期代码。
 - Minecraft API 调用、Mixin、accessor、渲染后端和 client-only 代码。
-- metadata、资源、数据生成和版本范围。
+- metadata、资源覆盖（1.21.1/26.1 的数据/资源包由 common 经生成器产出）和版本范围。
 - JDK、Gradle wrapper、加载器和 mappings 配置。
+
+1.21.1/26.1 的 `recipe`、`loot_table`、`advancement`、`tags`、`worldgen`、`assets/<ns>/items` 与 `equipment` 由 `scripts/generate-resources.py` 在构建期生成，target 源码树只保留 metadata 与明确归属 target 的覆盖。不要把手写或生成后的副本提交回 target；格式差异应扩展生成器与 `scripts/resource-profiles/*.json`。
 
 不要把 target 专属类以同一全限定名复制到 `common`，也不要依赖 classpath 顺序覆盖 shared class。
 

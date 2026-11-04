@@ -280,10 +280,7 @@ public interface DyeableItem {
 
     static void addDyeTooltip(ItemStack stack, List<Component> tooltip) {
         if (hasCustomColor(stack)) {
-            int color = getColor(stack);
-            String hexColor = String.format("#%06X", color);
-            tooltip.add(new TranslatableComponent("text.chineseweapons.color", hexColor)
-                    .withStyle(ChatFormatting.GRAY));
+            tooltip.add(net.mirrorloong.chineseweapons.rules.DyeRules.tooltipLine(getColor(stack)));
         }
     }
 }

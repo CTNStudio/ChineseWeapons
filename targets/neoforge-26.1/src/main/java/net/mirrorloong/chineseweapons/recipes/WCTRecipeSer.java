@@ -55,18 +55,10 @@ public final class WCTRecipeSer {
 
     private static WCTRecipe create(List<String> pattern, Map<String, Ingredient> key, Ingredient mainMaterial,
             ItemStackTemplate result) {
-        List<Ingredient> ingredients = new ArrayList<>(10);
-        for (int row = 0; row < Math.min(3, pattern.size()); row++) {
-            String line = pattern.get(row);
-            for (int column = 0; column < 3; column++) {
-                String symbol = column < line.length() ? String.valueOf(line.charAt(column)) : " ";
-                ingredients.add(key.get(symbol));
-            }
-        }
+        List<Ingredient> ingredients = CastingRecipe.sparseIngredients(pattern, key, mainMaterial);
         if (pattern.size() > 3) {
             ChineseWeapons.LOGGER.warn("Casting recipe pattern has more than three rows; extra rows ignored");
         }
-        ingredients.add(mainMaterial);
         return new WCTRecipe(ingredients, result);
     }
 }

@@ -26,7 +26,8 @@ import net.minecraft.world.level.Level;
  * Casting table recipe. 26.1 recipes are codec driven: the serializer is a
  * {@link RecipeSerializer} record holding a {@link MapCodec} and a
  * {@link StreamCodec}, and the recipe must expose placement and recipe-book
- * metadata.
+ * metadata. Slot matching and ingredient layout come from the shared
+ * {@link CastingRecipe}.
  */
 public class WCTRecipe implements Recipe<WCTRecipeInput> {
     public static final MapCodec<WCTRecipe> MAP_CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
@@ -47,13 +48,16 @@ public class WCTRecipe implements Recipe<WCTRecipeInput> {
     private final Ingredient mainMaterial;
     private final NonNullList<Ingredient> input;
     private final ItemStack output;
+    private final CastingRecipe recipe;
 
     public WCTRecipe(List<String> pattern, Map<String, Ingredient> key, Ingredient mainMaterial, ItemStack output) {
         this.pattern = List.copyOf(pattern);
         this.key = Map.copyOf(key);
         this.mainMaterial = mainMaterial;
         this.output = output;
-        this.input = buildIngredients(this.pattern, this.key, mainMaterial);
+        this.input = NonNullList.create();
+        this.input.addAll(CastingRecipe.variableWidthIngredients(this.pattern, this.key, mainMaterial));
+        this.recipe = new CastingRecipe(input, output);
     }
 
     public WCTRecipe(List<Ingredient> ingredients, ItemStack output) {
@@ -63,19 +67,7 @@ public class WCTRecipe implements Recipe<WCTRecipeInput> {
         this.input = NonNullList.create();
         this.input.addAll(ingredients);
         this.output = output;
-    }
-
-    private static NonNullList<Ingredient> buildIngredients(List<String> pattern, Map<String, Ingredient> key,
-            Ingredient mainMaterial) {
-        NonNullList<Ingredient> ingredients = NonNullList.create();
-        for (String row : pattern) {
-            for (int i = 0; i < row.length(); i++) {
-                String symbol = String.valueOf(row.charAt(i));
-                ingredients.add(key.getOrDefault(symbol, Ingredient.of(net.minecraft.world.item.Items.AIR)));
-            }
-        }
-        ingredients.add(mainMaterial);
-        return ingredients;
+        this.recipe = new CastingRecipe(input, output);
     }
 
     public List<String> pattern() {
@@ -100,17 +92,12 @@ public class WCTRecipe implements Recipe<WCTRecipeInput> {
 
     @Override
     public boolean matches(WCTRecipeInput inv, Level level) {
-        for (int i = 0; i < 10; ++i) {
-            if (i >= input.size() || !input.get(i).test(inv.getItem(i))) {
-                return false;
-            }
-        }
-        return true;
+        return recipe.matches(inv::getItem);
     }
 
     @Override
     public ItemStack assemble(WCTRecipeInput inv) {
-        return output.copy();
+        return recipe.assemble();
     }
 
     @Override
@@ -144,6 +131,6 @@ public class WCTRecipe implements Recipe<WCTRecipeInput> {
     }
 
     public ItemStack getResultItem2() {
-        return output.copy();
+        return recipe.result();
     }
 }

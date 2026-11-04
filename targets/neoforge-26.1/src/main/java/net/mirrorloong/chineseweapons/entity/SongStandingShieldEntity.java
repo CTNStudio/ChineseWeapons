@@ -1,8 +1,5 @@
 package net.mirrorloong.chineseweapons.entity;
 
-import net.minecraft.ChatFormatting;
-import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -19,15 +16,17 @@ import net.minecraft.world.entity.MoverType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.throwableitemprojectile.AbstractThrownPotion;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.event.level.ExplosionEvent;
+import net.mirrorloong.chineseweapons.ChineseWeapons;
 import net.mirrorloong.chineseweapons.compat.WeaponScriptSettings;
-import net.mirrorloong.chineseweapons.item.EnchantmentLevels;
+import net.mirrorloong.chineseweapons.rules.ShieldRules;
+import net.mirrorloong.chineseweapons.spi.GameplayCompat;
+import net.mirrorloong.chineseweapons.spi.StandingShieldEntity;
 
-public class SongStandingShieldEntity extends Entity {
+public class SongStandingShieldEntity extends Entity implements StandingShieldEntity {
 
     private static final EntityDataAccessor<Float> DATA_HP =
             SynchedEntityData.defineId(SongStandingShieldEntity.class, EntityDataSerializers.FLOAT);
@@ -35,10 +34,6 @@ public class SongStandingShieldEntity extends Entity {
             SynchedEntityData.defineId(SongStandingShieldEntity.class, EntityDataSerializers.FLOAT);
 
     private ItemStack storedItem = ItemStack.EMPTY;
-
-    private int rotateTicks = 0;
-    private float rotateDelta = 0;
-    private float rotateStart = 0;
 
     public SongStandingShieldEntity(EntityType<?> type, Level level) {
         super(type, level);
@@ -59,6 +54,23 @@ public class SongStandingShieldEntity extends Entity {
         return this.storedItem.copy();
     }
 
+    @Override
+    public ItemStack storedItem() {
+        return getStoredItem();
+    }
+
+    @Override
+    public float shieldHealth() {
+        return getHealth();
+    }
+
+    @Override
+    public void storeShield(ItemStack stack, float health, float yaw) {
+        setShieldYaw(yaw);
+        setStoredItem(stack);
+        setHealth(health);
+    }
+
     public float getHealth() { return this.entityData.get(DATA_HP); }
 
     boolean setHealthLogic = WeaponScriptSettings.getLogicChance(
@@ -66,33 +78,13 @@ public class SongStandingShieldEntity extends Entity {
             WeaponScriptSettings.Logic.SONGSTANDINGSHIELD_ENDURANCEDISPLAY, true);
 
     public AABB getSafeZone() {
-        Vec3 shieldPos = this.position();
-        float yaw = this.getShieldYaw();
-        double fx = -Math.sin(Math.toRadians(yaw));
-        double fz =  Math.cos(Math.toRadians(yaw));
-        Vec3 forward = new Vec3(fx, 0, fz).normalize();
-
-        double yBehindCenter = WeaponScriptSettings.getArmorThreshold(
-                null,
-                WeaponScriptSettings.ALLWeapon.SONGSTANDINGSHIELD_BEHINDCENTER, 4.0);
-
-        Vec3 frontCenter = shieldPos.add(forward.scale(yBehindCenter));
-        return new AABB(
-                frontCenter.x - 4, frontCenter.y - 4, frontCenter.z - 4,
-                frontCenter.x + 4, frontCenter.y + 4, frontCenter.z + 4
-        );
+        return ShieldRules.safeZone(this.position(), this.getShieldYaw(), behindCenter());
     }
 
     public void setHealth(float hp) {
         this.entityData.set(DATA_HP, hp);
         if (setHealthLogic) {
-
-            MutableComponent name = Component.translatable("entity.standing_shield.hp", (int) hp);
-            if (hp <= 100f) {
-                name = name.withStyle(ChatFormatting.RED);
-            }
-
-            this.setCustomName(name);
+            this.setCustomName(ShieldRules.healthName(hp));
         }
     }
 
@@ -117,24 +109,12 @@ public class SongStandingShieldEntity extends Entity {
 
         // 蹲下 + 右键：执行旋转
         if (player.isShiftKeyDown()) {
-            Vec3 selfPos = this.position();
-            float yaw = this.getShieldYaw();
-
-            double fx = -Math.sin(Math.toRadians(yaw));
-            double fz =  Math.cos(Math.toRadians(yaw));
-
-            double rx = -fz;
-            double rz =  fx;
-
-            Vec3 toPlayer = player.position().subtract(selfPos);
-            double dot = toPlayer.x * rx + toPlayer.z * rz;
-
             double ANGLE = WeaponScriptSettings.getArmorThreshold(
                     null,
                     WeaponScriptSettings.ALLWeapon.SONGSTANDINGSHIELD_ANGLE, 15f);
 
-            float newYaw = (float) (yaw + (dot > 0 ? -ANGLE : ANGLE));
-
+            float newYaw = ShieldRules.rotatedYaw(this.position(), this.getShieldYaw(),
+                    player.position(), ANGLE);
             this.setShieldYaw(newYaw);
 
             this.level().playSound(null, this.getX(), this.getY(), this.getZ(),
@@ -147,21 +127,12 @@ public class SongStandingShieldEntity extends Entity {
             ItemStack recovered = getStoredItem();
             float hp = this.getHealth();
 
-            float maxHp = recovered.getMaxDamage();
-
-            if (maxHp <= 0) {
+            float newHp = ShieldRules.repairedHealth(recovered, hp);
+            if (newHp < 0) {
                 return InteractionResult.PASS;
             }
-
-            if (hp >= maxHp) {
+            if (newHp == hp) {
                 return InteractionResult.CONSUME;
-            }
-
-            float newHp;
-            if (hp < 50f) {
-                newHp = maxHp;
-            } else {
-                newHp = Math.min(hp + 50f, maxHp);
             }
 
             this.setHealth(newHp);
@@ -193,12 +164,11 @@ public class SongStandingShieldEntity extends Entity {
         int unbreaking = 0;
         ItemStack stored = this.getStoredItem();
         if (!stored.isEmpty()) {
-            unbreaking = EnchantmentLevels.level(this.level(), stored, Enchantments.UNBREAKING);
+            unbreaking = ChineseWeapons.gameplay()
+                    .enchantmentLevel(this.level(), stored, GameplayCompat.Enchantment.UNBREAKING);
         }
 
-        float actualDamage = amount / (unbreaking + 1);
-
-        float newHp = this.getHealth() - actualDamage;
+        float newHp = ShieldRules.damagedHealth(this.getHealth(), amount, unbreaking);
         if (newHp <= 0) {
             this.level().playSound(null, this.getX(), this.getY(), this.getZ(),
                     SoundEvents.SHIELD_BREAK, this.getSoundSource(), 1.0F, 1.0F);
@@ -228,7 +198,6 @@ public class SongStandingShieldEntity extends Entity {
         super.tick();
 
         if (this.level().isClientSide()) {
-            zhuannimation();
             return;
         }
 
@@ -248,25 +217,6 @@ public class SongStandingShieldEntity extends Entity {
         }
 
         this.setCustomNameVisible(true);
-
-        zhuannimation();
-    }
-
-
-    private void zhuannimation() {
-        if (rotateDelta != 0) {
-            if (rotateTicks % 4 == 0) {
-                float progress = rotateTicks / 4f;
-                if (progress > 15f) {
-                    this.setShieldYaw(rotateStart + Math.signum(rotateDelta) * 15f);
-                    rotateDelta = 0;
-                    rotateTicks = 0;
-                } else {
-                    this.setShieldYaw(rotateStart + Math.signum(rotateDelta) * progress);
-                }
-            }
-            rotateTicks++;
-        }
     }
 
     public void handleExplosion(ExplosionEvent.Detonate event) {
@@ -274,28 +224,19 @@ public class SongStandingShieldEntity extends Entity {
 
         Vec3 shieldPos = this.position();
         Vec3 expCenter = event.getExplosion().center();
+        if (!ShieldRules.isInFront(shieldPos, this.getShieldYaw(), expCenter)) {
+            return;
+        }
 
-        float yaw = this.getShieldYaw();
-        double fx = -Math.sin(Math.toRadians(yaw));
-        double fz =  Math.cos(Math.toRadians(yaw));
-        Vec3 forward = new Vec3(fx, 0, fz).normalize();
-
-        Vec3 toExplosion = expCenter.subtract(shieldPos);
-        if (toExplosion.lengthSqr() < 1.0E-6) return;
-        if (toExplosion.normalize().dot(forward) <= 0) return;
-
-        double YBehindCenter = WeaponScriptSettings.getArmorThreshold(
-                null,
-                WeaponScriptSettings.ALLWeapon.SONGSTANDINGSHIELD_BEHINDCENTER, 4.0);
-
-        Vec3 behindCenter = shieldPos.subtract(forward.scale(YBehindCenter));
-        AABB safeZone = new AABB(
-                behindCenter.x - 4, behindCenter.y - 4, behindCenter.z - 4,
-                behindCenter.x + 4, behindCenter.y + 4, behindCenter.z + 4
-        );
-
+        AABB safeZone = ShieldRules.explosionSafeZone(shieldPos, this.getShieldYaw(), behindCenter());
         event.getAffectedBlocks().removeIf(pos -> safeZone.contains(Vec3.atCenterOf(pos)));
         event.getAffectedEntities().removeIf(ent -> safeZone.contains(ent.position()));
+    }
+
+    private static double behindCenter() {
+        return WeaponScriptSettings.getArmorThreshold(
+                null,
+                WeaponScriptSettings.ALLWeapon.SONGSTANDINGSHIELD_BEHINDCENTER, 4.0);
     }
 
     @Override

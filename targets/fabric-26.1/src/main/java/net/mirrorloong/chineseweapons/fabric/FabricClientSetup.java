@@ -11,8 +11,9 @@ import net.minecraft.client.KeyMapping;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.resources.Identifier;
 import net.mirrorloong.chineseweapons.ChineseWeapons;
-import net.mirrorloong.chineseweapons.client.model.ModelSongJavelinModel;
-import net.mirrorloong.chineseweapons.client.model.ModelSongStandingShield;
+import net.mirrorloong.chineseweapons.client.model.FabricModelFactory;
+import net.mirrorloong.chineseweapons.client.spec.EntityModelSpecs;
+import net.mirrorloong.chineseweapons.client.spec.ModelSpec;
 import net.mirrorloong.chineseweapons.gui.recipe.DeferredGui;
 import net.mirrorloong.chineseweapons.gui.recipe.WeaponsCastingTableScreen;
 import net.mirrorloong.chineseweapons.init.ChineseweaponsModEntities;
@@ -56,10 +57,10 @@ public final class FabricClientSetup implements ClientModInitializer {
     }
 
     private static void registerModelLayers() {
-        ModelLayerRegistry.registerModelLayer(ModelSongJavelinModel.LAYER_LOCATION,
-                ModelSongJavelinModel::createBodyLayer);
-        ModelLayerRegistry.registerModelLayer(ModelSongStandingShield.LAYER_LOCATION,
-                ModelSongStandingShield::createBodyLayer);
+        FabricModelFactory factory = FabricModelFactory.INSTANCE;
+        for (ModelSpec entity : EntityModelSpecs.all()) {
+            ModelLayerRegistry.registerModelLayer(factory.location(entity), () -> factory.layer(entity));
+        }
     }
 
     private static void registerKeyBinding() {

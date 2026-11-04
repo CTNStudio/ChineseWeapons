@@ -4,9 +4,6 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Vector3f;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.player.LocalPlayer;
-import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
@@ -16,15 +13,13 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Tier;
 import net.minecraft.world.item.UseAnim;
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
-import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.extensions.common.IClientItemExtensions;
 import net.mirrorloong.chineseweapons.entity.SongJavelinProjectile;
-import net.mirrorloong.chineseweapons.procedures.armor.ChineseWeaponsCombatEvents;
+import net.mirrorloong.chineseweapons.rules.CombatRules;
+import net.mirrorloong.chineseweapons.rules.JavelinRules;
 
 import java.util.function.Consumer;
 
@@ -60,7 +55,7 @@ public class SongJavelinItem extends FourBlockReachSwordItem {
 
     @Override
     public int getUseDuration(ItemStack stack) {
-        return 72000;
+        return JavelinRules.USE_DURATION_TICKS;
     }
 
     @Override
@@ -71,103 +66,44 @@ public class SongJavelinItem extends FourBlockReachSwordItem {
     @Override
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
         ItemStack stack = player.getItemInHand(hand);
-        int riptideLevel = EnchantmentHelper.getTagEnchantmentLevel(Enchantments.RIPTIDE, stack);
-
-        if (riptideLevel > 0) {
-            if (!player.isInWaterOrRain()) {
-                return InteractionResultHolder.fail(stack);
-            }
-        }
-
-        if (stack.getDamageValue() >= stack.getMaxDamage() - 1) {
-            return InteractionResultHolder.fail(stack);
-        }
-
-        player.startUsingItem(hand);
-        return InteractionResultHolder.consume(stack);
+        return switch (JavelinRules.use(player, hand, stack)) {
+            case FAIL -> InteractionResultHolder.fail(stack);
+            case CONSUME -> InteractionResultHolder.consume(stack);
+        };
     }
 
     @Override
     public void releaseUsing(ItemStack stack, Level level, LivingEntity entity, int timeLeft) {
-        if (!(entity instanceof Player player)) return;
-        int useDuration = this.getUseDuration(stack) - timeLeft;
-        if (useDuration < 5) return;
-
-        int riptideLevel = EnchantmentHelper.getTagEnchantmentLevel(Enchantments.RIPTIDE, stack);
-        if (riptideLevel > 0 && player.isInWaterOrRain()) {
-            performRiptide(player, stack, riptideLevel);
+        if (!(entity instanceof Player player)) {
             return;
         }
-
-        float charge = Math.min(useDuration / 20.0F, 1.0F);
-        float velocity = this.attackSpeed * charge;
-
-        if (!level.isClientSide) {
-            if (!player.getAbilities().instabuild) {
-                stack.hurtAndBreak(2, player, (p) -> p.broadcastBreakEvent(player.getUsedItemHand()));
-            }
-
-            //复制并传参
-            ItemStack copyStack = stack.copy();
-            SongJavelinProjectile projectile = new SongJavelinProjectile(level, player, copyStack);
-            projectile.setBaseDamage(this.attackDamage * charge);
-            projectile.setKnockback(1);
-            projectile.setCritArrow(charge >= 0.9F);
-
-            int loyalty = EnchantmentHelper.getTagEnchantmentLevel(Enchantments.LOYALTY, stack);
-            projectile.setLoyaltyLevel(loyalty);
-            boolean hasChanneling = EnchantmentHelper.getTagEnchantmentLevel(Enchantments.CHANNELING, stack) > 0;
-            projectile.setHasChanneling(hasChanneling);
-            int pierce = EnchantmentHelper.getTagEnchantmentLevel(Enchantments.PIERCING, stack);
-            projectile.setPierceLevel((byte) pierce);
-
-            projectile.shootFromRotation(player, player.getXRot() - 50.0F, player.getYRot(), 0.0F, velocity, 1.0F);
-            level.addFreshEntity(projectile);
-
-            level.playSound(null, player.blockPosition(), SoundEvents.TRIDENT_THROW, SoundSource.PLAYERS, 1.0F, 1.0F);
-
-            if (!player.getAbilities().instabuild) {
-                stack.shrink(1);
-            }
-        }
-
-        player.getCooldowns().addCooldown(this, 8);
+        int usedTicks = this.getUseDuration(stack) - timeLeft;
+        JavelinRules.releaseUsing(player, stack, usedTicks, this.attackDamage, this.attackSpeed,
+                (shot, stackCopy) -> spawnProjectile(level, player, shot, stackCopy));
     }
 
-    private void performRiptide(Player player, ItemStack stack, int riptideLevel) {
-        if (player.level.isClientSide) return;
-
-        //flyyyy
-        Vec3 look = player.getLookAngle();
-        Vec3 currentVel = player.getDeltaMovement();
-        double factor = 0.75 * (riptideLevel + 1);
-        Vec3 newVel = look.scale(factor).add(currentVel);
-        player.setDeltaMovement(newVel);
-        player.hurtMarked = true;
-
-        stack.hurtAndBreak(2, player, (p) -> p.broadcastBreakEvent(player.getUsedItemHand()));
-
-        switch (riptideLevel) {
-            case 1 -> player.level.playSound(null, player.blockPosition(), SoundEvents.TRIDENT_RIPTIDE_1, SoundSource.PLAYERS, 1.0F, 1.0F);
-            case 2 -> player.level.playSound(null, player.blockPosition(), SoundEvents.TRIDENT_RIPTIDE_2, SoundSource.PLAYERS, 1.0F, 1.0F);
-            default -> player.level.playSound(null, player.blockPosition(), SoundEvents.TRIDENT_RIPTIDE_3, SoundSource.PLAYERS, 1.0F, 1.0F);
-        }
-
-        player.getCooldowns().addCooldown(this, 20);
+    private static void spawnProjectile(Level level, Player player, JavelinRules.Shot shot,
+                                        ItemStack stackCopy) {
+        SongJavelinProjectile projectile = new SongJavelinProjectile(level, player, stackCopy);
+        projectile.setBaseDamage(shot.baseDamage());
+        projectile.setKnockback(1);
+        projectile.setCritArrow(shot.critical());
+        projectile.setLoyaltyLevel(shot.loyalty());
+        projectile.setHasChanneling(shot.channeling());
+        projectile.setPierceLevel((byte) shot.pierce());
+        projectile.shootFromRotation(player, player.getXRot() - 50.0F, player.getYRot(), 0.0F,
+                shot.velocity(), 1.0F);
+        level.addFreshEntity(projectile);
     }
 
     @Override
     public boolean hurtEnemy(ItemStack stack, LivingEntity target, LivingEntity attacker) {
         boolean result = super.hurtEnemy(stack, target, attacker);
-        if (!result || target.level.isClientSide() || !(attacker instanceof ServerPlayer player) || !target.isAlive()) {
-            return result;
+        if (!result) {
+            return false;
         }
-
-        if (player.getVehicle() != null && target.getVehicle() == null
-                && !ChineseWeaponsCombatEvents.isTethered(target)) {
-            ChineseWeaponsCombatEvents.tryStartMountedDrag(player, target);
-        }
-        return result;
+        CombatRules.startMountedDrag(target, attacker);
+        return true;
     }
 
     @Override

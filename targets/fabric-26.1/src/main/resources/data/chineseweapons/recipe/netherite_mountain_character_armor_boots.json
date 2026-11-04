@@ -1,9 +1,0 @@
-{
-  "type": "minecraft:smithing_transform",
-  "template": "minecraft:netherite_upgrade_smithing_template",
-  "base": "chineseweapons:diamond_mountain_character_armor_boots",
-  "addition": "minecraft:netherite_ingot",
-  "result": {
-    "id": "chineseweapons:netherite_mountain_character_armor_boots"
-  }
-}

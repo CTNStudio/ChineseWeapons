@@ -1,34 +1,26 @@
 package net.mirrorloong.chineseweapons.procedures.weapon;
 
-import net.mirrorloong.chineseweapons.compat.EffectHolders;
-
-import net.minecraft.advancements.AdvancementHolder;
-import net.minecraft.advancements.AdvancementProgress;
-import net.minecraft.resources.Identifier;
-import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.ai.attributes.AttributeModifier;
-import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.animal.equine.Horse;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.phys.AABB;
-import net.minecraft.world.phys.Vec3;
-import net.neoforged.neoforge.event.tick.PlayerTickEvent;
-import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
-import net.mirrorloong.chineseweapons.spi.RegistryEntry;
+import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
+import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 import net.mirrorloong.chineseweapons.ChineseWeapons;
-import net.mirrorloong.chineseweapons.init.ChineseWeaponsModEffects;
 import net.mirrorloong.chineseweapons.init.ChineseweaponsModItems;
+import net.mirrorloong.chineseweapons.rules.TangSaberRules;
+import net.mirrorloong.chineseweapons.spi.RegistryEntry;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.UUID;
 
+/** NeoForge 1.21.1 event wiring for the heng saber stab. */
 @EventBusSubscriber(modid = ChineseWeapons.MOD_ID)
 public class TangDynastyHengSabeCutsProcedures {
 
@@ -54,129 +46,28 @@ public class TangDynastyHengSabeCutsProcedures {
         return canSet;
     }
 
-    private static final Map<UUID, Long> lastRightClick = new HashMap<>();
-    private static final Map<UUID, Boolean> hasFirstClick = new HashMap<>();
-
-    private record StabAnimData(ItemStack bindItem, int tickLeft, boolean playing) {}
-    private static final Map<UUID, StabAnimData> itemAnimData = new HashMap<>();
-
-    private static final int DH_TICK = 46;
-
-
     @SubscribeEvent
     public static void rightClickTrigger(PlayerInteractEvent.RightClickItem event) {
         Player player = event.getEntity();
-        UUID uuid = player.getUUID();
-        long now = System.currentTimeMillis();
-        ItemStack mainHand = player.getMainHandItem();
-        Item holdItem = mainHand.getItem();
+        boolean tracked = getCanSet().contains(player.getMainHandItem().getItem());
 
-        if (!getCanSet().contains(holdItem)) return;
-
-        if (player.getCooldowns().isOnCooldown(mainHand)) return;
-        if (itemAnimData.containsKey(uuid)) return;
-
-        boolean firstPressed = hasFirstClick.getOrDefault(uuid, false);
-        long lastTime = lastRightClick.getOrDefault(uuid, 0L);
-
-        if (!firstPressed) {
-            hasFirstClick.put(uuid, true);
-            lastRightClick.put(uuid, now);
-        } else {
-            if (now - lastTime <= 400) {
-                executeStab(player, mainHand);
-            }
-            hasFirstClick.put(uuid, false);
-        }
-    }
-
-    private static void executeStab(Player player, ItemStack bindWeapon) {
-        ItemStack handItem = player.getMainHandItem();
-        if (handItem.isEmpty()) return;
-        if (!getCanSet().contains(handItem.getItem())) return;
-
-        player.getCooldowns().addCooldown(bindWeapon, 10);
-        handItem.hurtAndBreak(2, player, EquipmentSlot.MAINHAND);
-
-        Vec3 look = player.getLookAngle();
-        Vec3 playerPos = player.position();
-
-        AABB killBox = new AABB(
-                playerPos.x - 0.5F,
-                playerPos.y,
-                playerPos.z - 0.5F,
-                playerPos.x + 0.5F + look.x * 3,
-                playerPos.y + 2,
-                playerPos.z + 0.5F + look.z * 3
-        );
-
-        player.level().getEntities(player, killBox, e -> e instanceof LivingEntity living && living != player && !(living instanceof Horse horse && horse.isTamed() && horse.getOwnerReference() != null && player.getUUID().equals(horse.getOwnerReference().getUUID())))
-                .forEach(entity -> {
-                    LivingEntity target = (LivingEntity) entity;
-                    float baseDamage = (float) handItem.getAttributeModifiers().modifiers().stream()
-                            .filter(entry -> entry.attribute().value() == Attributes.ATTACK_DAMAGE.value())
-                            .mapToDouble(entry -> entry.modifier().amount())
-                            .sum();
-                    float dmg = baseDamage + 2;
-                    target.hurt(player.damageSources().playerAttack(player), dmg);
-                    target.addEffect(new MobEffectInstance(EffectHolders.holder(ChineseWeaponsModEffects.CusEffectSupplier), 60, 0, false, true));
-
-                    if (player instanceof ServerPlayer sp) {
-                        Identifier rootRl = Identifier.fromNamespaceAndPath(ChineseWeapons.MOD_ID, "get_ancient_gem/xiao_tang_dynasty_heng_saber");
-                        AdvancementHolder rootAdv = sp.level().getServer().getAdvancements().get(rootRl);
-                        if(rootAdv != null) {
-                            AdvancementProgress ap = sp.getAdvancements().getOrStartProgress(rootAdv);
-                            if (!ap.isDone()) {
-                                for (String criteria : ap.getRemainingCriteria()) {
-                                    sp.getAdvancements().award(rootAdv, criteria);
-                                }
-                            }
-                        }
-                    }
-                });
-
-        itemAnimData.put(player.getUUID(), new StabAnimData(bindWeapon, DH_TICK, true));
+        float baseDamage = (float) ChineseWeapons.gameplay().itemAttackDamage(player.getMainHandItem());
+        TangSaberRules.rightClick(player, tracked, horseOwnedBy(player), baseDamage);;
     }
 
     @SubscribeEvent
     public static void tickUpdate(PlayerTickEvent.Post event) {
-        Player player = event.getEntity();
-        UUID uid = player.getUUID();
-        if (!itemAnimData.containsKey(uid)) return;
-        StabAnimData anim = itemAnimData.get(uid);
-
-        boolean interrupt = !ItemStack.isSameItem(player.getMainHandItem(), anim.bindItem())
-                || player.getMainHandItem().isEmpty()
-                || player.swinging
-                || !player.getOffhandItem().isEmpty();
-
-        if (interrupt) {
-            itemAnimData.remove(uid);
-            return;
-        }
-
-        int tickLeft = anim.tickLeft() - 1;
-        if (tickLeft <= 0) {
-            itemAnimData.remove(uid);
-            return;
-        }
-        itemAnimData.put(uid, new StabAnimData(anim.bindItem(), tickLeft, true));
+        TangSaberRules.tick(event.getEntity());
     }
 
     public static float getAnimationProgress(UUID uid) {
-        StabAnimData anim = itemAnimData.get(uid);
-        if (anim == null) return 0.0F;
+        return TangSaberRules.animationProgress(uid);
+    }
 
-        int tickLeft = anim.tickLeft();
-        int passed = DH_TICK - tickLeft;
-        if (passed <= 8) {
-            return (float) passed / 8;
-        }
-        if (passed <= 38) {
-            return 1.0F;
-        }
-
-        int retractPass = passed - 38;
-        return 1.0F - ((float) retractPass / 8);
+    private static java.util.function.Predicate<Entity> horseOwnedBy(Player player) {
+        return entity -> entity instanceof Horse horse
+                && horse.isTamed()
+                && horse.getOwnerReference() != null
+                && player.getUUID().equals(horse.getOwnerReference().getUUID());
     }
 }

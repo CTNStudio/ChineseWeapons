@@ -24,6 +24,21 @@ public interface Platform {
         throw new UnsupportedOperationException("This platform does not provide a content factory");
     }
 
+    /**
+     * Version bridge used by {@code rules.*}. Every target supplies one; the
+     * shared gameplay rules never touch loader or version-specific APIs on
+     * their own.
+     */
+    GameplayCompat gameplay();
+
+    /**
+     * Legacy JSON ingredient/result decoding used by the 1.18.2-1.20.1 casting
+     * recipe serializer. Codec-based targets do not need it.
+     */
+    default RecipeSupport recipes() {
+        throw new UnsupportedOperationException("This platform does not provide recipe JSON support");
+    }
+
     boolean isClient();
 
     MenuType<WeaponsCastingTableTypeGuiMenu> castingTableMenu();

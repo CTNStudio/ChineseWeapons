@@ -13,8 +13,9 @@ import net.mirrorloong.chineseweapons.init.ChineseweaponsModTabs;
 import net.mirrorloong.chineseweapons.network.ArmorCastingTableBlockProgressPacket;
 import net.mirrorloong.chineseweapons.network.ArmorcastingtableguiSlotMessage;
 import net.mirrorloong.chineseweapons.network.ShieldActionPacket;
-import net.mirrorloong.chineseweapons.item.GuDuoItem;
+import net.mirrorloong.chineseweapons.network.SquashPacket;
 import net.mirrorloong.chineseweapons.recipes.DeferredRecipe;
+import net.mirrorloong.chineseweapons.spi.GameplayCompat;
 import net.mirrorloong.chineseweapons.spi.Network;
 import net.mirrorloong.chineseweapons.spi.PacketDirection;
 import net.mirrorloong.chineseweapons.spi.Platform;
@@ -50,6 +51,10 @@ public final class ChineseWeapons {
         return platform().network();
     }
 
+    public static GameplayCompat gameplay() {
+        return platform().gameplay();
+    }
+
     public static void bootstrap(Platform implementation) {
         if (platform != null) {
             throw new IllegalStateException("Chinese Weapons bootstrap already ran");
@@ -71,8 +76,8 @@ public final class ChineseWeapons {
 
     public static void registerPackets() {
         Network network = network();
-        network.register(0, GuDuoItem.SquashPacket.class, PacketDirection.CLIENTBOUND,
-                GuDuoItem.SquashPacket::decode);
+        network.register(0, SquashPacket.class, PacketDirection.CLIENTBOUND,
+                SquashPacket::decode);
         network.register(1, ShieldActionPacket.class, PacketDirection.SERVERBOUND,
                 ShieldActionPacket::new);
         network.register(2, ArmorCastingTableBlockProgressPacket.class, PacketDirection.CLIENTBOUND,

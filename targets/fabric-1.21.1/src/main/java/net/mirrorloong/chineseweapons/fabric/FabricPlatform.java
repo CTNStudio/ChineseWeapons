@@ -13,6 +13,7 @@ import net.minecraft.world.inventory.MenuType;
 import net.mirrorloong.chineseweapons.gui.recipe.DeferredGui;
 import net.mirrorloong.chineseweapons.gui.recipe.WeaponsCastingTableTypeGuiMenu;
 import net.mirrorloong.chineseweapons.spi.ContentFactory;
+import net.mirrorloong.chineseweapons.spi.GameplayCompat;
 import net.mirrorloong.chineseweapons.spi.Network;
 import net.mirrorloong.chineseweapons.spi.Platform;
 import net.mirrorloong.chineseweapons.spi.Registration;
@@ -21,6 +22,7 @@ public final class FabricPlatform implements Platform {
     private final FabricRegistration registration = new FabricRegistration();
     private final FabricNetwork network = new FabricNetwork();
     private final FabricContentFactory content = new FabricContentFactory();
+    private final FabricGameplayCompat gameplay = new FabricGameplayCompat();
 
     @Override
     public Registration registration() {
@@ -35,6 +37,11 @@ public final class FabricPlatform implements Platform {
     @Override
     public ContentFactory content() {
         return content;
+    }
+
+    @Override
+    public GameplayCompat gameplay() {
+        return gameplay;
     }
 
     @Override
