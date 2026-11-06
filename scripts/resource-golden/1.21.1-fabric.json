@@ -261,7 +261,7 @@
     "data/chineseweapons/recipe/wooden_tang_dynasty_heng_saber.json": "35947658aa3283717afae8336ed3cf34e1339a51c5d0d3d16e47d72722c08474",
     "data/chineseweapons/tags/item/armor_pieces.json": "f927258735fc710fe37e79c4115fdb2016c72ec53af7eabfb83297ac6426ac47",
     "data/chineseweapons/worldgen/configured_feature/ancient_gem_ore.json": "9b56d71fd743644c6003401b24f7055be32ed7cf098805dea753a21a3d585b03",
-    "data/chineseweapons/worldgen/configured_feature/deepslate_ancient_gem_ore.json": "5ca445bdf45f133e2c2ccc2d35802c50bfd9d042d9aeef3cdaa076cf5d09edad",
+    "data/chineseweapons/worldgen/configured_feature/deepslate_ancient_gem_ore.json": "8a2ae417efe2c31c0a6dab54bdf45514fdc99c279c986a5b6df04c1d358a40f8",
     "data/minecraft/tags/block/mineable/pickaxe.json": "508913bff303d1ca1df6bde4eecabf22a948b66330c72b69b4b0bd2dd4fd7041",
     "data/minecraft/tags/block/needs_iron_tool.json": "508913bff303d1ca1df6bde4eecabf22a948b66330c72b69b4b0bd2dd4fd7041",
     "data/minecraft/tags/item/netherite_ignores_lava.json": "eef5341b1795b3d2ab0b9632c4bb572ee89a3f25bdb2212668439b08315d9216",

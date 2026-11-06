@@ -119,12 +119,12 @@ public final class JavelinRules {
                     soundPos.getX() + 0.5D, soundPos.getY() + 0.5D, soundPos.getZ() + 0.5D,
                     GameplayCompat.Sound.TRIDENT_THROW, 1.0F, 1.0F);
 
+            ChineseWeapons.gameplay().addCooldown(player, stack, THROW_COOLDOWN_TICKS);
             if (!infinite) {
                 stack.shrink(1);
             }
         }
 
-        ChineseWeapons.gameplay().addCooldown(player, stack, THROW_COOLDOWN_TICKS);
         return true;
     }
 

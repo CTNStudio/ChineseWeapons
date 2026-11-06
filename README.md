@@ -29,7 +29,7 @@ A mod of Chinese classic armors
 ## 已确认的迁移限制
 
 - **数据与资源格式**：`common/src/main/resources` 是唯一的 1.20.1 权威资源。1.21.1/26.1 的 `recipe`、`loot_table`、`advancement`、`tags`、`worldgen`、`assets/<ns>/items`、`equipment` 与装备纹理由下文「资源生成管线」在构建时生成，target 源码树中不再保留这些副本；1.18.2/1.19.2/1.20.1 仍直接使用 common 资源。common 的旧目录仍会打进现代版本 jar，但不会被读取。生成结果只做 JSON/构建/基准哈希校验，**未做数据包加载验证**。Fabric 1.20.1/1.21.1 因原版无 Forge `separate_transforms` 等价物，37 个武器模型被压平为 GUI 模型；26.1 Fabric 将武器 3D 模型内联为 `_3d`，NeoForge 使用 `_hand` 中间模型。
-- **可选集成**：JEI / EMI / KubeJS / Patchouli 只在存在可用坐标的 target 中保留；1.18.2 省略 KubeJS 与 EMI，1.19.2 省略 Patchouli，Fabric 与 1.21.1+ 未接入这些集成。
+- **可选集成**：JEI 已接入全部 8 个 target；EMI 覆盖 Forge 1.19.2/1.20.1、Fabric 1.20.1/1.21.1、NeoForge 1.21.1（1.18.2 与 26.1 无对应 EMI 构建）；KubeJS 覆盖 Forge 1.19.2/1.20.1 与 Fabric 1.20.1。所有集成均为 compile-only，未安装对应 mod 时不会加载。
 - **平台专属渲染**：Forge 的 `IClientItemExtensions`/`initializeClient` 没有跨 loader 等价物。Fabric 目标使用各自的 armor renderer；26.1 取消 3D 盔甲模型钩子，改为 equipment asset 纹理，原 Blockbench 几何与染色贴图合并不再生效。
 - **热调试**：`fabric-1.21.1` 的 `hot-debug.gradle` 因本机无法获取对应 AutoJS 坐标而暂时注释；其余 target 保留。`verifyHotDebug` 通过不等于启动验证。
 - **26.1 差异**：盔甲几何改为 equipment asset 纹理（无 Blockbench 几何、无染色贴图合并）；部分 Forge 专属钩子（岩浆行走、猪灵中立、爆炸保护事件等）不再存在。

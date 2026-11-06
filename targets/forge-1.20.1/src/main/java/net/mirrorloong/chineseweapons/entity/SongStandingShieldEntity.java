@@ -253,8 +253,9 @@ public class SongStandingShieldEntity extends Entity implements StandingShieldEn
             this.yRotO = this.getShieldYaw();
         }
 
-        Player local = net.minecraft.client.Minecraft.getInstance().player;
-        this.setCustomNameVisible(local != null && this.getSafeZone().contains(local.position()));
+        this.setCustomNameVisible(this.level().players().stream()
+
+                .anyMatch(player -> this.getSafeZone().contains(player.position())));
     }
 
     public void handleExplosion(ExplosionEvent.Detonate event) {

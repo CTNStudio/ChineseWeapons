@@ -1,8 +1,9 @@
 package net.mirrorloong.chineseweapons.fabric;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
-import net.fabricmc.fabric.api.object.builder.v1.trade.TradeOfferHelper;
 import net.minecraft.world.entity.npc.VillagerProfession;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -12,30 +13,32 @@ import net.minecraft.world.item.trading.MerchantOffer;
 import net.mirrorloong.chineseweapons.init.ChineseweaponsModItems;
 
 /**
- * Armourer journeyman trades for the forging stones. NeoForge registers them
- * through {@code VillagerTradesEvent}; Fabric offers the same customisation
- * through {@code TradeOfferHelper}.
+ * Armourer master trades for the forging stones. Fabric's
+ * {@code TradeOfferHelper} only appends to the vanilla listing pool, from which
+ * {@code Villager.updateTrades} randomly picks two entries, so the trades would
+ * mostly never appear. {@code VillagerMixin} instead adds all eight offers
+ * directly, matching the Forge/NeoForge {@code VillagerTradesEvent} behaviour.
  */
 public final class FabricTrades {
     private FabricTrades() {
     }
 
-    public static void register() {
-        TradeOfferHelper.registerVillagerOffers(VillagerProfession.ARMORER, 4, factories -> {
-            factories.add((entity, random) -> offer(
-                    ChineseweaponsModItems.EarlyTangDynastyMingGuangArmorforgingStone.get(), 5));
-            factories.add((entity, random) -> offer(ChineseweaponsModItems.FootmenArmorforgingStone.get()));
-            factories.add((entity, random) -> offer(
-                    ChineseweaponsModItems.LateTangDynastyMingGuangArmorforgingStone.get()));
-            factories.add((entity, random) -> offer(
-                    ChineseweaponsModItems.MiddleTangDynastyMingGuangArmorforgingStone.get()));
-            factories.add((entity, random) -> offer(
-                    ChineseweaponsModItems.MountainCharacterArmorforgingStone.get()));
-            factories.add((entity, random) -> offer(ChineseweaponsModItems.BlackChuiArmorforgingStone.get()));
-            factories.add((entity, random) -> offer(
-                    ChineseweaponsModItems.TangDynastyInfantryArmorforgingStone.get()));
-            factories.add((entity, random) -> offer(ChineseweaponsModItems.FineScaleArmorforgingStone.get()));
-        });
+    /** Creates a fresh set of master offers; callers own the instances. */
+    public static List<MerchantOffer> masterOffers() {
+        List<MerchantOffer> offers = new ArrayList<>(8);
+        offers.add(offer(ChineseweaponsModItems.EarlyTangDynastyMingGuangArmorforgingStone.get(), 5));
+        offers.add(offer(ChineseweaponsModItems.FootmenArmorforgingStone.get()));
+        offers.add(offer(ChineseweaponsModItems.LateTangDynastyMingGuangArmorforgingStone.get()));
+        offers.add(offer(ChineseweaponsModItems.MiddleTangDynastyMingGuangArmorforgingStone.get()));
+        offers.add(offer(ChineseweaponsModItems.MountainCharacterArmorforgingStone.get()));
+        offers.add(offer(ChineseweaponsModItems.BlackChuiArmorforgingStone.get()));
+        offers.add(offer(ChineseweaponsModItems.TangDynastyInfantryArmorforgingStone.get()));
+        offers.add(offer(ChineseweaponsModItems.FineScaleArmorforgingStone.get()));
+        return offers;
+    }
+
+    public static boolean isMasterArmourer(VillagerProfession profession, int level) {
+        return profession == VillagerProfession.ARMORER && level >= 4;
     }
 
     private static MerchantOffer offer(Item result) {

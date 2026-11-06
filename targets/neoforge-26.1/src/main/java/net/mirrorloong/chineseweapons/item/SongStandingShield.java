@@ -12,7 +12,7 @@ import net.mirrorloong.chineseweapons.spi.StandingShieldItem;
 public class SongStandingShield extends Item implements StandingShieldItem {
 
     public SongStandingShield() {
-        super(new Item.Properties().durability(1670));
+        super(ItemIds.apply(new Item.Properties()).durability(1670));
     }
 
     @Override

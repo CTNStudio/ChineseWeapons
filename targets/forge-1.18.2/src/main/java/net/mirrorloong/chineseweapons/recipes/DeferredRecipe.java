@@ -23,6 +23,9 @@ public class DeferredRecipe {
             return new WCTRecipeSer();
         }
     });
+    public static final RegistryEntry<RecipeSerializer<?>> DyeableArmorSerType =
+            DeferredRecipeSer.register("crafting_special_dyeablearmor", () -> DyeableArmorRecipe.SERIALIZER);
+
     public static void init() {
     }
 }

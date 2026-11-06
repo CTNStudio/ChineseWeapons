@@ -676,6 +676,14 @@
     "data/chineseweapons/tags/item/armor_repair/netheritesuannihelmet.json": "45881eed35c14636f8f2194d9a1cded11cfc7293b405b5df4c30da2dc37b628e",
     "data/chineseweapons/tags/item/armor_repair/song_dynasty_infantry_armor.json": "a10bcf5bfcbab4dfd074e3718fdbfc43010c5684502b596a2f71766db6085e11",
     "data/chineseweapons/tags/item/armor_repair/tang_dynasty_infantry_armor.json": "a10bcf5bfcbab4dfd074e3718fdbfc43010c5684502b596a2f71766db6085e11",
+    "data/chineseweapons/villager_trade/forging_stone/black_chui_armor_forging_stone.json": "34921cc57a7bd9777a2158369c95cc36e9c594b413d48373410b16314db3915c",
+    "data/chineseweapons/villager_trade/forging_stone/early_tang_dynasty_ming_guang_armor_forging_stone.json": "39dc50ef94f75e41de663c1b2bdcd4b2598c9013fd62e5ed64f330561601d1ac",
+    "data/chineseweapons/villager_trade/forging_stone/fine_scale_armor_forging_stone.json": "ffc20c0d925ea0fd05b68e2659ad221d39b96b502dde6e65dfc538b8a2e823f8",
+    "data/chineseweapons/villager_trade/forging_stone/footmen_armor_forging_stone.json": "a58aa09cbc965e38f5d679c9e9d87eda638d0c5524ccee0c9f82a1cfd09b365b",
+    "data/chineseweapons/villager_trade/forging_stone/late_tang_dynasty_ming_guang_armor_forging_stone.json": "046732b96c02060c0467987c38a358f7fb6fb4dfdff41a54cefc1becd554c943",
+    "data/chineseweapons/villager_trade/forging_stone/middle_tang_dynasty_ming_guang_armor_forging_stone.json": "2259bf910726bed532bc0b085783c7a6e19dc19a2a3a2143c8c1603d9bd0b005",
+    "data/chineseweapons/villager_trade/forging_stone/mountain_character_armor_forging_stone.json": "d8902401ef82fa68c9663d2e31c921302e9cc8476fbdcfa6395547c37f4208c8",
+    "data/chineseweapons/villager_trade/forging_stone/tang_dynasty_infantry_armor_forging_stone.json": "ea840bc34de30975ca90fb59ef264c13aee9a3d38a95e4072024f215f12b1860",
     "data/chineseweapons/worldgen/configured_feature/ancient_gem_ore.json": "a3fcf09a0bf598b8ca5946c554fbc53afc56257c0c95ea043608dccb086b07c4",
     "data/chineseweapons/worldgen/configured_feature/deepslate_ancient_gem_ore.json": "83a093a22cb0f8f114d08aae2c924c6feeb4b561ed49f98fcbcae597d41d7879",
     "data/chineseweapons/worldgen/placed_feature/ancient_gem_ore.json": "cbec160ed005aaaf3d855b3b5280e9a841915d601a36f5e2f4acf4e14e55f173",
@@ -683,6 +691,8 @@
     "data/minecraft/tags/block/mineable/pickaxe.json": "508913bff303d1ca1df6bde4eecabf22a948b66330c72b69b4b0bd2dd4fd7041",
     "data/minecraft/tags/block/needs_iron_tool.json": "508913bff303d1ca1df6bde4eecabf22a948b66330c72b69b4b0bd2dd4fd7041",
     "data/minecraft/tags/item/netherite_ignores_lava.json": "eef5341b1795b3d2ab0b9632c4bb572ee89a3f25bdb2212668439b08315d9216",
-    "data/minecraft/tags/item/swords.json": "268cb33a55a6fc258f770339a4c36652b499a2d2b0de3594144e3d75f3326217"
+    "data/minecraft/tags/item/swords.json": "268cb33a55a6fc258f770339a4c36652b499a2d2b0de3594144e3d75f3326217",
+    "data/minecraft/tags/villager_trade/armorer/level_4.json": "2f6da32db33516bffe294be721fad0458bfe8d45bc92aa34fb9e3d524a1db9b5",
+    "data/minecraft/trade_set/armorer/level_4.json": "b183bdd1fc45ace19b06a0e436f2aefbfcee3fb3dda9cfdb16fff688e8628543"
   }
 }

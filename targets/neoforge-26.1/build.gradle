@@ -47,9 +47,18 @@ neoForge {
 repositories {
     mavenCentral()
     mavenLocal()
+    maven {
+        name = 'Modrinth'
+        url = 'https://api.modrinth.com/maven'
+        content { includeGroup 'maven.modrinth' }
+    }
 }
 
 dependencies {
+    // Optional JEI integration: compile against the plugin API only, never ship
+    // or require JEI at runtime. EMI has no 26.1 build, so it is not included.
+    compileOnly 'maven.modrinth:jei:29.53.0.115-neoforge'
+
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher:1.11.4'
 }
 

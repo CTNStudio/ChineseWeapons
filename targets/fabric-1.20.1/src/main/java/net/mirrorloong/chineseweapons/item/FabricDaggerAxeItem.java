@@ -32,11 +32,8 @@ public class FabricDaggerAxeItem extends DaggerAxeItemBase implements DaggerAxeI
         return result;
     }
 
-    // Vanilla 1.20.1 exposes the crafting-remaining item only through
-    // Item.Properties#craftingRemainingItem, which needs the item instance
-    // before construction, and makes getCraftingRemainingItem() final. Forge's
-    // stack-based hooks do not exist on Fabric, so the definition's
-    // craftingRemainingItem flag cannot be applied here.
+    // The crafting-remaining self reference is provided by ItemMixin (vanilla's
+    // final getCraftingRemainingItem needs the item before construction).
     @Override
     public boolean isValidRepairItem(ItemStack stack, ItemStack repairCandidate) {
         return definition.repairable() && super.isValidRepairItem(stack, repairCandidate);

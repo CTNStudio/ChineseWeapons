@@ -8,9 +8,11 @@ import net.mirrorloong.chineseweapons.rules.HalberdRules;
 
 public class SkyPiercingHalberdItem extends FourBlockReachSwordItem {
 
+
+
     public SkyPiercingHalberdItem(Tier tier, int displayedAttackDamage, float speed, boolean fireResistant) {
         super(
-                tier,
+                WeaponTier.withUses(tier, tier.getUses() + 50),
                 Math.round(displayedAttackDamage - 1.0F - tier.getAttackDamageBonus()),
                 speed - 4.0F,
                 properties(tier, fireResistant)

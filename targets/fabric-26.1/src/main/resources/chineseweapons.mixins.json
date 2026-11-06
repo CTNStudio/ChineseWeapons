@@ -3,7 +3,11 @@
   "package": "net.mirrorloong.chineseweapons.mixin",
   "compatibilityLevel": "JAVA_25",
   "mixins": [
-    "LivingEntityMixin"
+    "ItemMixin",
+    "LivingEntityMixin",
+    "PiglinAiMixin",
+    "PlayerReachMixin",
+    "PowderSnowBlockMixin"
   ],
   "injectors": {
     "defaultRequire": 1

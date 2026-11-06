@@ -354,7 +354,10 @@ def transform_worldgen_configured_feature(name: str, feature_json: dict, profile
                 else "minecraft:stone_ore_replaceables"
             )
         else:
-            target_def["tag"] = feature(profile, "worldgenStoneTag", "minecraft:stone_ore_replaceables")
+            target_def["tag"] = (
+                "minecraft:deepslate_ore_replaceables" if name.startswith("deepslate")
+                else feature(profile, "worldgenStoneTag", "minecraft:stone_ore_replaceables")
+            )
     return feature_json
 
 
@@ -511,6 +514,51 @@ def armor_repair_tags(profile: dict) -> dict[str, bytes]:
     return out
 
 
+# 26.1 sells master armourer trades as data: one VillagerTrade file per offer,
+# a merged tag on the vanilla armorer level-4 pool and an override that raises
+# the number of picks so every custom offer appears.
+FORGING_STONE_TRADES = (
+    ("early_tang_dynasty_ming_guang_armor_forging_stone", 5),
+    ("footmen_armor_forging_stone", 1),
+    ("late_tang_dynasty_ming_guang_armor_forging_stone", 1),
+    ("middle_tang_dynasty_ming_guang_armor_forging_stone", 1),
+    ("mountain_character_armor_forging_stone", 1),
+    ("black_chui_armor_forging_stone", 1),
+    ("tang_dynasty_infantry_armor_forging_stone", 1),
+    ("fine_scale_armor_forging_stone", 1),
+)
+
+
+def villager_trades(profile: dict) -> dict[str, bytes]:
+    if not feature(profile, "villagerTrades"):
+        return {}
+    out = {}
+    trade_ids = []
+    for item_id, iron_cost in FORGING_STONE_TRADES:
+        trade_id = f"forging_stone/{item_id}"
+        trade_ids.append(f"{MOD_ID}:{trade_id}")
+        out[f"{MOD_DATA}/villager_trade/{trade_id}.json"] = dump_json({
+            "wants": {"id": "minecraft:emerald", "count": 10.0},
+            "additional_wants": {"id": "minecraft:iron_ingot", "count": float(iron_cost)},
+            "gives": {"id": f"{MOD_ID}:{item_id}"},
+            "max_uses": 10.0,
+            "reputation_discount": 0.05,
+            "xp": 5.0,
+        })
+    out["data/minecraft/tags/villager_trade/armorer/level_4.json"] = dump_json({
+        "replace": False,
+        "values": trade_ids,
+    })
+    # Vanilla's set picks 2 of 3; the merged tag makes it 11 entries, so pick
+    # all of them to keep the original "8 extra master trades" behaviour.
+    out["data/minecraft/trade_set/armorer/level_4.json"] = dump_json({
+        "amount": 11.0,
+        "random_sequence": "minecraft:trade_set/armorer/level_4",
+        "trades": "#minecraft:armorer/level_4",
+    })
+    return out
+
+
 # ---------------------------------------------------------------------------
 # bundle assembly
 
@@ -598,6 +646,7 @@ def generate(profile: dict) -> dict[str, bytes]:
         out.update(equipment_assets(profile))
         out.update(equipment_textures(profile))
         out.update(armor_repair_tags(profile))
+        out.update(villager_trades(profile))
     else:
         raise SystemExit(f"unsupported profile family {family!r}")
     return out

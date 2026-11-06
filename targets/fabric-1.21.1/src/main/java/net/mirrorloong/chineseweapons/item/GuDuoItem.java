@@ -8,13 +8,15 @@ import net.mirrorloong.chineseweapons.compat.WeaponScriptSettings;
 import net.mirrorloong.chineseweapons.rules.GuDuoRules;
 
 public class GuDuoItem extends SixBlockReachSwordItem {
-
     private final int maxDurability;
+
+
+
 
     public GuDuoItem(Tier tier, int displayedAttackDamage, float speed,
                      boolean fireResistant, int durabilityOffset) {
         super(
-                tier,
+                WeaponTier.withUses(tier, durabilityOffset),
                 Math.round(displayedAttackDamage - 1.0F - tier.getAttackDamageBonus()),
                 speed - 4.0F,
                 makeProperties(fireResistant, durabilityOffset)

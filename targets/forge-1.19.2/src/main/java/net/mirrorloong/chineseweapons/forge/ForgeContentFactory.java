@@ -6,6 +6,7 @@ import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
@@ -46,6 +47,16 @@ import net.minecraft.resources.ResourceLocation;
 import java.util.function.Supplier;
 
 public final class ForgeContentFactory implements ContentFactory {
+    @Override
+    public Item simpleItem() {
+        return new Item(new Item.Properties());
+    }
+
+    @Override
+    public Item blockItem(Block block) {
+        return new BlockItem(block, new Item.Properties());
+    }
+
     @Override
     public Item armor(ArmorDefinition definition, ArmorSlot slot) {
         return new ForgeArmorItem(definition, slot);

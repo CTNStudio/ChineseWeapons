@@ -16,6 +16,8 @@ public final class ChineseWeaponsNeoForge261 {
     public ChineseWeaponsNeoForge261(IEventBus modBus) {
         NeoForgePlatform platform = new NeoForgePlatform(modBus);
         ChineseWeapons.bootstrap(platform);
+        // Item data components are bound by Minecraft after data pack tags load; do not
+        // build DATA_COMPONENT_INITIALIZERS here, since tag lookups are unavailable yet.
         ChineseWeapons.registerPackets();
 
         NeoForgeNetwork network = platform.networkImpl();

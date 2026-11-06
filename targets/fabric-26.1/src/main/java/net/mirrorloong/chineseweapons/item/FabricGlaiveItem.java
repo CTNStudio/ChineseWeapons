@@ -36,7 +36,7 @@ public class FabricGlaiveItem extends GlaiveItemBase implements GlaiveItem {
     }
 
     private static Item.Properties properties(WeaponDefinition definition) {
-        Item.Properties properties = new Item.Properties();
+        Item.Properties properties = ItemIds.apply(new Item.Properties());
         return definition.fireResistant() ? properties.fireResistant() : properties;
     }
 }

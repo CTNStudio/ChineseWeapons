@@ -12,6 +12,12 @@
     "client": [
       "net.mirrorloong.chineseweapons.fabric.FabricClientNetwork",
       "net.mirrorloong.chineseweapons.fabric.FabricClientSetup"
+    ],
+    "jei_mod_plugin": [
+      "net.mirrorloong.chineseweapons.jei.WeaponsCastingTableRecipeJeiPlugin"
+    ],
+    "emi": [
+      "net.mirrorloong.chineseweapons.compat.emi.ChineseWeaponsEmiPlugin"
     ]
   },
   "mixins": ["chineseweapons.mixins.json"],

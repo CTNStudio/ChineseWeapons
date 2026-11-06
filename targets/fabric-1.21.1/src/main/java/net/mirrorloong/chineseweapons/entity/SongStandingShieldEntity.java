@@ -85,6 +85,11 @@ public class SongStandingShieldEntity extends Entity implements StandingShieldEn
         return ShieldRules.safeZone(this.position(), this.getShieldYaw(), behindCenter);
     }
 
+    public AABB getExplosionSafeZone() {
+        double behindCenter = behindCenter();
+        return ShieldRules.explosionSafeZone(this.position(), this.getShieldYaw(), behindCenter);
+    }
+
     public void setHealth(float health) {
         this.entityData.set(DATA_HP, health);
         if (setHealthLogic) {
@@ -233,8 +238,8 @@ public class SongStandingShieldEntity extends Entity implements StandingShieldEn
         super.tick();
 
         if (this.level().isClientSide) {
-            Player local = net.minecraft.client.Minecraft.getInstance().player;
-            this.setCustomNameVisible(local != null && this.getSafeZone().contains(local.position()));
+            this.setCustomNameVisible(this.level().players().stream()
+                    .anyMatch(player -> this.getSafeZone().contains(player.position())));
             return;
         }
 

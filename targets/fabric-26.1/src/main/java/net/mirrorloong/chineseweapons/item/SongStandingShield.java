@@ -15,7 +15,7 @@ import net.mirrorloong.chineseweapons.spi.StandingShieldItem;
 public class SongStandingShield extends Item implements StandingShieldItem {
 
     public SongStandingShield() {
-        super(new Item.Properties()
+        super(ItemIds.apply(new Item.Properties())
                 .durability(1670)
                 .equippableUnswappable(EquipmentSlot.OFFHAND)
                 .component(DataComponents.BLOCKS_ATTACKS, ShieldSupport.BLOCKS));

@@ -160,21 +160,21 @@ public class ChineseweaponsModItems {
     public static final RegistryEntry<Item> NETHERITE_GU_DUO = REGISTRY.register("netherite_guduo", () -> ChineseWeapons.platform().content().guDuo(WeaponMaterial.NETHERITE, 9, 1.6F,true, 2048));
 
 	public static final RegistryEntry<Item> ARMOR_CASTING_TABLE = block(ChineseweaponsModBlocks.ARMOR_CASTING_TABLE);
-	public static final RegistryEntry<Item> DiamondArmorPieces = REGISTRY.register("diamond_armor_pieces", () -> new Item(new Item.Properties()));
-	public static final RegistryEntry<Item> DiamondArmorPiecesPlate = REGISTRY.register("diamond_armor_pieces_plate", () -> new Item(new Item.Properties()));
-	public static final RegistryEntry<Item> DiamondMountainCharacterArmorPiecesPlate = REGISTRY.register("diamond_mountain_character_armor_pieces_plate", () -> new Item(new Item.Properties()));
-	public static final RegistryEntry<Item> GoldenArmorPieces = REGISTRY.register("golden_armor_pieces", () -> new Item(new Item.Properties()));
-	public static final RegistryEntry<Item> GoldenArmorPiecesPlate = REGISTRY.register("golden_armor_pieces_plate", () -> new Item(new Item.Properties()));
-    public static final RegistryEntry<Item> GoldenMountainCharacterArmorPieces = REGISTRY.register("golden_mountain_character_armor_pieces", () -> new Item(new Item.Properties()));
-    public static final RegistryEntry<Item> GoldenMountainCharacterArmorPiecesPlate = REGISTRY.register("golden_mountain_character_armor_pieces_plate", () -> new Item(new Item.Properties()));
-    public static final RegistryEntry<Item> IronMountainCharacterArmorPieces = REGISTRY.register("iron_mountain_character_armor_pieces", () -> new Item(new Item.Properties()));
-	public static final RegistryEntry<Item> IronMountainCharacterArmorPiecesPlate = REGISTRY.register("iron_mountain_character_armor_pieces_plate", () -> new Item(new Item.Properties()));
-	public static final RegistryEntry<Item> StoneArmorPieces = REGISTRY.register("stone_armor_pieces", () -> new Item(new Item.Properties()));
-	public static final RegistryEntry<Item> StoneArmorPiecesPlate = REGISTRY.register("stone_armor_pieces_plate", () -> new Item(new Item.Properties()));
-	public static final RegistryEntry<Item> AncientGem = REGISTRY.register("ancient_gem",()->new Item(new Item.Properties()));
-	public static final RegistryEntry<Item> IronArmorPieces = REGISTRY.register("iron_armor_pieces",()->new Item(new Item.Properties()));
-    public static final RegistryEntry<Item> IronArmorPiecesPlate = REGISTRY.register("iron_armor_pieces_plate", () -> new Item(new Item.Properties()));
-	public static final RegistryEntry<Item> DiamondMountainCharacterArmorPieces = REGISTRY.register("diamond_mountain_character_armor_pieces",()->new Item(new Item.Properties()));
+	public static final RegistryEntry<Item> DiamondArmorPieces = REGISTRY.register("diamond_armor_pieces", () -> ChineseWeapons.platform().content().simpleItem());
+	public static final RegistryEntry<Item> DiamondArmorPiecesPlate = REGISTRY.register("diamond_armor_pieces_plate", () -> ChineseWeapons.platform().content().simpleItem());
+	public static final RegistryEntry<Item> DiamondMountainCharacterArmorPiecesPlate = REGISTRY.register("diamond_mountain_character_armor_pieces_plate", () -> ChineseWeapons.platform().content().simpleItem());
+	public static final RegistryEntry<Item> GoldenArmorPieces = REGISTRY.register("golden_armor_pieces", () -> ChineseWeapons.platform().content().simpleItem());
+	public static final RegistryEntry<Item> GoldenArmorPiecesPlate = REGISTRY.register("golden_armor_pieces_plate", () -> ChineseWeapons.platform().content().simpleItem());
+    public static final RegistryEntry<Item> GoldenMountainCharacterArmorPieces = REGISTRY.register("golden_mountain_character_armor_pieces", () -> ChineseWeapons.platform().content().simpleItem());
+    public static final RegistryEntry<Item> GoldenMountainCharacterArmorPiecesPlate = REGISTRY.register("golden_mountain_character_armor_pieces_plate", () -> ChineseWeapons.platform().content().simpleItem());
+    public static final RegistryEntry<Item> IronMountainCharacterArmorPieces = REGISTRY.register("iron_mountain_character_armor_pieces", () -> ChineseWeapons.platform().content().simpleItem());
+	public static final RegistryEntry<Item> IronMountainCharacterArmorPiecesPlate = REGISTRY.register("iron_mountain_character_armor_pieces_plate", () -> ChineseWeapons.platform().content().simpleItem());
+	public static final RegistryEntry<Item> StoneArmorPieces = REGISTRY.register("stone_armor_pieces", () -> ChineseWeapons.platform().content().simpleItem());
+	public static final RegistryEntry<Item> StoneArmorPiecesPlate = REGISTRY.register("stone_armor_pieces_plate", () -> ChineseWeapons.platform().content().simpleItem());
+	public static final RegistryEntry<Item> AncientGem = REGISTRY.register("ancient_gem",()->ChineseWeapons.platform().content().simpleItem());
+	public static final RegistryEntry<Item> IronArmorPieces = REGISTRY.register("iron_armor_pieces",()->ChineseWeapons.platform().content().simpleItem());
+    public static final RegistryEntry<Item> IronArmorPiecesPlate = REGISTRY.register("iron_armor_pieces_plate", () -> ChineseWeapons.platform().content().simpleItem());
+	public static final RegistryEntry<Item> DiamondMountainCharacterArmorPieces = REGISTRY.register("diamond_mountain_character_armor_pieces",()->ChineseWeapons.platform().content().simpleItem());
     public static final RegistryEntry<Item> ANCIENT_GEM_ORE = block(ChineseweaponsModBlocks.ANCIENT_GEM_ORE);
     public static final RegistryEntry<Item> DeepslateANCIENT_GEM_ORE = block(ChineseweaponsModBlocks.DeepslateANCIENT_GEM_ORE);
     public static final RegistryEntry<Item> EarlyTangDynastyMingGuangArmorforgingStone = REGISTRY.register("early_tang_dynasty_ming_guang_armor_forging_stone", () -> ChineseWeapons.platform().content().forgingStone("item.chineseweapons.early_tang_dynasty_ming_guang_armor_forging_stone.tile"));
@@ -233,7 +233,7 @@ public class ChineseweaponsModItems {
     public static final RegistryEntry<Item> ANCIENT_GEM_BLOCK = block(ChineseweaponsModBlocks.ANCIENT_GEM_BLOCK);
 
     private static RegistryEntry<Item> block(RegistryEntry<Block> block) {
-        return REGISTRY.register(block.id().path(), () -> new BlockItem(block.get(), new Item.Properties()));
+        return REGISTRY.register(block.id().path(), () -> ChineseWeapons.platform().content().blockItem(block.get()));
     }
 
 

@@ -23,12 +23,20 @@ tasks.named('sourcesJar', Jar).configure {
 
 repositories {
     mavenCentral()
+    maven {
+        name = 'Modrinth'
+        url = 'https://api.modrinth.com/maven'
+    }
 }
 
 dependencies {
     minecraft "com.mojang:minecraft:${fabric_minecraft_version}"
     implementation "net.fabricmc:fabric-loader:${fabric_loader_version}"
     implementation "net.fabricmc.fabric-api:fabric-api:${fabric_api_version}"
+
+    // Optional JEI API surface (jei/); compile-only, JEI is not a runtime dependency.
+    // Minecraft 26.1 is unobfuscated, so this needs no Loom remap configuration.
+    compileOnly 'maven.modrinth:jei:29.53.0.115'
 
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher:1.11.4'
 }

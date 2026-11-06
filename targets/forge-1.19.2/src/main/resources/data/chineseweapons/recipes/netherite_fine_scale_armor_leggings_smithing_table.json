@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:smithing",
+  "addition": {
+    "item": "minecraft:netherite_ingot"
+  },
+  "base": {
+    "item": "chineseweapons:diamond_fine_scale_armor_leggings"
+  },
+  "result": {
+    "item": "chineseweapons:netherite_fine_scale_armor_leggings"
+  }
+}

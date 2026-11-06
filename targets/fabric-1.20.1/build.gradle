@@ -33,6 +33,10 @@ commonJava {
 
 repositories {
     mavenCentral()
+    maven {
+        name = 'Modrinth'
+        url = 'https://api.modrinth.com/maven'
+    }
 }
 
 dependencies {
@@ -44,6 +48,18 @@ dependencies {
     // Forge provided JSR-305 annotations implicitly; vanilla 1.20.1 does not, and
     // the shared sources use javax.annotation.Nullable in their method signatures.
     compileOnly 'com.google.code.findbugs:jsr305:3.0.2'
+
+    // Optional KubeJS API surface (compat.kubejs); the mod is not required at runtime.
+    def kubejsCoordinate = providers.gradleProperty('debug_kubejs').orNull
+    if (kubejsCoordinate != null && !kubejsCoordinate.trim().isEmpty()) {
+        modCompileOnly kubejsCoordinate
+    }
+
+    // Optional JEI API surface (jei/); compile-only, JEI is not a runtime dependency.
+    modCompileOnly 'maven.modrinth:jei:15.20.0.104'
+
+    // Optional EMI API surface (compat/emi/); compile-only, EMI is not a runtime dependency.
+    modCompileOnly 'maven.modrinth:emi:1.1.24+1.20.1+fabric'
 }
 
 tasks.named('sourcesJar', Jar) {

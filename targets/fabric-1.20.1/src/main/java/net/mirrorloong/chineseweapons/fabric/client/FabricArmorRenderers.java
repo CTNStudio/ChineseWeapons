@@ -17,6 +17,10 @@ import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.mirrorloong.chineseweapons.ChineseWeapons;
+import net.mirrorloong.chineseweapons.content.ArmorSlot;
+import net.mirrorloong.chineseweapons.item.FabricArmorItem;
+import net.mirrorloong.chineseweapons.item.FabricArmorModels;
+import net.mirrorloong.chineseweapons.procedures.armor.DyeableArmorTextures;
 
 /**
  * Registers a Fabric {@link ArmorRenderer} for every shared armor item that
@@ -36,28 +40,41 @@ public final class FabricArmorRenderers {
             if (key == null || !ChineseWeapons.MOD_ID.equals(key.getNamespace())) {
                 continue;
             }
-            if (!(item instanceof ArmorItem armorItem)
-                    || !(item instanceof ArmorModelProvider provider)
-                    || !(item instanceof ArmorTextureProvider textures)) {
+            if (!(item instanceof FabricArmorItem armorItem)) {
                 continue;
             }
             ArmorRenderer.register((matrices, vertexConsumers, stack, entity, slot, light, contextModel) ->
-                    render(armorItem, provider, textures, matrices, vertexConsumers, stack, entity, slot, light, contextModel), item);
+                    render(armorItem, matrices, vertexConsumers, stack, entity, slot, light, contextModel), item);
         }
     }
 
-    private static void render(ArmorItem armorItem, ArmorModelProvider provider, ArmorTextureProvider textures,
+    private static void render(FabricArmorItem armorItem,
             PoseStack matrices, MultiBufferSource vertexConsumers, ItemStack stack, LivingEntity entity,
             EquipmentSlot slot, int light, HumanoidModel<LivingEntity> contextModel) {
         if (armorItem.getEquipmentSlot() != slot) {
             return;
         }
 
-        HumanoidModel<LivingEntity> model = provider.createArmorModel(entity, contextModel);
+        ArmorSlot armorSlot = switch (slot) {
+            case HEAD -> ArmorSlot.HELMET;
+            case CHEST -> ArmorSlot.CHESTPLATE;
+            case LEGS -> ArmorSlot.LEGGINGS;
+            case FEET -> ArmorSlot.BOOTS;
+            default -> null;
+        };
+        if (armorSlot == null) {
+            return;
+        }
+
+        HumanoidModel<LivingEntity> model = FabricArmorModels.create(
+                armorItem.definition().modelId(), armorSlot, entity, contextModel);
         contextModel.copyPropertiesTo(model);
         setPartVisibility(model, slot);
 
-        String texturePath = textures.getArmorTexture(stack, entity, slot, null);
+        String texturePath = armorItem.definition().overlayTexture().isEmpty()
+                ? armorItem.definition().baseTexture()
+                : DyeableArmorTextures.getArmorTexture(stack, null,
+                        armorItem.definition().baseTexture(), armorItem.definition().overlayTexture());
         ResourceLocation texture = ResourceLocation.tryParse(texturePath);
         if (texture == null) {
             return;

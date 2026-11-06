@@ -14,7 +14,7 @@ public class TangDynastyHengSaberItem extends FourBlockReachSwordItem {
     }
 
     private static Item.Properties properties(boolean fireResistant) {
-        Item.Properties properties = new Item.Properties();
+        Item.Properties properties = ItemIds.apply(new Item.Properties());
         return fireResistant ? properties.fireResistant() : properties;
     }
 }

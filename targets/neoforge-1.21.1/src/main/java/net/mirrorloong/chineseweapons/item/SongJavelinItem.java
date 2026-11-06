@@ -24,15 +24,17 @@ import net.mirrorloong.chineseweapons.rules.JavelinRules;
 import java.util.function.Consumer;
 
 public class SongJavelinItem extends FourBlockReachSwordItem {
+    private final int maxDurability;
+
+
 
     private final float attackDamage;
     private final float attackSpeed;
-    private final int maxDurability;
 
     public SongJavelinItem(Tier tier, int displayedAttackDamage, float speed,
                            boolean fireResistant, int durabilityOffset) {
         super(
-                tier,
+                WeaponTier.withUses(tier, tier.getUses() + durabilityOffset),
                 Math.round(displayedAttackDamage + tier.getAttackDamageBonus()),
                 speed - 4.0F,
                 properties(tier, fireResistant, durabilityOffset)

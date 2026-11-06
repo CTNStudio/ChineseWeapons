@@ -424,9 +424,9 @@
     "data/chineseweapons/advancement/get_sky_piercing_halberd/use_fangtian_hengzhan.json": "978bbf92fd4c9e93f16bdea4718dc67f636de748dd9c25ed565be299e8b1e799",
     "data/chineseweapons/advancement/root.json": "dbb748c8e58a8d0b37ee13cbcd56710d74a1383e9e367e3a12a4bd875b9fdb85",
     "data/chineseweapons/loot_table/blocks/ancient_gem_block.json": "06ce064080eb3b65878d850579a9337b147900eb701d0929eeeffafd2dc4eb2a",
-    "data/chineseweapons/loot_table/blocks/ancient_gem_ore.json": "76ae44cf1fd0edafe74cfcfa8cfa6d2f6239d92be42789c38ee53ea725f100c2",
+    "data/chineseweapons/loot_table/blocks/ancient_gem_ore.json": "dcd2600b5ee5b2836e039c1096800d3b1b0c41b07d7c9be61f70d521e70888ce",
     "data/chineseweapons/loot_table/blocks/armor_casting_table.json": "f79a447fe8be29cf25138a233da3622a71809ce3f6de6a084a31ddf0b7021640",
-    "data/chineseweapons/loot_table/blocks/deepslate_ancient_gem_ore.json": "b8870cb64b5150175a16e391e4907b5010007438636319f7e22e3620dc9086c0",
+    "data/chineseweapons/loot_table/blocks/deepslate_ancient_gem_ore.json": "fd4ad1948e955f40476428e37b8c5106d8d8891f2ae423ca6b14449c19cd7b4a",
     "data/chineseweapons/recipe/ancient_gem_block.json": "6c9b812b22a946f705e071cf3d7db5d2cb89af8c7df15ad1f51c4c8d3f2409ba",
     "data/chineseweapons/recipe/armor_casting_table.json": "20307c13b14510389a3a8947edcc638aa17f9845077aecdb827dce050b4c9d6e",
     "data/chineseweapons/recipe/diamond_armor_pieces.json": "f8656ef8c77401e18a643aea366a8e42f575e0da46d14db6f3d95cf501fb2004",
@@ -620,10 +620,20 @@
     "data/chineseweapons/recipe/wooden_song_javelin.json": "5a85a456088df89e20ad94f86e7bbbad07d26ac7ffe4d4cbaa82125e02e06c85",
     "data/chineseweapons/recipe/wooden_tang_dynasty_heng_saber.json": "d6b59eba3eda39d7e74628cb1077399e49e1dc09881c46bab4cb7d5516b860d8",
     "data/chineseweapons/tags/item/armor_pieces.json": "f927258735fc710fe37e79c4115fdb2016c72ec53af7eabfb83297ac6426ac47",
+    "data/chineseweapons/villager_trade/forging_stone/black_chui_armor_forging_stone.json": "34921cc57a7bd9777a2158369c95cc36e9c594b413d48373410b16314db3915c",
+    "data/chineseweapons/villager_trade/forging_stone/early_tang_dynasty_ming_guang_armor_forging_stone.json": "39dc50ef94f75e41de663c1b2bdcd4b2598c9013fd62e5ed64f330561601d1ac",
+    "data/chineseweapons/villager_trade/forging_stone/fine_scale_armor_forging_stone.json": "ffc20c0d925ea0fd05b68e2659ad221d39b96b502dde6e65dfc538b8a2e823f8",
+    "data/chineseweapons/villager_trade/forging_stone/footmen_armor_forging_stone.json": "a58aa09cbc965e38f5d679c9e9d87eda638d0c5524ccee0c9f82a1cfd09b365b",
+    "data/chineseweapons/villager_trade/forging_stone/late_tang_dynasty_ming_guang_armor_forging_stone.json": "046732b96c02060c0467987c38a358f7fb6fb4dfdff41a54cefc1becd554c943",
+    "data/chineseweapons/villager_trade/forging_stone/middle_tang_dynasty_ming_guang_armor_forging_stone.json": "2259bf910726bed532bc0b085783c7a6e19dc19a2a3a2143c8c1603d9bd0b005",
+    "data/chineseweapons/villager_trade/forging_stone/mountain_character_armor_forging_stone.json": "d8902401ef82fa68c9663d2e31c921302e9cc8476fbdcfa6395547c37f4208c8",
+    "data/chineseweapons/villager_trade/forging_stone/tang_dynasty_infantry_armor_forging_stone.json": "ea840bc34de30975ca90fb59ef264c13aee9a3d38a95e4072024f215f12b1860",
     "data/chineseweapons/worldgen/configured_feature/ancient_gem_ore.json": "9b56d71fd743644c6003401b24f7055be32ed7cf098805dea753a21a3d585b03",
     "data/chineseweapons/worldgen/configured_feature/deepslate_ancient_gem_ore.json": "8a2ae417efe2c31c0a6dab54bdf45514fdc99c279c986a5b6df04c1d358a40f8",
     "data/minecraft/tags/block/mineable/pickaxe.json": "508913bff303d1ca1df6bde4eecabf22a948b66330c72b69b4b0bd2dd4fd7041",
     "data/minecraft/tags/block/needs_iron_tool.json": "508913bff303d1ca1df6bde4eecabf22a948b66330c72b69b4b0bd2dd4fd7041",
-    "data/minecraft/tags/item/swords.json": "268cb33a55a6fc258f770339a4c36652b499a2d2b0de3594144e3d75f3326217"
+    "data/minecraft/tags/item/swords.json": "268cb33a55a6fc258f770339a4c36652b499a2d2b0de3594144e3d75f3326217",
+    "data/minecraft/tags/villager_trade/armorer/level_4.json": "2f6da32db33516bffe294be721fad0458bfe8d45bc92aa34fb9e3d524a1db9b5",
+    "data/minecraft/trade_set/armorer/level_4.json": "b183bdd1fc45ace19b06a0e436f2aefbfcee3fb3dda9cfdb16fff688e8628543"
   }
 }

@@ -19,7 +19,7 @@ public class SkyPiercingHalberdItem extends FourBlockReachSwordItem {
     }
 
     private static Item.Properties properties(ToolMaterial material, boolean fireResistant) {
-        Item.Properties properties = new Item.Properties().durability(material.durability() + 50);
+        Item.Properties properties = ItemIds.apply(new Item.Properties()).durability(material.durability() + 50);
         return fireResistant ? properties.fireResistant() : properties;
     }
 

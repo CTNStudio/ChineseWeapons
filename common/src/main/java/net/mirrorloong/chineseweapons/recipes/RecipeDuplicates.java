@@ -29,6 +29,11 @@ public final class RecipeDuplicates {
     public static void check(String signature, String recipeId) {
         String existing = REGISTERED.get(signature);
         if (existing != null) {
+            // A resource reload parses every recipe again; the same id must not
+            // be reported as a duplicate of its previous load.
+            if (existing.equals(recipeId)) {
+                return;
+            }
             ChineseWeapons.LOGGER.error("Duplicate recipe detected: " + existing + " <--> " + recipeId
                     + " - same ingredients but different output");
         } else {

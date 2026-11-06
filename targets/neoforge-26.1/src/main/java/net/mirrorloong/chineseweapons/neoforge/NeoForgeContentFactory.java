@@ -6,6 +6,7 @@ import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
@@ -24,8 +25,11 @@ import net.mirrorloong.chineseweapons.effects.BleedEffect;
 import net.mirrorloong.chineseweapons.effects.CutsEffect;
 import net.mirrorloong.chineseweapons.entity.SongJavelinProjectile;
 import net.mirrorloong.chineseweapons.entity.SongStandingShieldEntity;
+import net.mirrorloong.chineseweapons.item.ItemIds;
 import net.mirrorloong.chineseweapons.init.ChineseweaponsModBlocks;
+import net.mirrorloong.chineseweapons.item.ItemIds;
 import net.mirrorloong.chineseweapons.init.ChineseweaponsModItems;
+import net.mirrorloong.chineseweapons.item.ItemIds;
 import net.mirrorloong.chineseweapons.init.ChineseweaponsModTabs;
 import net.mirrorloong.chineseweapons.item.NeoForgeArmorItem;
 import net.mirrorloong.chineseweapons.item.NeoForgeDaggerAxeItem;
@@ -40,12 +44,24 @@ import net.mirrorloong.chineseweapons.item.TangDynastyHorseItem;
 import net.mirrorloong.chineseweapons.item.TangDynastyShield;
 import net.mirrorloong.chineseweapons.spi.ContentFactory;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.Identifier;
 import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.ToolMaterial;
 import java.util.function.Supplier;
 
 public final class NeoForgeContentFactory implements ContentFactory {
+    @Override
+    public Item simpleItem() {
+        return new Item(ItemIds.apply(new Item.Properties()));
+    }
+
+    @Override
+    public Item blockItem(Block block) {
+        return new BlockItem(block, ItemIds.apply(new Item.Properties()));
+    }
+
     @Override
     public Item armor(ArmorDefinition definition, ArmorSlot slot) {
         return new NeoForgeArmorItem(definition, slot);
@@ -105,22 +121,22 @@ public final class NeoForgeContentFactory implements ContentFactory {
 
     @Override
     public Block armorCastingTable() {
-        return new ArmorcastingtableBlock();
+        return new ArmorcastingtableBlock(blockKey("armor_casting_table"));
     }
 
     @Override
     public Block ancientGemOre() {
-        return new AncientgemoreBlock();
+        return new AncientgemoreBlock(blockKey("ancient_gem_ore"));
     }
 
     @Override
     public Block deepslateAncientGemOre() {
-        return new DeepslateAncientgemoreBlock();
+        return new DeepslateAncientgemoreBlock(blockKey("deepslate_ancient_gem_ore"));
     }
 
     @Override
     public Block ancientGemBlock() {
-        return new AncientGemBlock();
+        return new AncientGemBlock(blockKey("ancient_gem_block"));
     }
 
     @Override
@@ -186,5 +202,9 @@ public final class NeoForgeContentFactory implements ContentFactory {
             case DIAMOND -> ToolMaterial.DIAMOND;
             case NETHERITE -> ToolMaterial.NETHERITE;
         };
+    }
+
+    private static ResourceKey<Block> blockKey(String path) {
+        return ResourceKey.create(Registries.BLOCK, Identifier.fromNamespaceAndPath(ChineseWeapons.MOD_ID, path));
     }
 }

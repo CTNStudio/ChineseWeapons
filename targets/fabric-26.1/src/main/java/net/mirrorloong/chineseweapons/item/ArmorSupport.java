@@ -14,7 +14,10 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.equipment.ArmorMaterial;
 import net.minecraft.world.item.equipment.ArmorType;
+import net.minecraft.world.item.equipment.EquipmentAsset;
 import net.minecraft.world.item.equipment.EquipmentAssets;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.Identifier;
 import net.mirrorloong.chineseweapons.ChineseWeapons;
 import net.mirrorloong.chineseweapons.content.ArmorDefinition;
 import net.mirrorloong.chineseweapons.content.ArmorEquipSound;
@@ -32,7 +35,7 @@ public final class ArmorSupport {
 
     public static ArmorMaterial armor(int durability, int[] defense, int enchantmentValue,
             Holder<SoundEvent> equipSound, float toughness, float knockbackResistance,
-            TagKey<Item> repairIngredient, String assetName) {
+            TagKey<Item> repairIngredient, ResourceKey<EquipmentAsset> assetKey) {
         Map<ArmorType, Integer> defenseMap = new EnumMap<>(ArmorType.class);
         defenseMap.put(ArmorType.BOOTS, defense[0]);
         defenseMap.put(ArmorType.LEGGINGS, defense[1]);
@@ -40,7 +43,7 @@ public final class ArmorSupport {
         defenseMap.put(ArmorType.HELMET, defense[3]);
         defenseMap.put(ArmorType.BODY, defense[2]);
         return new ArmorMaterial(durability, defenseMap, enchantmentValue, equipSound, toughness,
-                knockbackResistance, repairIngredient, EquipmentAssets.createId(assetName));
+                knockbackResistance, repairIngredient, assetKey);
     }
 
     /**
@@ -69,12 +72,12 @@ public final class ArmorSupport {
      * under its registry path except the face guards, whose assets drop the
      * {@code _helmet} suffix.
      */
-    public static String equipmentAsset(ArmorDefinition definition) {
+    public static ResourceKey<EquipmentAsset> equipmentAsset(ArmorDefinition definition) {
         String id = definition.id();
         if (id.endsWith("_face_guard_helmet")) {
             id = id.substring(0, id.length() - "_helmet".length());
         }
-        return ChineseWeapons.MOD_ID + ":" + id;
+        return ResourceKey.create(EquipmentAssets.ROOT_ID, Identifier.fromNamespaceAndPath(ChineseWeapons.MOD_ID, id));
     }
 
     private static Holder<SoundEvent> equipSound(ArmorEquipSound sound) {

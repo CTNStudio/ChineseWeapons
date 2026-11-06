@@ -14,6 +14,10 @@ import net.minecraft.world.item.component.CustomData;
  */
 public interface DyeableItem {
 
+    default boolean isDyeable() {
+        return true;
+    }
+
     String TAG_COLOR = "Color";
     String TAG_DISPLAY = "display";
 

@@ -10,8 +10,8 @@ import net.mirrorloong.chineseweapons.ChineseWeapons;
 
 @Mod(ChineseWeapons.MOD_ID)
 public final class ChineseWeaponsForge {
-    public ChineseWeaponsForge(FMLJavaModLoadingContext context) {
-        IEventBus modBus = context.getModEventBus();
+    public ChineseWeaponsForge() {
+        IEventBus modBus = FMLJavaModLoadingContext.get().getModEventBus();
 
         ChineseWeapons.bootstrap(new ForgePlatform(modBus));
 

@@ -295,7 +295,7 @@ public class SongJavelinProjectile extends AbstractArrow {
 
     @Override
     protected ItemStack getPickupItem() {
-        return this.weaponStack.copy();
+        return this.weaponStack == null ? ItemStack.EMPTY : this.weaponStack.copy();
     }
 
     @Override

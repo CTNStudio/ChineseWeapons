@@ -6,9 +6,10 @@
     "armorRepairTags": false,
     "dyeableArmorRecipe": true,
     "humanoidBabyLayer": true,
-    "lootPredicateComponents": true,
+    "lootPredicateComponents": false,
     "namespacedPredicateType": false,
     "netheriteIgnoresLavaTag": false,
-    "shieldBaseModel": "item"
+    "shieldBaseModel": "item",
+    "villagerTrades": true
   }
 }

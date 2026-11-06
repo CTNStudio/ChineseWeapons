@@ -24,8 +24,8 @@ public class NeoForgeDaggerAxeItem extends DaggerAxeItemBase implements DaggerAx
 
     private static Item.Properties properties(WeaponDefinition definition) {
         Item.Properties properties = definition.fireResistant()
-                ? new Item.Properties().fireResistant()
-                : new Item.Properties();
+                ? ItemIds.apply(new Item.Properties()).fireResistant()
+                : ItemIds.apply(new Item.Properties());
         return ModWeapons.sword(ModWeapons.toolMaterial(definition), definition.attackDamageModifier(),
                 definition.attackSpeedModifier(), properties);
     }

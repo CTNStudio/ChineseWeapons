@@ -38,7 +38,7 @@ public class SongJavelinItem extends FourBlockReachSwordItem {
 
     private static Item.Properties properties(ToolMaterial tier, boolean fireResistant, int durabilityOffset) {
         int finalDurability = tier.durability() + durabilityOffset;
-        Item.Properties properties = new Item.Properties().durability(finalDurability);
+        Item.Properties properties = ItemIds.apply(new Item.Properties()).durability(finalDurability);
         return fireResistant ? properties.fireResistant() : properties;
     }
 

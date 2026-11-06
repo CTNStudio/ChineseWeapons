@@ -9,12 +9,15 @@ import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.crafting.RecipeType;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.event.ItemAttributeModifierEvent;
+import net.neoforged.neoforge.event.OnDatapackSyncEvent;
 import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
 import net.mirrorloong.chineseweapons.ChineseWeapons;
 import net.mirrorloong.chineseweapons.compat.WeaponScriptSettings;
 import net.mirrorloong.chineseweapons.item.ReachSwordItem;
+import net.mirrorloong.chineseweapons.recipes.DeferredRecipe;
 import net.mirrorloong.chineseweapons.spi.GlaiveItem;
 
 public final class NeoForgeEvents {
@@ -42,6 +45,23 @@ public final class NeoForgeEvents {
         if (RANDOM.nextFloat() < chance) {
             event.getEntity().stopRiding();
         }
+    }
+
+    @SubscribeEvent
+    public static void onDatapackSync(OnDatapackSyncEvent event) {
+        // 26.1 clients no longer receive the recipe registry. Request our recipe
+        // type so client-side recipe viewers can display it, plus the vanilla
+        // types JEI registers from the same sync (JEI adds these itself when it
+        // runs on the server; the request set is deduplicated).
+        event.sendRecipes(
+                RecipeType.CRAFTING,
+                RecipeType.STONECUTTING,
+                RecipeType.SMELTING,
+                RecipeType.SMOKING,
+                RecipeType.BLASTING,
+                RecipeType.CAMPFIRE_COOKING,
+                RecipeType.SMITHING,
+                DeferredRecipe.WeaponCastingShapedType.get());
     }
 
     @SubscribeEvent

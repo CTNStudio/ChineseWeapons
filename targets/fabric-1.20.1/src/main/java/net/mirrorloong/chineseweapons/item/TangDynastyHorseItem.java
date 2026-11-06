@@ -11,10 +11,18 @@ import net.minecraft.world.item.ItemStack;
  * overrides are reduced to their vanilla equivalents.
  */
 public class TangDynastyHorseItem extends HorseArmorItem {
+    private final ResourceLocation texture;
+
     public TangDynastyHorseItem(int defense, ResourceLocation texture) {
-        super(defense, texture.toString(), new Item.Properties()
+        super(defense, texture.getPath(), new Item.Properties()
                 .stacksTo(1)
                 .durability(0));
+        this.texture = texture;
+    }
+
+    @Override
+    public ResourceLocation getTexture() {
+        return texture;
     }
 
     public int getMaxDamage(ItemStack stack) {

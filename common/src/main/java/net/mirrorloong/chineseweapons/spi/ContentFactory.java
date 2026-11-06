@@ -17,6 +17,10 @@ import net.mirrorloong.chineseweapons.content.WeaponMaterial;
  * loader/version-specific classes live in the targets.
  */
 public interface ContentFactory {
+    Item blockItem(Block block);
+
+    Item simpleItem();
+
     Item armor(ArmorDefinition definition, ArmorSlot slot);
 
     Item glaive(WeaponDefinition definition);

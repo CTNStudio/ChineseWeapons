@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:smithing",
+  "addition": {
+    "item": "minecraft:netherite_ingot"
+  },
+  "base": {
+    "item": "chineseweapons:diamond_face_guard_helmet"
+  },
+  "result": {
+    "item": "chineseweapons:netherite_face_guard_helmet"
+  }
+}

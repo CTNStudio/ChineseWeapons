@@ -98,6 +98,20 @@ public final class ChineseWeaponsCombatEvents {
         return ArmorRules.isFullFineScaleSet(entity, FabricGameplayCompat.ARMOR_GAIN);
     }
 
+    /** Original {@code LivingJumpEvent}: a tethered entity has a 30% chance to escape on jump. */
+    public static void tryEscapeTether(LivingEntity entity) {
+        if (ChineseWeapons.gameplay().isClientSide(ChineseWeapons.gameplay().level(entity))) {
+            return;
+        }
+        if (!isTethered(entity)) {
+            return;
+        }
+        if (ChineseWeapons.gameplay().nextFloat(ChineseWeapons.gameplay().level(entity)) >= 0.30F) {
+            return;
+        }
+        TETHERS.remove(entity.getUUID());
+    }
+
     public static boolean isTethered(LivingEntity entity) {
         return TETHERS.containsKey(entity.getUUID());
     }

@@ -7,7 +7,9 @@ import net.mirrorloong.chineseweapons.procedures.armor.ChineseWeaponsCombatEvent
 import net.mirrorloong.chineseweapons.procedures.armor.FootmenarmorcompletetestingProcedure;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 /**
  * Fabric has no damage event that can change the incoming amount before armour
@@ -27,5 +29,10 @@ public abstract class LivingEntityMixin {
         LivingEntity self = (LivingEntity) (Object) this;
         float modified = ChineseWeaponsCombatEvents.modifyDamageAmount(self, source, amount);
         return FootmenarmorcompletetestingProcedure.modifyDamageAmount(self, source, modified);
+    }
+
+    @Inject(method = "jumpFromGround", at = @At("TAIL"))
+    private void chineseweapons$tryEscapeTether(CallbackInfo ci) {
+        ChineseWeaponsCombatEvents.tryEscapeTether((LivingEntity) (Object) this);
     }
 }

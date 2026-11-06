@@ -11,6 +11,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.EntityBlock;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
@@ -33,12 +34,12 @@ public class ArmorcastingtableBlock extends Block implements EntityBlock {
             box(1, 4, 1, 15, 12, 15)
     );
 
-    public ArmorcastingtableBlock() {
+    public ArmorcastingtableBlock(ResourceKey<Block> id) {
         super(BlockBehaviour.Properties.of()
                 .sound(SoundType.STONE)
                 .strength(3f, 10f)
                 .noOcclusion()
-                .isRedstoneConductor((bs, br, bp) -> false));
+                .isRedstoneConductor((bs, br, bp) -> false).setId(id));
     }
 
     @Override

@@ -9,6 +9,7 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.Identifier;
 import net.mirrorloong.chineseweapons.ChineseWeapons;
 import net.mirrorloong.chineseweapons.spi.Registration;
+import net.mirrorloong.chineseweapons.spi.ContentIds;
 import net.mirrorloong.chineseweapons.spi.RegistryBuilder;
 import net.mirrorloong.chineseweapons.spi.RegistryEntry;
 import net.mirrorloong.chineseweapons.spi.ResourceId;
@@ -101,7 +102,7 @@ public final class FabricRegistration implements Registration {
         @Override
         public <V extends T> RegistryEntry<V> register(String name, Supplier<V> factory) {
             ResourceId id = new ResourceId(ChineseWeapons.MOD_ID, name);
-            V value = factory.get();
+            V value = ContentIds.with(name, factory);
             Registry.register(registry, Identifier.fromNamespaceAndPath(id.namespace(), id.path()), value);
             return new Entry<>(id, value);
         }

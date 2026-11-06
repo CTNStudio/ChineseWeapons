@@ -7,7 +7,8 @@ import net.minecraft.core.Registry;
 import java.util.EnumMap;
 import java.util.Map;
 import java.util.Objects;
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.Collections;
+import java.util.HashMap;
 
 public final class WeaponScriptSettings {
     public enum Skill {
@@ -30,10 +31,10 @@ public final class WeaponScriptSettings {
         ARMOR_GAIN
     }
 
-    private static final Map<ResourceLocation, Double> REACH_BONUSES = new ConcurrentHashMap<>();
-    private static final Map<ResourceLocation, EnumMap<Skill, Float>> SKILL_CHANCES = new ConcurrentHashMap<>();
-    private static final Map<ResourceLocation, EnumMap<ALLWeapon, Double>> ARMOR_THRESHOLDS = new ConcurrentHashMap<>();
-    private static final Map<ResourceLocation, EnumMap<Logic, Boolean>> LOGIC_CHANCES = new ConcurrentHashMap<>();
+    private static final Map<ResourceLocation, Double> REACH_BONUSES = Collections.synchronizedMap(new HashMap<>());
+    private static final Map<ResourceLocation, EnumMap<Skill, Float>> SKILL_CHANCES = Collections.synchronizedMap(new HashMap<>());
+    private static final Map<ResourceLocation, EnumMap<ALLWeapon, Double>> ARMOR_THRESHOLDS = Collections.synchronizedMap(new HashMap<>());
+    private static final Map<ResourceLocation, EnumMap<Logic, Boolean>> LOGIC_CHANCES = Collections.synchronizedMap(new HashMap<>());
 
     private WeaponScriptSettings() {
     }
@@ -47,7 +48,7 @@ public final class WeaponScriptSettings {
 
     public static double getReachBonus(Item item, double fallback) {
         ResourceLocation itemId = Registry.ITEM.getKey(item);
-        return itemId == null ? fallback : REACH_BONUSES.getOrDefault(itemId, fallback);
+        return REACH_BONUSES.getOrDefault(itemId, fallback);
     }
 
     public static void setChance(ResourceLocation itemId, Skill skill, double chance) {
@@ -59,7 +60,7 @@ public final class WeaponScriptSettings {
 
     public static float getChance(Item item, Skill skill, float fallback) {
         ResourceLocation itemId = Registry.ITEM.getKey(item);
-        EnumMap<Skill, Float> values = itemId == null ? null : SKILL_CHANCES.get(itemId);
+        EnumMap<Skill, Float> values = SKILL_CHANCES.get(itemId);
         return values == null ? fallback : values.getOrDefault(skill, fallback);
     }
 
@@ -72,7 +73,7 @@ public final class WeaponScriptSettings {
 
     public static double getArmorThreshold(Item item, ALLWeapon threshold, double fallback) {
         ResourceLocation itemId = Registry.ITEM.getKey(item);
-        EnumMap<ALLWeapon, Double> values = itemId == null ? null : ARMOR_THRESHOLDS.get(itemId);
+        EnumMap<ALLWeapon, Double> values = ARMOR_THRESHOLDS.get(itemId);
         return values == null ? fallback : values.getOrDefault(threshold, fallback);
     }
 
@@ -85,7 +86,7 @@ public final class WeaponScriptSettings {
 
     public static boolean getLogicChance(Item item, Logic logic, boolean fallback) {
         ResourceLocation itemId = Registry.ITEM.getKey(item);
-        EnumMap<Logic, Boolean> values = itemId == null ? null : LOGIC_CHANCES.get(itemId);
+        EnumMap<Logic, Boolean> values = LOGIC_CHANCES.get(itemId);
         return values == null ? fallback : values.getOrDefault(logic, fallback);
     }
 }

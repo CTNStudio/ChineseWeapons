@@ -28,11 +28,8 @@ public class GuDuoItem extends SixBlockReachSwordItem {
     }
 
     private static Item.Properties makeProperties(boolean fireResistant, int durability) {
-        Item.Properties properties = new Item.Properties().durability(durability);
-        if (fireResistant) {
-            properties.fireResistant();
-        }
-        return properties;
+        Item.Properties properties = ItemIds.apply(new Item.Properties()).durability(durability);
+        return fireResistant ? properties.fireResistant() : properties;
     }
 
     @Override

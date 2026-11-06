@@ -13,6 +13,7 @@ import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import net.mirrorloong.chineseweapons.ChineseWeapons;
 import net.mirrorloong.chineseweapons.spi.Registration;
+import net.mirrorloong.chineseweapons.spi.ContentIds;
 import net.mirrorloong.chineseweapons.spi.RegistryBuilder;
 import net.mirrorloong.chineseweapons.spi.RegistryEntry;
 import net.mirrorloong.chineseweapons.spi.ResourceId;
@@ -59,7 +60,7 @@ public final class NeoForgeRegistration implements Registration {
 
         @Override
         public <V extends T> RegistryEntry<V> register(String name, Supplier<V> factory) {
-            DeferredHolder<T, V> object = deferred.register(name, factory);
+            DeferredHolder<T, V> object = deferred.register(name, () -> ContentIds.with(name, factory));
             return new Entry<>(object);
         }
     }

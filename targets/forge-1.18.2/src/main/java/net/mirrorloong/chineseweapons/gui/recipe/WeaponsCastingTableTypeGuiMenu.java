@@ -88,7 +88,7 @@ public class WeaponsCastingTableTypeGuiMenu extends AbstractContainerMenu {
         result = stack.copy();
 
         // onTake
-        if (index == 11) {
+        if (index == 10) {
             if (table == null || !table.isFinished()) {
                 return ItemStack.EMPTY;
             }
@@ -103,18 +103,18 @@ public class WeaponsCastingTableTypeGuiMenu extends AbstractContainerMenu {
             return result;
         }
 
-        // 输入槽 0-10
-        if (index >= 0 && index <= 10) {
+        // 输入槽 0-9
+        if (index >= 0 && index <= 9) {
             if (table != null && !table.getOutput().getItem(0).isEmpty()) {
                 return ItemStack.EMPTY;
             }
-            if (!this.moveItemStackTo(stack, 12, 47, true)) {
+            if (!this.moveItemStackTo(stack, 11, 47, true)) {
                 return ItemStack.EMPTY;
             }
         }
-        // 背包 12-46
-        else if (index >= 12 && index <= 46) {
-            if (!this.moveItemStackTo(stack, 0, 11, false)) {
+        // 背包 11-46
+        else if (index >= 11 && index <= 46) {
+            if (!this.moveItemStackTo(stack, 0, 10, false)) {
                 return ItemStack.EMPTY;
             }
         }

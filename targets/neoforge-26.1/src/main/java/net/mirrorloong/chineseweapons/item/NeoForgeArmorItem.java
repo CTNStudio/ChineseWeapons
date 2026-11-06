@@ -92,8 +92,8 @@ public class NeoForgeArmorItem extends Item implements DyeableItem, ArmorItemLik
 
     private static Item.Properties properties(ArmorDefinition definition, ArmorSlot slot) {
         Item.Properties properties = definition.fireResistant()
-                ? new Item.Properties().fireResistant()
-                : new Item.Properties();
+                ? ItemIds.apply(new Item.Properties()).fireResistant()
+                : ItemIds.apply(new Item.Properties());
         return ModArmorMaterials.apply(properties, definition, type(slot));
     }
 

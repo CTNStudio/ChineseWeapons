@@ -12,7 +12,7 @@ public class ForgingStoneItem extends Item {
     private final String tooltipKey;
 
     public ForgingStoneItem(String tooltipKey) {
-        super(new Properties());
+        super(ItemIds.apply(new Properties()));
         this.tooltipKey = tooltipKey;
     }
 

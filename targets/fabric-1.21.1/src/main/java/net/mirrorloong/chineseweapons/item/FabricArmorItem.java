@@ -2,7 +2,6 @@ package net.mirrorloong.chineseweapons.item;
 
 import java.util.List;
 
-import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.core.Holder;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -22,8 +21,6 @@ import net.minecraft.world.level.Level;
 import net.mirrorloong.chineseweapons.content.ArmorDefinition;
 import net.mirrorloong.chineseweapons.content.ArmorEquipSound;
 import net.mirrorloong.chineseweapons.content.ArmorSlot;
-import net.mirrorloong.chineseweapons.fabric.client.ArmorModelProvider;
-import net.mirrorloong.chineseweapons.fabric.client.ArmorTextureProvider;
 import net.mirrorloong.chineseweapons.procedures.armor.DyeableItem;
 import net.mirrorloong.chineseweapons.procedures.armor.FaceGuardHelmetKHProcedures;
 import net.mirrorloong.chineseweapons.procedures.armor.FootmenarmorcompletetestingProcedure;
@@ -35,7 +32,7 @@ import net.mirrorloong.chineseweapons.spi.ArmorItemLike;
  * read the material data instead of testing concrete classes.
  */
 public class FabricArmorItem extends ArmorItem
-        implements ArmorItemLike, ArmorModelProvider, ArmorTextureProvider {
+        implements ArmorItemLike {
     private static final String FACE_GUARD_MODEL = "face_guard";
     private static final String FOOTMEN_MODEL = "footmen_armor";
 
@@ -84,23 +81,9 @@ public class FabricArmorItem extends ArmorItem
         return false;
     }
 
-    @Override
-    public HumanoidModel createArmorModel(LivingEntity living, HumanoidModel defaultModel) {
-        return FabricArmorModels.create(definition.modelId(), slot, living, defaultModel);
-    }
 
-    @Override
-    public ResourceLocation getArmorTexture(ItemStack stack, Entity entity, EquipmentSlot equipmentSlot,
-                                            ArmorMaterial.Layer layer, boolean innerModel) {
-        if (definition.overlayTexture().isEmpty()) {
-            return ResourceLocation.parse(definition.baseTexture());
-        }
-        return ResourceLocation.parse(DyeableItem.getArmorTexture(stack, innerModel ? "layer_2" : "layer_1",
-                definition.baseTexture(), definition.overlayTexture()));
-    }
-
-    // Forge/NeoForge items expose these hooks; vanilla 1.21.1 does not, so on
-    // Fabric the flags are carried by the definition but not consulted by the game.
+    // Forge/NeoForge items expose these hooks; vanilla 1.21.1 does not, so
+    // PiglinAiMixin/PowderSnowBlockMixin consult these methods on Fabric.
     public boolean makesPiglinsNeutral(ItemStack stack, LivingEntity wearer) {
         return definition.piglinNeutral();
     }

@@ -20,7 +20,7 @@ public final class ModWeapons {
     }
 
     public static Item.Properties sword(ToolMaterial material, float attackDamage, float attackSpeed) {
-        return new Item.Properties().sword(material, attackDamage, attackSpeed);
+        return ItemIds.apply(new Item.Properties()).sword(material, attackDamage, attackSpeed);
     }
 
     /**

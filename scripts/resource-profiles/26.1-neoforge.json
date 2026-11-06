@@ -12,6 +12,7 @@
     "lootPredicateComponents": false,
     "namespacedPredicateType": true,
     "netheriteIgnoresLavaTag": true,
-    "shieldBaseModel": "custom"
+    "shieldBaseModel": "custom",
+    "villagerTrades": true
   }
 }

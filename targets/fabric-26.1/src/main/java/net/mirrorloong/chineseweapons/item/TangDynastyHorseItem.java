@@ -3,12 +3,14 @@ package net.mirrorloong.chineseweapons.item;
 import java.util.Map;
 
 import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.equipment.ArmorMaterial;
 import net.minecraft.world.item.equipment.ArmorType;
 import net.minecraft.world.item.equipment.EquipmentAssets;
+import net.mirrorloong.chineseweapons.ChineseWeapons;
 
 /**
  * 26.1 removed {@code HorseArmorItem}: horse armour is a regular item whose
@@ -17,7 +19,7 @@ import net.minecraft.world.item.equipment.EquipmentAssets;
  */
 public class TangDynastyHorseItem extends Item {
     public TangDynastyHorseItem(int defense, Identifier texture) {
-        super(new Item.Properties().stacksTo(1).horseArmor(createMaterial(defense, texture)));
+        super(ItemIds.apply(new Item.Properties()).stacksTo(1).horseArmor(createMaterial(defense, texture)));
     }
 
     private static ArmorMaterial createMaterial(int defense, Identifier texture) {
@@ -34,6 +36,6 @@ public class TangDynastyHorseItem extends Item {
                 0.0F,
                 0.0F,
                 ItemTags.REPAIRS_LEATHER_ARMOR,
-                EquipmentAssets.createId("chineseweapons:" + name));
+                ResourceKey.create(EquipmentAssets.ROOT_ID, Identifier.fromNamespaceAndPath(ChineseWeapons.MOD_ID, name)));
     }
 }

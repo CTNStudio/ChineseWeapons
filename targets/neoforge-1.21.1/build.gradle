@@ -47,6 +47,18 @@ neoForge {
 repositories {
     mavenCentral()
     mavenLocal()
+    maven {
+        name = 'Modrinth'
+        url = 'https://api.modrinth.com/maven'
+        content { includeGroup 'maven.modrinth' }
+    }
+}
+
+dependencies {
+    // Optional recipe-viewer integration: compile against the plugin APIs only,
+    // never ship or require the viewer mods at runtime.
+    compileOnly 'maven.modrinth:jei:19.70.0.469'
+    compileOnly 'maven.modrinth:emi:1.1.24+1.21.1+neoforge'
 }
 
 tasks.named('processResources', ProcessResources).configure {

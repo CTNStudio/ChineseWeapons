@@ -12,7 +12,8 @@
     "client": [
       "net.mirrorloong.chineseweapons.fabric.FabricClientNetwork",
       "net.mirrorloong.chineseweapons.fabric.FabricClientSetup"
-    ]
+    ],
+    "emi": ["net.mirrorloong.chineseweapons.compat.emi.ChineseWeaponsEmiPlugin"]
   },
   "mixins": ["chineseweapons.mixins.json"],
   "depends": {

@@ -28,7 +28,7 @@ public class SongJavelinItem extends FourBlockReachSwordItem {
     }
 
     private static Properties properties(ToolMaterial material, boolean fireResistant, int durabilityOffset) {
-        Properties properties = new Properties().durability(material.durability() + durabilityOffset);
+        Properties properties = ItemIds.apply(new Properties()).durability(material.durability() + durabilityOffset);
         return fireResistant ? properties.fireResistant() : properties;
     }
 

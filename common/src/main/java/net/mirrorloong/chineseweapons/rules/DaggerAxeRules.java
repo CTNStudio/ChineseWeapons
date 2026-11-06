@@ -37,7 +37,8 @@ public final class DaggerAxeRules {
     /** Runs the fierce hook for a player holding a dagger-axe (shield action packet). */
     public static void hook(Player player, ItemStack itemStack) {
         float scriptChance = ChineseWeapons.gameplay().daggerAxeHookChance(itemStack);
-        execute(ChineseWeapons.gameplay().level(player), player.getX(), player.getY(), player.getZ(),
+        var eye = player.getEyePosition();
+        execute(ChineseWeapons.gameplay().level(player), eye.x, eye.y, eye.z,
                 player, itemStack, scriptChance, stack -> ChineseWeapons.gameplay().armorGain(stack));
     }
 

@@ -25,6 +25,9 @@ public class DeferredRecipe {
     public static final RegistryEntry<RecipeSerializer<?>> WeaponsCastingShapedSerType =
             SERIALIZERS.register("weapon_casting_shaped", () -> WCTRecipeSer.SERIALIZER);
 
+    public static final RegistryEntry<RecipeSerializer<?>> DyeableArmorSerType =
+            SERIALIZERS.register("crafting_special_dyeablearmor", () -> DyeableArmorRecipe.SERIALIZER);
+
     public static void init() {
     }
 }

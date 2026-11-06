@@ -6,7 +6,6 @@ import javax.annotation.Nullable;
 
 import com.google.common.collect.Iterables;
 
-import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
@@ -24,8 +23,6 @@ import net.minecraft.world.level.Level;
 import net.mirrorloong.chineseweapons.content.ArmorDefinition;
 import net.mirrorloong.chineseweapons.content.ArmorEquipSound;
 import net.mirrorloong.chineseweapons.content.ArmorSlot;
-import net.mirrorloong.chineseweapons.fabric.client.ArmorModelProvider;
-import net.mirrorloong.chineseweapons.fabric.client.ArmorTextureProvider;
 import net.mirrorloong.chineseweapons.procedures.armor.DyeableItem;
 import net.mirrorloong.chineseweapons.procedures.armor.FaceGuardHelmetKHProcedures;
 import net.mirrorloong.chineseweapons.procedures.armor.FootmenarmorcompletetestingProcedure;
@@ -39,7 +36,7 @@ import net.mirrorloong.chineseweapons.spi.ArmorItemLike;
  * {@link ArmorModelProvider}.
  */
 public class FabricArmorItem extends ArmorItem
-        implements DyeableItem, ArmorItemLike, ArmorModelProvider, ArmorTextureProvider {
+        implements DyeableItem, ArmorItemLike {
     private static final int[] BASE_DURABILITY = new int[]{13, 15, 16, 11};
     private static final String FACE_GUARD_MODEL = "face_guard";
     private static final String FOOTMEN_MODEL = "footmen_armor";
@@ -86,28 +83,15 @@ public class FabricArmorItem extends ArmorItem
         }
     }
 
-    @Override
-    public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlot equipmentSlot, String type) {
-        if (definition.overlayTexture().isEmpty()) {
-            return definition.baseTexture();
-        }
-        return DyeableItem.getArmorTexture(stack, type, definition.baseTexture(), definition.overlayTexture());
-    }
-
     // Forge's IForgeItem hooks for these two flags do not exist in vanilla
-    // 1.20.1, so the definition still carries them but the game never consults
-    // them on Fabric.
+    // 1.20.1; PiglinAiMixin/PowderSnowBlockMixin consult these methods so the
+    // flags still take effect on Fabric.
     public boolean makesPiglinsNeutral(ItemStack stack, LivingEntity wearer) {
         return definition.piglinNeutral();
     }
 
     public boolean canWalkOnPowderedSnow(ItemStack stack, LivingEntity wearer) {
         return definition.snowWalk() && slot == ArmorSlot.BOOTS;
-    }
-
-    @Override
-    public HumanoidModel createArmorModel(LivingEntity living, HumanoidModel defaultModel) {
-        return FabricArmorModels.create(definition.modelId(), slot, living, defaultModel);
     }
 
     private static Item.Properties properties(ArmorDefinition definition) {
