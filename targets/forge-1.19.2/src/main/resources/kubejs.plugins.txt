@@ -1,0 +1,1 @@
+net.mirrorloong.chineseweapons.compat.kubejs.ChineseWeaponsKubeJSPlugin

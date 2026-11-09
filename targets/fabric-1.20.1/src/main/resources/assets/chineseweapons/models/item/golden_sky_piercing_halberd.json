@@ -1,0 +1,8 @@
+{
+  "gui_light": "front",
+  "parent": "chineseweapons:custom/sky_piercing_halberd",
+  "textures": {
+    "1": "chineseweapons:block/weapon/golden_sky_piercing_halberd",
+    "particle": "chineseweapons:block/weapon/golden_sky_piercing_halberd"
+  }
+}

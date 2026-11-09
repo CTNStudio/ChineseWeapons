@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "id": "${mod_id}",
+  "version": "${mod_version}",
+  "name": "${mod_name}",
+  "description": "${mod_description}",
+  "authors": ["${mod_authors}"],
+  "license": "${mod_license}",
+  "environment": "*",
+  "entrypoints": {
+    "main": ["net.mirrorloong.chineseweapons.ChineseWeaponsFabric"],
+    "client": [
+      "net.mirrorloong.chineseweapons.fabric.FabricClientNetwork",
+      "net.mirrorloong.chineseweapons.fabric.FabricClientSetup"
+    ],
+    "jei_mod_plugin": [
+      "net.mirrorloong.chineseweapons.jei.WeaponsCastingTableRecipeJeiPlugin"
+    ]
+  },
+  "mixins": ["chineseweapons.mixins.json"],
+  "depends": {
+    "fabricloader": ">=${fabric_loader_version}",
+    "fabric-api": ">=${fabric_api_version}",
+    "minecraft": "~${minecraft_version}",
+    "java": ">=25"
+  }
+}

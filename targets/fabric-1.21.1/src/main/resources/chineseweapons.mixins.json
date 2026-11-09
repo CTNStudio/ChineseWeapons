@@ -1,0 +1,19 @@
+{
+  "required": true,
+  "package": "net.mirrorloong.chineseweapons.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": [
+    "ArrowMixin",
+    "ExplosionMixin",
+    "ItemMixin",
+    "LivingEntityMixin",
+    "PiglinAiMixin",
+    "PlayerReachMixin",
+    "PowderSnowBlockMixin",
+    "VillagerMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "refmap": "chineseweapons-fabric.refmap.json"
+}
