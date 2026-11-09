@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:smithing",
+  "addition": {
+    "item": "minecraft:netherite_ingot"
+  },
+  "base": {
+    "item": "chineseweapons:diamond_guduo"
+  },
+  "result": {
+    "item": "chineseweapons:netherite_guduo"
+  }
+}

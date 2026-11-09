@@ -1,0 +1,43 @@
+package net.mirrorloong.chineseweapons.item;
+
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ToolMaterial;
+import net.mirrorloong.chineseweapons.ChineseWeapons;
+import net.mirrorloong.chineseweapons.compat.WeaponScriptSettings;
+import net.mirrorloong.chineseweapons.rules.GuDuoRules;
+
+public class GuDuoItem extends SixBlockReachSwordItem {
+
+    public GuDuoItem(ToolMaterial material, int displayedAttackDamage, float speed,
+                     boolean fireResistant, int durabilityOffset) {
+        super(ModWeapons.sword(material,
+                Math.round(displayedAttackDamage - 1.0F - material.attackDamageBonus()),
+                speed - 4.0F,
+                makeProperties(material, fireResistant, durabilityOffset)));
+    }
+
+    private static Properties makeProperties(ToolMaterial material, boolean fireResistant, int durability) {
+        Properties properties = ItemIds.apply(new Properties()).durability(material.durability() + durability);
+        return fireResistant ? properties.fireResistant() : properties;
+    }
+
+    @Override
+    public void hurtEnemy(ItemStack stack, LivingEntity target, LivingEntity attacker) {
+        GuDuoRules.onHurtEnemy(stack, target, attacker, settings(stack));
+        ChineseWeapons.gameplay().damageItem(stack, 2, attacker);
+        super.hurtEnemy(stack, target, attacker);
+    }
+
+    private static GuDuoRules.Settings settings(ItemStack stack) {
+        return new GuDuoRules.Settings(
+                WeaponScriptSettings.getArmorThreshold(
+                        stack.getItem(), WeaponScriptSettings.ALLWeapon.GUDUO_ARMORBLINDNESS, 4.0),
+                WeaponScriptSettings.getArmorThreshold(
+                        stack.getItem(), WeaponScriptSettings.ALLWeapon.GUDUO_HURTDOWNWARD, 1.0),
+                (int) Math.round(WeaponScriptSettings.getArmorThreshold(
+                        stack.getItem(), WeaponScriptSettings.ALLWeapon.GUDUO_HURTSKILLTICK, 10.0)),
+                WeaponScriptSettings.getChance(
+                        stack.getItem(), WeaponScriptSettings.Skill.GUDUO_STOPRIDING, 0.3F));
+    }
+}

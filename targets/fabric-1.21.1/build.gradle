@@ -1,0 +1,106 @@
+buildscript {
+    repositories {
+        gradlePluginPortal()
+        maven { url = 'https://maven.fabricmc.net/' }
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'net.fabricmc:fabric-loom:1.10.5'
+        classpath 'me.modmuss50:mod-publish-plugin:2.1.1'
+    }
+}
+
+apply plugin: 'fabric-loom'
+apply plugin: 'java'
+apply plugin: 'me.modmuss50.mod-publish-plugin'
+
+apply from: file('../../gradle/target-conventions/shared.gradle')
+
+ext.resourceProfile = '1.21.1-fabric'
+apply from: file('../../gradle/target-conventions/generated-resources.gradle')
+
+java {
+    toolchain.languageVersion = JavaLanguageVersion.of(21)
+}
+
+loom {
+    mixin {
+        defaultRefmapName = 'chineseweapons-fabric.refmap.json'
+    }
+}
+
+commonJava {
+    // Intentionally empty: no shared source file is excluded. Target-local procedures
+    // are thin event adapters around the shared rules in common/.../rules.
+}
+
+repositories {
+    mavenCentral()
+    // Optional recipe-viewer integrations (JEI, EMI), compile-only.
+    maven {
+        name = 'Modrinth'
+        url = 'https://api.modrinth.com/maven'
+    }
+    maven {
+        name = 'BlameJared'
+        url = 'https://maven.blamejared.com'
+    }
+}
+
+dependencies {
+    minecraft "com.mojang:minecraft:${fabric_minecraft_version}"
+    mappings loom.officialMojangMappings()
+    modImplementation "net.fabricmc:fabric-loader:${fabric_loader_version}"
+    modImplementation "net.fabricmc.fabric-api:fabric-api:${fabric_api_version}"
+
+    // Forge/NeoForge ship JSR-305 annotations implicitly; vanilla does not, and the
+    // shared sources use javax.annotation.Nullable in their method signatures.
+    compileOnly 'com.google.code.findbugs:jsr305:3.0.2'
+
+    // Optional recipe-viewer integration, compile-only: neither JEI nor EMI is a
+    // runtime dependency, and the plugin classes are only loaded when the viewer
+    // that owns the entrypoint is installed.
+    //
+    // JEI: version 19.70.0.469 is shared between the Forge and Fabric uploads, so the
+    // Modrinth Maven coordinate serves the Forge jar; the Fabric mod jar also declares
+    // Fabric-Loom-Version 1.18.2, which Loom 1.10 refuses to remap. JEI's published API
+    // artifact is already in Mojang mappings, so it needs no remapping.
+    compileOnly 'mezz.jei:jei-1.21.1-common-api:19.70.0.469'
+    modCompileOnly 'maven.modrinth:emi:1.1.24+1.21.1+fabric'
+}
+
+tasks.named('sourcesJar', Jar).configure {
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+}
+
+tasks.named('processResources', ProcessResources).configure {
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    // Forge's conditional recipe wrapper and its Patchouli guide book result are not
+    // understood by Fabric; the Patchouli integration is not ported.
+    exclude 'data/chineseweapons/recipes/forging_notes.json'
+    def replaceProperties = [
+            minecraft_version    : fabric_minecraft_version,
+            fabric_loader_version: fabric_loader_version,
+            fabric_api_version   : fabric_api_version,
+            mod_id               : mod_id,
+            mod_name             : mod_name,
+            mod_license          : mod_license,
+            mod_version          : mod_version,
+            mod_authors          : mod_authors,
+            mod_description      : mod_description
+    ]
+    inputs.properties replaceProperties
+    filesMatching('fabric.mod.json') {
+        expand replaceProperties + [project: project]
+    }
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.release = 21
+}
+
+// AutoJS hot-debug is disabled for this target: Loom resolves modLocalRuntime during
+// configuration and no AutoJS-fabric-1.21.1 artifact is available in the local maven
+// layout (only AutoJS-fabric-1.20.1 is cached). Re-enable once the artifact is reachable.
+apply from: file('../../gradle/target-conventions/hot-debug.gradle')
+apply from: file('../../gradle/target-conventions/publish.gradle')
