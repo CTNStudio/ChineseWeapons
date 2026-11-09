@@ -1,0 +1,164 @@
+package net.mirrorloong.chineseweapons.item;
+
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.model.HumanoidModel;
+import net.minecraft.client.model.geom.ModelPart;
+import net.minecraft.network.chat.Component;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.*;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.level.Level;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.client.extensions.common.IClientItemExtensions;
+import net.mirrorloong.chineseweapons.client.model.Modelsong_dynasty_infantry_armor;
+import net.mirrorloong.chineseweapons.procedures.armor.DyeableItem;
+
+import javax.annotation.Nullable;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+import java.util.function.Consumer;
+
+public abstract class SongDynastyInfantryarmorItem extends ArmorItem implements DyeableItem {
+    public SongDynastyInfantryarmorItem(Type type, Properties properties) {
+        super(new ArmorMaterial() {
+            @Override
+            public int getDurabilityForType(Type type) {
+                return new int[]{13, 15, 16, 11}[type.getSlot().getIndex()] * 16;
+            }
+
+            @Override
+            public int getDefenseForType(Type type) {
+                return new int[]{4, 7, 8, 4}[type.getSlot().getIndex()];
+            }
+
+            @Override
+            public int getEnchantmentValue() {
+                return 10;
+            }
+
+            @Override
+            public SoundEvent getEquipSound() {
+                return SoundEvents.ARMOR_EQUIP_IRON;
+            }
+
+            @Override
+            public Ingredient getRepairIngredient() {
+                return Ingredient.of(new ItemStack(Items.IRON_INGOT));
+            }
+
+            @Override
+            public String getName() {
+                return "song_dynasty_infantry_armor";
+            }
+
+            @Override
+            public float getToughness() {
+                return 0f;
+            }
+
+            @Override
+            public float getKnockbackResistance() {
+                return 0f;
+            }
+        }, type, properties);
+    }
+
+    public static final String TEXTURE_BASE = "chineseweapons:textures/entities/song_dynasty_infantry_armor.png";
+    public static final String TEXTURE_OVERLAY = "chineseweapons:textures/entities/song_dynasty_infantry_armor_color.png";
+
+    private static ModelPart emptyPart() {
+        return new ModelPart(Collections.emptyList(), Collections.emptyMap());
+    }
+
+    private static HumanoidModel createArmorModel(LivingEntity living, HumanoidModel defaultModel, Type armorType) {
+        Modelsong_dynasty_infantry_armor model = new Modelsong_dynasty_infantry_armor(Minecraft.getInstance().getEntityModels().bakeLayer(Modelsong_dynasty_infantry_armor.LAYER_LOCATION));
+        Map<String, ModelPart> parts = switch (armorType) {
+            case HELMET -> Map.of("head", model.bipedHead, "hat", emptyPart(), "body", emptyPart(), "right_arm", emptyPart(), "left_arm", emptyPart(), "right_leg", emptyPart(), "left_leg", emptyPart());
+            case CHESTPLATE -> Map.of("body", model.bipedBody, "left_arm", model.bipedLeftArm, "right_arm", model.bipedRightArm, "head", emptyPart(), "hat", emptyPart(), "right_leg", emptyPart(), "left_leg", emptyPart());
+            case LEGGINGS -> Map.of("left_leg", model.bipedLeftLeg, "right_leg", model.bipedRightLeg, "head", emptyPart(), "hat", emptyPart(), "body", emptyPart(), "right_arm", emptyPart(), "left_arm", emptyPart());
+            case BOOTS -> Map.of("left_leg", model.LeftBoots, "right_leg", model.RightBoots, "head", emptyPart(), "hat", emptyPart(), "body", emptyPart(), "right_arm", emptyPart(), "left_arm", emptyPart());
+        };
+        HumanoidModel armorModel = new HumanoidModel(new ModelPart(Collections.emptyList(), parts));
+        armorModel.crouching = living.isShiftKeyDown();
+        armorModel.riding = defaultModel.riding;
+        armorModel.young = living.isBaby();
+        return armorModel;
+    }
+
+    private static void initializeArmorClient(Consumer<IClientItemExtensions> consumer, Type armorType) {
+        consumer.accept(new IClientItemExtensions() {
+            @Override
+            @OnlyIn(Dist.CLIENT)
+            public HumanoidModel getHumanoidArmorModel(LivingEntity living, ItemStack stack, EquipmentSlot slot, HumanoidModel defaultModel) {
+                return createArmorModel(living, defaultModel, armorType);
+            }
+        });
+    }
+
+    @Override
+    public void appendHoverText(ItemStack stack, @Nullable Level level,
+                                List<Component> tooltip, TooltipFlag flag) {
+        super.appendHoverText(stack, level, tooltip, flag);
+        DyeableItem.addDyeTooltip(stack, tooltip);
+    }
+
+    @Override
+    public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlot slot, String type) {
+        return DyeableItem.getArmorTexture(stack, type, TEXTURE_BASE, TEXTURE_OVERLAY);
+    }
+
+    public static class Helmet extends SongDynastyInfantryarmorItem {
+        public Helmet() {
+            super(Type.HELMET, new Properties());
+        }
+
+        @Override
+        public void initializeClient(Consumer<IClientItemExtensions> consumer) {
+            initializeArmorClient(consumer, Type.HELMET);
+        }
+    }
+
+    public static class Chestplate extends SongDynastyInfantryarmorItem {
+        public Chestplate() {
+            super(Type.CHESTPLATE, new Properties());
+        }
+
+        @Override
+        public void initializeClient(Consumer<IClientItemExtensions> consumer) {
+            initializeArmorClient(consumer, Type.CHESTPLATE);
+        }
+    }
+
+    public static class Leggings extends SongDynastyInfantryarmorItem {
+        public Leggings() {
+            super(Type.LEGGINGS, new Properties());
+        }
+
+        @Override
+        public void initializeClient(Consumer<IClientItemExtensions> consumer) {
+            initializeArmorClient(consumer, Type.LEGGINGS);
+        }
+    }
+
+    public static class Boots extends SongDynastyInfantryarmorItem {
+        public Boots() {
+            super(Type.BOOTS, new Properties());
+        }
+
+        @Override
+        public void initializeClient(Consumer<IClientItemExtensions> consumer) {
+            initializeArmorClient(consumer, Type.BOOTS);
+        }
+
+        @Override
+        public boolean canWalkOnPowderedSnow(ItemStack stack, LivingEntity wearer) {
+            return true;
+        }
+    }
+}

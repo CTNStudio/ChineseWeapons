@@ -1,8 +1,0 @@
-{
-  "gui_light": "front",
-  "parent": "chineseweapons:custom/song_javelin",
-  "textures": {
-    "2": "chineseweapons:block/weapon/diamond_song_javelin",
-    "particle": "chineseweapons:block/weapon/diamond_song_javelin"
-  }
-}

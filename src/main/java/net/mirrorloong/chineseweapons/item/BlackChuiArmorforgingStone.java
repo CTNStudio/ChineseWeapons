@@ -1,0 +1,22 @@
+package net.mirrorloong.chineseweapons.item;
+
+
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.level.Level;
+
+import java.util.List;
+
+public class BlackChuiArmorforgingStone extends Item {
+    public BlackChuiArmorforgingStone() {
+        super(new Properties());
+    }
+
+    @Override
+    public void appendHoverText(ItemStack itemstack, Level level, List<Component> list, TooltipFlag flag) {
+        super.appendHoverText(itemstack, level, list, flag);
+        list.add(Component.translatable("item.chineseweapons.black_chui_armor_forging_stone.tile"));
+    }
+}
