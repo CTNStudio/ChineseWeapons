@@ -111,14 +111,21 @@ public class SongStandingShieldEntity extends Entity {
     public InteractionResult interact(Player player, InteractionHand hand) {
         if (hand != InteractionHand.MAIN_HAND) return InteractionResult.PASS;
 
+        boolean isRotating = player.isShiftKeyDown();
+        boolean isRepairing = player.getItemInHand(hand).is(ItemTags.PLANKS);
+
+        if (!isRotating && !isRepairing) {
+            return InteractionResult.PASS;
+        }
+
         if (this.level().isClientSide) {
             return InteractionResult.SUCCESS;
         }
 
         ItemStack held = player.getItemInHand(hand);
 
-        // 蹲下 + 右键：执行旋转
-        if (player.isShiftKeyDown()) {
+        //旋转
+        if (isRotating) {
             Vec3 selfPos = this.position();
             float yaw = this.getShieldYaw();
 
@@ -145,40 +152,36 @@ public class SongStandingShieldEntity extends Entity {
             return InteractionResult.CONSUME;
         }
 
-        if (held.is(ItemTags.PLANKS)) {
-            ItemStack recovered = getStoredItem();
-            float hp = this.getHealth();
+        ItemStack recovered = getStoredItem();
+        float hp = this.getHealth();
 
-            float maxHp = recovered.getMaxDamage();
+        float maxHp = recovered.getMaxDamage();
 
-            if (maxHp <= 0) {
-                return InteractionResult.PASS;
-            }
+        if (maxHp <= 0) {
+            return InteractionResult.PASS;
+        }
 
-            if (hp >= maxHp) {
-                return InteractionResult.CONSUME;
-            }
-
-            float newHp;
-            if (hp < 50f) {
-                newHp = maxHp;
-            } else {
-                newHp = Math.min(hp + 50f, maxHp);
-            }
-
-            this.setHealth(newHp);
-
-            if (!player.getAbilities().instabuild) {
-                held.shrink(1);
-            }
-
-            this.level().playSound(null, this.getX(), this.getY(), this.getZ(),
-                    SoundEvents.WOODEN_BUTTON_CLICK_ON, this.getSoundSource(), 1.3F, 0.8F);
-
+        if (hp >= maxHp) {
             return InteractionResult.CONSUME;
         }
 
-        return InteractionResult.PASS;
+        float newHp;
+        if (hp < 50f) {
+            newHp = maxHp;
+        } else {
+            newHp = Math.min(hp + 50f, maxHp);
+        }
+
+        this.setHealth(newHp);
+
+        if (!player.getAbilities().instabuild) {
+            held.shrink(1);
+        }
+
+        this.level().playSound(null, this.getX(), this.getY(), this.getZ(),
+                SoundEvents.WOODEN_BUTTON_CLICK_ON, this.getSoundSource(), 1.3F, 0.8F);
+
+        return InteractionResult.CONSUME;
     }
 
     @Override
