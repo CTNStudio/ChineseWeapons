@@ -386,5 +386,9 @@
   "entity.chineseweapons.song_javelin": "方天畫戟之實體O.o",
   "entity.chineseweapons.standing_shield": "宋立盾之實體O.o",
   "block.chineseweapons.ancient_gem_block": "上古寶石之塊",
-  "text.chineseweapons.tips.miss_patchouli": "薦君裝 Patchouli 模組，以閱鍛造日記之冊"
+  "text.chineseweapons.tips.miss_patchouli": "薦君裝 Patchouli 模組，以閱鍛造日記之冊",
+  "item_group.chineseweapons.armor": "甲冑",
+  "item_group.chineseweapons.horse_armor": "馬鎧",
+  "item_group.chineseweapons.weapon": "兵器",
+  "item_group.chineseweapons.materials_and_miscellaneous_items": "材與雜物"
 }

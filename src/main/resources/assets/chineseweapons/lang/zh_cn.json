@@ -390,6 +390,10 @@
   "entity.chineseweapons.standing_shield": "宋代立盾实体O.o",
   "block.chineseweapons.ancient_gem_block": "远古宝石块",
   "text.chineseweapons.tips.miss_patchouli": "推荐您安装 Patchouli 模组以查看锻造日记手册",
+  "item_group.chineseweapons.armor": "盔甲",
+  "item_group.chineseweapons.horse_armor": "马凯",
+  "item_group.chineseweapons.weapon": "武器",
+  "item_group.chineseweapons.materials_and_miscellaneous_items": "材料与杂物",
 
   "patchouli.chineseweapons.book.entries.other.banquan.artwork.name": "美术资源归属权",
   "patchouli.chineseweapons.book.entries.other.banquan.codes.name": "代码资源归属权",
