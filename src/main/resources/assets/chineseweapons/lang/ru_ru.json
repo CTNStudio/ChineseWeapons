@@ -363,6 +363,10 @@
 
   "text.chineseweapons.tips.miss_patchouli": "It is recommended that you install the Patchouli mod to view the Forging Notes handbook",
   "block.chineseweapons.ancient_gem_block": "Ancient Gem Block",
+  "item_group.chineseweapons.armor": "Armor",
+  "item_group.chineseweapons.horse_armor": "Horse Armor",
+  "item_group.chineseweapons.weapon": "Weapon",
+  "item_group.chineseweapons.materials_and_miscellaneous_items": "Materials and miscellaneous items",
 
   "item.chineseweapons.GlaiveItemGetLostKill": "Вы можете использовать глейфу через %s секунд",
   "patchouli.chineseweapons.book.entries.materials.forging_stone.pages.1.text":"Это может быть сделано наподобие этого",

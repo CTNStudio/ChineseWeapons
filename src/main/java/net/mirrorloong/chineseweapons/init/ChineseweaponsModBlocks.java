@@ -1,12 +1,6 @@
 
 package net.mirrorloong.chineseweapons.init;
 
-import net.minecraft.util.valueproviders.UniformInt;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.DropExperienceBlock;
-import net.minecraft.world.level.block.state.BlockBehaviour;
-import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
-import net.minecraft.world.level.material.MapColor;
 import net.mirrorloong.chineseweapons.block.*;
 import net.mirrorloong.chineseweapons.ChineseweaponsMod;
 
