@@ -1,4 +1,4 @@
-# 中国甲兵
+# 中式甲兵
 [![CurseForge Game Versions](https://img.shields.io/curseforge/game-versions/1628670?style=for-the-badge&logo=educative&logoColor=%23F16436&label=For%20MiaoCraft%20Version)](https://www.curseforge.com/minecraft/mc-mods/chinese-weapons)
 [![Modrinth Downloads](https://img.shields.io/modrinth/dt/nweFmOF7?style=for-the-badge&logo=modrinth&logoColor=%2300AF5C&label=modrinth%20miaomiao%20ovo)](https://modrinth.com/mod/chinese-weapons)
 [![CurseForge Downloads](https://img.shields.io/curseforge/dt/1628670?style=for-the-badge&logo=curseforge&logoColor=%23F16436&label=curseforge%20miaomiao%20ovo)](https://www.curseforge.com/minecraft/mc-mods/chinese-weapons)
