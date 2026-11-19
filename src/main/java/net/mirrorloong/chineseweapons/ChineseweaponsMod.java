@@ -125,10 +125,7 @@ public class ChineseweaponsMod {
 				DamageSource source = event.getSource();
 				if(source.getEntity() instanceof Player player){
 					Item item = player.getMainHandItem().getItem();
-					if(item instanceof DiamondglaiveItem || item instanceof GoldenglaiveItem
-					|| item instanceof IronglaiveItem || item instanceof NetheriteglaiveItem
-					|| item instanceof GreenloongglaiveItem
-					|| item instanceof WoodenglaiveItem ||item instanceof StoneglaiveItem ){
+					if(item instanceof GlaiveItem){
 						float chance = WeaponScriptSettings.getChance(item, WeaponScriptSettings.Skill.GLAIVE_DISMOUNT, 0.60F);
 						if (random.nextFloat() < chance) {
 							event.getEntity().stopRiding();

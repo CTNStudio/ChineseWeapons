@@ -114,20 +114,20 @@ public class ChineseweaponsModItems {
 	public static final RegistryObject<Item> NETHERITEFINE_SCALE_ARMOR_LEGGINGS = REGISTRY.register("netherite_fine_scale_armor_leggings", () -> new FinescalearmorItem(FinescalearmorItem.MaterialVariant.NETHERITE, ArmorItem.Type.LEGGINGS));
 	public static final RegistryObject<Item> NETHERITEFINE_SCALE_ARMOR_BOOTS = REGISTRY.register("netherite_fine_scale_armor_boots", () -> new FinescalearmorItem(FinescalearmorItem.MaterialVariant.NETHERITE, ArmorItem.Type.BOOTS));
 
-	public static final RegistryObject<Item> GOLDEN_DAGGER_AXE = REGISTRY.register("golden_dagger_axe", GoldendaggeraxeItem::new);
-	public static final RegistryObject<Item> DIAMOND_DAGGER_AXE = REGISTRY.register("diamond_dagger_axe", DiamonddaggeraxeItem::new);
-	public static final RegistryObject<Item> IRON_DAGGER_AXE = REGISTRY.register("iron_dagger_axe", IrondaggeraxeItem::new);
-	public static final RegistryObject<Item> WOODEN_DAGGER_AXE = REGISTRY.register("wooden_dagger_axe", WoodendaggeraxeItem::new);
-	public static final RegistryObject<Item> NETHERITE_DAGGER_AXE = REGISTRY.register("netherite_dagger_axe", NetheritedaggeraxeItem::new);
-	public static final RegistryObject<Item> STONE_DAGGER_AXE = REGISTRY.register("stone_dagger_axe", StonedaggeraxeItem::new);
+    public static final RegistryObject<Item> GOLDEN_DAGGER_AXE = REGISTRY.register("golden_dagger_axe", () -> new DaggerAxeItem(Tiers.GOLD, 7, 1.5F, false));
+    public static final RegistryObject<Item> DIAMOND_DAGGER_AXE = REGISTRY.register("diamond_dagger_axe", () -> new DaggerAxeItem(Tiers.DIAMOND, 10, 1.9F, false));
+    public static final RegistryObject<Item> IRON_DAGGER_AXE = REGISTRY.register("iron_dagger_axe", () -> new DaggerAxeItem(Tiers.IRON, 9, 1.5F, false));
+    public static final RegistryObject<Item> WOODEN_DAGGER_AXE = REGISTRY.register("wooden_dagger_axe", () -> new DaggerAxeItem(Tiers.WOOD, 7, 1.9F, false));
+    public static final RegistryObject<Item> NETHERITE_DAGGER_AXE = REGISTRY.register("netherite_dagger_axe", () -> new DaggerAxeItem(Tiers.NETHERITE, 11, 1.9F, true));
+    public static final RegistryObject<Item> STONE_DAGGER_AXE = REGISTRY.register("stone_dagger_axe", () -> new DaggerAxeItem(Tiers.STONE, 8, 1.5F, false));
 
-	public static final RegistryObject<Item> DIAMOND_GLAIVE = REGISTRY.register("diamond_glaive", DiamondglaiveItem::new);
-	public static final RegistryObject<Item> GOLDEN_GLAIVE = REGISTRY.register("golden_glaive", GoldenglaiveItem::new);
-	public static final RegistryObject<Item> NETHERITE_GLAIVE = REGISTRY.register("netherite_glaive", NetheriteglaiveItem::new);
-	public static final RegistryObject<Item> IRON_GLAIVE = REGISTRY.register("iron_glaive", IronglaiveItem::new);
-	public static final RegistryObject<Item> STONE_GLAIVE = REGISTRY.register("stone_glaive", StoneglaiveItem::new);
-	public static final RegistryObject<Item> WOODEN_GLAIVE = REGISTRY.register("wooden_glaive", WoodenglaiveItem::new);
-	public static final RegistryObject<Item> GREENLOONG_GLAIVE = REGISTRY.register("green_loong_glaive", GreenloongglaiveItem::new);
+    public static final RegistryObject<Item> DIAMOND_GLAIVE = REGISTRY.register("diamond_glaive", () -> new GlaiveItem(Tiers.DIAMOND, 10, 1.2F, false));
+    public static final RegistryObject<Item> GOLDEN_GLAIVE = REGISTRY.register("golden_glaive", () -> new GlaiveItem(Tiers.GOLD, 7, 1.8F, false));
+    public static final RegistryObject<Item> NETHERITE_GLAIVE = REGISTRY.register("netherite_glaive", () -> new GlaiveItem(Tiers.NETHERITE, 11, 1.0F, true));
+    public static final RegistryObject<Item> IRON_GLAIVE = REGISTRY.register("iron_glaive", () -> new GlaiveItem(Tiers.IRON, 9, 1.4F, false));
+    public static final RegistryObject<Item> STONE_GLAIVE = REGISTRY.register("stone_glaive", () -> new GlaiveItem(Tiers.STONE, 8, 1.6F, false));
+    public static final RegistryObject<Item> WOODEN_GLAIVE = REGISTRY.register("wooden_glaive", () -> new GlaiveItem(Tiers.WOOD, 7, 1.8F, false));
+    public static final RegistryObject<Item> GREENLOONG_GLAIVE = REGISTRY.register("green_loong_glaive", () -> new GlaiveItem(WeaponTier.GREENLOONG_GLAIVE, 12, 1.0F, true));
 
     public static final RegistryObject<Item> DIAMOND_TANG_DYNASTY_HENG_SABER = REGISTRY.register("diamond_tang_dynasty_heng_saber", () -> new TangDynastyHengSaberItem(Tiers.DIAMOND, 8, 1.4F,false));
     public static final RegistryObject<Item> GOLDEN_TANG_DYNASTY_HENG_SABER = REGISTRY.register("golden_tang_dynasty_heng_saber", () -> new TangDynastyHengSaberItem(Tiers.GOLD, 5, 1.8F,false));

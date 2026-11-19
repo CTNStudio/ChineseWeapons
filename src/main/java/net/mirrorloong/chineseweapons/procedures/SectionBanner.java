@@ -14,11 +14,11 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.ScreenEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.util.ObfuscationReflectionHelper;
 
 import javax.annotation.Nullable;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.function.Consumer;
 
@@ -45,11 +45,11 @@ public final class SectionBanner extends CreativeModeTab {
         populator.accept(out);
         this.layouts = List.copyOf(out.layouts);
         try {
-            Field f = CreativeModeTab.class.getDeclaredField("displayItems");
+            Field f = ObfuscationReflectionHelper.findField(CreativeModeTab.class, "f_243839_");
             f.setAccessible(true);
             f.set(this, List.copyOf(out.items));
         } catch (Exception e) {
-            e.printStackTrace();
+            System.err.println("[ChineseweaponsModTabs] failed to set displayItems: " + e.getMessage());
         }
     }
 
@@ -167,20 +167,22 @@ public final class SectionBanner extends CreativeModeTab {
 
         private static CreativeModeTab getSelectedTab() {
             try {
-                Field f = CreativeModeInventoryScreen.class.getDeclaredField("selectedTab");
+                Field f = ObfuscationReflectionHelper.findField(CreativeModeInventoryScreen.class, "f_98507_");
                 f.setAccessible(true);
                 return (CreativeModeTab) f.get(null);
             } catch (Exception e) {
+                System.err.println("[ChineseweaponsModTabs] getSelectedTab failed: " + e.getMessage());
                 return null;
             }
         }
 
         private static float getScrollOffs(CreativeModeInventoryScreen screen) {
             try {
-                Field f = CreativeModeInventoryScreen.class.getDeclaredField("scrollOffs");
+                Field f = ObfuscationReflectionHelper.findField(CreativeModeInventoryScreen.class, "f_98508_");
                 f.setAccessible(true);
                 return f.getFloat(screen);
             } catch (Exception e) {
+                System.err.println("[ChineseweaponsModTabs] getScrollOffs failed: " + e.getMessage());
                 return 0f;
             }
         }

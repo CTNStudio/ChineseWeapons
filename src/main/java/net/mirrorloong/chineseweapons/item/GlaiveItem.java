@@ -1,48 +1,30 @@
-
 package net.mirrorloong.chineseweapons.item;
 
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
-import net.mirrorloong.chineseweapons.init.ChineseweaponsModItems;
-
-import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.world.item.Tier;
-import net.minecraft.world.item.Items;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Tier;
 import net.mirrorloong.chineseweapons.procedures.weapon.DaggerAxeAndGlaiveItemjizhongProcedure;
 import net.mirrorloong.chineseweapons.procedures.weapon.GlaiveItemStopRunProcedure;
 
-public class GoldenglaiveItem extends GlaiveItemBase {
-	public GoldenglaiveItem() {
-		super(new Tier() {
-			public int getUses() {
-				return 45;
-			}
+public class GlaiveItem extends GlaiveItemBase {
 
-			public float getSpeed() {
-				return 15f;
-			}
+    public GlaiveItem(Tier tier, int displayedAttackDamage, float speed, boolean fireResistant) {
+        super(
+                tier,
+                Math.round(displayedAttackDamage - 1.0F - tier.getAttackDamageBonus()),
+                speed - 4.0F,
+                properties(tier, fireResistant)
+        );
+    }
 
-			public float getAttackDamageBonus() {
-				return 3f;
-			}
-
-			public int getLevel() {
-				return 0;
-			}
-
-			public int getEnchantmentValue() {
-				return 25;
-			}
-
-			public Ingredient getRepairIngredient() {
-				return Ingredient.of(new ItemStack(Items.GOLD_INGOT), new ItemStack(ChineseweaponsModItems.GOLDEN_GLAIVE.get()));
-			}
-		}, 3, -2.2f, new Item.Properties());
-	}
+    private static Item.Properties properties(Tier tier, boolean fireResistant) {
+        Item.Properties properties = new Item.Properties().durability(tier.getUses());
+        return fireResistant ? properties.fireResistant() : properties;
+    }
 
     @Override
     public boolean hurtEnemy(ItemStack itemstack, LivingEntity entity, LivingEntity sourceentity) {

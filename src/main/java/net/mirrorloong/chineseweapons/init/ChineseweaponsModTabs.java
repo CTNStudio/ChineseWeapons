@@ -21,6 +21,8 @@ public class ChineseweaponsModTabs {
                             .icon(() -> new ItemStack(ChineseweaponsModItems.IRONMOUNTAINCHARACTERARMOR_HELMET.get())),
                     out -> {
 
+                        ChineseweaponsMod.LOGGER.info("[ChineseweaponsModTabs] class loaded, registering chinese_weapons tab");
+
                         out.section(Component.translatable("item_group.chineseweapons.armor"),
                                 0xFF8C3A2A, 0xFFD4A24A, null,
                                 new ResourceLocation(ChineseweaponsMod.MODID, "iron_mountain_character_armor_helmet"), 0.9f,
