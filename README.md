@@ -5,7 +5,7 @@
 ![CurseForge Downloads](https://img.shields.io/curseforge/dt/1628670?style=for-the-badge&logo=curseforge&logoColor=%23F16436&label=curseforge%20miaomiao%20ovo&link=https%3A%2F%2Fwww.curseforge.com%2Fminecraft%2Fmc-mods%2Fchinese-weapons)
 
 ## Licensing
-Code and Art unless otherwise stated default to our [LICENSE](LICENSE.md)
+Code and Art unless otherwise stated default to our [LICENSE](LICENSE)
 
 ---
 ### Extra code
