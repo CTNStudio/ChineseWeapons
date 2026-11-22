@@ -14,28 +14,20 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Tier;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.event.RenderLivingEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.network.NetworkEvent;
-import net.minecraftforge.network.PacketDistributor;
 import net.mirrorloong.chineseweapons.ChineseweaponsMod;
 import net.mirrorloong.chineseweapons.compat.WeaponScriptSettings;
 import net.mirrorloong.chineseweapons.init.ChineseWeaponsModEffects;
+import net.mirrorloong.chineseweapons.network.ModPacket;
+import net.mirrorloong.chineseweapons.network.NetworkHandler;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.function.Supplier;
 
 public class GuDuoItem extends SixBlockReachSwordItem {
 
-    // 状态
-    public static final Map<Integer, Long> SQUASH = new ConcurrentHashMap<>();
+        public static final Map<Integer, Long> SQUASH = new ConcurrentHashMap<>();
     public static final long T1 = 300L, T2 = 800L;
     public static final float MIN = 0.6F;
-
-    private final int maxDurability;
 
     public GuDuoItem(Tier tier, int displayedAttackDamage, float speed,
                      boolean fireResistant, int durabilityOffset) {
@@ -45,12 +37,6 @@ public class GuDuoItem extends SixBlockReachSwordItem {
                 speed - 4.0F,
                 makeProperties(fireResistant, durabilityOffset)
         );
-        this.maxDurability = durabilityOffset;
-    }
-
-    @Override
-    public int getMaxDamage(ItemStack stack) {
-        return maxDurability;
     }
 
     private static Properties makeProperties(boolean fireResistant, int durability) {
@@ -131,12 +117,12 @@ public class GuDuoItem extends SixBlockReachSwordItem {
             double downward = 0.3D + attacker.getRandom().nextDouble() * (downward_o - 0.1D);
             target.push(0.0D, -downward, 0.0D);
 
-            // 压扁
-            if (target.level() instanceof ServerLevel sl) {
+                        if (target.level() instanceof ServerLevel sl) {
                 SquashPacket pkt = new SquashPacket(target.getId());
                 for (ServerPlayer sp : sl.players()) {
                     if (sp.distanceToSqr(target) < 4096) {
-                        ChineseweaponsMod.CHANNEL.send(PacketDistributor.PLAYER.with(() -> sp), pkt);
+                        //old api ChineseweaponsMod.CHANNEL.send(PacketDistributor.PLAYER.with(() -> sp), pkt) -> new api NetworkHandler.sendToPlayer(sp, pkt)
+                        NetworkHandler.sendToPlayer(sp, pkt);
                     }
                 }
             }
@@ -175,75 +161,65 @@ public class GuDuoItem extends SixBlockReachSwordItem {
         }
     }
 
-    //心跳包
-    public static float scaleY(long t) {
+        public static float scaleY(long t) {
         if (t < T1) {
-            // easeOutCubic
-            float x = t / (float) T1;
+                        float x = t / (float) T1;
             float ease = 1.0F - (float) Math.pow(1.0F - x, 3);
             return 1.0F - (1.0F - MIN) * ease;
         }
-        // easeInCubic
-        float x = (t - T1) / (float) (T2 - T1);
+                float x = (t - T1) / (float) (T2 - T1);
         return MIN + (1.0F - MIN) * (x * x * x);
     }
 
-    //数据包
-    public record SquashPacket(int id) {
+        //old api SimpleChannel#registerMessage + Supplier<NetworkEvent.Context> -> new api implements ModPacket + NetworkHandler
+    public record SquashPacket(int id) implements ModPacket {
+
+        public static final int ID = 0;
+
+        @Override
+        public int id() {
+            return ID;
+        }
+
         public static void encode(SquashPacket m, FriendlyByteBuf b) {
             b.writeVarInt(m.id);
+        }
+
+        //old api static encode(SquashPacket, FriendlyByteBuf) -> new api ModPacket#encode(FriendlyByteBuf)
+        @Override
+        public void encode(FriendlyByteBuf b) {
+            b.writeVarInt(this.id);
         }
 
         public static SquashPacket decode(FriendlyByteBuf b) {
             return new SquashPacket(b.readVarInt());
         }
 
-        public static void handle(SquashPacket m, Supplier<NetworkEvent.Context> c) {
-            c.get().enqueueWork(() -> SQUASH.put(m.id, System.currentTimeMillis()));
-            c.get().setPacketHandled(true);
+                public void handleClient() {
+            SQUASH.put(this.id, System.currentTimeMillis());
+        }
+
+                public void handleClientOnly() {
+            this.handleClient();
         }
     }
 
-    //客户端渲染
-    @Mod.EventBusSubscriber(
-            modid = ChineseweaponsMod.MODID,
-            bus = Mod.EventBusSubscriber.Bus.FORGE,
-            value = Dist.CLIENT
-    )
-    public static class Client {
+            public static class Client {
 
-        private static final java.util.Set<Integer> PUSHED = new java.util.HashSet<>();
-
-        @SubscribeEvent
-        public static void onRenderLivingPre(RenderLivingEvent.Pre<?, ?> event) {
-            LivingEntity entity = event.getEntity();
-            int id = entity.getId();
-
+        public static Long pollStart(int id) {
             Long start = SQUASH.get(id);
-            if (start == null) return;
+            if (start == null) return null;
 
             long elapsed = System.currentTimeMillis() - start;
             if (elapsed >= T2) {
                 SQUASH.remove(id);
-                return;
+                return null;
             }
-
-            float sy = scaleY(elapsed);
-            if (sy == 1.0F) return;
-
-            PoseStack ps = event.getPoseStack();
-            ps.pushPose();
-            ps.scale(1.0F, sy, 1.0F);
-
-            PUSHED.add(id);
+            return start;
         }
 
-        @SubscribeEvent
-        public static void onRenderLivingPost(RenderLivingEvent.Post<?, ?> event) {
-            int id = event.getEntity().getId();
-            if (PUSHED.remove(id)) {
-                event.getPoseStack().popPose();
-            }
+        public static void clear(int id) {
+            SQUASH.remove(id);
         }
     }
 }

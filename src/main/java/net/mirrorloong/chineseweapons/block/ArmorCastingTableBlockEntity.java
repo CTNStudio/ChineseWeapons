@@ -20,11 +20,10 @@ import net.mirrorloong.chineseweapons.recipes.WCTRecipe;
 
 public class ArmorCastingTableBlockEntity extends BlockEntity {
 
-    //PS MAX TIME 2S
-    public static final int MIN_TICKS_PER_STEP = 20;   // 最少等待
-    public static final int MAX_TICKS_PER_STEP = 40;   // 最多等待
-    public static final int MIN_PROGRESS_PER_STEP = 15; //最少增长
-    public static final int MAX_PROGRESS_PER_STEP = 35; //最多增长
+        public static final int MIN_TICKS_PER_STEP = 20;
+    public static final int MAX_TICKS_PER_STEP = 40;
+    public static final int MIN_PROGRESS_PER_STEP = 15;
+    public static final int MAX_PROGRESS_PER_STEP = 35;
     public static final int MAX_PROGRESS = 100;
 
     private final SimpleContainer input = new SimpleContainer(10);

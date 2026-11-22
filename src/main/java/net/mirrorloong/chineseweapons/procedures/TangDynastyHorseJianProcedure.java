@@ -1,44 +1,36 @@
 package net.mirrorloong.chineseweapons.procedures;
 
+import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.animal.horse.Horse;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.event.entity.ProjectileImpactEvent;
-import net.minecraftforge.event.entity.living.LivingHurtEvent;
-import net.minecraftforge.eventbus.api.EventPriority;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
-import net.mirrorloong.chineseweapons.ChineseweaponsMod;
 import net.mirrorloong.chineseweapons.item.TangDynastyHorseItem;
 
-@Mod.EventBusSubscriber(modid = ChineseweaponsMod.MODID)
 public class TangDynastyHorseJianProcedure {
+    private static boolean registered;
 
-    @SubscribeEvent(priority = EventPriority.HIGHEST)
-    public static void onHorseHurt(LivingHurtEvent event) {
-        if (!(event.getEntity() instanceof Horse horse)) return;
-        if (!(event.getSource().getDirectEntity() instanceof AbstractArrow)) return;
+        public static void init() {
+        if (registered) {
+            return;
+        }
+        registered = true;
+
+                                ServerLivingEntityEvents.ALLOW_DAMAGE.register(TangDynastyHorseJianProcedure::onLivingDamage);
+    }
+
+    public static boolean onLivingDamage(LivingEntity entity, DamageSource source, float amount) {
+        if (!(entity instanceof Horse horse)) return true;
+        if (!(source.getDirectEntity() instanceof AbstractArrow arrow)) return true;
 
         ItemStack armor = horse.getArmor();
         if (!armor.isEmpty() && armor.getItem() instanceof TangDynastyHorseItem) {
-            event.setCanceled(true);
+            reflectArrow(arrow);
+            return false;
         }
-    }
-
-    @SubscribeEvent(priority = EventPriority.HIGHEST)
-    public static void onArrowImpact(ProjectileImpactEvent event) {
-        if (event.getProjectile() instanceof AbstractArrow arrow &&
-                event.getRayTraceResult() instanceof EntityHitResult hitResult &&
-                hitResult.getEntity() instanceof Horse horse) {
-
-            ItemStack armor = horse.getArmor();
-            if (!armor.isEmpty() && armor.getItem() instanceof TangDynastyHorseItem) {
-                event.setResult(ProjectileImpactEvent.Result.DENY);
-                reflectArrow(arrow);
-            }
-        }
+        return true;
     }
 
     private static void reflectArrow(AbstractArrow arrow) {

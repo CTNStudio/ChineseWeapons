@@ -7,10 +7,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.Level;
 import net.mirrorloong.chineseweapons.client.model.Modelfootmen_armor;
-
-import net.minecraftforge.client.extensions.common.IClientItemExtensions;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.api.distmarker.Dist;
+import net.mirrorloong.chineseweapons.client.armor.CustomArmorModel;
 
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.entity.LivingEntity;
@@ -24,13 +21,12 @@ import net.minecraft.client.Minecraft;
 import net.mirrorloong.chineseweapons.procedures.armor.DyeableItem;
 import net.mirrorloong.chineseweapons.procedures.armor.FootmenarmorcompletetestingProcedure;
 
-import javax.annotation.Nullable;
+import org.jetbrains.annotations.Nullable;
 import java.util.List;
-import java.util.function.Consumer;
 import java.util.Map;
 import java.util.Collections;
 
-public abstract class GoldenfootmenarmorItem extends ArmorItem implements DyeableItem {
+public abstract class GoldenfootmenarmorItem extends ArmorItem implements DyeableItem, CustomArmorModel {
 	public GoldenfootmenarmorItem(ArmorItem.Type type, Item.Properties properties) {
 		super(new ArmorMaterial() {
 			@Override
@@ -95,27 +91,17 @@ public abstract class GoldenfootmenarmorItem extends ArmorItem implements Dyeabl
 			super(ArmorItem.Type.HELMET, new Item.Properties());
 		}
 
-		@Override
-		public void initializeClient(Consumer<IClientItemExtensions> consumer) {
-			consumer.accept(new IClientItemExtensions() {
 				@Override
-				public HumanoidModel getHumanoidArmorModel(LivingEntity living, ItemStack stack, EquipmentSlot slot, HumanoidModel defaultModel) {
-					HumanoidModel armorModel = new HumanoidModel(new ModelPart(Collections.emptyList(),
-							Map.of("head", new Modelfootmen_armor(Minecraft.getInstance().getEntityModels().bakeLayer(Modelfootmen_armor.LAYER_LOCATION)).bipedHead, "hat", new ModelPart(Collections.emptyList(), Collections.emptyMap()), "body",
-									new ModelPart(Collections.emptyList(), Collections.emptyMap()), "right_arm", new ModelPart(Collections.emptyList(), Collections.emptyMap()), "left_arm",
-									new ModelPart(Collections.emptyList(), Collections.emptyMap()), "right_leg", new ModelPart(Collections.emptyList(), Collections.emptyMap()), "left_leg",
-									new ModelPart(Collections.emptyList(), Collections.emptyMap()))));
-					armorModel.crouching = living.isShiftKeyDown();
-					armorModel.riding = defaultModel.riding;
-					armorModel.young = living.isBaby();
-					return armorModel;
-				}
-			});
-		}
-
-		@Override
-		public boolean makesPiglinsNeutral(ItemStack itemstack, LivingEntity entity) {
-			return true;
+		public HumanoidModel getHumanoidArmorModel(LivingEntity living, ItemStack stack, EquipmentSlot slot, HumanoidModel defaultModel) {
+			HumanoidModel armorModel = new HumanoidModel(new ModelPart(Collections.emptyList(),
+					Map.of("head", new Modelfootmen_armor(Minecraft.getInstance().getEntityModels().bakeLayer(Modelfootmen_armor.LAYER_LOCATION)).bipedHead, "hat", new ModelPart(Collections.emptyList(), Collections.emptyMap()), "body",
+							new ModelPart(Collections.emptyList(), Collections.emptyMap()), "right_arm", new ModelPart(Collections.emptyList(), Collections.emptyMap()), "left_arm",
+							new ModelPart(Collections.emptyList(), Collections.emptyMap()), "right_leg", new ModelPart(Collections.emptyList(), Collections.emptyMap()), "left_leg",
+							new ModelPart(Collections.emptyList(), Collections.emptyMap()))));
+			armorModel.crouching = living.isShiftKeyDown();
+			armorModel.riding = defaultModel.riding;
+			armorModel.young = living.isBaby();
+			return armorModel;
 		}
 
         @Override
@@ -132,28 +118,18 @@ public abstract class GoldenfootmenarmorItem extends ArmorItem implements Dyeabl
 			super(ArmorItem.Type.CHESTPLATE, new Item.Properties());
 		}
 
-		@Override
-		public void initializeClient(Consumer<IClientItemExtensions> consumer) {
-			consumer.accept(new IClientItemExtensions() {
 				@Override
-				@OnlyIn(Dist.CLIENT)
-				public HumanoidModel getHumanoidArmorModel(LivingEntity living, ItemStack stack, EquipmentSlot slot, HumanoidModel defaultModel) {
-					HumanoidModel armorModel = new HumanoidModel(new ModelPart(Collections.emptyList(), Map.of("body", new Modelfootmen_armor(Minecraft.getInstance().getEntityModels().bakeLayer(Modelfootmen_armor.LAYER_LOCATION)).bipedBody,
-							"left_arm", new Modelfootmen_armor(Minecraft.getInstance().getEntityModels().bakeLayer(Modelfootmen_armor.LAYER_LOCATION)).bipedLeftArm, "right_arm",
-							new Modelfootmen_armor(Minecraft.getInstance().getEntityModels().bakeLayer(Modelfootmen_armor.LAYER_LOCATION)).bipedRightArm, "head", new ModelPart(Collections.emptyList(), Collections.emptyMap()), "hat",
-							new ModelPart(Collections.emptyList(), Collections.emptyMap()), "right_leg", new ModelPart(Collections.emptyList(), Collections.emptyMap()), "left_leg", new ModelPart(Collections.emptyList(), Collections.emptyMap()))));
-					armorModel.crouching = living.isShiftKeyDown();
-					armorModel.riding = defaultModel.riding;
-					armorModel.young = living.isBaby();
-					return armorModel;
-				}
-			});
+		public HumanoidModel getHumanoidArmorModel(LivingEntity living, ItemStack stack, EquipmentSlot slot, HumanoidModel defaultModel) {
+			HumanoidModel armorModel = new HumanoidModel(new ModelPart(Collections.emptyList(), Map.of("body", new Modelfootmen_armor(Minecraft.getInstance().getEntityModels().bakeLayer(Modelfootmen_armor.LAYER_LOCATION)).bipedBody,
+					"left_arm", new Modelfootmen_armor(Minecraft.getInstance().getEntityModels().bakeLayer(Modelfootmen_armor.LAYER_LOCATION)).bipedLeftArm, "right_arm",
+					new Modelfootmen_armor(Minecraft.getInstance().getEntityModels().bakeLayer(Modelfootmen_armor.LAYER_LOCATION)).bipedRightArm, "head", new ModelPart(Collections.emptyList(), Collections.emptyMap()), "hat",
+					new ModelPart(Collections.emptyList(), Collections.emptyMap()), "right_leg", new ModelPart(Collections.emptyList(), Collections.emptyMap()), "left_leg", new ModelPart(Collections.emptyList(), Collections.emptyMap()))));
+			armorModel.crouching = living.isShiftKeyDown();
+			armorModel.riding = defaultModel.riding;
+			armorModel.young = living.isBaby();
+			return armorModel;
 		}
 
-		@Override
-		public boolean makesPiglinsNeutral(ItemStack itemstack, LivingEntity entity) {
-			return true;
-		}
 	}
 
 	public static class Leggings extends GoldenfootmenarmorItem {
@@ -161,29 +137,19 @@ public abstract class GoldenfootmenarmorItem extends ArmorItem implements Dyeabl
 			super(ArmorItem.Type.LEGGINGS, new Item.Properties());
 		}
 
-		@Override
-		public void initializeClient(Consumer<IClientItemExtensions> consumer) {
-			consumer.accept(new IClientItemExtensions() {
 				@Override
-				@OnlyIn(Dist.CLIENT)
-				public HumanoidModel getHumanoidArmorModel(LivingEntity living, ItemStack stack, EquipmentSlot slot, HumanoidModel defaultModel) {
-					HumanoidModel armorModel = new HumanoidModel(new ModelPart(Collections.emptyList(),
-							Map.of("left_leg", new Modelfootmen_armor(Minecraft.getInstance().getEntityModels().bakeLayer(Modelfootmen_armor.LAYER_LOCATION)).bipedLeftLeg, "right_leg",
-									new Modelfootmen_armor(Minecraft.getInstance().getEntityModels().bakeLayer(Modelfootmen_armor.LAYER_LOCATION)).bipedRightLeg, "head", new ModelPart(Collections.emptyList(), Collections.emptyMap()), "hat",
-									new ModelPart(Collections.emptyList(), Collections.emptyMap()), "body", new ModelPart(Collections.emptyList(), Collections.emptyMap()), "right_arm", new ModelPart(Collections.emptyList(), Collections.emptyMap()),
-									"left_arm", new ModelPart(Collections.emptyList(), Collections.emptyMap()))));
-					armorModel.crouching = living.isShiftKeyDown();
-					armorModel.riding = defaultModel.riding;
-					armorModel.young = living.isBaby();
-					return armorModel;
-				}
-			});
+		public HumanoidModel getHumanoidArmorModel(LivingEntity living, ItemStack stack, EquipmentSlot slot, HumanoidModel defaultModel) {
+			HumanoidModel armorModel = new HumanoidModel(new ModelPart(Collections.emptyList(),
+					Map.of("left_leg", new Modelfootmen_armor(Minecraft.getInstance().getEntityModels().bakeLayer(Modelfootmen_armor.LAYER_LOCATION)).bipedLeftLeg, "right_leg",
+							new Modelfootmen_armor(Minecraft.getInstance().getEntityModels().bakeLayer(Modelfootmen_armor.LAYER_LOCATION)).bipedRightLeg, "head", new ModelPart(Collections.emptyList(), Collections.emptyMap()), "hat",
+							new ModelPart(Collections.emptyList(), Collections.emptyMap()), "body", new ModelPart(Collections.emptyList(), Collections.emptyMap()), "right_arm", new ModelPart(Collections.emptyList(), Collections.emptyMap()),
+							"left_arm", new ModelPart(Collections.emptyList(), Collections.emptyMap()))));
+			armorModel.crouching = living.isShiftKeyDown();
+			armorModel.riding = defaultModel.riding;
+			armorModel.young = living.isBaby();
+			return armorModel;
 		}
 
-		@Override
-		public boolean makesPiglinsNeutral(ItemStack itemstack, LivingEntity entity) {
-			return true;
-		}
 	}
 
 	public static class Boots extends GoldenfootmenarmorItem {
@@ -191,28 +157,18 @@ public abstract class GoldenfootmenarmorItem extends ArmorItem implements Dyeabl
 			super(ArmorItem.Type.BOOTS, new Item.Properties());
 		}
 
-		@Override
-		public void initializeClient(Consumer<IClientItemExtensions> consumer) {
-			consumer.accept(new IClientItemExtensions() {
 				@Override
-				@OnlyIn(Dist.CLIENT)
-				public HumanoidModel getHumanoidArmorModel(LivingEntity living, ItemStack stack, EquipmentSlot slot, HumanoidModel defaultModel) {
-					HumanoidModel armorModel = new HumanoidModel(new ModelPart(Collections.emptyList(),
-							Map.of("left_leg", new Modelfootmen_armor(Minecraft.getInstance().getEntityModels().bakeLayer(Modelfootmen_armor.LAYER_LOCATION)).bipedLeft, "right_leg",
-									new Modelfootmen_armor(Minecraft.getInstance().getEntityModels().bakeLayer(Modelfootmen_armor.LAYER_LOCATION)).bipedRight, "head", new ModelPart(Collections.emptyList(), Collections.emptyMap()), "hat",
-									new ModelPart(Collections.emptyList(), Collections.emptyMap()), "body", new ModelPart(Collections.emptyList(), Collections.emptyMap()), "right_arm", new ModelPart(Collections.emptyList(), Collections.emptyMap()),
-									"left_arm", new ModelPart(Collections.emptyList(), Collections.emptyMap()))));
-					armorModel.crouching = living.isShiftKeyDown();
-					armorModel.riding = defaultModel.riding;
-					armorModel.young = living.isBaby();
-					return armorModel;
-				}
-			});
+		public HumanoidModel getHumanoidArmorModel(LivingEntity living, ItemStack stack, EquipmentSlot slot, HumanoidModel defaultModel) {
+			HumanoidModel armorModel = new HumanoidModel(new ModelPart(Collections.emptyList(),
+					Map.of("left_leg", new Modelfootmen_armor(Minecraft.getInstance().getEntityModels().bakeLayer(Modelfootmen_armor.LAYER_LOCATION)).bipedLeft, "right_leg",
+							new Modelfootmen_armor(Minecraft.getInstance().getEntityModels().bakeLayer(Modelfootmen_armor.LAYER_LOCATION)).bipedRight, "head", new ModelPart(Collections.emptyList(), Collections.emptyMap()), "hat",
+							new ModelPart(Collections.emptyList(), Collections.emptyMap()), "body", new ModelPart(Collections.emptyList(), Collections.emptyMap()), "right_arm", new ModelPart(Collections.emptyList(), Collections.emptyMap()),
+							"left_arm", new ModelPart(Collections.emptyList(), Collections.emptyMap()))));
+			armorModel.crouching = living.isShiftKeyDown();
+			armorModel.riding = defaultModel.riding;
+			armorModel.young = living.isBaby();
+			return armorModel;
 		}
 
-		@Override
-		public boolean makesPiglinsNeutral(ItemStack itemstack, LivingEntity entity) {
-			return true;
-		}
 	}
 }

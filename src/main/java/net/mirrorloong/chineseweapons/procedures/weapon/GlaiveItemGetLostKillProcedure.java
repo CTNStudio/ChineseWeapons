@@ -1,10 +1,13 @@
 package net.mirrorloong.chineseweapons.procedures.weapon;
 
+import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
 import net.minecraft.ChatFormatting;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementProgress;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.LivingEntity;
@@ -15,11 +18,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.event.TickEvent;
-import net.minecraftforge.event.entity.player.PlayerEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.common.MinecraftForge;
 import net.mirrorloong.chineseweapons.ChineseweaponsMod;
 import net.mirrorloong.chineseweapons.event.GlaiveSpinStartedEvent;
 
@@ -28,7 +26,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
-@Mod.EventBusSubscriber(modid = ChineseweaponsMod.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public final class GlaiveItemGetLostKillProcedure {
     private static final int SKILL_DURATION_TICKS = 30;
     private static final int DAMAGE_PULSE_INTERVAL_TICKS = 11;
@@ -44,7 +41,21 @@ public final class GlaiveItemGetLostKillProcedure {
     private static final Map<UUID, Integer> LAST_TIP_TICK = new HashMap<>();
     private static final int TIP_THROTTLE_TICKS = 10;
 
+    private static boolean registered;
+
     private GlaiveItemGetLostKillProcedure() {
+    }
+
+        public static void init() {
+        if (registered) {
+            return;
+        }
+        registered = true;
+
+                ServerTickEvents.END_SERVER_TICK.register(GlaiveItemGetLostKillProcedure::onServerTick);
+
+        //old api @SubscribeEvent PlayerEvent.PlayerLoggedOutEvent -> new api ServerPlayConnectionEvents.DISCONNECT
+        ServerPlayConnectionEvents.DISCONNECT.register((handler, server) -> onPlayerLogout(handler.player));
     }
 
     public static boolean tryStart(Level world, Player player, InteractionHand hand, ItemStack itemStack) {
@@ -72,7 +83,7 @@ public final class GlaiveItemGetLostKillProcedure {
 
         player.getCooldowns().addCooldown(itemStack.getItem(), COOLDOWN_TICKS);
         if (world.isClientSide()) {
-            MinecraftForge.EVENT_BUS.post(new GlaiveSpinStartedEvent(player, itemStack.copy()));
+                        GlaiveSpinStartedEvent.fire(player, itemStack.copy());
             return true;
         }
 
@@ -104,14 +115,17 @@ public final class GlaiveItemGetLostKillProcedure {
         return true;
     }
 
+        private static void onServerTick(MinecraftServer server) {
+        for (ServerPlayer player : server.getPlayerList().getPlayers()) {
+            onPlayerTick(player);
+        }
+    }
 
-    @SubscribeEvent
-    public static void onPlayerTick(TickEvent.PlayerTickEvent event) {
-        if (event.phase != TickEvent.Phase.END || event.player.level().isClientSide()) {
+    public static void onPlayerTick(Player player) {
+        if (player.level().isClientSide()) {
             return;
         }
 
-        Player player = event.player;
         ActiveSpin activeSpin = ACTIVE_SPINS.get(player.getUUID());
         if (activeSpin == null) {
             return;
@@ -131,9 +145,8 @@ public final class GlaiveItemGetLostKillProcedure {
         }
     }
 
-    @SubscribeEvent
-    public static void onPlayerLogout(PlayerEvent.PlayerLoggedOutEvent event) {
-        UUID uuid = event.getEntity().getUUID();
+        public static void onPlayerLogout(Player player) {
+        UUID uuid = player.getUUID();
         ACTIVE_SPINS.remove(uuid);
         LAST_TIP_TICK.remove(uuid);
     }

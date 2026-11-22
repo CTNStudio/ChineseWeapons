@@ -1,6 +1,5 @@
 package net.mirrorloong.chineseweapons.compat.emi;
 
-import dev.emi.emi.api.EmiEntrypoint;
 import dev.emi.emi.api.EmiPlugin;
 import dev.emi.emi.api.EmiRegistry;
 import dev.emi.emi.api.recipe.EmiRecipeCategory;
@@ -10,7 +9,6 @@ import net.mirrorloong.chineseweapons.ChineseweaponsMod;
 import net.mirrorloong.chineseweapons.init.ChineseweaponsModBlocks;
 import net.mirrorloong.chineseweapons.recipes.DeferredRecipe;
 
-@EmiEntrypoint
 public final class ChineseWeaponsEmiPlugin implements EmiPlugin {
     public static final EmiRecipeCategory WEAPON_CASTING = new EmiRecipeCategory(
             new ResourceLocation(ChineseweaponsMod.MODID, "weapon_casting_shaped"),

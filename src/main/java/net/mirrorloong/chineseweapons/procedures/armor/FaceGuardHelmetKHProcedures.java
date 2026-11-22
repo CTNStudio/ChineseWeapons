@@ -64,9 +64,9 @@ public class FaceGuardHelmetKHProcedures {
         level.playSound(
                 null,
                 player.getX(), player.getY(), player.getZ(),
-                SoundEvents.RAID_HORN.get(),
+                                SoundEvents.RAID_HORN.value(),
                 SoundSource.PLAYERS,
-                3.0F,//音量
+                3.0F,
                 1.0F
         );
 
@@ -98,8 +98,7 @@ public class FaceGuardHelmetKHProcedures {
                         .normalize();
                 Vec3 fleeTarget = player.position().add(fleeDir.scale(QZ));
 
-                // 驱逐
-                monster.getNavigation().moveTo(
+                                monster.getNavigation().moveTo(
                         fleeTarget.x, fleeTarget.y, fleeTarget.z, 1.5
                 );
             }

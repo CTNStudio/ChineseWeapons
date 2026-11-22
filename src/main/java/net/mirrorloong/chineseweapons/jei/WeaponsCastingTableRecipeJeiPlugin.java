@@ -29,8 +29,6 @@ import net.mirrorloong.chineseweapons.recipes.WCTRecipe;
 
 import java.util.*;
 
-import static net.mirrorloong.chineseweapons.ChineseweaponsMod.LOGGER;
-
 @JeiPlugin
 public class WeaponsCastingTableRecipeJeiPlugin implements IModPlugin {
     private static final ResourceLocation PLUGIN_ID = new ResourceLocation(ChineseweaponsMod.MODID, "jei_plugin");
@@ -68,8 +66,8 @@ public class WeaponsCastingTableRecipeJeiPlugin implements IModPlugin {
                 WeaponsCastingTableTypeGuiMenu.class,
                 DeferredGui.RegMenu.get(),
                 RECIPE_TYPE,
-                0, 10,   // 索引 0~9
-                11, 36   // 索引 11~46
+                0, 10,
+                11, 36
         );
 
     }

@@ -2,7 +2,8 @@ package net.mirrorloong.chineseweapons.block;
 
 import net.mirrorloong.chineseweapons.gui.recipe.WeaponsCastingTableTypeGuiMenu;
 
-import net.minecraftforge.network.NetworkHooks;
+//old api NetworkHooks.openScreen(player, MenuProvider, pos) -> new api ServerPlayer#openMenu(ExtendedScreenHandlerFactory)
+import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory;
 
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.phys.shapes.VoxelShape;
@@ -102,7 +103,13 @@ public class ArmorcastingtableBlock extends Block implements EntityBlock {
             if (!(be instanceof ArmorCastingTableBlockEntity)) {
                 return InteractionResult.PASS;
             }
-            NetworkHooks.openScreen(player, new MenuProvider() {
+
+            player.openMenu(new ExtendedScreenHandlerFactory() {
+                @Override
+                public void writeScreenOpeningData(ServerPlayer playerEntity, net.minecraft.network.FriendlyByteBuf buf) {
+                    buf.writeBlockPos(pos);
+                }
+
                 @Override
                 public Component getDisplayName() {
                     return Component.translatable("block.chineseweapons.armor_casting_table");
@@ -112,7 +119,7 @@ public class ArmorcastingtableBlock extends Block implements EntityBlock {
                 public AbstractContainerMenu createMenu(int id, Inventory inventory, Player player) {
                     return new WeaponsCastingTableTypeGuiMenu(id, inventory, pos);
                 }
-            }, pos);
+            });
         }
         return InteractionResult.SUCCESS;
     }

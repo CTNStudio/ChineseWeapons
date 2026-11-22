@@ -1,9 +1,16 @@
 package net.mirrorloong.chineseweapons.procedures.armor;
 
-import net.minecraft.nbt.CompoundTag;
+import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
+import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
+//old api ForgeRegistries.ITEMS.getKey(item) -> new api BuiltInRegistries.ITEM.getKey(item)
+//old api import net.minecraftforge.registries.ForgeRegistries -> new api net.minecraft.core.registries.BuiltInRegistries
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.ItemTags;
+import net.minecraft.world.Difficulty;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -26,24 +33,17 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.event.level.ExplosionEvent;
 import net.mirrorloong.chineseweapons.ChineseweaponsMod;
 import net.mirrorloong.chineseweapons.compat.WeaponScriptSettings;
 import net.mirrorloong.chineseweapons.entity.SongStandingShieldEntity;
 import net.mirrorloong.chineseweapons.init.ChineseWeaponsModEffects;
 import net.mirrorloong.chineseweapons.init.ChineseweaponsModItems;
-import net.minecraftforge.event.TickEvent;
-import net.minecraftforge.event.entity.living.LivingAttackEvent;
-import net.minecraftforge.event.entity.living.LivingEvent;
-import net.minecraftforge.event.entity.living.LivingHurtEvent;
-import net.minecraftforge.eventbus.api.EventPriority;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.registries.ForgeRegistries;
 
+import java.util.List;
+import java.util.Map;
 import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
 
-@Mod.EventBusSubscriber(modid = ChineseweaponsMod.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public final class ChineseWeaponsCombatEvents {
     private static final UUID MING_GUANG_SPEED_ID = UUID.fromString("1117a420-9d72-4fa4-89d0-825a318d3e17");
     private static final AttributeModifier MING_GUANG_SPEED = new AttributeModifier(
@@ -61,12 +61,28 @@ public final class ChineseWeaponsCombatEvents {
             AttributeModifier.Operation.ADDITION
     );
 
-    private static final String TETHER_OWNER = "chineseweapons:tether_owner";
-    private static final String TETHER_UNTIL = "chineseweapons:tether_until";
     private static final int TETHER_DURATION = 5 * 20;
     private static final ThreadLocal<Boolean> REFLECTING_DAMAGE = ThreadLocal.withInitial(() -> false);
+        private static final ThreadLocal<Boolean> APPLYING_REDUCED_DAMAGE = ThreadLocal.withInitial(() -> false);
+        private static final Map<UUID, Tether> TETHERS = new ConcurrentHashMap<>();
+
+    private static boolean registered;
 
     private ChineseWeaponsCombatEvents() {
+    }
+
+        public static void init() {
+        if (registered) {
+            return;
+        }
+        registered = true;
+
+                ServerLivingEntityEvents.ALLOW_DAMAGE.register(ChineseWeaponsCombatEvents::onAllowDamage);
+
+                        ServerTickEvents.END_SERVER_TICK.register(ChineseWeaponsCombatEvents::onServerTick);
+    }
+
+    private record Tether(UUID owner, long until) {
     }
 
     private enum ArmorFamily {
@@ -84,70 +100,111 @@ public final class ChineseWeaponsCombatEvents {
         }
     }
 
-    @SubscribeEvent(priority = EventPriority.HIGHEST)
-    public static void preventTetheredAttacks(LivingAttackEvent event) {
+        public static boolean onAllowDamage(LivingEntity entity, DamageSource source, float amount) {
+        if (APPLYING_REDUCED_DAMAGE.get()) {
+            return true;
+        }
+        if (!allowTetheredAttacks(entity, source, amount)) {
+            return false;
+        }
+        if (!allowExplosionDamage(entity, source)) {
+            return false;
+        }
+                return applyArmorCombatRules(entity, source, amount);
+    }
+
+    private static boolean allowTetheredAttacks(LivingEntity target, DamageSource source, float amount) {
         if (REFLECTING_DAMAGE.get()) {
-            return;
+            return true;
         }
 
-        LivingEntity target = event.getEntity();
         ArmorFamily targetFamily = primaryArmorFamily(target);
 
         if (targetFamily != null
                 && isMingGuang(targetFamily)
                 && countPieces(target, targetFamily) == 4
-                && event.getSource().getDirectEntity() instanceof AbstractArrow arrow
+                && source.getDirectEntity() instanceof AbstractArrow arrow
                 && !(arrow instanceof ThrownTrident)) {
 
             if (isFireArrow(arrow)) {
-                return;
+                return true;
             }
 
-            if (event.getAmount() <= 3.0F) {
+            if (amount <= 3.0F) {
                 arrow.setDeltaMovement(arrow.getDeltaMovement().scale(10.0D));
                 arrow.hurtMarked = true;
-                event.setCanceled(true);
+                return false;
             }
-            return;
+            return true;
         }
 
-        Entity attacker = event.getSource().getEntity();
+        Entity attacker = source.getEntity();
         if (attacker instanceof LivingEntity livingAttacker && isTethered(livingAttacker)) {
-            event.setCanceled(true);
+            return false;
         }
+        return true;
     }
 
-    @SubscribeEvent(priority = EventPriority.HIGH)
-    public static void applyArmorCombatRules(LivingHurtEvent event) {
-        LivingEntity wearer = event.getEntity();
+    private static boolean applyArmorCombatRules(LivingEntity wearer, DamageSource source, float amount) {
+        float desired = reduceDamage(wearer, source, amount);
+        if (desired <= 0.0F) {
+            return false;
+        }
+        if (desired >= amount) {
+            return true;
+        }
+                float nestedAmount = undoPlayerDifficultyScaling(wearer, source, desired);
+        APPLYING_REDUCED_DAMAGE.set(true);
+        try {
+            wearer.hurt(source, nestedAmount);
+        } finally {
+            APPLYING_REDUCED_DAMAGE.set(false);
+        }
+        return false;
+    }
+
+            private static float undoPlayerDifficultyScaling(LivingEntity wearer, DamageSource source, float desired) {
+        if (!(wearer instanceof Player) || !source.scalesWithDifficulty()) {
+            return desired;
+        }
+        Difficulty difficulty = wearer.level().getDifficulty();
+        if (difficulty == Difficulty.HARD) {
+            return desired / 1.5F;
+        }
+        if (difficulty == Difficulty.EASY) {
+                        return desired < 2.0F ? desired : 2.0F * (desired - 1.0F);
+        }
+        return desired;
+    }
+
+    private static float reduceDamage(LivingEntity wearer, DamageSource source, float amount) {
         if (wearer.level().isClientSide() || REFLECTING_DAMAGE.get()) {
-            return;
+            return amount;
         }
 
         ArmorFamily family = primaryArmorFamily(wearer);
         if (family == null) {
-            return;
+            return amount;
         }
 
         int pieceCount = countPieces(wearer, family);
         boolean fullSet = pieceCount == 4;
-        DamageSource source = event.getSource();
-        float originalDamage = event.getAmount();
+        float originalDamage = amount;
+        float result = amount;
 
         if (family == ArmorFamily.FINE_SCALE && fullSet && source.is(DamageTypes.SWEET_BERRY_BUSH)) {
-            event.setCanceled(true);
-            return;
+            return 0.0F;
         }
 
         switch (family) {
             case MOUNTAIN_CHARACTER -> {
                 if (isSwordOrTrident(source)) {
-                    event.setAmount(Math.max(0.0F, event.getAmount() - 3.0F));
+                    result = Math.max(0.0F, result - 3.0F);
                 }
             }
             case FINE_SCALE -> {
                 if (isSwordOrTrident(source) && roll(wearer, fullSet ? 0.30F : 0.10F)) {
-                    event.setAmount(event.getAmount() * 0.80F);
+                    result = result * 0.80F;
                 }
             }
             case BLACK_CHUI -> {
@@ -157,10 +214,10 @@ public final class ChineseWeaponsCombatEvents {
 
                 if (isMaceSmash(source)) {
                     if (roll(wearer, fullSet ? 1.00F : 0.50F)) {
-                        event.setAmount(event.getAmount() * 0.50F);
+                        result = result * 0.50F;
                     }
                 } else if (isSwordOrTrident(source) && roll(wearer, fullSet ? 0.60F : 0.30F)) {
-                    event.setAmount(event.getAmount() * 0.60F);
+                    result = result * 0.60F;
                 }
 
                 if (roll(wearer, fullSet ? 0.30F : 0.10F)) {
@@ -173,50 +230,56 @@ public final class ChineseWeaponsCombatEvents {
                 }
 
                 if (isMaceSmash(source) && roll(wearer, fullSet ? 0.80F : 0.30F)) {
-                    event.setAmount(event.getAmount() * 0.80F);
+                    result = result * 0.80F;
                 }
 
                 if (fullSet
                         && source.getDirectEntity() instanceof AbstractArrow arrow
                         && !(arrow instanceof ThrownTrident)
                         && !isFireArrow(arrow)
-                        && event.getAmount() > 3.0F) {
-                    event.setAmount(Math.max(0.0F, event.getAmount() - 1.0F));
+                        && result > 3.0F) {
+                    result = Math.max(0.0F, result - 1.0F);
                 }
             }
             case MIDDLE_MING_GUANG -> {
                 if (isSwordOrTrident(source) && wearer.isShiftKeyDown()) {
-                    event.setAmount(Math.max(0.0F, event.getAmount() - 2.0F));
+                    result = Math.max(0.0F, result - 2.0F);
                 }
 
                 if (fullSet
                         && source.getDirectEntity() instanceof AbstractArrow arrow
                         && !(arrow instanceof ThrownTrident)
                         && !isFireArrow(arrow)
-                        && event.getAmount() > 3.0F) {
-                    event.setAmount(Math.max(0.0F, event.getAmount() - 2.0F));
+                        && result > 3.0F) {
+                    result = Math.max(0.0F, result - 2.0F);
                 }
             }
             case LATE_MING_GUANG -> {
                 if (isSwordOrTrident(source) && wearer.isShiftKeyDown()) {
-                    event.setAmount(Math.max(0.0F, event.getAmount() - 2.0F));
+                    result = Math.max(0.0F, result - 2.0F);
                 }
 
                 if (fullSet
                         && source.getDirectEntity() instanceof AbstractArrow arrow
                         && !(arrow instanceof ThrownTrident)
                         && !isFireArrow(arrow)
-                        && event.getAmount() > 3.0F) {
-                    event.setAmount(Math.max(0.0F, event.getAmount() - 2.0F));
+                        && result > 3.0F) {
+                    result = Math.max(0.0F, result - 2.0F);
                 }
             }
         }
+        return result;
     }
 
-    @SubscribeEvent
-    public static void applyArmorTickRules(TickEvent.PlayerTickEvent event) {
-        Player player = event.player;
-        if (event.phase != TickEvent.Phase.END || player.level().isClientSide()) {
+        private static void onServerTick(MinecraftServer server) {
+        for (ServerPlayer player : server.getPlayerList().getPlayers()) {
+            applyArmorTickRules(player);
+        }
+        tickTethers(server);
+    }
+
+    private static void applyArmorTickRules(Player player) {
+        if (player.level().isClientSide()) {
             return;
         }
 
@@ -234,23 +297,41 @@ public final class ChineseWeaponsCombatEvents {
         }
     }
 
-    @SubscribeEvent
-    public static void tickTetheredEntity(LivingEvent.LivingTickEvent event) {
-        LivingEntity target = event.getEntity();
-        if (!(target.level() instanceof ServerLevel serverLevel) || !isTethered(target)) {
+        private static void tickTethers(MinecraftServer server) {
+        for (Map.Entry<UUID, Tether> entry : TETHERS.entrySet()) {
+            Entity entity = null;
+            for (ServerLevel level : server.getAllLevels()) {
+                entity = level.getEntity(entry.getKey());
+                if (entity != null) {
+                    break;
+                }
+            }
+            if (!(entity instanceof LivingEntity target)) {
+                TETHERS.remove(entry.getKey());
+                continue;
+            }
+            tickTetheredEntity(target, entry.getValue());
+        }
+    }
+
+    private static void tickTetheredEntity(LivingEntity target, Tether tether) {
+        if (!isTethered(target)) {
             return;
         }
 
-        CompoundTag data = target.getPersistentData();
-        if (!data.hasUUID(TETHER_OWNER)) {
+                        if (target.getDeltaMovement().y > 0.25D && roll(target, 0.30F)) {
             clearTether(target);
             return;
         }
 
-        Entity owner = serverLevel.getEntity(data.getUUID(TETHER_OWNER));
+        if (!(target.level() instanceof ServerLevel serverLevel)) {
+            return;
+        }
+
+        Entity owner = serverLevel.getEntity(tether.owner());
         if (!(owner instanceof Player playerOwner)
                 || !owner.isAlive()
-                || serverLevel.getGameTime() >= data.getLong(TETHER_UNTIL)) {
+                || serverLevel.getGameTime() >= tether.until()) {
             clearTether(target);
             return;
         }
@@ -283,14 +364,6 @@ public final class ChineseWeaponsCombatEvents {
         }
     }
 
-    @SubscribeEvent
-    public static void tryEscapeTether(LivingEvent.LivingJumpEvent event) {
-        LivingEntity entity = event.getEntity();
-        if (!entity.level().isClientSide() && isTethered(entity) && roll(entity, 0.30F)) {
-            clearTether(entity);
-        }
-    }
-
     public static boolean tryStartMountedDrag(Player owner, LivingEntity target) {
         if (owner.level().isClientSide()
                 || owner == target
@@ -300,9 +373,7 @@ public final class ChineseWeaponsCombatEvents {
             return false;
         }
 
-        CompoundTag data = target.getPersistentData();
-        data.putUUID(TETHER_OWNER, owner.getUUID());
-        data.putLong(TETHER_UNTIL, owner.level().getGameTime() + TETHER_DURATION);
+        TETHERS.put(target.getUUID(), new Tether(owner.getUUID(), owner.level().getGameTime() + TETHER_DURATION));
         target.addEffect(new MobEffectInstance(ChineseWeaponsModEffects.CusEffectSupplier.get(), TETHER_DURATION, 0, false, true));
         return true;
     }
@@ -312,13 +383,11 @@ public final class ChineseWeaponsCombatEvents {
     }
 
     private static void clearTether(LivingEntity entity) {
-        CompoundTag data = entity.getPersistentData();
-        data.remove(TETHER_OWNER);
-        data.remove(TETHER_UNTIL);
+        TETHERS.remove(entity.getUUID());
     }
 
     public static boolean isTethered(LivingEntity entity) {
-        return entity.getPersistentData().contains(TETHER_UNTIL);
+        return TETHERS.containsKey(entity.getUUID());
     }
 
     private static void updateMingGuangSpeed(Player player, boolean enabled) {
@@ -407,7 +476,8 @@ public final class ChineseWeaponsCombatEvents {
         }
 
         if (source.getEntity() instanceof LivingEntity attacker && attacker.fallDistance > 0.0F) {
-            ResourceLocation key = ForgeRegistries.ITEMS.getKey(attacker.getMainHandItem().getItem());
+
+            ResourceLocation key = BuiltInRegistries.ITEM.getKey(attacker.getMainHandItem().getItem());
             if (key != null) {
                 String path = key.getPath();
                 return path.contains("mace") || path.contains("heavy_hammer");
@@ -447,7 +517,6 @@ public final class ChineseWeaponsCombatEvents {
         }
         return count;
     }
-
 
     private static boolean isArmorPiece(ItemStack stack, ArmorFamily family) {
         if (stack.isEmpty()) {
@@ -491,7 +560,8 @@ public final class ChineseWeaponsCombatEvents {
     }
 
     private static String itemPath(ItemStack stack) {
-        ResourceLocation key = ForgeRegistries.ITEMS.getKey(stack.getItem());
+
+        ResourceLocation key = BuiltInRegistries.ITEM.getKey(stack.getItem());
         return key == null ? "" : key.getPath();
     }
 
@@ -499,12 +569,39 @@ public final class ChineseWeaponsCombatEvents {
         return entity.getRandom().nextFloat() < probability;
     }
 
-    @SubscribeEvent
-    public static void onExplosion(ExplosionEvent.Detonate event) {
-        var level = event.getLevel();
-        var center = event.getExplosion().getPosition();
-        level.getEntitiesOfClass(SongStandingShieldEntity.class,
-                        new AABB(center, center).inflate(32))
-                .forEach(e -> e.handleExplosion(event));
+                private static boolean allowExplosionDamage(LivingEntity entity, DamageSource source) {
+        if (!source.is(DamageTypes.EXPLOSION) && !source.is(DamageTypes.PLAYER_EXPLOSION)) {
+            return true;
+        }
+        return !isInsideShieldSafeZone(entity);
+    }
+
+    private static boolean isInsideShieldSafeZone(LivingEntity entity) {
+        if (!(entity.level() instanceof ServerLevel level)) {
+            return false;
+        }
+
+        double behindCenter = WeaponScriptSettings.getArmorThreshold(
+                null,
+                WeaponScriptSettings.ALLWeapon.SONGSTANDINGSHIELD_BEHINDCENTER, 4.0);
+
+        List<SongStandingShieldEntity> shields = level.getEntitiesOfClass(
+                SongStandingShieldEntity.class,
+                entity.getBoundingBox().inflate(32.0D)
+        );
+
+        for (SongStandingShieldEntity shield : shields) {
+            float yaw = shield.getShieldYaw();
+            Vec3 forward = new Vec3(-Math.sin(Math.toRadians(yaw)), 0.0D, Math.cos(Math.toRadians(yaw))).normalize();
+            Vec3 center = shield.position().subtract(forward.scale(behindCenter));
+            AABB safeZone = new AABB(
+                    center.x - 4, center.y - 4, center.z - 4,
+                    center.x + 4, center.y + 4, center.z + 4
+            );
+            if (safeZone.contains(entity.position())) {
+                return true;
+            }
+        }
+        return false;
     }
 }

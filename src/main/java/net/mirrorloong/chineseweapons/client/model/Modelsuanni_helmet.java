@@ -1,8 +1,4 @@
 package net.mirrorloong.chineseweapons.client.model;
-// Made with Blockbench 5.1.6
-// Exported for Minecraft version 1.17 or later with Mojang mappings
-// Paste this class into your mod and generate all required imports
-
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
@@ -16,8 +12,7 @@ import net.minecraft.world.entity.Entity;
 import net.mirrorloong.chineseweapons.ChineseweaponsMod;
 
 public class Modelsuanni_helmet<T extends Entity> extends EntityModel<T> {
-	// This layer location should be baked with EntityRendererProvider.Context in the entity renderer and passed into this model's constructor
-    public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(new ResourceLocation(ChineseweaponsMod.MODID, "suanni_helmet"), "main");
+	    public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(new ResourceLocation(ChineseweaponsMod.MODID, "suanni_helmet"), "main");
     public final ModelPart bipedHead;
 
     public Modelsuanni_helmet(ModelPart root) {

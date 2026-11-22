@@ -12,7 +12,6 @@ import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.ShapedRecipe;
 import net.mirrorloong.chineseweapons.ChineseweaponsMod;
 import net.mirrorloong.chineseweapons.init.ChineseweaponsModItems;
-import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Map;
@@ -56,8 +55,7 @@ public class WCTRecipeSer implements RecipeSerializer<WCTRecipe> {
             String signature = generateRecipeSignature(ingredients2, jsonObject);
             if (TRUE_REG_RECIPE.containsKey(signature)) {
                 ResourceLocation existingRecipe = TRUE_REG_RECIPE.get(signature);
-                //防粗心Xiris喵
-                ChineseweaponsMod.LOGGER.error("Duplicate recipe detected: " + existingRecipe + " <--> " + resourceLocation + " - same ingredients but different output");
+                                ChineseweaponsMod.LOGGER.error("Duplicate recipe detected: " + existingRecipe + " <--> " + resourceLocation + " - same ingredients but different output");
             } else {
                 TRUE_REG_RECIPE.put(signature, resourceLocation);
             }
@@ -126,6 +124,6 @@ public class WCTRecipeSer implements RecipeSerializer<WCTRecipe> {
     public void toNetwork(FriendlyByteBuf buf, WCTRecipe wctRecipe) {
         buf.writeVarInt(wctRecipe.getIngredients().size());
         for(Ingredient ingredient: wctRecipe.getIngredients()) ingredient.toNetwork(buf);
-        buf.writeItemStack(wctRecipe.getResultItem2(), false);
+        buf.writeItem(wctRecipe.getResultItem2());
     }
 }

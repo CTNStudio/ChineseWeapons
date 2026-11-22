@@ -13,19 +13,16 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.client.extensions.common.IClientItemExtensions;
 import net.mirrorloong.chineseweapons.client.model.Modellate_tang_dynasty_ming_guang_armor;
+import net.mirrorloong.chineseweapons.client.armor.CustomArmorModel;
 import net.mirrorloong.chineseweapons.procedures.armor.DyeableItem;
 
-import javax.annotation.Nullable;
+import org.jetbrains.annotations.Nullable;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.function.Consumer;
 
-public abstract class NetheritelatetangdynastymingguangarmorItem extends ArmorItem implements DyeableItem {
+public abstract class NetheritelatetangdynastymingguangarmorItem extends ArmorItem implements DyeableItem, CustomArmorModel {
 	public NetheritelatetangdynastymingguangarmorItem(Type type, Properties properties) {
 		super(new ArmorMaterial() {
 			@Override
@@ -90,22 +87,17 @@ public abstract class NetheritelatetangdynastymingguangarmorItem extends ArmorIt
 			super(Type.HELMET, new Properties().fireResistant());
 		}
 
-		@Override
-		public void initializeClient(Consumer<IClientItemExtensions> consumer) {
-			consumer.accept(new IClientItemExtensions() {
 				@Override
-				public HumanoidModel getHumanoidArmorModel(LivingEntity living, ItemStack stack, EquipmentSlot slot, HumanoidModel defaultModel) {
-					HumanoidModel armorModel = new HumanoidModel(new ModelPart(Collections.emptyList(),
-							Map.of("head", new Modellate_tang_dynasty_ming_guang_armor(Minecraft.getInstance().getEntityModels().bakeLayer(Modellate_tang_dynasty_ming_guang_armor.LAYER_LOCATION)).bipedHead, "hat",
-									new ModelPart(Collections.emptyList(), Collections.emptyMap()), "body", new ModelPart(Collections.emptyList(), Collections.emptyMap()), "right_arm", new ModelPart(Collections.emptyList(), Collections.emptyMap()),
-									"left_arm", new ModelPart(Collections.emptyList(), Collections.emptyMap()), "right_leg", new ModelPart(Collections.emptyList(), Collections.emptyMap()), "left_leg",
-									new ModelPart(Collections.emptyList(), Collections.emptyMap()))));
-					armorModel.crouching = living.isShiftKeyDown();
-					armorModel.riding = defaultModel.riding;
-					armorModel.young = living.isBaby();
-					return armorModel;
-				}
-			});
+		public HumanoidModel getHumanoidArmorModel(LivingEntity living, ItemStack stack, EquipmentSlot slot, HumanoidModel defaultModel) {
+			HumanoidModel armorModel = new HumanoidModel(new ModelPart(Collections.emptyList(),
+					Map.of("head", new Modellate_tang_dynasty_ming_guang_armor(Minecraft.getInstance().getEntityModels().bakeLayer(Modellate_tang_dynasty_ming_guang_armor.LAYER_LOCATION)).bipedHead, "hat",
+							new ModelPart(Collections.emptyList(), Collections.emptyMap()), "body", new ModelPart(Collections.emptyList(), Collections.emptyMap()), "right_arm", new ModelPart(Collections.emptyList(), Collections.emptyMap()),
+							"left_arm", new ModelPart(Collections.emptyList(), Collections.emptyMap()), "right_leg", new ModelPart(Collections.emptyList(), Collections.emptyMap()), "left_leg",
+							new ModelPart(Collections.emptyList(), Collections.emptyMap()))));
+			armorModel.crouching = living.isShiftKeyDown();
+			armorModel.riding = defaultModel.riding;
+			armorModel.young = living.isBaby();
+			return armorModel;
 		}
 	}
 
@@ -114,24 +106,18 @@ public abstract class NetheritelatetangdynastymingguangarmorItem extends ArmorIt
 			super(Type.CHESTPLATE, new Properties().fireResistant());
 		}
 
-		@Override
-		public void initializeClient(Consumer<IClientItemExtensions> consumer) {
-			consumer.accept(new IClientItemExtensions() {
 				@Override
-				@OnlyIn(Dist.CLIENT)
-				public HumanoidModel getHumanoidArmorModel(LivingEntity living, ItemStack stack, EquipmentSlot slot, HumanoidModel defaultModel) {
-					HumanoidModel armorModel = new HumanoidModel(new ModelPart(Collections.emptyList(),
-							Map.of("body", new Modellate_tang_dynasty_ming_guang_armor(Minecraft.getInstance().getEntityModels().bakeLayer(Modellate_tang_dynasty_ming_guang_armor.LAYER_LOCATION)).bipedBody, "left_arm",
-									new Modellate_tang_dynasty_ming_guang_armor(Minecraft.getInstance().getEntityModels().bakeLayer(Modellate_tang_dynasty_ming_guang_armor.LAYER_LOCATION)).bipedLeftArm, "right_arm",
-									new Modellate_tang_dynasty_ming_guang_armor(Minecraft.getInstance().getEntityModels().bakeLayer(Modellate_tang_dynasty_ming_guang_armor.LAYER_LOCATION)).bipedRightArm, "head",
-									new ModelPart(Collections.emptyList(), Collections.emptyMap()), "hat", new ModelPart(Collections.emptyList(), Collections.emptyMap()), "right_leg", new ModelPart(Collections.emptyList(), Collections.emptyMap()),
-									"left_leg", new ModelPart(Collections.emptyList(), Collections.emptyMap()))));
-					armorModel.crouching = living.isShiftKeyDown();
-					armorModel.riding = defaultModel.riding;
-					armorModel.young = living.isBaby();
-					return armorModel;
-				}
-			});
+		public HumanoidModel getHumanoidArmorModel(LivingEntity living, ItemStack stack, EquipmentSlot slot, HumanoidModel defaultModel) {
+			HumanoidModel armorModel = new HumanoidModel(new ModelPart(Collections.emptyList(),
+					Map.of("body", new Modellate_tang_dynasty_ming_guang_armor(Minecraft.getInstance().getEntityModels().bakeLayer(Modellate_tang_dynasty_ming_guang_armor.LAYER_LOCATION)).bipedBody, "left_arm",
+							new Modellate_tang_dynasty_ming_guang_armor(Minecraft.getInstance().getEntityModels().bakeLayer(Modellate_tang_dynasty_ming_guang_armor.LAYER_LOCATION)).bipedLeftArm, "right_arm",
+							new Modellate_tang_dynasty_ming_guang_armor(Minecraft.getInstance().getEntityModels().bakeLayer(Modellate_tang_dynasty_ming_guang_armor.LAYER_LOCATION)).bipedRightArm, "head",
+							new ModelPart(Collections.emptyList(), Collections.emptyMap()), "hat", new ModelPart(Collections.emptyList(), Collections.emptyMap()), "right_leg", new ModelPart(Collections.emptyList(), Collections.emptyMap()),
+							"left_leg", new ModelPart(Collections.emptyList(), Collections.emptyMap()))));
+			armorModel.crouching = living.isShiftKeyDown();
+			armorModel.riding = defaultModel.riding;
+			armorModel.young = living.isBaby();
+			return armorModel;
 		}
 	}
 
@@ -140,23 +126,17 @@ public abstract class NetheritelatetangdynastymingguangarmorItem extends ArmorIt
 			super(Type.LEGGINGS, new Properties().fireResistant());
 		}
 
-		@Override
-		public void initializeClient(Consumer<IClientItemExtensions> consumer) {
-			consumer.accept(new IClientItemExtensions() {
 				@Override
-				@OnlyIn(Dist.CLIENT)
-				public HumanoidModel getHumanoidArmorModel(LivingEntity living, ItemStack stack, EquipmentSlot slot, HumanoidModel defaultModel) {
-					HumanoidModel armorModel = new HumanoidModel(new ModelPart(Collections.emptyList(),
-							Map.of("left_leg", new Modellate_tang_dynasty_ming_guang_armor(Minecraft.getInstance().getEntityModels().bakeLayer(Modellate_tang_dynasty_ming_guang_armor.LAYER_LOCATION)).bipedLeftLeg, "right_leg",
-									new Modellate_tang_dynasty_ming_guang_armor(Minecraft.getInstance().getEntityModels().bakeLayer(Modellate_tang_dynasty_ming_guang_armor.LAYER_LOCATION)).bipedRightLeg, "head",
-									new ModelPart(Collections.emptyList(), Collections.emptyMap()), "hat", new ModelPart(Collections.emptyList(), Collections.emptyMap()), "body", new ModelPart(Collections.emptyList(), Collections.emptyMap()),
-									"right_arm", new ModelPart(Collections.emptyList(), Collections.emptyMap()), "left_arm", new ModelPart(Collections.emptyList(), Collections.emptyMap()))));
-					armorModel.crouching = living.isShiftKeyDown();
-					armorModel.riding = defaultModel.riding;
-					armorModel.young = living.isBaby();
-					return armorModel;
-				}
-			});
+		public HumanoidModel getHumanoidArmorModel(LivingEntity living, ItemStack stack, EquipmentSlot slot, HumanoidModel defaultModel) {
+			HumanoidModel armorModel = new HumanoidModel(new ModelPart(Collections.emptyList(),
+					Map.of("left_leg", new Modellate_tang_dynasty_ming_guang_armor(Minecraft.getInstance().getEntityModels().bakeLayer(Modellate_tang_dynasty_ming_guang_armor.LAYER_LOCATION)).bipedLeftLeg, "right_leg",
+							new Modellate_tang_dynasty_ming_guang_armor(Minecraft.getInstance().getEntityModels().bakeLayer(Modellate_tang_dynasty_ming_guang_armor.LAYER_LOCATION)).bipedRightLeg, "head",
+							new ModelPart(Collections.emptyList(), Collections.emptyMap()), "hat", new ModelPart(Collections.emptyList(), Collections.emptyMap()), "body", new ModelPart(Collections.emptyList(), Collections.emptyMap()),
+							"right_arm", new ModelPart(Collections.emptyList(), Collections.emptyMap()), "left_arm", new ModelPart(Collections.emptyList(), Collections.emptyMap()))));
+			armorModel.crouching = living.isShiftKeyDown();
+			armorModel.riding = defaultModel.riding;
+			armorModel.young = living.isBaby();
+			return armorModel;
 		}
 	}
 
@@ -165,23 +145,17 @@ public abstract class NetheritelatetangdynastymingguangarmorItem extends ArmorIt
 			super(Type.BOOTS, new Properties().fireResistant());
 		}
 
-		@Override
-		public void initializeClient(Consumer<IClientItemExtensions> consumer) {
-			consumer.accept(new IClientItemExtensions() {
 				@Override
-				@OnlyIn(Dist.CLIENT)
-				public HumanoidModel getHumanoidArmorModel(LivingEntity living, ItemStack stack, EquipmentSlot slot, HumanoidModel defaultModel) {
-					HumanoidModel armorModel = new HumanoidModel(new ModelPart(Collections.emptyList(),
-							Map.of("left_leg", new Modellate_tang_dynasty_ming_guang_armor(Minecraft.getInstance().getEntityModels().bakeLayer(Modellate_tang_dynasty_ming_guang_armor.LAYER_LOCATION)).LeftBoots, "right_leg",
-									new Modellate_tang_dynasty_ming_guang_armor(Minecraft.getInstance().getEntityModels().bakeLayer(Modellate_tang_dynasty_ming_guang_armor.LAYER_LOCATION)).RightBoots, "head",
-									new ModelPart(Collections.emptyList(), Collections.emptyMap()), "hat", new ModelPart(Collections.emptyList(), Collections.emptyMap()), "body", new ModelPart(Collections.emptyList(), Collections.emptyMap()),
-									"right_arm", new ModelPart(Collections.emptyList(), Collections.emptyMap()), "left_arm", new ModelPart(Collections.emptyList(), Collections.emptyMap()))));
-					armorModel.crouching = living.isShiftKeyDown();
-					armorModel.riding = defaultModel.riding;
-					armorModel.young = living.isBaby();
-					return armorModel;
-				}
-			});
+		public HumanoidModel getHumanoidArmorModel(LivingEntity living, ItemStack stack, EquipmentSlot slot, HumanoidModel defaultModel) {
+			HumanoidModel armorModel = new HumanoidModel(new ModelPart(Collections.emptyList(),
+					Map.of("left_leg", new Modellate_tang_dynasty_ming_guang_armor(Minecraft.getInstance().getEntityModels().bakeLayer(Modellate_tang_dynasty_ming_guang_armor.LAYER_LOCATION)).LeftBoots, "right_leg",
+							new Modellate_tang_dynasty_ming_guang_armor(Minecraft.getInstance().getEntityModels().bakeLayer(Modellate_tang_dynasty_ming_guang_armor.LAYER_LOCATION)).RightBoots, "head",
+							new ModelPart(Collections.emptyList(), Collections.emptyMap()), "hat", new ModelPart(Collections.emptyList(), Collections.emptyMap()), "body", new ModelPart(Collections.emptyList(), Collections.emptyMap()),
+							"right_arm", new ModelPart(Collections.emptyList(), Collections.emptyMap()), "left_arm", new ModelPart(Collections.emptyList(), Collections.emptyMap()))));
+			armorModel.crouching = living.isShiftKeyDown();
+			armorModel.riding = defaultModel.riding;
+			armorModel.young = living.isBaby();
+			return armorModel;
 		}
 	}
 }

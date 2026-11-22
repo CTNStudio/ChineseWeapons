@@ -1,7 +1,7 @@
 package net.mirrorloong.chineseweapons.gui.recipe;
 
-import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.core.BlockPos;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
@@ -9,15 +9,9 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
-import net.mirrorloong.chineseweapons.ChineseweaponsMod;
 import net.mirrorloong.chineseweapons.block.ArmorCastingTableBlockEntity;
 import net.mirrorloong.chineseweapons.network.ArmorCastingTableBlockProgressPacket;
 
-@Mod.EventBusSubscriber(modid = ChineseweaponsMod.MODID, value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class WeaponsCastingTableTypeGuiMenu extends AbstractContainerMenu {
 
     private final Player player;
@@ -60,7 +54,7 @@ public class WeaponsCastingTableTypeGuiMenu extends AbstractContainerMenu {
                     super.onTake(p, stack);
                     if (table != null) {
                         table.getOutput().setItem(0, ItemStack.EMPTY);
-                        table.onRecipeTaken(); //刷新
+                        table.onRecipeTaken();
                     }
                 }
             });
@@ -74,6 +68,10 @@ public class WeaponsCastingTableTypeGuiMenu extends AbstractContainerMenu {
         for (int col = 0; col < 9; ++col) {
             this.addSlot(new Slot(inventoryPlayer, col, col * 18 - 19, 142));
         }
+    }
+
+        public WeaponsCastingTableTypeGuiMenu(int id, Inventory inventoryPlayer, FriendlyByteBuf data) {
+        this(id, inventoryPlayer, data.readBlockPos());
     }
 
     public BlockPos getTablePos() {
@@ -93,8 +91,7 @@ public class WeaponsCastingTableTypeGuiMenu extends AbstractContainerMenu {
         ItemStack stack = slot.getItem();
         result = stack.copy();
 
-        // onTake
-        if (index == 11) {
+                if (index == 11) {
             if (table == null || !table.isFinished()) {
                 return ItemStack.EMPTY;
             }
@@ -109,8 +106,7 @@ public class WeaponsCastingTableTypeGuiMenu extends AbstractContainerMenu {
             return result;
         }
 
-        // 输入槽 0-10
-        if (index >= 0 && index <= 10) {
+                if (index >= 0 && index <= 10) {
             if (table != null && !table.getOutput().getItem(0).isEmpty()) {
                 return ItemStack.EMPTY;
             }
@@ -118,8 +114,7 @@ public class WeaponsCastingTableTypeGuiMenu extends AbstractContainerMenu {
                 return ItemStack.EMPTY;
             }
         }
-        // 背包 12-46
-        else if (index >= 12 && index <= 46) {
+                else if (index >= 12 && index <= 46) {
             if (!this.moveItemStackTo(stack, 0, 11, false)) {
                 return ItemStack.EMPTY;
             }
@@ -145,10 +140,5 @@ public class WeaponsCastingTableTypeGuiMenu extends AbstractContainerMenu {
     @Override
     public boolean stillValid(Player player) {
         return true;
-    }
-
-    @SubscribeEvent
-    public static void onClientSetup(FMLClientSetupEvent event) {
-        event.enqueueWork(() -> MenuScreens.register(DeferredGui.RegMenu.get(), WeaponsCastingTableScreen::new));
     }
 }

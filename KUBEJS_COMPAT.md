@@ -1,6 +1,6 @@
 # Chinese Weapons：KubeJS 中文使用说明
 
-适用环境：Minecraft Forge 1.20.1。
+适用环境：Minecraft Fabric 1.20.1。
 
 本模组提供 KubeJS 兼容支持，可以通过脚本修改武器的基础属性、攻击距离、技能概率，以及新增或删除本模组的武器铸造台配方。
 
@@ -8,10 +8,10 @@ KubeJS 兼容是可选功能。不安装 KubeJS 时，Chinese Weapons 仍然可�
 
 ## 一、安装要求
 
-需要在对应的 Forge 1.20.1 实例中安装：
+需要在对应的 Fabric 1.20.1 实例中安装：
 
 - Chinese Weapons
-- KubeJS 6（Forge 1.20.1 版本）
+- KubeJS 6（Fabric 1.20.1 版本）
 - Rhino（KubeJS 前置）
 - Architectury API（KubeJS 前置）
 
@@ -34,8 +34,6 @@ kubejs/
 ```
 
 ## 二、修改物品属性
-
-## 注意，目前暂时不支持盔甲设置属性，等待添加代码。
 
 在以下位置新建文件：
 
@@ -73,9 +71,7 @@ chineseweapons:tang_dynasty_shield
 
 修改 `startup_scripts` 后必须完全退出并重新启动游戏或服务器，单独执行 `/reload` 不会重新执行启动脚本。
 
-## 三、修改技能/参数/概率/基础设置
-
-## 所有 技能/参数/概率/基础设置 可以在[ChineseWeaponsKubeJSBindings.java 点击跳转](src/main/java/net/mirrorloong/chineseweapons/compat/kubejs/ChineseWeaponsKubeJSBindings.java) 查看，代码内包含所有可以自定义选项的注释和详细用法 ***放心食用ovo***。
+## 三、修改武器技能参数
 
 下面的接口由 Chinese Weapons 提供，写在 `startup_scripts` 中即可：
 

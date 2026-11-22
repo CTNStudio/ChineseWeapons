@@ -1,0 +1,55 @@
+{
+  "schemaVersion": 1,
+  "id": "chineseweapons",
+  "version": "${version}",
+  "name": "Chinese Weapons",
+  "description": "A mod of Chinese classic armors.",
+  "authors": [
+    "CTN-STUDIO",
+    "Xiris177",
+    "Prizmarin",
+    "EndYigjie",
+    "sf.",
+    "BaiGave",
+    "spake404",
+    "MCcaptain5412",
+    "Slime_Dragon",
+    "Ku00115"
+  ],
+  "contact": {
+    "homepage": "https://www.curseforge.com/minecraft/mc-mods/chinese-weapons",
+    "sources": "https://github.com/CTN-STUDIO/ChineseWeapons"
+  },
+  "license": "All Rights Reserved",
+  "icon": "chineseweapons_logo.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "net.mirrorloong.chineseweapons.ChineseweaponsMod"
+    ],
+    "client": [
+      "net.mirrorloong.chineseweapons.client.ChineseWeaponsClientInit"
+    ],
+    "jei_mod_plugin": [
+      "net.mirrorloong.chineseweapons.jei.WeaponsCastingTableRecipeJeiPlugin"
+    ],
+    "emi": [
+      "net.mirrorloong.chineseweapons.compat.emi.ChineseWeaponsEmiPlugin"
+    ]
+  },
+  "mixins": [
+    "chineseweapons.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.16.14",
+    "fabric-api": "*",
+    "minecraft": "~1.20.1",
+    "java": ">=17"
+  },
+  "suggests": {
+    "jei": "*",
+    "emi": "*",
+    "patchouli": "*",
+    "kubejs": "*"
+  }
+}

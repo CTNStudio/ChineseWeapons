@@ -17,15 +17,14 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.client.extensions.common.IClientItemExtensions;
 import net.mirrorloong.chineseweapons.client.model.Modelface_guard;
+import net.mirrorloong.chineseweapons.client.armor.CustomArmorModel;
 import net.mirrorloong.chineseweapons.procedures.armor.FaceGuardHelmetKHProcedures;
 
 import java.util.Collections;
 import java.util.Map;
-import java.util.function.Consumer;
 
-public abstract class GoldenFaceGuardHelmetItem extends ArmorItem {
+public abstract class GoldenFaceGuardHelmetItem extends ArmorItem implements CustomArmorModel {
 	public GoldenFaceGuardHelmetItem(Type type, Properties properties) {
 		super(new ArmorMaterial() {
 			@Override
@@ -83,22 +82,17 @@ public abstract class GoldenFaceGuardHelmetItem extends ArmorItem {
             }
         }
 
-        @Override
-        public void initializeClient(Consumer<IClientItemExtensions> consumer) {
-            consumer.accept(new IClientItemExtensions() {
                 @Override
-                public HumanoidModel getHumanoidArmorModel(LivingEntity living, ItemStack stack, EquipmentSlot slot, HumanoidModel defaultModel) {
-                    HumanoidModel armorModel = new HumanoidModel(new ModelPart(Collections.emptyList(),
-                            Map.of("head", new Modelface_guard(Minecraft.getInstance().getEntityModels().bakeLayer(Modelface_guard.LAYER_LOCATION)).bipedHead, "hat",
-                                    new ModelPart(Collections.emptyList(), Collections.emptyMap()), "body", new ModelPart(Collections.emptyList(), Collections.emptyMap()), "right_arm", new ModelPart(Collections.emptyList(), Collections.emptyMap()),
-                                    "left_arm", new ModelPart(Collections.emptyList(), Collections.emptyMap()), "right_leg", new ModelPart(Collections.emptyList(), Collections.emptyMap()), "left_leg",
-                                    new ModelPart(Collections.emptyList(), Collections.emptyMap()))));
-                    armorModel.crouching = living.isShiftKeyDown();
-                    armorModel.riding = defaultModel.riding;
-                    armorModel.young = living.isBaby();
-                    return armorModel;
-                }
-            });
+        public HumanoidModel getHumanoidArmorModel(LivingEntity living, ItemStack stack, EquipmentSlot slot, HumanoidModel defaultModel) {
+            HumanoidModel armorModel = new HumanoidModel(new ModelPart(Collections.emptyList(),
+                    Map.of("head", new Modelface_guard(Minecraft.getInstance().getEntityModels().bakeLayer(Modelface_guard.LAYER_LOCATION)).bipedHead, "hat",
+                            new ModelPart(Collections.emptyList(), Collections.emptyMap()), "body", new ModelPart(Collections.emptyList(), Collections.emptyMap()), "right_arm", new ModelPart(Collections.emptyList(), Collections.emptyMap()),
+                            "left_arm", new ModelPart(Collections.emptyList(), Collections.emptyMap()), "right_leg", new ModelPart(Collections.emptyList(), Collections.emptyMap()), "left_leg",
+                            new ModelPart(Collections.emptyList(), Collections.emptyMap()))));
+            armorModel.crouching = living.isShiftKeyDown();
+            armorModel.riding = defaultModel.riding;
+            armorModel.young = living.isBaby();
+            return armorModel;
         }
 
         @Override

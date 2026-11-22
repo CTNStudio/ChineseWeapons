@@ -12,7 +12,6 @@ import net.minecraft.world.phys.*;
 import net.mirrorloong.chineseweapons.entity.SongStandingShieldEntity;
 import net.mirrorloong.chineseweapons.init.ChineseweaponsModEntities;
 
-
 public class SongStandingShield extends ShieldItem {
 
     public SongStandingShield() {

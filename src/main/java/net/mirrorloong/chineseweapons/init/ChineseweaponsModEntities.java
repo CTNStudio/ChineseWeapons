@@ -4,17 +4,16 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
-import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.RegistryObject;
+import net.mirrorloong.chineseweapons.compat.registry.DeferredRegister;
+import net.mirrorloong.chineseweapons.compat.registry.RegistryObject;
 import net.mirrorloong.chineseweapons.ChineseweaponsMod;
 import net.mirrorloong.chineseweapons.entity.SongJavelinProjectile;
 import net.mirrorloong.chineseweapons.entity.SongStandingShieldEntity;
 
 public class ChineseweaponsModEntities {
+    //old api DeferredRegister.create(ForgeRegistries.ENTITY_TYPES, MODID) -> new api DeferredRegister.create(BuiltInRegistries.ENTITY_TYPE, MODID)
     public static final DeferredRegister<EntityType<?>> ENTITIES =
-            DeferredRegister.create(ForgeRegistries.ENTITY_TYPES, ChineseweaponsMod.MODID);
+            DeferredRegister.create(BuiltInRegistries.ENTITY_TYPE, ChineseweaponsMod.MODID);
 
     public static final RegistryObject<EntityType<SongJavelinProjectile>> SONG_JAVELIN_PROJECTILE =
             ENTITIES.register("song_javelin",
@@ -31,10 +30,9 @@ public class ChineseweaponsModEntities {
                                     (type, level) -> new SongStandingShieldEntity(type, level), MobCategory.MISC)
                             .sized(0.8f, 2.8f)
                             .fireImmune()
-                            .build(String.valueOf(ResourceLocation.fromNamespaceAndPath(
+                                                        .build(String.valueOf(new ResourceLocation(
                                     ChineseweaponsMod.MODID, "standing_shield"))));
 
-    public static void register(IEventBus eventBus) {
-        ENTITIES.register(eventBus);
+            public static void bootstrap() {
     }
 }

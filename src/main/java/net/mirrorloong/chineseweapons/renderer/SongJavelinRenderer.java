@@ -26,8 +26,7 @@ public class SongJavelinRenderer extends EntityRenderer<SongJavelinProjectile> {
                        PoseStack poseStack, MultiBufferSource buffer, int packedLight) {
 
         poseStack.pushPose();
-        // 旋转指向飞行方向
-        poseStack.mulPose(Axis.YP.rotationDegrees(Mth.lerp(partialTick, entity.yRotO, entity.getYRot()) - 90.0F));
+                poseStack.mulPose(Axis.YP.rotationDegrees(Mth.lerp(partialTick, entity.yRotO, entity.getYRot()) - 90.0F));
         poseStack.mulPose(Axis.ZP.rotationDegrees(Mth.lerp(partialTick, entity.xRotO, entity.getXRot()) + 90.0F));
         poseStack.scale(1.0F, 1.0F, 1.0F);
 

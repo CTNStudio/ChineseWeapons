@@ -5,10 +5,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.Level;
 import net.mirrorloong.chineseweapons.client.model.Modelmountain_character_armor;
-
-import net.minecraftforge.client.extensions.common.IClientItemExtensions;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.api.distmarker.Dist;
+import net.mirrorloong.chineseweapons.client.armor.CustomArmorModel;
 
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.entity.LivingEntity;
@@ -21,13 +18,12 @@ import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.Minecraft;
 import net.mirrorloong.chineseweapons.procedures.armor.DyeableItem;
 
-import javax.annotation.Nullable;
+import org.jetbrains.annotations.Nullable;
 import java.util.List;
-import java.util.function.Consumer;
 import java.util.Map;
 import java.util.Collections;
 
-public abstract class NetheritemountaincharacterarmorItem extends ArmorItem implements DyeableItem {
+public abstract class NetheritemountaincharacterarmorItem extends ArmorItem implements DyeableItem, CustomArmorModel {
 	public NetheritemountaincharacterarmorItem(ArmorItem.Type type, Item.Properties properties) {
 		super(new ArmorMaterial() {
 			@Override
@@ -92,22 +88,17 @@ public abstract class NetheritemountaincharacterarmorItem extends ArmorItem impl
 			super(ArmorItem.Type.HELMET, new Item.Properties().fireResistant());
 		}
 
-		@Override
-		public void initializeClient(Consumer<IClientItemExtensions> consumer) {
-			consumer.accept(new IClientItemExtensions() {
 				@Override
-				public HumanoidModel getHumanoidArmorModel(LivingEntity living, ItemStack stack, EquipmentSlot slot, HumanoidModel defaultModel) {
-					HumanoidModel armorModel = new HumanoidModel(new ModelPart(Collections.emptyList(),
-							Map.of("head", new Modelmountain_character_armor(Minecraft.getInstance().getEntityModels().bakeLayer(Modelmountain_character_armor.LAYER_LOCATION)).bipedHead, "hat",
-									new ModelPart(Collections.emptyList(), Collections.emptyMap()), "body", new ModelPart(Collections.emptyList(), Collections.emptyMap()), "right_arm", new ModelPart(Collections.emptyList(), Collections.emptyMap()),
-									"left_arm", new ModelPart(Collections.emptyList(), Collections.emptyMap()), "right_leg", new ModelPart(Collections.emptyList(), Collections.emptyMap()), "left_leg",
-									new ModelPart(Collections.emptyList(), Collections.emptyMap()))));
-					armorModel.crouching = living.isShiftKeyDown();
-					armorModel.riding = defaultModel.riding;
-					armorModel.young = living.isBaby();
-					return armorModel;
-				}
-			});
+		public HumanoidModel getHumanoidArmorModel(LivingEntity living, ItemStack stack, EquipmentSlot slot, HumanoidModel defaultModel) {
+			HumanoidModel armorModel = new HumanoidModel(new ModelPart(Collections.emptyList(),
+					Map.of("head", new Modelmountain_character_armor(Minecraft.getInstance().getEntityModels().bakeLayer(Modelmountain_character_armor.LAYER_LOCATION)).bipedHead, "hat",
+							new ModelPart(Collections.emptyList(), Collections.emptyMap()), "body", new ModelPart(Collections.emptyList(), Collections.emptyMap()), "right_arm", new ModelPart(Collections.emptyList(), Collections.emptyMap()),
+							"left_arm", new ModelPart(Collections.emptyList(), Collections.emptyMap()), "right_leg", new ModelPart(Collections.emptyList(), Collections.emptyMap()), "left_leg",
+							new ModelPart(Collections.emptyList(), Collections.emptyMap()))));
+			armorModel.crouching = living.isShiftKeyDown();
+			armorModel.riding = defaultModel.riding;
+			armorModel.young = living.isBaby();
+			return armorModel;
 		}
 	}
 
@@ -116,24 +107,18 @@ public abstract class NetheritemountaincharacterarmorItem extends ArmorItem impl
 			super(ArmorItem.Type.CHESTPLATE, new Item.Properties().fireResistant());
 		}
 
-		@Override
-		public void initializeClient(Consumer<IClientItemExtensions> consumer) {
-			consumer.accept(new IClientItemExtensions() {
 				@Override
-				@OnlyIn(Dist.CLIENT)
-				public HumanoidModel getHumanoidArmorModel(LivingEntity living, ItemStack stack, EquipmentSlot slot, HumanoidModel defaultModel) {
-					HumanoidModel armorModel = new HumanoidModel(new ModelPart(Collections.emptyList(),
-							Map.of("body", new Modelmountain_character_armor(Minecraft.getInstance().getEntityModels().bakeLayer(Modelmountain_character_armor.LAYER_LOCATION)).bipedBody, "left_arm",
-									new Modelmountain_character_armor(Minecraft.getInstance().getEntityModels().bakeLayer(Modelmountain_character_armor.LAYER_LOCATION)).bipedLeftArm, "right_arm",
-									new Modelmountain_character_armor(Minecraft.getInstance().getEntityModels().bakeLayer(Modelmountain_character_armor.LAYER_LOCATION)).bipedRightArm, "head",
-									new ModelPart(Collections.emptyList(), Collections.emptyMap()), "hat", new ModelPart(Collections.emptyList(), Collections.emptyMap()), "right_leg", new ModelPart(Collections.emptyList(), Collections.emptyMap()),
-									"left_leg", new ModelPart(Collections.emptyList(), Collections.emptyMap()))));
-					armorModel.crouching = living.isShiftKeyDown();
-					armorModel.riding = defaultModel.riding;
-					armorModel.young = living.isBaby();
-					return armorModel;
-				}
-			});
+		public HumanoidModel getHumanoidArmorModel(LivingEntity living, ItemStack stack, EquipmentSlot slot, HumanoidModel defaultModel) {
+			HumanoidModel armorModel = new HumanoidModel(new ModelPart(Collections.emptyList(),
+					Map.of("body", new Modelmountain_character_armor(Minecraft.getInstance().getEntityModels().bakeLayer(Modelmountain_character_armor.LAYER_LOCATION)).bipedBody, "left_arm",
+							new Modelmountain_character_armor(Minecraft.getInstance().getEntityModels().bakeLayer(Modelmountain_character_armor.LAYER_LOCATION)).bipedLeftArm, "right_arm",
+							new Modelmountain_character_armor(Minecraft.getInstance().getEntityModels().bakeLayer(Modelmountain_character_armor.LAYER_LOCATION)).bipedRightArm, "head",
+							new ModelPart(Collections.emptyList(), Collections.emptyMap()), "hat", new ModelPart(Collections.emptyList(), Collections.emptyMap()), "right_leg", new ModelPart(Collections.emptyList(), Collections.emptyMap()),
+							"left_leg", new ModelPart(Collections.emptyList(), Collections.emptyMap()))));
+			armorModel.crouching = living.isShiftKeyDown();
+			armorModel.riding = defaultModel.riding;
+			armorModel.young = living.isBaby();
+			return armorModel;
 		}
 	}
 
@@ -142,23 +127,17 @@ public abstract class NetheritemountaincharacterarmorItem extends ArmorItem impl
 			super(ArmorItem.Type.LEGGINGS, new Item.Properties().fireResistant());
 		}
 
-		@Override
-		public void initializeClient(Consumer<IClientItemExtensions> consumer) {
-			consumer.accept(new IClientItemExtensions() {
 				@Override
-				@OnlyIn(Dist.CLIENT)
-				public HumanoidModel getHumanoidArmorModel(LivingEntity living, ItemStack stack, EquipmentSlot slot, HumanoidModel defaultModel) {
-					HumanoidModel armorModel = new HumanoidModel(new ModelPart(Collections.emptyList(),
-							Map.of("left_leg", new Modelmountain_character_armor(Minecraft.getInstance().getEntityModels().bakeLayer(Modelmountain_character_armor.LAYER_LOCATION)).bipedLeftLeg, "right_leg",
-									new Modelmountain_character_armor(Minecraft.getInstance().getEntityModels().bakeLayer(Modelmountain_character_armor.LAYER_LOCATION)).bipedRightLeg, "head",
-									new ModelPart(Collections.emptyList(), Collections.emptyMap()), "hat", new ModelPart(Collections.emptyList(), Collections.emptyMap()), "body", new ModelPart(Collections.emptyList(), Collections.emptyMap()),
-									"right_arm", new ModelPart(Collections.emptyList(), Collections.emptyMap()), "left_arm", new ModelPart(Collections.emptyList(), Collections.emptyMap()))));
-					armorModel.crouching = living.isShiftKeyDown();
-					armorModel.riding = defaultModel.riding;
-					armorModel.young = living.isBaby();
-					return armorModel;
-				}
-			});
+		public HumanoidModel getHumanoidArmorModel(LivingEntity living, ItemStack stack, EquipmentSlot slot, HumanoidModel defaultModel) {
+			HumanoidModel armorModel = new HumanoidModel(new ModelPart(Collections.emptyList(),
+					Map.of("left_leg", new Modelmountain_character_armor(Minecraft.getInstance().getEntityModels().bakeLayer(Modelmountain_character_armor.LAYER_LOCATION)).bipedLeftLeg, "right_leg",
+							new Modelmountain_character_armor(Minecraft.getInstance().getEntityModels().bakeLayer(Modelmountain_character_armor.LAYER_LOCATION)).bipedRightLeg, "head",
+							new ModelPart(Collections.emptyList(), Collections.emptyMap()), "hat", new ModelPart(Collections.emptyList(), Collections.emptyMap()), "body", new ModelPart(Collections.emptyList(), Collections.emptyMap()),
+							"right_arm", new ModelPart(Collections.emptyList(), Collections.emptyMap()), "left_arm", new ModelPart(Collections.emptyList(), Collections.emptyMap()))));
+			armorModel.crouching = living.isShiftKeyDown();
+			armorModel.riding = defaultModel.riding;
+			armorModel.young = living.isBaby();
+			return armorModel;
 		}
 	}
 
@@ -167,23 +146,17 @@ public abstract class NetheritemountaincharacterarmorItem extends ArmorItem impl
 			super(ArmorItem.Type.BOOTS, new Item.Properties().fireResistant());
 		}
 
-		@Override
-		public void initializeClient(Consumer<IClientItemExtensions> consumer) {
-			consumer.accept(new IClientItemExtensions() {
 				@Override
-				@OnlyIn(Dist.CLIENT)
-				public HumanoidModel getHumanoidArmorModel(LivingEntity living, ItemStack stack, EquipmentSlot slot, HumanoidModel defaultModel) {
-					HumanoidModel armorModel = new HumanoidModel(new ModelPart(Collections.emptyList(),
-							Map.of("left_leg", new Modelmountain_character_armor(Minecraft.getInstance().getEntityModels().bakeLayer(Modelmountain_character_armor.LAYER_LOCATION)).bipedLeft, "right_leg",
-									new Modelmountain_character_armor(Minecraft.getInstance().getEntityModels().bakeLayer(Modelmountain_character_armor.LAYER_LOCATION)).bipedRight, "head",
-									new ModelPart(Collections.emptyList(), Collections.emptyMap()), "hat", new ModelPart(Collections.emptyList(), Collections.emptyMap()), "body", new ModelPart(Collections.emptyList(), Collections.emptyMap()),
-									"right_arm", new ModelPart(Collections.emptyList(), Collections.emptyMap()), "left_arm", new ModelPart(Collections.emptyList(), Collections.emptyMap()))));
-					armorModel.crouching = living.isShiftKeyDown();
-					armorModel.riding = defaultModel.riding;
-					armorModel.young = living.isBaby();
-					return armorModel;
-				}
-			});
+		public HumanoidModel getHumanoidArmorModel(LivingEntity living, ItemStack stack, EquipmentSlot slot, HumanoidModel defaultModel) {
+			HumanoidModel armorModel = new HumanoidModel(new ModelPart(Collections.emptyList(),
+					Map.of("left_leg", new Modelmountain_character_armor(Minecraft.getInstance().getEntityModels().bakeLayer(Modelmountain_character_armor.LAYER_LOCATION)).bipedLeft, "right_leg",
+							new Modelmountain_character_armor(Minecraft.getInstance().getEntityModels().bakeLayer(Modelmountain_character_armor.LAYER_LOCATION)).bipedRight, "head",
+							new ModelPart(Collections.emptyList(), Collections.emptyMap()), "hat", new ModelPart(Collections.emptyList(), Collections.emptyMap()), "body", new ModelPart(Collections.emptyList(), Collections.emptyMap()),
+							"right_arm", new ModelPart(Collections.emptyList(), Collections.emptyMap()), "left_arm", new ModelPart(Collections.emptyList(), Collections.emptyMap()))));
+			armorModel.crouching = living.isShiftKeyDown();
+			armorModel.riding = defaultModel.riding;
+			armorModel.young = living.isBaby();
+			return armorModel;
 		}
 	}
 }

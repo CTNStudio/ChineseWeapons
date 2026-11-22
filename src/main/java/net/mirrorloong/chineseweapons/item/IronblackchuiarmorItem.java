@@ -5,10 +5,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.Level;
 import net.mirrorloong.chineseweapons.client.model.Modelblack_chui_armor;
-
-import net.minecraftforge.client.extensions.common.IClientItemExtensions;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.api.distmarker.Dist;
+import net.mirrorloong.chineseweapons.client.armor.CustomArmorModel;
 
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.entity.LivingEntity;
@@ -21,13 +18,12 @@ import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.Minecraft;
 import net.mirrorloong.chineseweapons.procedures.armor.DyeableItem;
 
-import javax.annotation.Nullable;
+import org.jetbrains.annotations.Nullable;
 import java.util.List;
-import java.util.function.Consumer;
 import java.util.Map;
 import java.util.Collections;
 
-public abstract class IronblackchuiarmorItem extends ArmorItem {
+public abstract class IronblackchuiarmorItem extends ArmorItem implements CustomArmorModel {
 	public IronblackchuiarmorItem(ArmorItem.Type type, Item.Properties properties) {
 		super(new ArmorMaterial() {
 			@Override
@@ -87,28 +83,22 @@ public abstract class IronblackchuiarmorItem extends ArmorItem {
         return DyeableItem.getArmorTexture(stack, type, TEXTURE_BASE, TEXTURE_OVERLAY);
     }
 
-
     public static class Helmet extends IronblackchuiarmorItem {
 		public Helmet() {
 			super(ArmorItem.Type.HELMET, new Item.Properties());
 		}
 
-        @Override
-		public void initializeClient(Consumer<IClientItemExtensions> consumer) {
-			consumer.accept(new IClientItemExtensions() {
-				@Override
-				public HumanoidModel getHumanoidArmorModel(LivingEntity living, ItemStack stack, EquipmentSlot slot, HumanoidModel defaultModel) {
-					HumanoidModel armorModel = new HumanoidModel(new ModelPart(Collections.emptyList(),
-							Map.of("head", new Modelblack_chui_armor(Minecraft.getInstance().getEntityModels().bakeLayer(Modelblack_chui_armor.LAYER_LOCATION)).bipedHead, "hat", new ModelPart(Collections.emptyList(), Collections.emptyMap()), "body",
-									new ModelPart(Collections.emptyList(), Collections.emptyMap()), "right_arm", new ModelPart(Collections.emptyList(), Collections.emptyMap()), "left_arm",
-									new ModelPart(Collections.emptyList(), Collections.emptyMap()), "right_leg", new ModelPart(Collections.emptyList(), Collections.emptyMap()), "left_leg",
-									new ModelPart(Collections.emptyList(), Collections.emptyMap()))));
-					armorModel.crouching = living.isShiftKeyDown();
-					armorModel.riding = defaultModel.riding;
-					armorModel.young = living.isBaby();
-					return armorModel;
-				}
-			});
+                @Override
+		public HumanoidModel getHumanoidArmorModel(LivingEntity living, ItemStack stack, EquipmentSlot slot, HumanoidModel defaultModel) {
+			HumanoidModel armorModel = new HumanoidModel(new ModelPart(Collections.emptyList(),
+					Map.of("head", new Modelblack_chui_armor(Minecraft.getInstance().getEntityModels().bakeLayer(Modelblack_chui_armor.LAYER_LOCATION)).bipedHead, "hat", new ModelPart(Collections.emptyList(), Collections.emptyMap()), "body",
+							new ModelPart(Collections.emptyList(), Collections.emptyMap()), "right_arm", new ModelPart(Collections.emptyList(), Collections.emptyMap()), "left_arm",
+							new ModelPart(Collections.emptyList(), Collections.emptyMap()), "right_leg", new ModelPart(Collections.emptyList(), Collections.emptyMap()), "left_leg",
+							new ModelPart(Collections.emptyList(), Collections.emptyMap()))));
+			armorModel.crouching = living.isShiftKeyDown();
+			armorModel.riding = defaultModel.riding;
+			armorModel.young = living.isBaby();
+			return armorModel;
 		}
 	}
 
@@ -117,23 +107,16 @@ public abstract class IronblackchuiarmorItem extends ArmorItem {
 			super(ArmorItem.Type.CHESTPLATE, new Item.Properties());
 		}
 
-
-        @Override
-		public void initializeClient(Consumer<IClientItemExtensions> consumer) {
-			consumer.accept(new IClientItemExtensions() {
-				@Override
-				@OnlyIn(Dist.CLIENT)
-				public HumanoidModel getHumanoidArmorModel(LivingEntity living, ItemStack stack, EquipmentSlot slot, HumanoidModel defaultModel) {
-					HumanoidModel armorModel = new HumanoidModel(new ModelPart(Collections.emptyList(), Map.of("body", new Modelblack_chui_armor(Minecraft.getInstance().getEntityModels().bakeLayer(Modelblack_chui_armor.LAYER_LOCATION)).bipedBody,
-							"left_arm", new Modelblack_chui_armor(Minecraft.getInstance().getEntityModels().bakeLayer(Modelblack_chui_armor.LAYER_LOCATION)).bipedLeftArm, "right_arm",
-							new Modelblack_chui_armor(Minecraft.getInstance().getEntityModels().bakeLayer(Modelblack_chui_armor.LAYER_LOCATION)).bipedRightArm, "head", new ModelPart(Collections.emptyList(), Collections.emptyMap()), "hat",
-							new ModelPart(Collections.emptyList(), Collections.emptyMap()), "right_leg", new ModelPart(Collections.emptyList(), Collections.emptyMap()), "left_leg", new ModelPart(Collections.emptyList(), Collections.emptyMap()))));
-					armorModel.crouching = living.isShiftKeyDown();
-					armorModel.riding = defaultModel.riding;
-					armorModel.young = living.isBaby();
-					return armorModel;
-				}
-			});
+                @Override
+		public HumanoidModel getHumanoidArmorModel(LivingEntity living, ItemStack stack, EquipmentSlot slot, HumanoidModel defaultModel) {
+			HumanoidModel armorModel = new HumanoidModel(new ModelPart(Collections.emptyList(), Map.of("body", new Modelblack_chui_armor(Minecraft.getInstance().getEntityModels().bakeLayer(Modelblack_chui_armor.LAYER_LOCATION)).bipedBody,
+					"left_arm", new Modelblack_chui_armor(Minecraft.getInstance().getEntityModels().bakeLayer(Modelblack_chui_armor.LAYER_LOCATION)).bipedLeftArm, "right_arm",
+					new Modelblack_chui_armor(Minecraft.getInstance().getEntityModels().bakeLayer(Modelblack_chui_armor.LAYER_LOCATION)).bipedRightArm, "head", new ModelPart(Collections.emptyList(), Collections.emptyMap()), "hat",
+					new ModelPart(Collections.emptyList(), Collections.emptyMap()), "right_leg", new ModelPart(Collections.emptyList(), Collections.emptyMap()), "left_leg", new ModelPart(Collections.emptyList(), Collections.emptyMap()))));
+			armorModel.crouching = living.isShiftKeyDown();
+			armorModel.riding = defaultModel.riding;
+			armorModel.young = living.isBaby();
+			return armorModel;
 		}
 	}
 
@@ -142,23 +125,17 @@ public abstract class IronblackchuiarmorItem extends ArmorItem {
 			super(ArmorItem.Type.LEGGINGS, new Item.Properties());
 		}
 
-		@Override
-		public void initializeClient(Consumer<IClientItemExtensions> consumer) {
-			consumer.accept(new IClientItemExtensions() {
 				@Override
-				@OnlyIn(Dist.CLIENT)
-				public HumanoidModel getHumanoidArmorModel(LivingEntity living, ItemStack stack, EquipmentSlot slot, HumanoidModel defaultModel) {
-					HumanoidModel armorModel = new HumanoidModel(new ModelPart(Collections.emptyList(),
-							Map.of("left_leg", new Modelblack_chui_armor(Minecraft.getInstance().getEntityModels().bakeLayer(Modelblack_chui_armor.LAYER_LOCATION)).bipedLeftLeg, "right_leg",
-									new Modelblack_chui_armor(Minecraft.getInstance().getEntityModels().bakeLayer(Modelblack_chui_armor.LAYER_LOCATION)).bipedRightLeg, "head", new ModelPart(Collections.emptyList(), Collections.emptyMap()), "hat",
-									new ModelPart(Collections.emptyList(), Collections.emptyMap()), "body", new ModelPart(Collections.emptyList(), Collections.emptyMap()), "right_arm", new ModelPart(Collections.emptyList(), Collections.emptyMap()),
-									"left_arm", new ModelPart(Collections.emptyList(), Collections.emptyMap()))));
-					armorModel.crouching = living.isShiftKeyDown();
-					armorModel.riding = defaultModel.riding;
-					armorModel.young = living.isBaby();
-					return armorModel;
-				}
-			});
+		public HumanoidModel getHumanoidArmorModel(LivingEntity living, ItemStack stack, EquipmentSlot slot, HumanoidModel defaultModel) {
+			HumanoidModel armorModel = new HumanoidModel(new ModelPart(Collections.emptyList(),
+					Map.of("left_leg", new Modelblack_chui_armor(Minecraft.getInstance().getEntityModels().bakeLayer(Modelblack_chui_armor.LAYER_LOCATION)).bipedLeftLeg, "right_leg",
+							new Modelblack_chui_armor(Minecraft.getInstance().getEntityModels().bakeLayer(Modelblack_chui_armor.LAYER_LOCATION)).bipedRightLeg, "head", new ModelPart(Collections.emptyList(), Collections.emptyMap()), "hat",
+							new ModelPart(Collections.emptyList(), Collections.emptyMap()), "body", new ModelPart(Collections.emptyList(), Collections.emptyMap()), "right_arm", new ModelPart(Collections.emptyList(), Collections.emptyMap()),
+							"left_arm", new ModelPart(Collections.emptyList(), Collections.emptyMap()))));
+			armorModel.crouching = living.isShiftKeyDown();
+			armorModel.riding = defaultModel.riding;
+			armorModel.young = living.isBaby();
+			return armorModel;
 		}
 	}
 
@@ -167,23 +144,17 @@ public abstract class IronblackchuiarmorItem extends ArmorItem {
 			super(ArmorItem.Type.BOOTS, new Item.Properties());
 		}
 
-		@Override
-		public void initializeClient(Consumer<IClientItemExtensions> consumer) {
-			consumer.accept(new IClientItemExtensions() {
 				@Override
-				@OnlyIn(Dist.CLIENT)
-				public HumanoidModel getHumanoidArmorModel(LivingEntity living, ItemStack stack, EquipmentSlot slot, HumanoidModel defaultModel) {
-					HumanoidModel armorModel = new HumanoidModel(new ModelPart(Collections.emptyList(),
-							Map.of("left_leg", new Modelblack_chui_armor(Minecraft.getInstance().getEntityModels().bakeLayer(Modelblack_chui_armor.LAYER_LOCATION)).LeftBoots, "right_leg",
-									new Modelblack_chui_armor(Minecraft.getInstance().getEntityModels().bakeLayer(Modelblack_chui_armor.LAYER_LOCATION)).RightBoots, "head", new ModelPart(Collections.emptyList(), Collections.emptyMap()), "hat",
-									new ModelPart(Collections.emptyList(), Collections.emptyMap()), "body", new ModelPart(Collections.emptyList(), Collections.emptyMap()), "right_arm", new ModelPart(Collections.emptyList(), Collections.emptyMap()),
-									"left_arm", new ModelPart(Collections.emptyList(), Collections.emptyMap()))));
-					armorModel.crouching = living.isShiftKeyDown();
-					armorModel.riding = defaultModel.riding;
-					armorModel.young = living.isBaby();
-					return armorModel;
-				}
-			});
+		public HumanoidModel getHumanoidArmorModel(LivingEntity living, ItemStack stack, EquipmentSlot slot, HumanoidModel defaultModel) {
+			HumanoidModel armorModel = new HumanoidModel(new ModelPart(Collections.emptyList(),
+					Map.of("left_leg", new Modelblack_chui_armor(Minecraft.getInstance().getEntityModels().bakeLayer(Modelblack_chui_armor.LAYER_LOCATION)).LeftBoots, "right_leg",
+							new Modelblack_chui_armor(Minecraft.getInstance().getEntityModels().bakeLayer(Modelblack_chui_armor.LAYER_LOCATION)).RightBoots, "head", new ModelPart(Collections.emptyList(), Collections.emptyMap()), "hat",
+							new ModelPart(Collections.emptyList(), Collections.emptyMap()), "body", new ModelPart(Collections.emptyList(), Collections.emptyMap()), "right_arm", new ModelPart(Collections.emptyList(), Collections.emptyMap()),
+							"left_arm", new ModelPart(Collections.emptyList(), Collections.emptyMap()))));
+			armorModel.crouching = living.isShiftKeyDown();
+			armorModel.riding = defaultModel.riding;
+			armorModel.young = living.isBaby();
+			return armorModel;
 		}
 	}
 }

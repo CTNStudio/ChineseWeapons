@@ -26,7 +26,6 @@ import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.event.level.ExplosionEvent;
 import net.mirrorloong.chineseweapons.compat.WeaponScriptSettings;
 
 public class SongStandingShieldEntity extends Entity {
@@ -98,7 +97,6 @@ public class SongStandingShieldEntity extends Entity {
         }
     }
 
-
     public float getShieldYaw() { return this.entityData.get(DATA_YAW); }
 
     public void setShieldYaw(float yaw) {
@@ -124,8 +122,7 @@ public class SongStandingShieldEntity extends Entity {
 
         ItemStack held = player.getItemInHand(hand);
 
-        //旋转
-        if (isRotating) {
+                if (isRotating) {
             Vec3 selfPos = this.position();
             float yaw = this.getShieldYaw();
 
@@ -198,7 +195,8 @@ public class SongStandingShieldEntity extends Entity {
         int unbreaking = 0;
         ItemStack stored = this.getStoredItem();
         if (!stored.isEmpty()) {
-            unbreaking = EnchantmentHelper.getTagEnchantmentLevel(
+            //old api EnchantmentHelper#getTagEnchantmentLevel -> new api EnchantmentHelper#getItemEnchantmentLevel
+            unbreaking = EnchantmentHelper.getItemEnchantmentLevel(
                     Enchantments.UNBREAKING, stored);
         }
 
@@ -236,7 +234,6 @@ public class SongStandingShieldEntity extends Entity {
     public void push(double x, double y, double z) {
     }
 
-
     @Override
     public void tick() {
         super.tick();
@@ -246,8 +243,7 @@ public class SongStandingShieldEntity extends Entity {
             return;
         }
 
-        // 只保留 Y 方向速度
-        double vy = this.getDeltaMovement().y;
+                double vy = this.getDeltaMovement().y;
         vy = (vy - 0.08) * 0.98;
         if (vy < -1.0) vy = -1.0;
         this.setDeltaMovement(0, vy, 0);
@@ -267,7 +263,6 @@ public class SongStandingShieldEntity extends Entity {
         zhuannimation();
     }
 
-
     private void zhuannimation() {
         if (rotateDelta != 0) {
             if (rotateTicks % 4 == 0) {
@@ -284,11 +279,8 @@ public class SongStandingShieldEntity extends Entity {
         }
     }
 
-    public void handleExplosion(ExplosionEvent.Detonate event) {
-        if (this.level().isClientSide) return;
-
+                    public AABB getExplosionSafeZone(Vec3 expCenter) {
         Vec3 shieldPos = this.position();
-        Vec3 expCenter = event.getExplosion().getPosition();
 
         float yaw = this.getShieldYaw();
         double fx = -Math.sin(Math.toRadians(yaw));
@@ -296,21 +288,23 @@ public class SongStandingShieldEntity extends Entity {
         Vec3 forward = new Vec3(fx, 0, fz).normalize();
 
         Vec3 toExplosion = expCenter.subtract(shieldPos);
-        if (toExplosion.lengthSqr() < 1.0E-6) return;
-        if (toExplosion.normalize().dot(forward) <= 0) return;
+        if (toExplosion.lengthSqr() < 1.0E-6) return null;
+        if (toExplosion.normalize().dot(forward) <= 0) return null;
 
         double YBehindCenter = WeaponScriptSettings.getArmorThreshold(
                 null,
                 WeaponScriptSettings.ALLWeapon.SONGSTANDINGSHIELD_BEHINDCENTER, 4.0);
 
         Vec3 behindCenter = shieldPos.subtract(forward.scale(YBehindCenter));
-        AABB safeZone = new AABB(
+        return new AABB(
                 behindCenter.x - 4, behindCenter.y - 4, behindCenter.z - 4,
                 behindCenter.x + 4, behindCenter.y + 4, behindCenter.z + 4
         );
+    }
 
-        event.getAffectedBlocks().removeIf(pos -> safeZone.contains(Vec3.atCenterOf(pos)));
-        event.getAffectedEntities().removeIf(ent -> safeZone.contains(ent.position()));
+        public boolean isProtectedFromExplosion(Vec3 expCenter, Vec3 targetPos) {
+        AABB safeZone = getExplosionSafeZone(expCenter);
+        return safeZone != null && safeZone.contains(targetPos);
     }
 
     @Override

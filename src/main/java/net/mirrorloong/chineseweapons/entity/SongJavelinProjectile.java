@@ -55,9 +55,10 @@ public class SongJavelinProjectile extends AbstractArrow {
         this.getEntityData().set(ITEM_REGISTRY_NAME, registryName);
         this.pickup = Pickup.ALLOWED;
 
-        this.loyaltyLevel = EnchantmentHelper.getTagEnchantmentLevel(Enchantments.LOYALTY, weaponStack);
-        this.hasChanneling = EnchantmentHelper.getTagEnchantmentLevel(Enchantments.CHANNELING, weaponStack) > 0;
-        int pierce = EnchantmentHelper.getTagEnchantmentLevel(Enchantments.PIERCING, weaponStack);
+        //old api EnchantmentHelper#getTagEnchantmentLevel -> new api EnchantmentHelper#getItemEnchantmentLevel
+        this.loyaltyLevel = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.LOYALTY, weaponStack);
+        this.hasChanneling = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.CHANNELING, weaponStack) > 0;
+        int pierce = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.PIERCING, weaponStack);
         this.setPierceLevel((byte) pierce);
     }
 
@@ -128,8 +129,7 @@ public class SongJavelinProjectile extends AbstractArrow {
 
         Entity hit = result.getEntity();
 
-        //Not LivingEntity can Fiyyyyyyy
-        if (!(hit instanceof LivingEntity)) {
+                if (!(hit instanceof LivingEntity)) {
             Vec3 motion = this.getDeltaMovement();
             if (motion.lengthSqr() > 1.0E-6) {
                 Vec3 hitDir = new Vec3(

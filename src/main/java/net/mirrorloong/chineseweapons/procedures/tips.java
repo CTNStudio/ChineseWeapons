@@ -1,32 +1,38 @@
 package net.mirrorloong.chineseweapons.procedures;
 
+import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.ClickEvent;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.HoverEvent;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.event.entity.player.PlayerEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.ModList;
-import net.minecraftforge.fml.common.Mod;
-import net.mirrorloong.chineseweapons.ChineseweaponsMod;
+import net.minecraft.server.level.ServerPlayer;
 
-@OnlyIn(Dist.CLIENT)
-@Mod.EventBusSubscriber(modid = ChineseweaponsMod.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE, value = Dist.CLIENT)
 public class tips {
+
+    private static boolean registered;
 
     private static boolean patchouliTipShown = false;
 
     private static final String PATCHOULI_URL = "https://www.curseforge.com/minecraft/mc-mods/patchouli";
 
-    @SubscribeEvent
-    public static void onEnterGame(PlayerEvent.PlayerLoggedInEvent event) {
+        public static void init() {
+        if (registered) {
+            return;
+        }
+        registered = true;
+
+        //old api @SubscribeEvent PlayerEvent.PlayerLoggedInEvent -> new api ServerPlayConnectionEvents.JOIN
+        ServerPlayConnectionEvents.JOIN.register((handler, sender, server) -> onEnterGame(handler.player));
+    }
+
+    public static void onEnterGame(ServerPlayer player) {
         if (patchouliTipShown) {
             return;
         }
 
-        if (!ModList.get().isLoaded("patchouli")) {
+        //old api ModList.get().isLoaded("patchouli") -> new api FabricLoader.getInstance().isModLoaded("patchouli")
+        if (!FabricLoader.getInstance().isModLoaded("patchouli")) {
             Component cw = Component.translatable("item_group.chineseweapons.chinese_weapons");
 
             Component modtip = Component.literal("[")
@@ -43,7 +49,7 @@ public class tips {
                                     Component.literal(PATCHOULI_URL)))
                     );
 
-            event.getEntity().sendSystemMessage(modtip.copy().append(link));
+            player.sendSystemMessage(modtip.copy().append(link));
             patchouliTipShown = true;
         }
     }

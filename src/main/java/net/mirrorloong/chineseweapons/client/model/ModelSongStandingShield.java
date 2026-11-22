@@ -12,8 +12,7 @@ import net.minecraft.world.entity.Entity;
 import net.mirrorloong.chineseweapons.ChineseweaponsMod;
 
 public class ModelSongStandingShield<T extends Entity> extends EntityModel<T> {
-    // This layer location should be baked with EntityRendererProvider.Context in the entity renderer and passed into this model's constructor
-    public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(new ResourceLocation(ChineseweaponsMod.MODID, "song_standing_shield"), "main");
+        public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(new ResourceLocation(ChineseweaponsMod.MODID, "song_standing_shield"), "main");
     private final ModelPart root;
 
     public ModelSongStandingShield(ModelPart root) {

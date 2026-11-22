@@ -7,59 +7,60 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.network.NetworkEvent;
 import net.mirrorloong.chineseweapons.entity.SongStandingShieldEntity;
 import net.mirrorloong.chineseweapons.item.SongStandingShield;
 import net.mirrorloong.chineseweapons.procedures.weapon.DaggerAxeItemFierceHookProcedure;
 import net.mirrorloong.chineseweapons.procedures.weapon.GlaiveItemStopRunProcedure;
 
 import java.util.Optional;
-import java.util.function.Supplier;
 
 import static net.mirrorloong.chineseweapons.item.GlaiveItemBase.isGlaiveItem;
 
-public class ShieldActionPacket {
+public class ShieldActionPacket implements ModPacket {
+
+    public static final int ID = 1;
 
     public ShieldActionPacket() {}
     public ShieldActionPacket(FriendlyByteBuf buf) {}
     public void encode(FriendlyByteBuf buf) {}
 
-    public void handle(Supplier<NetworkEvent.Context> ctx) {
-        ctx.get().enqueueWork(() -> {
-            ServerPlayer player = ctx.get().getSender();
-            if (player == null) return;
+    @Override
+    public int id() {
+        return ID;
+    }
 
-            SongStandingShieldEntity target = findTarget(player);
-            if (target != null) {
-                retrieve(player, target);
-                return;
+        public void handle(ServerPlayer player) {
+        if (player == null) return;
+
+        SongStandingShieldEntity target = findTarget(player);
+        if (target != null) {
+            retrieve(player, target);
+            return;
+        }
+
+        ItemStack main = player.getMainHandItem();
+
+        if (DaggerAxeItemFierceHookProcedure.isDaggerAxe(main)) {
+            DaggerAxeItemFierceHookProcedure.execute(
+                    player.level(),
+                    player.getX(), player.getY(), player.getZ(),
+                    player,
+                    main
+            );
+            return;
+        }
+
+        if (isGlaiveItem(main)) {
+            LivingEntity livingTarget = findLivingTarget(player, 3.0D);
+            if (livingTarget != null) {
+                GlaiveItemStopRunProcedure.execute(livingTarget, player, main);
             }
+            return;
+        }
 
-            ItemStack main = player.getMainHandItem();
-
-            if (DaggerAxeItemFierceHookProcedure.isDaggerAxe(main)) {
-                DaggerAxeItemFierceHookProcedure.execute(
-                        player.level(),
-                        player.getX(), player.getY(), player.getZ(),
-                        player,
-                        main
-                );
-                return;
-            }
-
-            if (isGlaiveItem(main)) {
-                LivingEntity livingTarget = findLivingTarget(player, 3.0D);
-                if (livingTarget != null) {
-                    GlaiveItemStopRunProcedure.execute(livingTarget, player, main);
-                }
-                return;
-            }
-
-            if (main.getItem() instanceof SongStandingShield) {
-                SongStandingShield.placeShield(player, main);
-            }
-        });
-        ctx.get().setPacketHandled(true);
+        if (main.getItem() instanceof SongStandingShield) {
+            SongStandingShield.placeShield(player, main);
+        }
     }
 
     private static LivingEntity findLivingTarget(ServerPlayer player, double reach) {
@@ -88,8 +89,7 @@ public class ShieldActionPacket {
         return best;
     }
 
-    // 收回
-    private static void retrieve(ServerPlayer player, SongStandingShieldEntity shield) {
+        private static void retrieve(ServerPlayer player, SongStandingShieldEntity shield) {
         ItemStack recovered = shield.getStoredItem();
         if (!recovered.isEmpty()) {
             int dmg = (int) Math.max(0, Math.min(recovered.getMaxDamage(),
@@ -114,7 +114,6 @@ public class ShieldActionPacket {
         }
         shield.discard();
     }
-
 
     private static boolean hasEmptySlot(ServerPlayer player) {
         for (int i = 0; i < 36; i++) {

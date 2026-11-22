@@ -12,19 +12,16 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.client.extensions.common.IClientItemExtensions;
 import net.mirrorloong.chineseweapons.client.model.Modelsong_dynasty_infantry_armor;
+import net.mirrorloong.chineseweapons.client.armor.CustomArmorModel;
 import net.mirrorloong.chineseweapons.procedures.armor.DyeableItem;
 
-import javax.annotation.Nullable;
+import org.jetbrains.annotations.Nullable;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.function.Consumer;
 
-public abstract class SongDynastyInfantryarmorItem extends ArmorItem implements DyeableItem {
+public abstract class SongDynastyInfantryarmorItem extends ArmorItem implements DyeableItem, CustomArmorModel {
     public SongDynastyInfantryarmorItem(Type type, Properties properties) {
         super(new ArmorMaterial() {
             @Override
@@ -91,16 +88,6 @@ public abstract class SongDynastyInfantryarmorItem extends ArmorItem implements 
         return armorModel;
     }
 
-    private static void initializeArmorClient(Consumer<IClientItemExtensions> consumer, Type armorType) {
-        consumer.accept(new IClientItemExtensions() {
-            @Override
-            @OnlyIn(Dist.CLIENT)
-            public HumanoidModel getHumanoidArmorModel(LivingEntity living, ItemStack stack, EquipmentSlot slot, HumanoidModel defaultModel) {
-                return createArmorModel(living, defaultModel, armorType);
-            }
-        });
-    }
-
     @Override
     public void appendHoverText(ItemStack stack, @Nullable Level level,
                                 List<Component> tooltip, TooltipFlag flag) {
@@ -118,10 +105,10 @@ public abstract class SongDynastyInfantryarmorItem extends ArmorItem implements 
             super(Type.HELMET, new Properties());
         }
 
-        @Override
-        public void initializeClient(Consumer<IClientItemExtensions> consumer) {
-            initializeArmorClient(consumer, Type.HELMET);
-        }
+                @Override
+        	public HumanoidModel getHumanoidArmorModel(LivingEntity living, ItemStack stack, EquipmentSlot slot, HumanoidModel defaultModel) {
+        		return createArmorModel(living, defaultModel, Type.HELMET);
+        	}
     }
 
     public static class Chestplate extends SongDynastyInfantryarmorItem {
@@ -129,10 +116,10 @@ public abstract class SongDynastyInfantryarmorItem extends ArmorItem implements 
             super(Type.CHESTPLATE, new Properties());
         }
 
-        @Override
-        public void initializeClient(Consumer<IClientItemExtensions> consumer) {
-            initializeArmorClient(consumer, Type.CHESTPLATE);
-        }
+                @Override
+        	public HumanoidModel getHumanoidArmorModel(LivingEntity living, ItemStack stack, EquipmentSlot slot, HumanoidModel defaultModel) {
+        		return createArmorModel(living, defaultModel, Type.CHESTPLATE);
+        	}
     }
 
     public static class Leggings extends SongDynastyInfantryarmorItem {
@@ -140,10 +127,10 @@ public abstract class SongDynastyInfantryarmorItem extends ArmorItem implements 
             super(Type.LEGGINGS, new Properties());
         }
 
-        @Override
-        public void initializeClient(Consumer<IClientItemExtensions> consumer) {
-            initializeArmorClient(consumer, Type.LEGGINGS);
-        }
+                @Override
+        	public HumanoidModel getHumanoidArmorModel(LivingEntity living, ItemStack stack, EquipmentSlot slot, HumanoidModel defaultModel) {
+        		return createArmorModel(living, defaultModel, Type.LEGGINGS);
+        	}
     }
 
     public static class Boots extends SongDynastyInfantryarmorItem {
@@ -151,14 +138,10 @@ public abstract class SongDynastyInfantryarmorItem extends ArmorItem implements 
             super(Type.BOOTS, new Properties());
         }
 
-        @Override
-        public void initializeClient(Consumer<IClientItemExtensions> consumer) {
-            initializeArmorClient(consumer, Type.BOOTS);
-        }
+                @Override
+        	public HumanoidModel getHumanoidArmorModel(LivingEntity living, ItemStack stack, EquipmentSlot slot, HumanoidModel defaultModel) {
+        		return createArmorModel(living, defaultModel, Type.BOOTS);
+        	}
 
-        @Override
-        public boolean canWalkOnPowderedSnow(ItemStack stack, LivingEntity wearer) {
-            return true;
-        }
-    }
+                    }
 }

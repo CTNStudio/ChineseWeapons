@@ -5,14 +5,15 @@ import net.minecraft.world.item.*;
 import net.mirrorloong.chineseweapons.item.*;
 import net.mirrorloong.chineseweapons.ChineseweaponsMod;
 
-import net.minecraftforge.registries.RegistryObject;
-import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.DeferredRegister;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.mirrorloong.chineseweapons.compat.registry.RegistryObject;
+import net.mirrorloong.chineseweapons.compat.registry.DeferredRegister;
 
 import net.minecraft.world.level.block.Block;
 
 public class ChineseweaponsModItems {
-	public static final DeferredRegister<Item> REGISTRY = DeferredRegister.create(ForgeRegistries.ITEMS, ChineseweaponsMod.MODID);
+	//old api DeferredRegister.create(ForgeRegistries.ITEMS, MODID) -> new api DeferredRegister.create(BuiltInRegistries.ITEM, MODID)
+	public static final DeferredRegister<Item> REGISTRY = DeferredRegister.create(BuiltInRegistries.ITEM, ChineseweaponsMod.MODID);
 	public static final RegistryObject<Item> GOLDENMOUNTAINCHARACTERARMOR_HELMET = REGISTRY.register("golden_mountain_character_armor_helmet", GoldenmountaincharacterarmorItem.Helmet::new);
 	public static final RegistryObject<Item> GOLDENMOUNTAINCHARACTERARMOR_CHESTPLATE = REGISTRY.register("golden_mountain_character_armor_chestplate", GoldenmountaincharacterarmorItem.Chestplate::new);
 	public static final RegistryObject<Item> GOLDENMOUNTAINCHARACTERARMOR_LEGGINGS = REGISTRY.register("golden_mountain_character_armor_leggings", GoldenmountaincharacterarmorItem.Leggings::new);
@@ -232,5 +233,8 @@ public class ChineseweaponsModItems {
 
     private static RegistryObject<Item> block(RegistryObject<Block> block) {
         return REGISTRY.register(block.getId().getPath(), () -> new BlockItem(block.get(), new Item.Properties()));
+    }
+
+            public static void bootstrap() {
     }
 }

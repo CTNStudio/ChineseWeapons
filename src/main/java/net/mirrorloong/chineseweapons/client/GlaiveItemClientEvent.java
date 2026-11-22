@@ -1,18 +1,14 @@
 package net.mirrorloong.chineseweapons.client;
 
+import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
-import net.minecraft.client.Minecraft;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.event.RenderHandEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
-import net.mirrorloong.chineseweapons.ChineseweaponsMod;
+import net.minecraft.world.item.ItemStack;
 import net.mirrorloong.chineseweapons.procedures.weapon.GlaiveItemStopRunProcedure;
 
 import java.util.UUID;
 
-@Mod.EventBusSubscriber(modid = ChineseweaponsMod.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE, value = Dist.CLIENT)
 public final class GlaiveItemClientEvent {
         private static final float ITEM_OFFSET = 3.0F / 16.0F;
         private static final float ROTATION = -30.0F;
@@ -20,20 +16,21 @@ public final class GlaiveItemClientEvent {
         private GlaiveItemClientEvent() {
         }
 
-        @SubscribeEvent
-        public static void modifyItemRender(RenderHandEvent event) {
-            Player player = Minecraft.getInstance().player;
-            if (player == null) {
-                return;
+        //old api @SubscribeEvent modifyItemRender(RenderHandEvent event) -> new api HandRenderEvents.Handler
+                public static boolean modifyItemRender(PoseStack poseStack, Player player, InteractionHand hand,
+                                               ItemStack stack, float partialTick) {
+                        if (player == null) {
+                return false;
             }
 
             UUID uuid = player.getUUID();
             float progress = GlaiveItemStopRunProcedure.getAnimationProgress(uuid);
             if (progress <= 0.0F) {
-                return;
+                return false;
             }
 
-            event.getPoseStack().mulPose(Axis.XP.rotationDegrees(ROTATION * progress));
-            event.getPoseStack().translate(0, 0, ITEM_OFFSET * progress);
+            poseStack.mulPose(Axis.XP.rotationDegrees(ROTATION * progress));
+            poseStack.translate(0, 0, ITEM_OFFSET * progress);
+            return false;
         }
 }

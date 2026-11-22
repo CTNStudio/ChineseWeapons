@@ -1,5 +1,6 @@
 package net.mirrorloong.chineseweapons.gui.recipe;
-
+//old api net.minecraft.client.gui.screens.MenuScreens.register(...) -> new api net.fabricmc.fabric.api.client.screenhandler.v1.ScreenRegistry.register(...)
+import net.fabricmc.fabric.api.client.screenhandler.v1.ScreenRegistry;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.core.BlockPos;
@@ -21,6 +22,10 @@ public class WeaponsCastingTableScreen extends AbstractContainerScreen<WeaponsCa
         this.inventoryLabelY -= 2;
     }
 
+        public static void register() {
+        ScreenRegistry.register(DeferredGui.RegMenu.get(), WeaponsCastingTableScreen::new);
+    }
+
     @Override
     public void render(GuiGraphics guiGraphics, int x, int y, float v) {
         this.renderBackground(guiGraphics);
@@ -39,54 +44,7 @@ public class WeaponsCastingTableScreen extends AbstractContainerScreen<WeaponsCa
         this.renderTooltip(guiGraphics, x, y);
     }
 
-
-    //UV详细信息 -- by github sf ovo https://github.com/sf326/mc_gui_uv_extract
-    //at pages https://sf326.github.io/mc_gui_uv_extract/
-    //贴图尺寸：256 × 256
-    //
-    //【选区 1】
-    //顶点：(80,37) , (80,40) , (125,40) , (125,46) , (126,46) , (126,45) , (127,45) , (127,44) , (128,44) , (128,43) , (129,43) , (129,42) , (130,42) , (130,41) , (131,41) , (131,40) , (132,40) , (132,39) , (133,39) , (133,38) , (132,38) , (132,37) , (131,37) , (131,36) , (130,36) , (130,35) , (129,35) , (129,34) , (128,34) , (128,33) , (127,33) , (127,32) , (126,32) , (126,31) , (125,31) , (125,37)
-    //包围盒：u=80, v=31, w=53, h=15
-    //对角：左上(80,31)，右下(133,46)
-    //归一UV：[0.3125,0.1211,0.5195,0.1797]
-    //--------------------------------------------------------
-    //【选区 2】
-    //顶点：(97,32) , (97,33) , (98,33) , (98,34) , (99,34) , (99,33) , (100,33) , (100,32) , (101,32) , (101,31) , (102,31) , (102,30) , (103,30) , (103,29) , (104,29) , (104,28) , (105,28) , (105,27) , (106,27) , (106,28) , (107,28) , (107,29) , (108,29) , (108,30) , (109,30) , (109,29) , (110,29) , (110,28) , (111,28) , (111,27) , (112,27) , (112,26) , (113,26) , (113,25) , (112,25) , (112,24) , (111,24) , (111,23) , (110,23) , (110,22) , (109,22) , (109,21) , (108,21) , (108,20) , (107,20) , (107,19) , (106,19) , (106,18) , (105,18) , (105,17) , (104,17) , (104,18) , (103,18) , (103,19) , (102,19) , (102,20) , (101,20) , (101,21) , (100,21) , (100,22) , (101,22) , (101,23) , (102,23) , (102,24) , (103,24) , (103,25) , (104,25) , (104,26) , (103,26) , (103,27) , (102,27) , (102,28) , (101,28) , (101,29) , (100,29) , (100,30) , (99,30) , (99,31) , (98,31) , (98,32)
-    //包围盒：u=97, v=17, w=16, h=17
-    //对角：左上(97,17)，右下(113,34)
-    //归一UV：[0.3789,0.0664,0.4414,0.1328]
-    //--------------------------------------------------------
-    //【选区 3】
-    //顶点：(104,30) , (104,32) , (105,32) , (105,33) , (106,33) , (106,31) , (105,31) , (105,30)
-    //包围盒：u=104, v=30, w=2, h=3
-    //对角：左上(104,30)，右下(106,33)
-    //归一UV：[0.4063,0.1172,0.4141,0.1289]
-    //--------------------------------------------------------
-    //【选区 4】
-    //顶点：(107,32) , (107,33) , (108,33) , (108,34) , (112,34) , (112,33) , (113,33) , (113,32) , (112,32) , (112,33) , (108,33) , (108,32)
-    //包围盒：u=107, v=32, w=6, h=2
-    //对角：左上(107,32)，右下(113,34)
-    //归一UV：[0.4180,0.1250,0.4414,0.1328]
-    //--------------------------------------------------------
-    //【选区 5】
-    //顶点：(109,31) , (109,32) , (111,32) , (111,31)
-    //包围盒：u=109, v=31, w=2, h=1
-    //对角：左上(109,31)，右下(111,32)
-    //归一UV：[0.4258,0.1211,0.4336,0.1250]
-    //--------------------------------------------------------
-    //【选区 6】
-    //顶点：(113,28) , (113,30) , (114,30) , (114,29) , (115,29) , (115,27) , (114,27) , (114,28)
-    //包围盒：u=113, v=27, w=2, h=3
-    //对角：左上(113,27)，右下(115,30)
-    //归一UV：[0.4414,0.1055,0.4492,0.1172]
-    //--------------------------------------------------------
-    //【选区 7】
-    //顶点：(114,23) , (114,24) , (115,24) , (115,23)
-    //包围盒：u=114, v=23, w=1, h=1
-    //对角：左上(114,23)，右下(115,24)
-    //归一UV：[0.4453,0.0898,0.4492,0.0938]
-    //--------------------------------------------------------
-    @Override
+                                                                                                                                                                                            @Override
     protected void renderBg(GuiGraphics guiGraphics, float v, int i, int i1) {
         int guiX = (this.width - this.imageWidth) / 2 - 27;
         int guiY = (this.height - this.imageHeight) / 2;
@@ -105,8 +63,7 @@ public class WeaponsCastingTableScreen extends AbstractContainerScreen<WeaponsCa
         int emptyColor = 0xFFCFA88A;
         int fullColor  = 0xFFFFFFFF;
 
-        // 选区 1
-        for (int col = 0; col < 53; col++) {
+                for (int col = 0; col < 53; col++) {
             int worldX = barX + 0 + col;
             float globalColX = 0 + col;
             int color = (globalColX < cutoff) ? fullColor : emptyColor;
@@ -272,8 +229,7 @@ public class WeaponsCastingTableScreen extends AbstractContainerScreen<WeaponsCa
             }
         }
 
-        // 选区 2
-        for (int col = 0; col < 16; col++) {
+                for (int col = 0; col < 16; col++) {
             int worldX = barX + 17 + col;
             float globalColX = 17 + col;
             int color = (globalColX < cutoff) ? fullColor : emptyColor;
@@ -332,8 +288,7 @@ public class WeaponsCastingTableScreen extends AbstractContainerScreen<WeaponsCa
             }
         }
 
-        // 选区 3
-        for (int col = 0; col < 2; col++) {
+                for (int col = 0; col < 2; col++) {
             int worldX = barX + 24 + col;
             float globalColX = 24 + col;
             int color = (globalColX < cutoff) ? fullColor : emptyColor;
@@ -346,8 +301,7 @@ public class WeaponsCastingTableScreen extends AbstractContainerScreen<WeaponsCa
             }
         }
 
-        // 选区 4
-        for (int col = 0; col < 6; col++) {
+                for (int col = 0; col < 6; col++) {
             int worldX = barX + 27 + col;
             float globalColX = 27 + col;
             int color = (globalColX < cutoff) ? fullColor : emptyColor;
@@ -372,8 +326,7 @@ public class WeaponsCastingTableScreen extends AbstractContainerScreen<WeaponsCa
             }
         }
 
-        // 选区 5
-        for (int col = 0; col < 2; col++) {
+                for (int col = 0; col < 2; col++) {
             int worldX = barX + 29 + col;
             float globalColX = 29 + col;
             int color = (globalColX < cutoff) ? fullColor : emptyColor;
@@ -386,8 +339,7 @@ public class WeaponsCastingTableScreen extends AbstractContainerScreen<WeaponsCa
             }
         }
 
-        // 选区 6
-        for (int col = 0; col < 2; col++) {
+                for (int col = 0; col < 2; col++) {
             int worldX = barX + 33 + col;
             float globalColX = 33 + col;
             int color = (globalColX < cutoff) ? fullColor : emptyColor;
@@ -400,8 +352,7 @@ public class WeaponsCastingTableScreen extends AbstractContainerScreen<WeaponsCa
             }
         }
 
-        // 选区 7
-        for (int col = 0; col < 1; col++) {
+                for (int col = 0; col < 1; col++) {
             int worldX = barX + 34 + col;
             float globalColX = 34 + col;
             int color = (globalColX < cutoff) ? fullColor : emptyColor;
@@ -411,8 +362,7 @@ public class WeaponsCastingTableScreen extends AbstractContainerScreen<WeaponsCa
             }
         }
 
-        // 选区 8
-        for (int col = 0; col < 2; col++) {
+                for (int col = 0; col < 2; col++) {
             int worldX = barX + 1 + col;
             float globalColX = 1 + col;
             int color = (globalColX < cutoff) ? fullColor : emptyColor;
@@ -425,8 +375,7 @@ public class WeaponsCastingTableScreen extends AbstractContainerScreen<WeaponsCa
             }
         }
 
-        // 选区 9
-        for (int col = 0; col < 1; col++) {
+                for (int col = 0; col < 1; col++) {
             int worldX = barX + 4 + col;
             float globalColX = 4 + col;
             int color = (globalColX < cutoff) ? fullColor : emptyColor;
@@ -436,8 +385,7 @@ public class WeaponsCastingTableScreen extends AbstractContainerScreen<WeaponsCa
             }
         }
 
-        // 选区 10
-        for (int col = 0; col < 1; col++) {
+                for (int col = 0; col < 1; col++) {
             int worldX = barX + 5 + col;
             float globalColX = 5 + col;
             int color = (globalColX < cutoff) ? fullColor : emptyColor;
@@ -447,8 +395,7 @@ public class WeaponsCastingTableScreen extends AbstractContainerScreen<WeaponsCa
             }
         }
 
-        // 选区 11
-        for (int col = 0; col < 1; col++) {
+                for (int col = 0; col < 1; col++) {
             int worldX = barX + 6 + col;
             float globalColX = 6 + col;
             int color = (globalColX < cutoff) ? fullColor : emptyColor;
@@ -458,8 +405,7 @@ public class WeaponsCastingTableScreen extends AbstractContainerScreen<WeaponsCa
             }
         }
 
-        // 选区 12
-        for (int col = 0; col < 1; col++) {
+                for (int col = 0; col < 1; col++) {
             int worldX = barX + 7 + col;
             float globalColX = 7 + col;
             int color = (globalColX < cutoff) ? fullColor : emptyColor;
@@ -469,8 +415,7 @@ public class WeaponsCastingTableScreen extends AbstractContainerScreen<WeaponsCa
             }
         }
 
-        // 选区 13
-        for (int col = 0; col < 1; col++) {
+                for (int col = 0; col < 1; col++) {
             int worldX = barX + 8 + col;
             float globalColX = 8 + col;
             int color = (globalColX < cutoff) ? fullColor : emptyColor;
@@ -480,8 +425,7 @@ public class WeaponsCastingTableScreen extends AbstractContainerScreen<WeaponsCa
             }
         }
 
-        // 选区 14
-        for (int col = 0; col < 2; col++) {
+                for (int col = 0; col < 2; col++) {
             int worldX = barX + 10 + col;
             float globalColX = 10 + col;
             int color = (globalColX < cutoff) ? fullColor : emptyColor;

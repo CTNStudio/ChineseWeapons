@@ -1,25 +1,17 @@
-
 package net.mirrorloong.chineseweapons.network;
 
 import net.mirrorloong.chineseweapons.procedures.ArmorcastingtableguipreventgivingawayitemsforfreeProcedure;
 import net.mirrorloong.chineseweapons.procedures.ArmorcastingtableguioutputsynthesisjudgmentProcedure;
-import net.mirrorloong.chineseweapons.ChineseweaponsMod;
-
-import net.minecraftforge.network.NetworkEvent;
-import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 import net.minecraft.world.level.Level;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.core.BlockPos;
 
-import java.util.function.Supplier;
-import java.util.HashMap;
+public class ArmorcastingtableguiSlotMessage implements ModPacket {
 
-@Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
-public class ArmorcastingtableguiSlotMessage {
+	public static final int ID = 2;
+
 	private final int slotID, x, y, z, changeType, meta;
 
 	public ArmorcastingtableguiSlotMessage(int slotID, int x, int y, int z, int changeType, int meta) {
@@ -40,138 +32,40 @@ public class ArmorcastingtableguiSlotMessage {
 		this.meta = buffer.readInt();
 	}
 
-	public static void buffer(ArmorcastingtableguiSlotMessage message, FriendlyByteBuf buffer) {
-		buffer.writeInt(message.slotID);
-		buffer.writeInt(message.x);
-		buffer.writeInt(message.y);
-		buffer.writeInt(message.z);
-		buffer.writeInt(message.changeType);
-		buffer.writeInt(message.meta);
+	@Override
+	public int id() {
+		return ID;
 	}
 
-	public static void handler(ArmorcastingtableguiSlotMessage message, Supplier<NetworkEvent.Context> contextSupplier) {
-		NetworkEvent.Context context = contextSupplier.get();
-		context.enqueueWork(() -> {
-			Player entity = context.getSender();
-			int slotID = message.slotID;
-			int changeType = message.changeType;
-			int meta = message.meta;
-			int x = message.x;
-			int y = message.y;
-			int z = message.z;
-			handleSlotAction(entity, slotID, changeType, meta, x, y, z);
-		});
-		context.setPacketHandled(true);
+	@Override
+	public void encode(FriendlyByteBuf buffer) {
+		buffer.writeInt(this.slotID);
+		buffer.writeInt(this.x);
+		buffer.writeInt(this.y);
+		buffer.writeInt(this.z);
+		buffer.writeInt(this.changeType);
+		buffer.writeInt(this.meta);
+	}
+
+		public void handle(Player entity) {
+		int slotID = this.slotID;
+		int changeType = this.changeType;
+		int meta = this.meta;
+		int x = this.x;
+		int y = this.y;
+		int z = this.z;
+		handleSlotAction(entity, slotID, changeType, meta, x, y, z);
 	}
 
 	public static void handleSlotAction(Player entity, int slot, int changeType, int meta, int x, int y, int z) {
 		Level world = entity.level();
-		// security measure to prevent arbitrary chunk generation
-		if (!world.hasChunkAt(new BlockPos(x, y, z)))
+				if (!world.hasChunkAt(new BlockPos(x, y, z)))
 			return;
-		if (slot == 1 && changeType == 1) {
-
+		if (slot >= 1 && slot <= 10 && changeType >= 1 && changeType <= 2) {
 			ArmorcastingtableguipreventgivingawayitemsforfreeProcedure.execute(entity);
 		}
-		if (slot == 1 && changeType == 2) {
-			int amount = meta;
-
-			ArmorcastingtableguipreventgivingawayitemsforfreeProcedure.execute(entity);
-		}
-		if (slot == 2 && changeType == 1) {
-
-			ArmorcastingtableguipreventgivingawayitemsforfreeProcedure.execute(entity);
-		}
-		if (slot == 2 && changeType == 2) {
-			int amount = meta;
-
-			ArmorcastingtableguipreventgivingawayitemsforfreeProcedure.execute(entity);
-		}
-		if (slot == 3 && changeType == 1) {
-
-			ArmorcastingtableguipreventgivingawayitemsforfreeProcedure.execute(entity);
-		}
-		if (slot == 3 && changeType == 2) {
-			int amount = meta;
-
-			ArmorcastingtableguipreventgivingawayitemsforfreeProcedure.execute(entity);
-		}
-		if (slot == 4 && changeType == 1) {
-
-			ArmorcastingtableguipreventgivingawayitemsforfreeProcedure.execute(entity);
-		}
-		if (slot == 4 && changeType == 2) {
-			int amount = meta;
-
-			ArmorcastingtableguipreventgivingawayitemsforfreeProcedure.execute(entity);
-		}
-		if (slot == 5 && changeType == 1) {
-
-			ArmorcastingtableguipreventgivingawayitemsforfreeProcedure.execute(entity);
-		}
-		if (slot == 5 && changeType == 2) {
-			int amount = meta;
-
-			ArmorcastingtableguipreventgivingawayitemsforfreeProcedure.execute(entity);
-		}
-		if (slot == 6 && changeType == 1) {
-
-			ArmorcastingtableguipreventgivingawayitemsforfreeProcedure.execute(entity);
-		}
-		if (slot == 6 && changeType == 2) {
-			int amount = meta;
-
-			ArmorcastingtableguipreventgivingawayitemsforfreeProcedure.execute(entity);
-		}
-		if (slot == 7 && changeType == 1) {
-
-			ArmorcastingtableguipreventgivingawayitemsforfreeProcedure.execute(entity);
-		}
-		if (slot == 7 && changeType == 2) {
-			int amount = meta;
-
-			ArmorcastingtableguipreventgivingawayitemsforfreeProcedure.execute(entity);
-		}
-		if (slot == 8 && changeType == 1) {
-
-			ArmorcastingtableguipreventgivingawayitemsforfreeProcedure.execute(entity);
-		}
-		if (slot == 8 && changeType == 2) {
-			int amount = meta;
-
-			ArmorcastingtableguipreventgivingawayitemsforfreeProcedure.execute(entity);
-		}
-		if (slot == 9 && changeType == 1) {
-
-			ArmorcastingtableguipreventgivingawayitemsforfreeProcedure.execute(entity);
-		}
-		if (slot == 9 && changeType == 2) {
-			int amount = meta;
-
-			ArmorcastingtableguipreventgivingawayitemsforfreeProcedure.execute(entity);
-		}
-		if (slot == 10 && changeType == 1) {
-
-			ArmorcastingtableguipreventgivingawayitemsforfreeProcedure.execute(entity);
-		}
-		if (slot == 10 && changeType == 2) {
-			int amount = meta;
-
-			ArmorcastingtableguipreventgivingawayitemsforfreeProcedure.execute(entity);
-		}
-		if (slot == 11 && changeType == 1) {
-
+		if (slot == 11 && changeType >= 1 && changeType <= 2) {
 			ArmorcastingtableguioutputsynthesisjudgmentProcedure.execute(entity);
 		}
-		if (slot == 11 && changeType == 2) {
-			int amount = meta;
-
-			ArmorcastingtableguioutputsynthesisjudgmentProcedure.execute(entity);
-		}
-	}
-
-	@SubscribeEvent
-	public static void registerMessage(FMLCommonSetupEvent event) {
-		ChineseweaponsMod.addNetworkMessage(ArmorcastingtableguiSlotMessage.class, ArmorcastingtableguiSlotMessage::buffer, ArmorcastingtableguiSlotMessage::new, ArmorcastingtableguiSlotMessage::handler);
 	}
 }

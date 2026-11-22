@@ -2,7 +2,8 @@ package net.mirrorloong.chineseweapons.compat;
 
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
-import net.minecraftforge.registries.ForgeRegistries;
+//old api ForgeRegistries.ITEMS.getKey(item) -> new api BuiltInRegistries.ITEM.getKey(item)
+import net.minecraft.core.registries.BuiltInRegistries;
 
 import java.util.EnumMap;
 import java.util.Map;
@@ -46,7 +47,7 @@ public final class WeaponScriptSettings {
     }
 
     public static double getReachBonus(Item item, double fallback) {
-        ResourceLocation itemId = ForgeRegistries.ITEMS.getKey(item);
+        ResourceLocation itemId = BuiltInRegistries.ITEM.getKey(item);
         return itemId == null ? fallback : REACH_BONUSES.getOrDefault(itemId, fallback);
     }
 
@@ -58,7 +59,8 @@ public final class WeaponScriptSettings {
     }
 
     public static float getChance(Item item, Skill skill, float fallback) {
-        ResourceLocation itemId = ForgeRegistries.ITEMS.getKey(item);
+
+        ResourceLocation itemId = BuiltInRegistries.ITEM.getKey(item);
         EnumMap<Skill, Float> values = itemId == null ? null : SKILL_CHANCES.get(itemId);
         return values == null ? fallback : values.getOrDefault(skill, fallback);
     }
@@ -71,7 +73,8 @@ public final class WeaponScriptSettings {
     }
 
     public static double getArmorThreshold(Item item, ALLWeapon threshold, double fallback) {
-        ResourceLocation itemId = ForgeRegistries.ITEMS.getKey(item);
+
+        ResourceLocation itemId = BuiltInRegistries.ITEM.getKey(item);
         EnumMap<ALLWeapon, Double> values = itemId == null ? null : ARMOR_THRESHOLDS.get(itemId);
         return values == null ? fallback : values.getOrDefault(threshold, fallback);
     }
@@ -84,7 +87,8 @@ public final class WeaponScriptSettings {
     }
 
     public static boolean getLogicChance(Item item, Logic logic, boolean fallback) {
-        ResourceLocation itemId = ForgeRegistries.ITEMS.getKey(item);
+
+        ResourceLocation itemId = BuiltInRegistries.ITEM.getKey(item);
         EnumMap<Logic, Boolean> values = itemId == null ? null : LOGIC_CHANCES.get(itemId);
         return values == null ? fallback : values.getOrDefault(logic, fallback);
     }

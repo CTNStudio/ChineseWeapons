@@ -1,5 +1,6 @@
 package net.mirrorloong.chineseweapons.procedures.armor;
 
+import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.LivingEntity;
@@ -12,12 +13,20 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.core.registries.Registries;
-import net.minecraftforge.event.entity.living.LivingHurtEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.mirrorloong.chineseweapons.compat.WeaponScriptSettings;
 import net.mirrorloong.chineseweapons.init.ChineseweaponsModItems;
 
 public class FootmenarmorcompletetestingProcedure {
+
+    private static boolean registered;
+
+        public static void init() {
+        if (registered) {
+            return;
+        }
+        registered = true;
+        ServerLivingEntityEvents.ALLOW_DAMAGE.register(FootmenarmorcompletetestingProcedure::onLivingDamage);
+    }
 
     public static boolean isFullFootmenArmorSet(LivingEntity livingEntity) {
         ItemStack head = livingEntity.getItemBySlot(EquipmentSlot.HEAD);
@@ -130,11 +139,8 @@ public class FootmenarmorcompletetestingProcedure {
         target.push(pushX, pushY, pushZ);
     }
 
-    @SubscribeEvent
-    public static void onLivingHurt(LivingHurtEvent event) {
-        LivingEntity victim = event.getEntity();
-        if (victim.level().isClientSide()) return;
-        DamageSource source = event.getSource();
+        public static boolean onLivingDamage(LivingEntity victim, DamageSource source, float amount) {
+        if (victim.level().isClientSide()) return true;
         Entity directEntity = source.getDirectEntity();
 
         if (victim.getHealth() <= 3f && isFullFootmenArmorSet(victim)) {
@@ -150,19 +156,18 @@ public class FootmenarmorcompletetestingProcedure {
         }
 
         if (isFullFootmenArmorSet(victim) && directEntity instanceof AbstractArrow arrow) {
-            event.setCanceled(true);
-            arrow.setDeltaMovement(victim.getLookAngle().scale(1.8D));
+                        arrow.setDeltaMovement(victim.getLookAngle().scale(1.8D));
             arrow.setOwner(victim);
             arrow.pickup = AbstractArrow.Pickup.DISALLOWED;
-            return;
+            return false;
         }
 
         Entity trueAttacker = source.getEntity();
         if (trueAttacker instanceof LivingEntity attackerLiving
                 && isFullFootmenArmorSet(attackerLiving)
                 && (source.is(DamageTypes.PLAYER_ATTACK) || source.is(DamageTypes.MOB_ATTACK))) {
-            event.setAmount(event.getAmount() + 2.0F);
-            event.setAmount(Math.max(0f, event.getAmount() - 2f));
-        }
+                                }
+
+        return true;
     }
 }

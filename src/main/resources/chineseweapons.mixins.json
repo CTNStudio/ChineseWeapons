@@ -1,0 +1,16 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "net.mirrorloong.chineseweapons.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "refmap": "chineseweapons.refmap.json",
+  "client": [
+    "HumanoidArmorLayerMixin",
+    "HumanoidModelMixin",
+    "ItemInHandRendererMixin",
+    "LivingEntityRendererMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

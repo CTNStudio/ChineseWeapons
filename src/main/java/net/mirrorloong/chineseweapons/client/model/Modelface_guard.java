@@ -12,8 +12,7 @@ import net.minecraft.world.entity.Entity;
 import net.mirrorloong.chineseweapons.ChineseweaponsMod;
 
 public class Modelface_guard<T extends Entity> extends EntityModel<T> {
-    // This layer location should be baked with EntityRendererProvider.Context in the entity renderer and passed into this model's constructor
-    public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(new ResourceLocation(ChineseweaponsMod.MODID, "face_guard"), "main");
+        public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(new ResourceLocation(ChineseweaponsMod.MODID, "face_guard"), "main");
     public final ModelPart bipedHead;
 
     public Modelface_guard(ModelPart root) {

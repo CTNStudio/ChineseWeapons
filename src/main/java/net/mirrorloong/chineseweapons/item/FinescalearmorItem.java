@@ -13,18 +13,15 @@ import net.minecraft.world.item.*;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import net.mirrorloong.chineseweapons.client.model.Modelfine_scale_armor;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.client.extensions.common.IClientItemExtensions;
+import net.mirrorloong.chineseweapons.client.armor.CustomArmorModel;
 import net.mirrorloong.chineseweapons.procedures.armor.DyeableItem;
 
-import javax.annotation.Nullable;
+import org.jetbrains.annotations.Nullable;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.function.Consumer;
 
-public class FinescalearmorItem extends ArmorItem implements DyeableItem {
+public class FinescalearmorItem extends ArmorItem implements DyeableItem, CustomArmorModel {
 	private final MaterialVariant materialVariant;
     private final String TEXTURE_BASE;
     public static final String TEXTURE_OVERLAY = "chineseweapons:textures/entities/fine_scale_armor_color.png";
@@ -58,15 +55,9 @@ public class FinescalearmorItem extends ArmorItem implements DyeableItem {
 		return armorModel;
 	}
 
-	@Override
-	public void initializeClient(Consumer<IClientItemExtensions> consumer) {
-		consumer.accept(new IClientItemExtensions() {
-			@Override
-			@OnlyIn(Dist.CLIENT)
-			public HumanoidModel getHumanoidArmorModel(LivingEntity living, ItemStack stack, EquipmentSlot slot, HumanoidModel defaultModel) {
-				return createArmorModel(living, defaultModel, getType());
-			}
-		});
+		@Override
+	public HumanoidModel getHumanoidArmorModel(LivingEntity living, ItemStack stack, EquipmentSlot slot, HumanoidModel defaultModel) {
+		return createArmorModel(living, defaultModel, getType());
 	}
 
     @Override
@@ -80,11 +71,6 @@ public class FinescalearmorItem extends ArmorItem implements DyeableItem {
         super.appendHoverText(stack, level, tooltip, flag);
         DyeableItem.addDyeTooltip(stack, tooltip);
     }
-    @Override
-	public boolean makesPiglinsNeutral(ItemStack stack, LivingEntity wearer) {
-		return materialVariant == MaterialVariant.GOLDEN;
-	}
-
 	public enum MaterialVariant implements ArmorMaterial {
 		IRON(16, new int[]{3, 6, 7, 3}, 10, 0f, 0f, Items.IRON_INGOT, "iron_fine_scale_armor", "iron_fine_scale_armor.png"),
 		GOLDEN(15, new int[]{2, 4, 6, 3}, 26, 1f, 0f, Items.GOLD_INGOT, "golden_fine_scale_armor", "golden_fine_scale_armor.png"),
@@ -128,8 +114,7 @@ public class FinescalearmorItem extends ArmorItem implements DyeableItem {
 
 		@Override
 		public SoundEvent getEquipSound() {
-			// 按材质返回对应原版穿戴音效
-			return switch (this) {
+						return switch (this) {
 				case IRON -> SoundEvents.ARMOR_EQUIP_IRON;
 				case GOLDEN -> SoundEvents.ARMOR_EQUIP_GOLD;
 				case DIAMOND -> SoundEvents.ARMOR_EQUIP_DIAMOND;

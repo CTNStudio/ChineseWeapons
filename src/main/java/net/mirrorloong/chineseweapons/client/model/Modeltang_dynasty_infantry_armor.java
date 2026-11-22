@@ -37,7 +37,6 @@ public class Modeltang_dynasty_infantry_armor<T extends Entity> extends EntityMo
 		this.RightBoots = root.getChild("RightBoots");
 	}
 
-
     public static LayerDefinition createBodyLayer() {
         MeshDefinition meshdefinition = new MeshDefinition();
         PartDefinition partdefinition = meshdefinition.getRoot();

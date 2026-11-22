@@ -9,22 +9,13 @@ import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.client.event.RenderHandEvent;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.TickEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 import java.util.UUID;
 
-@OnlyIn(Dist.CLIENT)
 public final class GlaiveSpinAnimationHandler {
     private static final int ANIMATION_DURATION_TICKS = 30;
 
-    // The action is intentionally split into readable phases so the first-person
-    // pose can be tuned without changing the server-side skill timing.
-    private static final float ADVANCE_END = 0.18F;
+            private static final float ADVANCE_END = 0.18F;
     private static final float DOWNWARD_END = 0.30F;
     private static final float SPIN_END = 0.86F;
     private static final float FORWARD_OFFSET = -0.28F;
@@ -35,9 +26,7 @@ public final class GlaiveSpinAnimationHandler {
     private static final float HAND_PIVOT_X = 0.0F;
     private static final float HAND_PIVOT_Y = -0.24F;
     private static final float HAND_PIVOT_Z = 0.10F;
-    private static final GlaiveSpinAnimationHandler INSTANCE = new GlaiveSpinAnimationHandler();
 
-    private static boolean registered;
     private static boolean rotating;
     private static int elapsedTicks;
     private static UUID rotatingPlayerId;
@@ -48,21 +37,15 @@ public final class GlaiveSpinAnimationHandler {
     }
 
     public static void start(Player player, ItemStack itemStack) {
-        if (!registered) {
-            MinecraftForge.EVENT_BUS.register(INSTANCE);
-            registered = true;
-        }
-
-        rotating = true;
+                rotating = true;
         elapsedTicks = 0;
         rotatingPlayerId = player.getUUID();
         startingSlot = player.getInventory().selected;
         startingItem = itemStack.getItem();
     }
 
-    @SubscribeEvent
-    public void onClientTick(TickEvent.ClientTickEvent event) {
-        if (event.phase != TickEvent.Phase.END || !rotating) {
+        public static void onClientTick(Minecraft client) {
+        if (!rotating) {
             return;
         }
 
@@ -78,22 +61,21 @@ public final class GlaiveSpinAnimationHandler {
         }
     }
 
-    @SubscribeEvent
-    public void onRenderHand(RenderHandEvent event) {
-        if (!rotating || event.getHand() != InteractionHand.MAIN_HAND) {
-            return;
+    //old api @SubscribeEvent onRenderHand(RenderHandEvent event) -> new api HandRenderEvents.Handler
+    public static boolean onRenderHand(PoseStack poseStack, Player player, InteractionHand hand,
+                                       ItemStack stack, float partialTick) {
+        if (!rotating || hand != InteractionHand.MAIN_HAND) {
+            return false;
         }
 
-        Player player = Minecraft.getInstance().player;
         if (!isStillHoldingStartingGlaive(player)) {
             stop();
-            return;
+            return false;
         }
 
-        // Keep vanilla hand and item rendering. The event's pose stack is used by
-        // the vanilla renderer immediately after this callback.
-        applyAnimation(event.getPoseStack(), player,
-                Mth.clamp((elapsedTicks + event.getPartialTick()) / ANIMATION_DURATION_TICKS, 0.0F, 1.0F));
+                                applyAnimation(poseStack, player,
+                Mth.clamp((elapsedTicks + partialTick) / ANIMATION_DURATION_TICKS, 0.0F, 1.0F));
+        return false;
     }
 
     private static boolean isStillHoldingStartingGlaive(Player player) {
@@ -120,9 +102,7 @@ public final class GlaiveSpinAnimationHandler {
 
         poseStack.translate(0.0D, DOWNWARD_OFFSET * moveProgress, FORWARD_OFFSET * moveProgress);
 
-        // Rotate around the hand instead of the camera origin. This keeps the
-        // glaive attached to the grip while the blade sweeps through the view.
-        poseStack.translate(HAND_PIVOT_X * handSign, HAND_PIVOT_Y, HAND_PIVOT_Z);
+                        poseStack.translate(HAND_PIVOT_X * handSign, HAND_PIVOT_Y, HAND_PIVOT_Z);
         poseStack.scale(scale, scale, scale);
         poseStack.mulPose(Axis.XP.rotationDegrees(downwardRotation));
         poseStack.mulPose(Axis.YP.rotationDegrees(spinRotation));

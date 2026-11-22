@@ -11,7 +11,6 @@ import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 
-
 public class WCTRecipe implements Recipe<Container> {
     private final ResourceLocation id;
     private final NonNullList<Ingredient> input;

@@ -22,7 +22,9 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.AABB;
 import net.mirrorloong.chineseweapons.init.ChineseweaponsModItems;
 import net.mirrorloong.chineseweapons.procedures.armor.FootmenarmorcompletetestingProcedure;
-import net.minecraftforge.registries.ForgeRegistries;
+//old api ForgeRegistries.ITEMS.getKey(item) -> new api BuiltInRegistries.ITEM.getKey(item)
+//old api net.minecraftforge.registries.ForgeRegistries -> new api net.minecraft.core.registries.BuiltInRegistries
+import net.minecraft.core.registries.BuiltInRegistries;
 
 public class DaggerAxeItemFierceHookProcedure {
     private static final double PULL_STOP_DISTANCE = 2.0D;
@@ -193,7 +195,8 @@ public class DaggerAxeItemFierceHookProcedure {
     private static boolean isFullArmorSet(LivingEntity entity, String itemPathMarker) {
         int count = 0;
         for (ItemStack armor : entity.getArmorSlots()) {
-            ResourceLocation key = ForgeRegistries.ITEMS.getKey(armor.getItem());
+
+            ResourceLocation key = BuiltInRegistries.ITEM.getKey(armor.getItem());
             if (key != null && key.getPath().contains(itemPathMarker)) {
                 count++;
             }

@@ -1,10 +1,14 @@
 package net.mirrorloong.chineseweapons.procedures.weapon;
 
+import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
+import net.fabricmc.fabric.api.event.player.UseItemCallback;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementProgress;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
@@ -14,20 +18,16 @@ import net.minecraft.world.entity.animal.horse.Horse;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.event.TickEvent;
-import net.minecraftforge.event.entity.player.PlayerInteractEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.registries.RegistryObject;
 import net.mirrorloong.chineseweapons.ChineseweaponsMod;
+import net.mirrorloong.chineseweapons.compat.registry.RegistryObject;
 import net.mirrorloong.chineseweapons.init.ChineseWeaponsModEffects;
 import net.mirrorloong.chineseweapons.init.ChineseweaponsModItems;
 
 import java.util.*;
 
-@Mod.EventBusSubscriber(modid = ChineseweaponsMod.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class TangDynastyHengSabeCutsProcedures {
 
     private static final List<RegistryObject<Item>> CAN_REGISTRY_OBJECTS = List.of(
@@ -40,6 +40,8 @@ public class TangDynastyHengSabeCutsProcedures {
     );
 
     private static Set<Item> canSet;
+
+    private static boolean registered;
 
     private static Set<Item> getCanSet() {
         if (canSet == null) {
@@ -58,21 +60,34 @@ public class TangDynastyHengSabeCutsProcedures {
     private record StabAnimData(Item bindItem, int tickLeft, boolean playing) {}
     private static final Map<UUID, StabAnimData> itemAnimData = new HashMap<>();
 
-    private static final int DH_TICK = 46;
+            private static final float SPEED_MULTIPLIER = 1.5F;
+    private static final int DH_TICK = Math.round(46 / SPEED_MULTIPLIER);
+    private static final int PHASE_START_TICK = Math.max(1, Math.round(8 / SPEED_MULTIPLIER));
+    private static final int PHASE_HOLD_END_TICK = Math.round(38 / SPEED_MULTIPLIER);
+    private static final int COOLDOWN_TICKS = Math.max(1, Math.round(10 / SPEED_MULTIPLIER));
 
+        public static void init() {
+        if (registered) {
+            return;
+        }
+        registered = true;
 
-    @SubscribeEvent
-    public static void rightClickTrigger(PlayerInteractEvent.RightClickItem event) {
-        Player player = event.getEntity();
+        //old api @SubscribeEvent PlayerInteractEvent.RightClickItem -> new api UseItemCallback.EVENT
+        UseItemCallback.EVENT.register(TangDynastyHengSabeCutsProcedures::onRightClickItem);
+
+                ServerTickEvents.END_SERVER_TICK.register(TangDynastyHengSabeCutsProcedures::onServerTick);
+    }
+
+    public static InteractionResultHolder<ItemStack> onRightClickItem(Player player, Level world, InteractionHand hand) {
         UUID uuid = player.getUUID();
         long now = System.currentTimeMillis();
         ItemStack mainHand = player.getMainHandItem();
         Item holdItem = mainHand.getItem();
 
-        if (!getCanSet().contains(holdItem)) return;
+        if (!getCanSet().contains(holdItem)) return InteractionResultHolder.pass(player.getItemInHand(hand));
 
-        if (player.getCooldowns().isOnCooldown(holdItem)) return;
-        if (itemAnimData.containsKey(uuid)) return;
+        if (player.getCooldowns().isOnCooldown(holdItem)) return InteractionResultHolder.pass(player.getItemInHand(hand));
+        if (itemAnimData.containsKey(uuid)) return InteractionResultHolder.pass(player.getItemInHand(hand));
 
         boolean firstPressed = hasFirstClick.getOrDefault(uuid, false);
         long lastTime = lastRightClick.getOrDefault(uuid, 0L);
@@ -86,6 +101,7 @@ public class TangDynastyHengSabeCutsProcedures {
             }
             hasFirstClick.put(uuid, false);
         }
+                return InteractionResultHolder.pass(player.getItemInHand(hand));
     }
 
     private static void executeStab(Player player, Item bindWeapon) {
@@ -93,7 +109,7 @@ public class TangDynastyHengSabeCutsProcedures {
         if (handItem.isEmpty()) return;
         if (!getCanSet().contains(handItem.getItem())) return;
 
-        player.getCooldowns().addCooldown(bindWeapon, 10);
+        player.getCooldowns().addCooldown(bindWeapon, COOLDOWN_TICKS);
         handItem.hurtAndBreak(2, player, (p) -> p.broadcastBreakEvent(InteractionHand.MAIN_HAND));
 
         Vec3 look = player.getLookAngle();
@@ -137,9 +153,13 @@ public class TangDynastyHengSabeCutsProcedures {
         itemAnimData.put(player.getUUID(), new StabAnimData(bindWeapon, DH_TICK, true));
     }
 
-    @SubscribeEvent
-    public static void tickUpdate(TickEvent.PlayerTickEvent event) {
-        Player player = event.player;
+        private static void onServerTick(MinecraftServer server) {
+        for (ServerPlayer player : server.getPlayerList().getPlayers()) {
+            tickUpdate(player);
+        }
+    }
+
+    public static void tickUpdate(Player player) {
         UUID uid = player.getUUID();
         if (!itemAnimData.containsKey(uid)) return;
         StabAnimData anim = itemAnimData.get(uid);
@@ -168,14 +188,15 @@ public class TangDynastyHengSabeCutsProcedures {
 
         int tickLeft = anim.tickLeft();
         int passed = DH_TICK - tickLeft;
-        if (passed <= 8) {
-            return (float) passed / 8;
+        if (passed <= PHASE_START_TICK) {
+            return (float) passed / PHASE_START_TICK;
         }
-        if (passed <= 38) {
+        if (passed <= PHASE_HOLD_END_TICK) {
             return 1.0F;
         }
 
-        int retractPass = passed - 38;
-        return 1.0F - ((float) retractPass / 8);
+        int retractPass = passed - PHASE_HOLD_END_TICK;
+        int retractTicks = Math.max(1, DH_TICK - PHASE_HOLD_END_TICK);
+        return 1.0F - ((float) retractPass / retractTicks);
     }
 }

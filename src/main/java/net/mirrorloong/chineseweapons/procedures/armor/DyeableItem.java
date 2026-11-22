@@ -10,8 +10,9 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.Resource;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
+//old api import net.minecraftforge.api.distmarker.Dist / OnlyIn -> new api net.fabricmc.api.EnvType / Environment
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.mirrorloong.chineseweapons.ChineseweaponsMod;
 
 import java.io.IOException;
@@ -56,7 +57,8 @@ public interface DyeableItem {
         }
     }
 
-    @OnlyIn(Dist.CLIENT)
+    //old api @OnlyIn(Dist.CLIENT) -> new api @Environment(EnvType.CLIENT)
+    @Environment(EnvType.CLIENT)
     static String getArmorTexture(ItemStack stack, String type,
                                   String baseTexture, String overlayTexture) {
         if (hasCustomColor(stack)) {
@@ -66,8 +68,7 @@ public interface DyeableItem {
         return getDefaultTexture(baseTexture, overlayTexture);
     }
 
-    //默认
-    @OnlyIn(Dist.CLIENT)
+        @Environment(EnvType.CLIENT)
     private static String getDefaultTexture(String basePath, String overlayPath) {
         String cacheKey = "default_" + basePath.hashCode() + "_" + overlayPath.hashCode();
 
@@ -129,7 +130,7 @@ public interface DyeableItem {
         }
     }
 
-    @OnlyIn(Dist.CLIENT)
+    @Environment(EnvType.CLIENT)
     private static String getOrCreateDyedTexture(String basePath, String overlayPath, int color) {
         String cacheKey = "dyed_" + basePath.hashCode() + "_" + overlayPath.hashCode() + "_" + String.format("%06X", color);
 
@@ -171,8 +172,7 @@ public interface DyeableItem {
                     int overlayPixel = overlayImage.getPixelRGBA(x, y);
                     int alpha = (overlayPixel >> 24) & 255;
                     if (alpha > 0) {
-                        // 交换 R 和 B
-                        int r = overlayPixel & 255;
+                                                int r = overlayPixel & 255;
                         int g = (overlayPixel >> 8) & 255;
                         int b = (overlayPixel >> 16) & 255;
 
@@ -252,7 +252,7 @@ public interface DyeableItem {
         }
     }
 
-    @OnlyIn(Dist.CLIENT)
+    @Environment(EnvType.CLIENT)
     private static NativeImage loadTexture(String texturePath) throws IOException {
         ResourceLocation resourceLocation = new ResourceLocation(texturePath);
         Minecraft mc = Minecraft.getInstance();

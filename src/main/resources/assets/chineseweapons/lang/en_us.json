@@ -387,6 +387,7 @@
   "item_group.chineseweapons.horse_armor": "Horse Armor",
   "item_group.chineseweapons.weapon": "Weapon",
   "item_group.chineseweapons.materials_and_miscellaneous_items": "Materials and miscellaneous items",
+  "item_group.chineseweapons.book": "Books",
 
   "patchouli.chineseweapons.book.entries.weapons.tang_dynasty_horse_armor.name": "Tang Horse Armor",
   "patchouli.chineseweapons.book.entries.weapons.tang_dynasty_horse_armor.pages.0.text": "Tang Horse Armor greatly boosts the defensive capability of horses.",

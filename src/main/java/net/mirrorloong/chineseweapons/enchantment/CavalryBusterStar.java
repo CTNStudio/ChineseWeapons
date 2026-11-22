@@ -12,14 +12,13 @@ import net.mirrorloong.chineseweapons.init.ChineseweaponsModItems;
 
 import java.util.Set;
 
-public class CavalryBusterStar extends Enchantment implements net.minecraftforge.common.IExtensibleEnum {
+public class CavalryBusterStar extends Enchantment {
     public CavalryBusterStar() {
         super(Rarity.UNCOMMON,
                     DAGGERAXEItem.DAGGER_AXE,
                 new EquipmentSlot[]{EquipmentSlot.MAINHAND}
         );
     }
-
 
     @Override
     public int getMinCost(int level) {
@@ -34,6 +33,11 @@ public class CavalryBusterStar extends Enchantment implements net.minecraftforge
     @Override
     public int getMaxLevel() {
         return 3;
+    }
+
+        @Override
+    public boolean canEnchant(ItemStack stack) {
+        return DAGGERAXEItem.isDaggerAxe(stack.getItem());
     }
 
 }

@@ -1,22 +1,29 @@
 package net.mirrorloong.chineseweapons.init;
 
+import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
+import net.fabricmc.loader.api.FabricLoader;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.Item;
+//old api ForgeRegistries.ITEMS.getValue(id) -> new api BuiltInRegistries.ITEM.get(id)
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.mirrorloong.chineseweapons.ChineseweaponsMod;
 import net.mirrorloong.chineseweapons.procedures.SectionBanner;
 
-import net.minecraftforge.registries.RegistryObject;
-import net.minecraftforge.registries.DeferredRegister;
+import net.mirrorloong.chineseweapons.compat.registry.RegistryObject;
+import net.mirrorloong.chineseweapons.compat.registry.DeferredRegister;
 
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.network.chat.Component;
-import net.minecraft.core.registries.Registries;
 
 public class ChineseweaponsModTabs {
-    public static final DeferredRegister<CreativeModeTab> REGISTRY = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, ChineseweaponsMod.MODID);
-    public static final RegistryObject<CreativeModeTab> CHINESE_WEAPONS = REGISTRY.register("chinese_weapons",
+    //old api DeferredRegister.create(Registries.CREATIVE_MODE_TAB, MODID) -> new api DeferredRegister.create(BuiltInRegistries.CREATIVE_MODE_TAB, MODID)
+    public static final DeferredRegister<CreativeModeTab> REGISTRY = DeferredRegister.create(BuiltInRegistries.CREATIVE_MODE_TAB, ChineseweaponsMod.MODID);
+        public static final RegistryObject<CreativeModeTab> CHINESE_WEAPONS = REGISTRY.register("chinese_weapons",
             () -> SectionBanner.create(
-                    CreativeModeTab.builder()
+                    FabricItemGroup.builder()
                             .title(Component.translatable("item_group.chineseweapons.chinese_weapons"))
                             .icon(() -> new ItemStack(ChineseweaponsModItems.IRONMOUNTAINCHARACTERARMOR_HELMET.get())),
                     out -> {
@@ -248,6 +255,26 @@ public class ChineseweaponsModTabs {
                         out.accept(ChineseweaponsModItems.BlackChuiArmorforgingStone.get());
                         out.accept(ChineseweaponsModItems.FineScaleArmorforgingStone.get());
                         out.accept(ChineseweaponsModItems.TangDynastyInfantryArmorforgingStone.get());
+
+                        //old api net.minecraftforge.fml.ModList -> new api FabricLoader#isModLoaded
+                        if (FabricLoader.getInstance().isModLoaded("patchouli")) {
+                            out.section(Component.translatable("item_group.chineseweapons.book"),
+                                    0xFF8C3A2A, 0xFFD4A24A, null,
+                                    new ResourceLocation("chineseweapons", "textures/item/forging_notes.png"), 0.9f,
+                                    "middle");
+
+                            var guideBookItem = BuiltInRegistries.ITEM.get(new ResourceLocation("patchouli", "guide_book"));
+                            if (guideBookItem != Items.AIR) {
+                                var bookStack = new ItemStack(guideBookItem);
+                                var tag = new CompoundTag();
+                                tag.putString("patchouli:book", "chineseweapons:forging_notes");
+                                bookStack.setTag(tag);
+                                out.accept(bookStack);
+                            }
+                        }
                     }
             ).build());
+
+        public static void bootstrap() {
+    }
 }
