@@ -9,6 +9,8 @@ import net.mirrorloong.chineseweapons.compat.registry.RegistryObject;
 import net.mirrorloong.chineseweapons.ChineseweaponsMod;
 import net.mirrorloong.chineseweapons.entity.SongJavelinProjectile;
 import net.mirrorloong.chineseweapons.entity.SongStandingShieldEntity;
+import net.mirrorloong.chineseweapons.entity.BedCrossbowEntity;
+import net.mirrorloong.chineseweapons.entity.BedCrossbowBoltEntity;
 
 public class ChineseweaponsModEntities {
     //old api DeferredRegister.create(ForgeRegistries.ENTITY_TYPES, MODID) -> new api DeferredRegister.create(BuiltInRegistries.ENTITY_TYPE, MODID)
@@ -32,6 +34,24 @@ public class ChineseweaponsModEntities {
                             .fireImmune()
                                                         .build(String.valueOf(new ResourceLocation(
                                     ChineseweaponsMod.MODID, "standing_shield"))));
+
+    public static final RegistryObject<EntityType<BedCrossbowEntity>> BED_CROSSBOW =
+            ENTITIES.register("bed_crossbow",
+                    () -> EntityType.Builder.<BedCrossbowEntity>of(
+                                    (type, level) -> new BedCrossbowEntity(type, level), MobCategory.MISC)
+                            .sized(2.4F, 1.4F)
+                            .clientTrackingRange(10)
+                            .updateInterval(1)
+                            .build("bed_crossbow"));
+
+    public static final RegistryObject<EntityType<BedCrossbowBoltEntity>> BED_CROSSBOW_BOLT =
+            ENTITIES.register("bed_crossbow_bolt",
+                    () -> EntityType.Builder.<BedCrossbowBoltEntity>of(
+                                    (type, level) -> new BedCrossbowBoltEntity(type, level), MobCategory.MISC)
+                            .sized(2.0F, 0.6F)
+                            .clientTrackingRange(10)
+                            .updateInterval(1)
+                            .build("bed_crossbow_bolt"));
 
             public static void bootstrap() {
     }

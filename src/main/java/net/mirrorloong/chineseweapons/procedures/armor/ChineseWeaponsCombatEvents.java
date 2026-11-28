@@ -581,7 +581,7 @@ public final class ChineseWeaponsCombatEvents {
             return false;
         }
 
-        double behindCenter = WeaponScriptSettings.getArmorThreshold(
+        double behindCenter = WeaponScriptSettings.getThreshold(
                 null,
                 WeaponScriptSettings.ALLWeapon.SONGSTANDINGSHIELD_BEHINDCENTER, 4.0);
 

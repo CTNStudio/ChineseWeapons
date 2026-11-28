@@ -12,13 +12,28 @@ public final class ArmPoseEvents {
         void apply(HumanoidModel<?> model, LivingEntity entity);
     }
 
+    public interface PreHandler {
+        void apply(HumanoidModel<?> model, LivingEntity entity);
+    }
+
     private static final List<Handler> HANDLERS = new ArrayList<>();
+    private static final List<PreHandler> PRE_HANDLERS = new ArrayList<>();
 
     private ArmPoseEvents() {
     }
 
     public static void register(Handler handler) {
         HANDLERS.add(handler);
+    }
+
+    public static void registerPre(PreHandler handler) {
+        PRE_HANDLERS.add(handler);
+    }
+
+    public static void invokePre(HumanoidModel<?> model, LivingEntity entity) {
+        for (int i = 0; i < PRE_HANDLERS.size(); i++) {
+            PRE_HANDLERS.get(i).apply(model, entity);
+        }
     }
 
     public static void invokeAll(HumanoidModel<?> model, LivingEntity entity) {

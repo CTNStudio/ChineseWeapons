@@ -5,6 +5,7 @@
   "compatibilityLevel": "JAVA_17",
   "refmap": "chineseweapons.refmap.json",
   "client": [
+    "CameraMixin",
     "HumanoidArmorLayerMixin",
     "HumanoidModelMixin",
     "ItemInHandRendererMixin",

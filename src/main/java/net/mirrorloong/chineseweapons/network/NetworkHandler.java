@@ -18,6 +18,9 @@ public final class NetworkHandler {
     private static final int ID_SHIELD_ACTION = 1;
     private static final int ID_CASTING_TABLE_SLOT = 2;
     private static final int ID_CASTING_TABLE_PROGRESS = 3;
+    private static final int ID_BED_CROSSBOW_RELEASE = BedCrossbowReleasePacket.ID;
+    private static final int ID_BED_CROSSBOW_WIND = BedCrossbowWindPacket.ID;
+    private static final int ID_BED_CROSSBOW_SHAKE = BedCrossbowShakePacket.ID;
 
     private NetworkHandler() {
     }
@@ -31,6 +34,8 @@ public final class NetworkHandler {
                     case ID_GUDUO_SQUASH -> GuDuoItem.SquashPacket.decode(payload).handleClientOnly();
                     case ID_SHIELD_ACTION -> new ShieldActionPacket(payload).handle(player);
                     case ID_CASTING_TABLE_SLOT -> new ArmorcastingtableguiSlotMessage(payload).handle(player);
+                    case ID_BED_CROSSBOW_RELEASE -> BedCrossbowReleasePacket.decode(payload).handle(player);
+                    case ID_BED_CROSSBOW_WIND -> BedCrossbowWindPacket.decode(payload).handle(player);
                     default -> ChineseweaponsMod.LOGGER.warn("Unknown packet id {} from {}", packetId, player.getName().getString());
                 }
             });
@@ -46,6 +51,8 @@ public final class NetworkHandler {
                     ArmorCastingTableBlockProgressPacket.decode(payload).handleClient();
                 } else if (packetId == ID_GUDUO_SQUASH) {
                     GuDuoItem.SquashPacket.decode(payload).handleClient();
+                } else if (packetId == ID_BED_CROSSBOW_SHAKE) {
+                    BedCrossbowShakePacket.decode(payload).handleClient();
                 }
             });
         });

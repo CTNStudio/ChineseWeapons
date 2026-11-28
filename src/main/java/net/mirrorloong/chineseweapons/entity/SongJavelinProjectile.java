@@ -41,6 +41,7 @@ public class SongJavelinProjectile extends AbstractArrow {
     private boolean isReturning = false;
     private boolean returnSoundPlayed = false;
     private boolean hovering = false;
+    private boolean hasHitEntity = false;
 
     public SongJavelinProjectile(EntityType<? extends AbstractArrow> type, Level level) {
         super(type, level);
@@ -124,42 +125,19 @@ public class SongJavelinProjectile extends AbstractArrow {
     }
 
     @Override
-    protected void onHitEntity(EntityHitResult result) {
-        if (this.level().isClientSide) return;
+    protected boolean canHitEntity(Entity target) {
+        return !this.hasHitEntity && !this.isReturning && super.canHitEntity(target);
+    }
 
+    @Override
+    protected void onHitEntity(EntityHitResult result) {
+        if (this.level().isClientSide || this.hasHitEntity || this.isReturning) return;
+
+        this.hasHitEntity = true;
+        this.setPierceLevel((byte) 0);
         Entity hit = result.getEntity();
 
-                if (!(hit instanceof LivingEntity)) {
-            Vec3 motion = this.getDeltaMovement();
-            if (motion.lengthSqr() > 1.0E-6) {
-                Vec3 hitDir = new Vec3(
-                        hit.getX() - this.getX(),
-                        hit.getY() - this.getY(),
-                        hit.getZ() - this.getZ()
-                );
-
-                if (hitDir.lengthSqr() < 1.0E-6) {
-                    this.setDeltaMovement(motion.scale(-0.4));
-                } else {
-                    Vec3 normal = hitDir.normalize();
-                    double dot = motion.dot(normal);
-                    Vec3 reflected = motion.subtract(normal.scale(2.0 * dot));
-                    this.setDeltaMovement(reflected.scale(0.4));
-                }
-            }
-
-            this.playSound(SoundEvents.ARROW_HIT, 0.8F, 1.0F);
-
-            float damage = (float) this.getBaseDamage();
-            hit.hurt(this.damageSources().thrown(this, this.getOwner()), damage + 2);
-
-            if (this.hasChanneling && this.level().isThundering()) {
-                LightningBolt bolt = new LightningBolt(EntityType.LIGHTNING_BOLT, this.level());
-                bolt.setPos(hit.getX(), hit.getY(), hit.getZ());
-                this.level().addFreshEntity(bolt);
-            }
-        } else {
-            LivingEntity target = (LivingEntity) hit;
+        if (hit instanceof LivingEntity target) {
             float damage = (float) this.getBaseDamage();
             target.hurt(this.damageSources().thrown(this, this.getOwner()), damage + 2);
 
@@ -175,18 +153,31 @@ public class SongJavelinProjectile extends AbstractArrow {
                 bolt.setPos(target.getX(), target.getY(), target.getZ());
                 this.level().addFreshEntity(bolt);
             }
+        } else {
+            float damage = (float) this.getBaseDamage();
+            hit.hurt(this.damageSources().thrown(this, this.getOwner()), damage + 2);
+            this.playSound(SoundEvents.ARROW_HIT, 0.8F, 1.0F);
+
+            if (this.hasChanneling && this.level().isThundering()) {
+                LightningBolt bolt = new LightningBolt(EntityType.LIGHTNING_BOLT, this.level());
+                bolt.setPos(hit.getX(), hit.getY(), hit.getZ());
+                this.level().addFreshEntity(bolt);
+            }
         }
 
-        if (this.loyaltyLevel <= 0) {
+        if (this.loyaltyLevel > 0) {
+            startReturning();
+        } else {
             this.setDeltaMovement(Vec3.ZERO);
             this.setNoGravity(false);
-        } else {
-            startReturning();
         }
     }
 
     @Override
     protected void onHitBlock(BlockHitResult result) {
+        if (this.isReturning) {
+            return;
+        }
         super.onHitBlock(result);
         if (!this.level().isClientSide) {
             this.playSound(SoundEvents.TRIDENT_HIT_GROUND, 1.0F, 1.0F);
@@ -214,6 +205,7 @@ public class SongJavelinProjectile extends AbstractArrow {
         this.hovering = false;
         this.returnSoundPlayed = false;
         this.inGround = false;
+        this.noPhysics = true;
         this.setNoGravity(true);
         this.setDeltaMovement(Vec3.ZERO);
     }

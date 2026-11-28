@@ -73,7 +73,7 @@ public class SongStandingShieldEntity extends Entity {
         double fz =  Math.cos(Math.toRadians(yaw));
         Vec3 forward = new Vec3(fx, 0, fz).normalize();
 
-        double yBehindCenter = WeaponScriptSettings.getArmorThreshold(
+        double yBehindCenter = WeaponScriptSettings.getThreshold(
                 null,
                 WeaponScriptSettings.ALLWeapon.SONGSTANDINGSHIELD_BEHINDCENTER, 4.0);
 
@@ -135,7 +135,7 @@ public class SongStandingShieldEntity extends Entity {
             Vec3 toPlayer = player.position().subtract(selfPos);
             double dot = toPlayer.x * rx + toPlayer.z * rz;
 
-            double ANGLE = WeaponScriptSettings.getArmorThreshold(
+            double ANGLE = WeaponScriptSettings.getThreshold(
                     null,
                     WeaponScriptSettings.ALLWeapon.SONGSTANDINGSHIELD_ANGLE, 15f);
 
@@ -291,7 +291,7 @@ public class SongStandingShieldEntity extends Entity {
         if (toExplosion.lengthSqr() < 1.0E-6) return null;
         if (toExplosion.normalize().dot(forward) <= 0) return null;
 
-        double YBehindCenter = WeaponScriptSettings.getArmorThreshold(
+        double YBehindCenter = WeaponScriptSettings.getThreshold(
                 null,
                 WeaponScriptSettings.ALLWeapon.SONGSTANDINGSHIELD_BEHINDCENTER, 4.0);
 

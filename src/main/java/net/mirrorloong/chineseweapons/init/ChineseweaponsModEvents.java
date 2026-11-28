@@ -3,6 +3,8 @@ package net.mirrorloong.chineseweapons.init;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
 import net.mirrorloong.chineseweapons.renderer.SongJavelinRenderer;
 import net.mirrorloong.chineseweapons.renderer.SongStandingShieldRenderer;
+import net.mirrorloong.chineseweapons.renderer.BedCrossbowRenderer;
+import net.mirrorloong.chineseweapons.renderer.BedCrossbowBoltRenderer;
 
 public class ChineseweaponsModEvents {
     //old api @SubscribeEvent registerEntityRenderers(EntityRenderersEvent.RegisterRenderers event) -> new api EntityRendererRegistry.register(...)
@@ -11,5 +13,9 @@ public class ChineseweaponsModEvents {
                 SongJavelinRenderer::new);
                 EntityRendererRegistry.register(ChineseweaponsModEntities.STANDING_SHIELD.get(),
                 SongStandingShieldRenderer::new);
+                EntityRendererRegistry.register(ChineseweaponsModEntities.BED_CROSSBOW.get(),
+                BedCrossbowRenderer::new);
+                EntityRendererRegistry.register(ChineseweaponsModEntities.BED_CROSSBOW_BOLT.get(),
+                BedCrossbowBoltRenderer::new);
     }
 }

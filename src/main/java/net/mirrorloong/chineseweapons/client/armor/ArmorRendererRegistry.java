@@ -12,7 +12,7 @@ public final class ArmorRendererRegistry {
     @SuppressWarnings({"rawtypes", "unchecked"})
     public static void init() {
         LivingEntityFeatureRendererRegistrationCallback.EVENT.register((entityType, entityRenderer, registrationHelper, context) -> {
-            LivingEntityRenderer renderer = (LivingEntityRenderer) entityRenderer;
+            LivingEntityRenderer renderer = entityRenderer;
             if (renderer.getModel() instanceof HumanoidModel) {
                 registrationHelper.register(new CustomArmorFeatureRenderer(renderer, context.getModelSet()));
             }

@@ -1,0 +1,26 @@
+{
+  "type": "chineseweapons:weapon_casting_shaped",
+  "pattern": [
+    " I ",
+    " S ",
+    "GSG"
+  ],
+  "main_material": {
+    "item": "minecraft:iron_ingot"
+  },
+  "key": {
+    "I": {
+      "item": "minecraft:iron_sword"
+    },
+    "S": {
+      "item": "minecraft:stick"
+    },
+    "G": {
+      "item": "minecraft:iron_ingot"
+    }
+  },
+  "result": {
+    "count": 1,
+    "item": "chineseweapons:spear_three_sword_bolt"
+  }
+}

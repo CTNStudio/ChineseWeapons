@@ -222,6 +222,9 @@ public class ChineseweaponsModTabs {
                         out.accept(ChineseweaponsModItems.GREENLOONG_GLAIVE.get());
                         out.accept(ChineseweaponsModItems.TangDynastyShield.get());
                         out.accept(ChineseweaponsModItems.SongStandingShield.get());
+                        out.accept(ChineseweaponsModItems.BED_CROSSBOW_ITEM.get());
+                        out.accept(ChineseweaponsModItems.SPEAR_THREE_SWORD_BOLT.get());
+                        out.accept(ChineseweaponsModItems.TREAD_PEG_BOLT.get());
 
                         out.section(Component.translatable("item_group.chineseweapons.materials_and_miscellaneous_items"),
                                 0xFFB17A43, 0xFFD4A24A, null,

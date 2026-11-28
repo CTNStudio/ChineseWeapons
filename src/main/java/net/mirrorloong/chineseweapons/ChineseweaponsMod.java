@@ -84,6 +84,7 @@ public class ChineseweaponsMod implements ModInitializer {
 
 				ChineseWeaponsCombatEvents.init();
 		TangDynastyHorseJianProcedure.init();
+		net.mirrorloong.chineseweapons.item.BedCrossbowItem.init();
 		tips.init();
 		DyeableItemCleanColor.init();
 		FaceGuardHelmetKHKeepFarProcedures.init();

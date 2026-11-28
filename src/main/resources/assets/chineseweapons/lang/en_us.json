@@ -402,5 +402,22 @@
   "patchouli.chineseweapons.book.entries.other.banquan.artwork.pages.0.text": "美术资源版权归属（ARR）：",
   "patchouli.chineseweapons.book.entries.other.banquan.artwork.pages.1.text": "本项目所涉及的全部美术资源（包括但不限于纹理、模型、音效、音乐、UI素材、插画、特效、动画等）的著作权，依法归属于星屹工作室（CTN STUDIO）及其制作者独家所有，未纳入BSD-3授权范围。",
   "patchouli.chineseweapons.book.entries.other.banquan.artwork.pages.2.text": "$(br2)任何单位或个人，未经星屹工作室（CTN STUDIO）书面授权，不得擅自复制、修改、分发、商用或二次使用上述美术资源。",
-  "patchouli.chineseweapons.book.entries.tang_dynasty_shield.pages.0.text":"The Tang Dynasty Shield boasts higher durability compared to common shields."
+  "patchouli.chineseweapons.book.entries.tang_dynasty_shield.pages.0.text":"The Tang Dynasty Shield boasts higher durability compared to common shields.",
+  "item.chineseweapons.bed_crossbow_item": "Bed Crossbow",
+  "item.chineseweapons.spear_three_sword_bolt": "Spear-Three-Sword Bolt",
+  "item.chineseweapons.tread_peg_bolt": "Tread Peg Bolt",
+  "entity.chineseweapons.bed_crossbow": "Bed Crossbow",
+  "entity.chineseweapons.bed_crossbow_bolt": "Bed Crossbow Bolt",
+  "entity.bed_crossbow.hp": "Remaining Durability: %d",
+  "message.chineseweapons.bed_crossbow.no_space": "Not enough space to place the bed crossbow",
+  "message.chineseweapons.bed_crossbow.already_loaded": "The bed crossbow is already loaded",
+  "message.chineseweapons.bed_crossbow.press_back": "Hold right-click to wind, press the skill key to fire, sneak to leave",
+  "patchouli.chineseweapons.book.entries.weapons.bed_crossbow.name": "Bed Crossbow",
+  "patchouli.chineseweapons.book.entries.weapons.bed_crossbow.pages.0.text": "The Bed Crossbow is a fixed heavy crossbow: place it, load a bolt, then wind it up before firing. Sneak and press the skill key while aiming at the top face of a block to place it; right-click with a Spear-Three-Sword Bolt or Tread Peg Bolt to load, and sneak-right-click to remove. Right-click from behind to operate and smoothly move to the fixed operating position. Hold right-click to wind, release to start the hand-ache timer, press the skill key to fire, and sneak + skill key to start recovery.You can enter the operating state without a loaded bolt; while empty you can only right-click to load a bolt or leave. Winding is enabled only after loading.",
+  "message.chineseweapons.bed_crossbow.recover_status": "Recovering %s",
+  "message.chineseweapons.bed_crossbow.charge_status": "Charge %s",
+  "message.chineseweapons.bed_crossbow.hand_ache_status": "Hand ache %s",
+  "message.chineseweapons.bed_crossbow.load_to_charge": "Bed crossbow is empty: right-click to load a bolt, sneak to leave",
+  "gui.chineseweapons.bed_crossbow.durability": "Durability: %s",
+  "gui.chineseweapons.bed_crossbow.charge": "%s"
 }

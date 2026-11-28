@@ -110,7 +110,6 @@ public class TangDynastyHengSabeCutsProcedures {
         if (!getCanSet().contains(handItem.getItem())) return;
 
         player.getCooldowns().addCooldown(bindWeapon, COOLDOWN_TICKS);
-        handItem.hurtAndBreak(2, player, (p) -> p.broadcastBreakEvent(InteractionHand.MAIN_HAND));
 
         Vec3 look = player.getLookAngle();
         Vec3 playerPos = player.position();
@@ -134,6 +133,7 @@ public class TangDynastyHengSabeCutsProcedures {
                             .sum();
                     float dmg = baseDamage + 2;
                     target.hurt(player.damageSources().playerAttack(player), dmg);
+                    handItem.hurtAndBreak(2, player, (p) -> p.broadcastBreakEvent(InteractionHand.MAIN_HAND));
                     target.addEffect(new MobEffectInstance(ChineseWeaponsModEffects.CusEffectSupplier.get(), 60, 0, false, true));
 
                     if (player instanceof ServerPlayer sp) {

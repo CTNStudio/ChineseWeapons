@@ -1,0 +1,29 @@
+{
+  "type": "chineseweapons:weapon_casting_shaped",
+  "pattern": [
+    "AAA",
+    "BCB",
+    "DDD"
+  ],
+  "main_material": {
+    "item": "minecraft:iron_ingot"
+  },
+  "key": {
+    "A": {
+      "item": "minecraft:bow"
+    },
+    "B": {
+      "item": "minecraft:string"
+    },
+    "C": {
+      "item": "minecraft:iron_ingot"
+    },
+    "D": {
+      "tag": "minecraft:planks"
+    }
+  },
+  "result": {
+    "count": 1,
+    "item": "chineseweapons:bed_crossbow_item"
+  }
+}

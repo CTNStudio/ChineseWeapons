@@ -18,6 +18,10 @@ public class ChineseWeaponsClientInit implements ClientModInitializer {
 
                 ChineseWeaponsClientEvents.initClient();
 
+        //old api @Mod.EventBusSubscriber(CLIENT) -> new api BedCrossbowClientEvents.init() / BedCrossbowHudRenderer.init()
+        BedCrossbowClientEvents.init();
+        net.mirrorloong.chineseweapons.gui.BedCrossbowHudRenderer.init();
+
         net.mirrorloong.chineseweapons.client.item.WeaponItemRenderer.init();
 
                 net.mirrorloong.chineseweapons.gui.recipe.WeaponsCastingTableScreen.register();

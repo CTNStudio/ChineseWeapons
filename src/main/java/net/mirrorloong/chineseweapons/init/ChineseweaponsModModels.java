@@ -18,6 +18,8 @@ public class ChineseweaponsModModels {
         EntityModelLayerRegistry.registerModelLayer(Modelbohai_helmet.LAYER_LOCATION, Modelbohai_helmet::createBodyLayer);
         EntityModelLayerRegistry.registerModelLayer(ModelSongJavelinModel.LAYER_LOCATION, ModelSongJavelinModel::createBodyLayer);
         EntityModelLayerRegistry.registerModelLayer(ModelSongStandingShield.LAYER_LOCATION, ModelSongStandingShield::createBodyLayer);
+        EntityModelLayerRegistry.registerModelLayer(Modelbed_crossbow.LAYER_LOCATION, Modelbed_crossbow::createBodyLayer);
+        EntityModelLayerRegistry.registerModelLayer(Modelbed_crossbow_bolt.LAYER_LOCATION, Modelbed_crossbow_bolt::createBodyLayer);
         EntityModelLayerRegistry.registerModelLayer(Modelsong_dynasty_infantry_armor.LAYER_LOCATION, Modelsong_dynasty_infantry_armor::createBodyLayer);
         EntityModelLayerRegistry.registerModelLayer(Modelface_guard.LAYER_LOCATION, Modelface_guard::createBodyLayer);
 	}

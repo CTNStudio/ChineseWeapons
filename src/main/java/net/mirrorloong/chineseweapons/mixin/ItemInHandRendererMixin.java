@@ -29,7 +29,7 @@ public class ItemInHandRendererMixin {
             return;
         }
         float partialTick = Minecraft.getInstance().getFrameTime();
-        if (HandRenderEvents.invokeAll(poseStack, player, hand, stack, partialTick)) {
+        if (HandRenderEvents.invokeAll(poseStack, player, hand, stack, partialTick, buffer, combinedLight)) {
             ci.cancel();
         }
     }
