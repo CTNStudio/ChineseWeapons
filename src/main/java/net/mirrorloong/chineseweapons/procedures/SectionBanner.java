@@ -10,6 +10,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.ScreenEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -152,12 +153,19 @@ public final class SectionBanner extends CreativeModeTab {
             int cur = startX;
             if (l.iconId() != null) {
                 Item icon = BuiltInRegistries.ITEM.get(l.iconId());
-                var pose = g.pose();
-                pose.pushPose();
-                pose.translate(cur + 8, y + 1 + 8, 0);
-                pose.scale(scale, scale, 1);
-                g.renderItem(new ItemStack(icon), -8, -8);
-                pose.popPose();
+                if (icon != Items.AIR) {
+                    var pose = g.pose();
+                    pose.pushPose();
+                    pose.translate(cur + 8, y + 1 + 8, 0);
+                    pose.scale(scale, scale, 1);
+                    g.renderItem(new ItemStack(icon), -8, -8);
+                    pose.popPose();
+                } else {
+                    ResourceLocation tex = ResourceLocation.fromNamespaceAndPath(
+                            l.iconId().getNamespace(),
+                            l.iconId().getPath());
+                    g.blit(tex, cur, y + 1, 0, 0, iconSize, iconSize, 16, 16);
+                }
                 cur += iconSize + 2;
             }
             if (text != null) {

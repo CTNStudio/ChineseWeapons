@@ -230,6 +230,14 @@ public class ChineseweaponsModItems {
 
     public static final RegistryObject<Item> ANCIENT_GEM_BLOCK = block(ChineseweaponsModBlocks.ANCIENT_GEM_BLOCK);
 
+    public static final RegistryObject<Item> BED_CROSSBOW_ITEM = REGISTRY.register("bed_crossbow_item", BedCrossbowItem::new);
+    public static final RegistryObject<Item> SPEAR_THREE_SWORD_BOLT = REGISTRY.register("spear_three_sword_bolt",
+            () -> new BedCrossbowBoltItem(BedCrossbowBoltItem.BoltKind.SPEAR_THREE_SWORD,
+                    new Item.Properties().stacksTo(16)));
+    public static final RegistryObject<Item> TREAD_PEG_BOLT = REGISTRY.register("tread_peg_bolt",
+            () -> new BedCrossbowBoltItem(BedCrossbowBoltItem.BoltKind.TREAD_PEG,
+                    new Item.Properties().stacksTo(16)));
+
     private static RegistryObject<Item> block(RegistryObject<Block> block) {
         return REGISTRY.register(block.getId().getPath(), () -> new BlockItem(block.get(), new Item.Properties()));
     }

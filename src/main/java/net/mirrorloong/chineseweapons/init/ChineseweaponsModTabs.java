@@ -1,6 +1,10 @@
 package net.mirrorloong.chineseweapons.init;
 
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.Item;
+import net.minecraftforge.fml.ModList;
+import net.minecraftforge.registries.ForgeRegistries;
 import net.mirrorloong.chineseweapons.ChineseweaponsMod;
 import net.mirrorloong.chineseweapons.procedures.SectionBanner;
 
@@ -20,8 +24,6 @@ public class ChineseweaponsModTabs {
                             .title(Component.translatable("item_group.chineseweapons.chinese_weapons"))
                             .icon(() -> new ItemStack(ChineseweaponsModItems.IRONMOUNTAINCHARACTERARMOR_HELMET.get())),
                     out -> {
-
-                        ChineseweaponsMod.LOGGER.info("[ChineseweaponsModTabs] class loaded, registering chinese_weapons tab");
 
                         out.section(Component.translatable("item_group.chineseweapons.armor"),
                                 0xFF8C3A2A, 0xFFD4A24A, null,
@@ -215,6 +217,9 @@ public class ChineseweaponsModTabs {
                         out.accept(ChineseweaponsModItems.GREENLOONG_GLAIVE.get());
                         out.accept(ChineseweaponsModItems.TangDynastyShield.get());
                         out.accept(ChineseweaponsModItems.SongStandingShield.get());
+                        out.accept(ChineseweaponsModItems.BED_CROSSBOW_ITEM.get());
+                        out.accept(ChineseweaponsModItems.SPEAR_THREE_SWORD_BOLT.get());
+                        out.accept(ChineseweaponsModItems.TREAD_PEG_BOLT.get());
 
                         out.section(Component.translatable("item_group.chineseweapons.materials_and_miscellaneous_items"),
                                 0xFFB17A43, 0xFFD4A24A, null,
@@ -248,6 +253,22 @@ public class ChineseweaponsModTabs {
                         out.accept(ChineseweaponsModItems.BlackChuiArmorforgingStone.get());
                         out.accept(ChineseweaponsModItems.FineScaleArmorforgingStone.get());
                         out.accept(ChineseweaponsModItems.TangDynastyInfantryArmorforgingStone.get());
+
+                        if (ModList.get().isLoaded("patchouli")) {
+                            out.section(Component.translatable("item_group.chineseweapons.book"),
+                                    0xFF8C3A2A, 0xFFD4A24A, null,
+                                    new ResourceLocation("chineseweapons", "textures/item/forging_notes.png"), 0.9f,
+                                    "middle");
+
+                            var guideBookItem = ForgeRegistries.ITEMS.getValue(new ResourceLocation("patchouli", "guide_book"));
+                            if (guideBookItem != null) {
+                                var bookStack = new ItemStack(guideBookItem);
+                                var tag = new CompoundTag();
+                                tag.putString("patchouli:book", "chineseweapons:forging_notes");
+                                bookStack.setTag(tag);
+                                out.accept(bookStack);
+                            }
+                        }
                     }
             ).build());
 }

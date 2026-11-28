@@ -89,7 +89,7 @@ public class FaceGuardHelmetKHProcedures {
 
                 FaceGuardHelmetKHKeepFarProcedures.addFar(monster, level.getGameTime() + 60);
 
-                double QZ = WeaponScriptSettings.getArmorThreshold(
+                double QZ = WeaponScriptSettings.getThreshold(
                         stack.getItem(),
                         WeaponScriptSettings.ALLWeapon.FACEGUARDHELMET_KH, 25.0);
 

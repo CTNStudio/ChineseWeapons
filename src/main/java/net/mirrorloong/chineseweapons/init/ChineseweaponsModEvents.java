@@ -5,8 +5,7 @@ import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.mirrorloong.chineseweapons.ChineseweaponsMod;
-import net.mirrorloong.chineseweapons.renderer.SongJavelinRenderer;
-import net.mirrorloong.chineseweapons.renderer.SongStandingShieldRenderer;
+import net.mirrorloong.chineseweapons.renderer.*;
 
 @Mod.EventBusSubscriber(modid = ChineseweaponsMod.MODID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public class ChineseweaponsModEvents {
@@ -19,5 +18,11 @@ public class ChineseweaponsModEvents {
 
         event.registerEntityRenderer(ChineseweaponsModEntities.STANDING_SHIELD.get(),
                 SongStandingShieldRenderer::new);
+
+        event.registerEntityRenderer(ChineseweaponsModEntities.BED_CROSSBOW.get(),
+                BedCrossbowRenderer::new);
+
+        event.registerEntityRenderer(ChineseweaponsModEntities.BED_CROSSBOW_BOLT.get(),
+                BedCrossbowBoltRenderer::new);
     }
 }

@@ -12,6 +12,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.Tier;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
@@ -76,6 +77,7 @@ public class GuDuoItem extends SixBlockReachSwordItem {
                     DFHurt(stack, target, attacker);
                 }
             }
+            HurtShieldBreak(target, stack);
         }
         stack.hurtAndBreak(2, attacker, (p) -> p.broadcastBreakEvent(InteractionHand.MAIN_HAND));
         return super.hurtEnemy(stack, target, attacker);
@@ -85,12 +87,36 @@ public class GuDuoItem extends SixBlockReachSwordItem {
         target.addEffect(new MobEffectInstance(
                 ChineseWeaponsModEffects.BleedEffectSupplier.get(), 60, 0));
 
-        double GL = WeaponScriptSettings.getArmorThreshold(
+        double GL = WeaponScriptSettings.getThreshold(
                 stack.getItem(),
                 WeaponScriptSettings.ALLWeapon.GUDUO_ARMORBLINDNESS, 4.0);
 
         if (attacker.getAttributeValue(Attributes.ARMOR) <= GL) {
-            target.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, 60, 0));
+            if (attacker.getRandom().nextFloat() < 0.5F) {
+                target.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, 60, 0));
+            }
+            if (attacker.getRandom().nextFloat() < 0.5F) {
+                target.addEffect(new MobEffectInstance(MobEffects.CONFUSION, 60, 0));
+            }
+        }
+    }
+
+    private static void HurtShieldBreak(LivingEntity target, ItemStack stack) {
+        if (!(target instanceof Player victim)) return;
+
+        double CoolChance = WeaponScriptSettings.getThreshold(
+                stack.getItem(),
+                WeaponScriptSettings.ALLWeapon.GUDUO_HURTSKILLTICK, 0.6D);
+
+        double CoolTick = WeaponScriptSettings.getThreshold(
+                stack.getItem(),
+                WeaponScriptSettings.ALLWeapon.GUDUO_HURTSKILLTICK, 40D);
+
+        if (victim.getRandom().nextFloat() >= CoolChance) return;
+        victim.getCooldowns().addCooldown(Items.SHIELD, (int) CoolTick);
+
+        if (victim.isUsingItem() && victim.getUseItem().is(Items.SHIELD)) {
+            victim.stopUsingItem();
         }
     }
 
@@ -124,7 +150,7 @@ public class GuDuoItem extends SixBlockReachSwordItem {
                     target.getZ() + back.z
             );
 
-            double downward_o = WeaponScriptSettings.getArmorThreshold(
+            double downward_o = WeaponScriptSettings.getThreshold(
                     stack.getItem(),
                     WeaponScriptSettings.ALLWeapon.GUDUO_HURTDOWNWARD, 1D);
 
@@ -142,7 +168,7 @@ public class GuDuoItem extends SixBlockReachSwordItem {
             }
         }
 
-        double tick = WeaponScriptSettings.getArmorThreshold(
+        double tick = WeaponScriptSettings.getThreshold(
                 stack.getItem(),
                 WeaponScriptSettings.ALLWeapon.GUDUO_HURTSKILLTICK, 10D);
 

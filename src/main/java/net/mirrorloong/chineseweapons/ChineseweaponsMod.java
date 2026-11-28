@@ -15,8 +15,7 @@ import net.minecraftforge.registries.RegistryObject;
 import net.mirrorloong.chineseweapons.gui.recipe.DeferredGui;
 import net.mirrorloong.chineseweapons.init.*;
 import net.mirrorloong.chineseweapons.item.*;
-import net.mirrorloong.chineseweapons.network.ArmorCastingTableBlockProgressPacket;
-import net.mirrorloong.chineseweapons.network.ShieldActionPacket;
+import net.mirrorloong.chineseweapons.network.*;
 import net.mirrorloong.chineseweapons.procedures.SectionBanner;
 import net.mirrorloong.chineseweapons.recipes.DeferredRecipe;
 import net.mirrorloong.chineseweapons.recipes.DyeableArmorRecipe;
@@ -114,6 +113,24 @@ public class ChineseweaponsMod {
                 ArmorCastingTableBlockProgressPacket::encode,
                 ArmorCastingTableBlockProgressPacket::decode,
                 ArmorCastingTableBlockProgressPacket::handle);
+        ChineseweaponsMod.CHANNEL.registerMessage(
+                3,
+                BedCrossbowReleasePacket.class,
+                BedCrossbowReleasePacket::encode,
+                BedCrossbowReleasePacket::new,
+                BedCrossbowReleasePacket::handle);
+        ChineseweaponsMod.CHANNEL.registerMessage(
+                4,
+                BedCrossbowWindPacket.class,
+                BedCrossbowWindPacket::encode,
+                BedCrossbowWindPacket::new,
+                BedCrossbowWindPacket::handle);
+        ChineseweaponsMod.CHANNEL.registerMessage(
+                5,
+                BedCrossbowShakePacket.class,
+                BedCrossbowShakePacket::encode,
+                BedCrossbowShakePacket::new,
+                BedCrossbowShakePacket::handle);
     }
 
 	private static final Random random = new Random();

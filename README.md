@@ -12,7 +12,7 @@
 
 ---
 ## Licensing
-Code and Art unless otherwise stated default to our [LICENSE](LICENSE.md)
+Code and Art unless otherwise stated default to our [LICENSE](LICENSE)
 
 ---
 ### Extra code
