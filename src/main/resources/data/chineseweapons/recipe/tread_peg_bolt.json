@@ -1,0 +1,32 @@
+{
+  "type": "chineseweapons:weapon_casting_shaped",
+  "pattern": [
+    "NIN",
+    " P ",
+    "GSG"
+  ],
+  "main_material": {
+    "item": "minecraft:iron_ingot"
+  },
+  "key": {
+    "N": {
+      "item": "minecraft:iron_nugget"
+    },
+    "I": {
+      "item": "minecraft:iron_sword"
+    },
+    "P": {
+      "tag": "minecraft:planks"
+    },
+    "S": {
+      "item": "minecraft:stick"
+    },
+    "G": {
+      "item": "minecraft:iron_ingot"
+    }
+  },
+  "result": {
+    "count": 1,
+    "item": "chineseweapons:tread_peg_bolt"
+  }
+}

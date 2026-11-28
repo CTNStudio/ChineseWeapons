@@ -25,6 +25,9 @@ import net.mirrorloong.chineseweapons.gui.recipe.DeferredGui;
 import net.mirrorloong.chineseweapons.init.*;
 import net.mirrorloong.chineseweapons.item.*;
 import net.mirrorloong.chineseweapons.network.ArmorCastingTableBlockProgressPacket;
+import net.mirrorloong.chineseweapons.network.BedCrossbowReleasePacket;
+import net.mirrorloong.chineseweapons.network.BedCrossbowShakePacket;
+import net.mirrorloong.chineseweapons.network.BedCrossbowWindPacket;
 import net.mirrorloong.chineseweapons.network.ShieldActionPacket;
 import net.mirrorloong.chineseweapons.recipes.DeferredRecipe;
 import net.mirrorloong.chineseweapons.recipes.DyeableArmorRecipe;
@@ -99,6 +102,21 @@ public class ChineseweaponsMod {
                 ArmorCastingTableBlockProgressPacket.STREAM_CODEC,
                 ArmorCastingTableBlockProgressPacket::handle
         );
+        registrar.playBidirectional(
+                BedCrossbowReleasePacket.TYPE,
+                BedCrossbowReleasePacket.STREAM_CODEC,
+                BedCrossbowReleasePacket::handle
+        );
+        registrar.playBidirectional(
+                BedCrossbowWindPacket.TYPE,
+                BedCrossbowWindPacket.STREAM_CODEC,
+                BedCrossbowWindPacket::handle
+        );
+        registrar.playBidirectional(
+                BedCrossbowShakePacket.TYPE,
+                BedCrossbowShakePacket.STREAM_CODEC,
+                BedCrossbowShakePacket::handle
+        );
     }
 
     private static final Random random = new Random();
@@ -111,10 +129,7 @@ public class ChineseweaponsMod {
                 DamageSource source = event.getSource();
                 if (source.getEntity() instanceof Player player) {
                     Item item = player.getMainHandItem().getItem();
-                    if (item instanceof DiamondglaiveItem || item instanceof GoldenglaiveItem
-                            || item instanceof IronglaiveItem || item instanceof NetheriteglaiveItem
-                            || item instanceof GreenloongglaiveItem
-                            || item instanceof WoodenglaiveItem || item instanceof StoneglaiveItem) {
+                    if(item instanceof GlaiveItem){
                         float chance = WeaponScriptSettings.getChance(item, WeaponScriptSettings.Skill.GLAIVE_DISMOUNT, 0.60F);
                         if (random.nextFloat() < chance) {
                             event.getEntity().stopRiding();

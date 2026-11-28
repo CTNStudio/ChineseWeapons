@@ -94,8 +94,6 @@ public class TangDynastyHengSabeCutsProcedures {
 
         player.getCooldowns().addCooldown(bindWeapon, 10);
 
-        handItem.hurtAndBreak(2, player, EquipmentSlot.MAINHAND);
-
         Vec3 look = player.getLookAngle();
         Vec3 playerPos = player.position();
 
@@ -126,6 +124,7 @@ public class TangDynastyHengSabeCutsProcedures {
 
                     float dmg = baseDamage[0] + 2;
                     target.hurt(player.damageSources().playerAttack(player), dmg);
+                    handItem.hurtAndBreak(2, player, EquipmentSlot.MAINHAND);
 
                     target.addEffect(new MobEffectInstance(
                             ChineseWeaponsModEffects.CusEffectSupplier, 60, 0, false, true));

@@ -11,7 +11,9 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.mirrorloong.chineseweapons.ChineseweaponsMod;
+import net.mirrorloong.chineseweapons.entity.BedCrossbowEntity;
 import net.mirrorloong.chineseweapons.entity.SongStandingShieldEntity;
+import net.mirrorloong.chineseweapons.item.BedCrossbowItem;
 import net.mirrorloong.chineseweapons.item.SongStandingShield;
 import net.mirrorloong.chineseweapons.procedures.weapon.DaggerAxeItemFierceHookProcedure;
 import net.mirrorloong.chineseweapons.procedures.weapon.GlaiveItemStopRunProcedure;
@@ -39,10 +41,33 @@ public record ShieldActionPacket() implements CustomPacketPayload {
         context.enqueueWork(() -> {
             if (!(context.player() instanceof ServerPlayer player)) return;
 
+            //床弩
+            BedCrossbowEntity operating = BedCrossbowEntity.findOperating(player);
+            if (operating != null) {
+                operating.fireFromSkill(player);
+                return;
+            }
+
+            if (player.isShiftKeyDown()) {
+                BedCrossbowEntity crossbowTarget = BedCrossbowEntity.findTarget(player);
+                if (crossbowTarget != null) {
+                    crossbowTarget.recover(player);
+                    return;
+                }
+            }
+
             SongStandingShieldEntity target = findTarget(player);
             if (target != null) {
                 retrieve(player, target);
                 return;
+            }
+
+            if (player.isShiftKeyDown()) {
+                ItemStack mainHand = player.getMainHandItem();
+                if (mainHand.getItem() instanceof BedCrossbowItem
+                        && BedCrossbowItem.startPlacement(player, mainHand)) {
+                    return;
+                }
             }
 
             ItemStack main = player.getMainHandItem();

@@ -7,6 +7,7 @@ import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -14,6 +15,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.Tier;
 import net.minecraft.world.phys.Vec3;
 import net.mirrorloong.chineseweapons.ChineseweaponsMod;
@@ -77,10 +79,9 @@ public class GuDuoItem extends SixBlockReachSwordItem {
                     DFHurt(stack, target, attacker);
                 }
             }
+            HurtShieldBreak(target, stack);
         }
-
         stack.hurtAndBreak(2, attacker, EquipmentSlot.MAINHAND);
-
         return super.hurtEnemy(stack, target, attacker);
     }
 
@@ -88,12 +89,36 @@ public class GuDuoItem extends SixBlockReachSwordItem {
         target.addEffect(new MobEffectInstance(
                 ChineseWeaponsModEffects.BleedEffectSupplier, 60, 0));
 
-        double GL = WeaponScriptSettings.getArmorThreshold(
+        double GL = WeaponScriptSettings.getThreshold(
                 stack.getItem(),
                 WeaponScriptSettings.ALLWeapon.GUDUO_ARMORBLINDNESS, 4.0);
 
         if (attacker.getAttributeValue(Attributes.ARMOR) <= GL) {
-            target.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, 60, 0));
+            if (attacker.getRandom().nextFloat() < 0.5F) {
+                target.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, 60, 0));
+            }
+            if (attacker.getRandom().nextFloat() < 0.5F) {
+                target.addEffect(new MobEffectInstance(MobEffects.CONFUSION, 60, 0));
+            }
+        }
+    }
+
+    private static void HurtShieldBreak(LivingEntity target, ItemStack stack) {
+        if (!(target instanceof Player victim)) return;
+
+        float CoolChance = WeaponScriptSettings.getChance(
+                stack.getItem(),
+                WeaponScriptSettings.Skill.GUDUO_TargetCoolChance, 0.6F);
+
+        double CoolTick = WeaponScriptSettings.getThreshold(
+                stack.getItem(),
+                WeaponScriptSettings.ALLWeapon.GUDUO_TargetCoolTICK, 40D);
+
+        if (victim.getRandom().nextFloat() >= CoolChance) return;
+        victim.getCooldowns().addCooldown(Items.SHIELD, (int) CoolTick);
+
+        if (victim.isUsingItem() && victim.getUseItem().is(Items.SHIELD)) {
+            victim.stopUsingItem();
         }
     }
 
@@ -127,7 +152,7 @@ public class GuDuoItem extends SixBlockReachSwordItem {
                     target.getZ() + back.z
             );
 
-            double downward_o = WeaponScriptSettings.getArmorThreshold(
+            double downward_o = WeaponScriptSettings.getThreshold(
                     stack.getItem(),
                     WeaponScriptSettings.ALLWeapon.GUDUO_HURTDOWNWARD, 1D);
 
@@ -143,7 +168,7 @@ public class GuDuoItem extends SixBlockReachSwordItem {
             }
         }
 
-        double tick = WeaponScriptSettings.getArmorThreshold(
+        double tick = WeaponScriptSettings.getThreshold(
                 stack.getItem(),
                 WeaponScriptSettings.ALLWeapon.GUDUO_HURTSKILLTICK, 10D);
 
@@ -211,7 +236,7 @@ public class GuDuoItem extends SixBlockReachSwordItem {
         }
     }
 
-	//客户端渲染
+    //客户端渲染
     @EventBusSubscriber(
             modid = ChineseweaponsMod.MODID,
             value = Dist.CLIENT

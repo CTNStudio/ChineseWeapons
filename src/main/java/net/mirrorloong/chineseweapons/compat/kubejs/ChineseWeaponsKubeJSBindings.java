@@ -29,17 +29,28 @@ public final class ChineseWeaponsKubeJSBindings {
 
     //设置骨朵护甲致盲概率 用法 ChineseWeapons.setGuduoArmorBlindnessChance('物品ID', 概率)
     public static void setGuduoArmorBlindnessChance(String itemId, double chance) {
-        WeaponScriptSettings.setArmorThreshold(parseItemId(itemId), WeaponScriptSettings.ALLWeapon.GUDUO_ARMORBLINDNESS, chance);
+        WeaponScriptSettings.setThreshold(parseItemId(itemId), WeaponScriptSettings.ALLWeapon.GUDUO_ARMORBLINDNESS, chance);
     }
 
     //设置骨朵击退/下压格 用法 ChineseWeapons.setGuduoHurtDownwardChance('物品ID', 数值)
     public static void setGuduoHurtDownwardChance(String itemId, double chance) {
-        WeaponScriptSettings.setArmorThreshold(parseItemId(itemId), WeaponScriptSettings.ALLWeapon.GUDUO_HURTDOWNWARD, chance);
+        WeaponScriptSettings.setThreshold(parseItemId(itemId), WeaponScriptSettings.ALLWeapon.GUDUO_HURTDOWNWARD, chance);
     }
 
     //设置骨朵受击技能触发概率 用法 ChineseWeapons.setGuduoHurtSkillTickChance('物品ID', 概率)
     public static void setGuduoHurtSkillTickChance(String itemId, double chance) {
-        WeaponScriptSettings.setArmorThreshold(parseItemId(itemId), WeaponScriptSettings.ALLWeapon.GUDUO_HURTSKILLTICK, chance);
+        WeaponScriptSettings.setThreshold(parseItemId(itemId), WeaponScriptSettings.ALLWeapon.GUDUO_HURTSKILLTICK, chance);
+    }
+
+    //设置骨朵让对方盾牌冷却多久 用法 ChineseWeapons.setGuduoHurtTargetCoolTickChance('物品ID', 数值)
+    public static void setGuduoHurtTargetCoolTickChance(String itemId, double chance) {
+        WeaponScriptSettings.setThreshold(parseItemId(itemId), WeaponScriptSettings.ALLWeapon.GUDUO_TargetCoolTICK, chance);
+    }
+
+
+    //设置骨朵让对方盾牌冷却触发概率 用法 ChineseWeapons.setGuduoHurtTargetCoolChanceChance('物品ID', 概率)
+    public static void setGuduoHurtTargetCoolChanceChance(String itemId, double chance) {
+        WeaponScriptSettings.setChance(parseItemId(itemId), WeaponScriptSettings.Skill.GUDUO_TargetCoolChance, chance);
     }
 
     //设置骨朵停止骑乘概率 用法 ChineseWeapons.setGuduoStopRidingChance('物品ID', 概率)
@@ -49,12 +60,12 @@ public final class ChineseWeaponsKubeJSBindings {
 
     //设置宋代立盾背后防爆多少格 用法 ChineseWeapons.setSongStandingShieldBehindCenterChance(数值)
     public static void setSongStandingShieldBehindCenterChance(double chance) {
-        WeaponScriptSettings.setArmorThreshold(null, WeaponScriptSettings.ALLWeapon.SONGSTANDINGSHIELD_BEHINDCENTER, chance);
+        WeaponScriptSettings.setThreshold(null, WeaponScriptSettings.ALLWeapon.SONGSTANDINGSHIELD_BEHINDCENTER, chance);
     }
 
     //设置宋代立盾旋转角度 用法 ChineseWeapons.setSongStandingShield_AngleChance(角度)
     public static void setSongStandingShield_AngleChance(double chance) {
-        WeaponScriptSettings.setArmorThreshold(null, WeaponScriptSettings.ALLWeapon.SONGSTANDINGSHIELD_ANGLE, chance);
+        WeaponScriptSettings.setThreshold(null, WeaponScriptSettings.ALLWeapon.SONGSTANDINGSHIELD_ANGLE, chance);
     }
 
     //设置显示唐代立盾耐久开关 用法 ChineseWeapons.setSongStandingShieldEnduranceDisplay(true/false)
@@ -69,7 +80,7 @@ public final class ChineseWeaponsKubeJSBindings {
 
     //设置面甲驱逐生物最大格数 用法 ChineseWeapons.setFaceGuardHelmetFarFromChance('物品ID', 格数)
     public static void setFaceGuardHelmetFarFromChance(String itemId, double chance) {
-        WeaponScriptSettings.setArmorThreshold(parseItemId(itemId), WeaponScriptSettings.ALLWeapon.FACEGUARDHELMET_KH, chance);
+        WeaponScriptSettings.setThreshold(parseItemId(itemId), WeaponScriptSettings.ALLWeapon.FACEGUARDHELMET_KH, chance);
     }
 
 

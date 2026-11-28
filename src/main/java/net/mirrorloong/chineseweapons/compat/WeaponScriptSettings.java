@@ -14,13 +14,15 @@ public final class WeaponScriptSettings {
         HOOK_DISMOUNT,
         HIT_EFFECT,
         GLAIVE_DISMOUNT,
-        GUDUO_STOPRIDING
+        GUDUO_STOPRIDING,
+        GUDUO_TargetCoolChance
     }
 
     public enum ALLWeapon {
         GUDUO_ARMORBLINDNESS,
         GUDUO_HURTDOWNWARD,
         GUDUO_HURTSKILLTICK,
+        GUDUO_TargetCoolTICK,
         SONGSTANDINGSHIELD_BEHINDCENTER,
         SONGSTANDINGSHIELD_ANGLE,
         FACEGUARDHELMET_KH
@@ -32,7 +34,7 @@ public final class WeaponScriptSettings {
 
     private static final Map<ResourceLocation, Double> REACH_BONUSES = new ConcurrentHashMap<>();
     private static final Map<ResourceLocation, EnumMap<Skill, Float>> SKILL_CHANCES = new ConcurrentHashMap<>();
-    private static final Map<ResourceLocation, EnumMap<ALLWeapon, Double>> ARMOR_THRESHOLDS = new ConcurrentHashMap<>();
+    private static final Map<ResourceLocation, EnumMap<ALLWeapon, Double>> THRESHOLDS = new ConcurrentHashMap<>();
     private static final Map<ResourceLocation, EnumMap<Logic, Boolean>> LOGIC_CHANCES = new ConcurrentHashMap<>();
 
     private WeaponScriptSettings() {
@@ -63,16 +65,16 @@ public final class WeaponScriptSettings {
         return values == null ? fallback : values.getOrDefault(skill, fallback);
     }
 
-    public static void setArmorThreshold(ResourceLocation itemId, ALLWeapon threshold, double value) {
+    public static void setThreshold(ResourceLocation itemId, ALLWeapon threshold, double value) {
         if (!Double.isFinite(value) || value < 0.0D) {
-            throw new IllegalArgumentException("Armor threshold must be between 0: " + value);
+            throw new IllegalArgumentException("Threshold must be between 0: " + value);
         }
-        ARMOR_THRESHOLDS.computeIfAbsent(itemId, ignored -> new EnumMap<>(ALLWeapon.class)).put(threshold, value);
+        THRESHOLDS.computeIfAbsent(itemId, ignored -> new EnumMap<>(ALLWeapon.class)).put(threshold, value);
     }
 
-    public static double getArmorThreshold(Item item, ALLWeapon threshold, double fallback) {
+    public static double getThreshold(Item item, ALLWeapon threshold, double fallback) {
         ResourceLocation itemId = BuiltInRegistries.ITEM.getKey(item);
-        EnumMap<ALLWeapon, Double> values = itemId == null ? null : ARMOR_THRESHOLDS.get(itemId);
+        EnumMap<ALLWeapon, Double> values = itemId == null ? null : THRESHOLDS.get(itemId);
         return values == null ? fallback : values.getOrDefault(threshold, fallback);
     }
 

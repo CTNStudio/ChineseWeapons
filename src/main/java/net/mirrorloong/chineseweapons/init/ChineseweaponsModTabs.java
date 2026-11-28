@@ -2,10 +2,17 @@
 
 package net.mirrorloong.chineseweapons.init;
 
+import net.minecraft.core.component.DataComponentType;
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.component.CustomData;
 import net.mirrorloong.chineseweapons.ChineseweaponsMod;
 
 import net.mirrorloong.chineseweapons.procedures.SectionBanner;
+import net.neoforged.fml.ModList;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
@@ -215,6 +222,9 @@ public class ChineseweaponsModTabs {
                         out.accept(ChineseweaponsModItems.GREENLOONG_GLAIVE.get());
                         out.accept(ChineseweaponsModItems.TangDynastyShield.get());
                         out.accept(ChineseweaponsModItems.SongStandingShield.get());
+                        out.accept(ChineseweaponsModItems.BED_CROSSBOW_ITEM.get());
+                        out.accept(ChineseweaponsModItems.SPEAR_THREE_SWORD_BOLT.get());
+                        out.accept(ChineseweaponsModItems.TREAD_PEG_BOLT.get());
 
                         out.section(Component.translatable("item_group.chineseweapons.materials_and_miscellaneous_items"),
                                 0xFFB17A43, 0xFFD4A24A, null,
@@ -248,6 +258,31 @@ public class ChineseweaponsModTabs {
                         out.accept(ChineseweaponsModItems.BlackChuiArmorforgingStone.get());
                         out.accept(ChineseweaponsModItems.FineScaleArmorforgingStone.get());
                         out.accept(ChineseweaponsModItems.TangDynastyInfantryArmorforgingStone.get());
+
+                        if (ModList.get().isLoaded("patchouli")) {
+                            out.section(Component.translatable("item_group.chineseweapons.book"),
+                                    0xFF8C3A2A, 0xFFD4A24A, null,
+                                    ResourceLocation.fromNamespaceAndPath("chineseweapons", "textures/item/forging_notes.png"), 0.9f,
+                                    "middle");
+
+                            var guideBookItem = BuiltInRegistries.ITEM.get(
+                                    ResourceLocation.fromNamespaceAndPath("patchouli", "guide_book"));
+                            if (guideBookItem != Items.AIR) {
+                                var bookStack = new ItemStack(guideBookItem);
+
+                                // get
+                                var bookComponentType = BuiltInRegistries.DATA_COMPONENT_TYPE.get(
+                                        ResourceLocation.fromNamespaceAndPath("patchouli", "book"));
+
+                                if (bookComponentType != null) {
+                                    @SuppressWarnings("unchecked")
+                                    var typed = (DataComponentType<ResourceLocation>) bookComponentType;
+                                    bookStack.set(typed, ResourceLocation.fromNamespaceAndPath("chineseweapons", "forging_notes"));
+                                }
+
+                                out.accept(bookStack);
+                            }
+                        }
                     }
             ).build());
 }

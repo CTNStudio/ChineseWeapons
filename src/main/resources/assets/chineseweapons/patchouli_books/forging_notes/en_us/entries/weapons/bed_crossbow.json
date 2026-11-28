@@ -1,0 +1,44 @@
+{
+  "sortnum": 8,
+  "name": "patchouli.chineseweapons.book.entries.weapons.bed_crossbow.name",
+  "icon": "chineseweapons:bed_crossbow_item",
+  "category": "chineseweapons:weapons",
+  "pages": [
+    {
+      "type": "spotlight",
+      "item": "chineseweapons:bed_crossbow_item",
+      "text": "patchouli.chineseweapons.book.entries.weapons.bed_crossbow.pages.0.text"
+    },
+    {
+      "type": "image",
+      "images": [
+        "chineseweapons:textures/book/weapons_8.png"
+      ],
+      "text": "patchouli.chineseweapons.book.entries.weapons.text"
+    },
+    {
+      "type": "spotlight",
+      "item": "chineseweapons:tread_peg_bolt",
+      "text": "patchouli.chineseweapons.book.entries.weapons.tread_peg_bolt.pages.0.text"
+    },
+    {
+      "type": "image",
+      "images": [
+        "chineseweapons:textures/book/weapons_9.png"
+      ],
+      "text": "patchouli.chineseweapons.book.entries.weapons.text"
+    },
+    {
+      "type": "spotlight",
+      "item": "chineseweapons:spear_three_sword_bolt",
+      "text": "patchouli.chineseweapons.book.entries.weapons.spear_three_sword_bolt.pages.0.text"
+    },
+    {
+      "type": "image",
+      "images": [
+        "chineseweapons:textures/book/weapons_10.png"
+      ],
+      "text": "patchouli.chineseweapons.book.entries.weapons.text"
+    }
+  ]
+}

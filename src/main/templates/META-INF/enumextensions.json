@@ -8,6 +8,15 @@
         "class": "net/mirrorloong/chineseweapons/item/SongJavelinItem$EnumParams",
         "field": "CHARGING_JAVELIN_POSE_PROXY"
       }
+    },
+    {
+      "enum": "net/minecraft/client/model/HumanoidModel$ArmPose",
+      "name": "CHINESEWEAPONS_BED_CROSSBOW_OPERATE",
+      "constructor": "(ZLnet/neoforged/neoforge/client/IArmPoseTransformer;)V",
+      "parameters": {
+        "class": "net/mirrorloong/chineseweapons/client/BedCrossbowClientEvents$EnumParams",
+        "field": "OPERATING_POSE_PROXY"
+      }
     }
   ]
 }

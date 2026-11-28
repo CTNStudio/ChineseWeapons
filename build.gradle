@@ -52,7 +52,7 @@ repositories {
 }
 
 base {
-    archivesName = mod_id
+    archivesName = "${mod_id}-neoforge-${mc_version}"
 }
 
 // Mojang ships Java 21 to end users in 1.21.1, so mods should target Java 21.
@@ -142,6 +142,9 @@ dependencies {
 
     compileOnly "maven.modrinth:emi:${emi_version}"
     localRuntime "maven.modrinth:emi:${emi_version}"
+
+    compileOnly "vazkii.patchouli:Patchouli:${patchouli_version}"
+    runtimeOnly "vazkii.patchouli:Patchouli:${patchouli_version}"
 
     compileOnly "dev.latvian.mods:kubejs-neoforge:${kubejs_version}"
     localRuntime("dev.latvian.mods:kubejs-neoforge:${kubejs_version}") {

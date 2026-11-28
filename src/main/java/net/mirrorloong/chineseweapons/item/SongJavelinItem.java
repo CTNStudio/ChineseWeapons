@@ -148,7 +148,7 @@ public class SongJavelinItem extends FourBlockReachSwordItem {
             ItemStack copyStack = stack.copy();
             SongJavelinProjectile projectile = new SongJavelinProjectile(level, player, copyStack);
             projectile.setBaseDamage(this.attackDamage * charge);
-
+            projectile.setKnockback(1);
             projectile.setCritArrow(charge >= 0.9F);
 
             int loyalty = EnchantmentHelper.getItemEnchantmentLevel(
